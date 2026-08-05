@@ -19,7 +19,7 @@ from .confidentiality_boundary import (
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths
-from .project_identity import project_identity_record
+from .project_identity import project_identity_record, current_build_id as _current_build_id
 from .provenance import evaluate_artifact_provenance, provenance_records
 from .state import load_settings
 
@@ -77,14 +77,6 @@ def _project_file(project_root: Path, raw: str, *, label: str, require: bool = T
     if require and not path.is_file():
         raise ValueError(f"Release package {label} does not exist: {relative}")
     return path, relative
-
-
-def _current_build_id(project_root: Path) -> str:
-    record = project_identity_record(project_root)
-    if record.get("lifecycle_status") != "active":
-        return ""
-    identity = record.get("identity", {}) if isinstance(record.get("identity"), dict) else {}
-    return str(identity.get("build_id", "")).strip()
 
 
 def _sanitize_scan(scan: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:

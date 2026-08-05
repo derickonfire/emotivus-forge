@@ -1,6 +1,17 @@
 """Deterministic portable ceremony kits for optional external build attestation."""
 from __future__ import annotations
 
+from .common import (
+    canonical_bytes as _canonical_bytes,
+    pretty_bytes as _pretty_bytes,
+    sha256_bytes as _sha256_bytes,
+    sha256_file as _sha256_file,
+    safe_member as _safe_member,
+    member_is_symlink as _member_is_symlink,
+    zip_info as _zip_info,
+    ZIP_TIMESTAMP,
+)
+
 import hashlib
 import json
 import stat
@@ -11,7 +22,6 @@ from typing import Any
 from .build_attestation import BUILD_MANIFEST_SCHEMA, read_build_manifest
 
 KIT_SCHEMA = "forge-owner-attestation-kit/1"
-ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 KIT_ROOT_PREFIX = "Forge-Attestation-Kit-"
 
 TRUTH_BOUNDARY = (
@@ -27,42 +37,6 @@ class AttestationKitError(ValueError):
     """Raised when one portable attestation kit cannot be trusted."""
 
 
-def _canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def _pretty_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def _sha256_bytes(value: bytes) -> str:
-    return hashlib.sha256(value).hexdigest()
-
-
-def _sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def _safe_member(name: str) -> bool:
-    normalized = name.replace("\\", "/")
-    path = PurePosixPath(normalized)
-    return bool(normalized) and not normalized.startswith("/") and ".." not in path.parts
-
-
-def _member_is_symlink(info: zipfile.ZipInfo) -> bool:
-    return stat.S_ISLNK((info.external_attr >> 16) & 0xFFFF)
-
-
-def _zip_info(name: str) -> zipfile.ZipInfo:
-    info = zipfile.ZipInfo(name, date_time=ZIP_TIMESTAMP)
-    info.compress_type = zipfile.ZIP_DEFLATED
-    info.create_system = 3
-    info.external_attr = (0o100644 & 0xFFFF) << 16
-    return info
 
 
 def _packaged_manifest(path: Path) -> dict[str, Any]:

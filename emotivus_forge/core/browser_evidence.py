@@ -9,6 +9,14 @@ HTTP-server or production-origin check, independent review, release authorizatio
 """
 from __future__ import annotations
 
+from .common import (
+    canonical_bytes,
+    pretty_bytes,
+    sha256_bytes,
+    sha256_file,
+    member_is_symlink as _zip_symlink,
+)
+
 import argparse
 import hashlib
 import json
@@ -71,28 +79,6 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def pretty_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def sha256_bytes(value: bytes) -> str:
-    return hashlib.sha256(value).hexdigest()
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def _zip_symlink(info: zipfile.ZipInfo) -> bool:
-    return stat.S_ISLNK((info.external_attr >> 16) & 0xFFFF)
 
 
 def inspect_website_zip(path: Path) -> tuple[WebsiteIdentity, list[zipfile.ZipInfo]]:

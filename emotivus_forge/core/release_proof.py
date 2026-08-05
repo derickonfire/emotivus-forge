@@ -11,7 +11,7 @@ from .common import normalize_rel, sha256_file, utc_now, write_json
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths
-from .project_identity import project_identity_record
+from .project_identity import project_identity_record, current_build_id as _current_build_id
 from .release_package import evaluate_release_package, release_package_records
 from .state import load_settings
 
@@ -117,14 +117,6 @@ def _active_release_package(project_root: Path, package_id: str) -> dict[str, An
     if evaluation.get("release_package_id") != package_id or final_package.get("status") != "PASS":
         raise ValueError("Release Proof requires a current exact final-package binding before its assurance map is recorded.")
     return record
-
-
-def _current_build_id(project_root: Path) -> str:
-    record = project_identity_record(project_root)
-    if record.get("lifecycle_status") != "active":
-        return ""
-    identity = record.get("identity", {}) if isinstance(record.get("identity"), dict) else {}
-    return str(identity.get("build_id", "")).strip()
 
 
 def _package_members(project_root: Path, package_id: str) -> tuple[set[str], dict[str, Any]]:

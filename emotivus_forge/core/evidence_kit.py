@@ -15,11 +15,19 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from .continuity_benchmark import define_task, verify_task_immutable
+from .common import (
+    canonical_bytes as _canonical_bytes,
+    pretty_bytes as _pretty_bytes,
+    sha256_bytes as _sha256_bytes,
+    sha256_file as _sha256_file,
+    safe_member as _safe_member,
+    member_is_symlink as _zip_member_is_symlink,
+    zip_info as _zip_info,
+    ZIP_TIMESTAMP,
+)
 
 KIT_SCHEMA = "forge-portable-evidence-kit/1"
 KIT_ROOT_PREFIX = "Forge-Evidence-Kit-"
-ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
-
 TRUTH_BOUNDARY = (
     "This deterministic archive is an execution aid bound to one exact public Forge runtime. "
     "Creating, copying, extracting, or verifying the kit is not independent evidence, does not "
@@ -33,40 +41,10 @@ class EvidenceKitError(ValueError):
     """Raised when a portable evidence kit cannot be trusted."""
 
 
-def _canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def _pretty_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def _sha256_bytes(value: bytes) -> str:
-    return hashlib.sha256(value).hexdigest()
-
-
-def _sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def _is_hex_digest(value: Any) -> bool:
     text = str(value)
     return len(text) == 64 and all(char in "0123456789abcdef" for char in text.lower())
 
-
-def _safe_member(name: str) -> bool:
-    normalized = name.replace("\\", "/")
-    path = PurePosixPath(normalized)
-    return bool(normalized) and not normalized.startswith("/") and ".." not in path.parts
-
-
-def _zip_member_is_symlink(info: zipfile.ZipInfo) -> bool:
-    mode = (info.external_attr >> 16) & 0xFFFF
-    return stat.S_ISLNK(mode)
 
 
 def runtime_identity(path: Path) -> dict[str, Any]:
@@ -200,12 +178,6 @@ def _kit_identifier(runtime: dict[str, Any], task: dict[str, Any], payloads: lis
     return hashlib.sha256(_canonical_bytes(identity)).hexdigest()
 
 
-def _zip_info(name: str) -> zipfile.ZipInfo:
-    info = zipfile.ZipInfo(name, date_time=ZIP_TIMESTAMP)
-    info.compress_type = zipfile.ZIP_DEFLATED
-    info.create_system = 3
-    info.external_attr = (0o100644 & 0xFFFF) << 16
-    return info
 
 
 def build_portable_evidence_kit(

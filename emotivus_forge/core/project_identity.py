@@ -186,6 +186,19 @@ def project_identity_record(project_root: Path) -> dict[str, Any]:
     )
 
 
+def current_build_id(project_root: Path) -> str:
+    """Active-lifecycle build_id for the project, or "" when not active/recorded.
+
+    Shared truth-boundary read routed through project identity so the release
+    services (package, proof, distribution) no longer each re-implement it.
+    """
+    record = project_identity_record(project_root)
+    if record.get("lifecycle_status") != "active":
+        return ""
+    identity = record.get("identity", {}) if isinstance(record.get("identity"), dict) else {}
+    return str(identity.get("build_id", "")).strip()
+
+
 def project_identity_summary(project_root: Path) -> dict[str, Any]:
     record = project_identity_record(project_root)
     if not record:

@@ -3,10 +3,12 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import stat
 import tempfile
+import zipfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 
@@ -47,6 +49,39 @@ def sha256_file(path: Path, *, chunk_size: int = 1024 * 1024) -> str:
         while chunk := handle.read(chunk_size):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+
+def sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def canonical_bytes(value: Any) -> bytes:
+    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
+
+
+def pretty_bytes(value: Any) -> bytes:
+    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+
+
+def safe_member(name: str) -> bool:
+    normalized = name.replace("\\", "/")
+    path = PurePosixPath(normalized)
+    return bool(normalized) and not normalized.startswith("/") and ".." not in path.parts
+
+
+def member_is_symlink(info: zipfile.ZipInfo) -> bool:
+    return stat.S_ISLNK((info.external_attr >> 16) & 0xFFFF)
+
+
+def zip_info(name: str) -> zipfile.ZipInfo:
+    info = zipfile.ZipInfo(name, date_time=ZIP_TIMESTAMP)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.create_system = 3
+    info.external_attr = (0o100644 & 0xFFFF) << 16
+    return info
 
 
 def _is_forge_state_path(path: Path) -> bool:

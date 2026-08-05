@@ -8,6 +8,7 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from .common import sha256_file as _sha256
 from .state import CORE_STATE_SCHEMA, SETTINGS_SCHEMA
 
 CERT_RE = re.compile(
@@ -33,14 +34,6 @@ def _json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{path.name} must contain a JSON object")
     return value
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _required_paths(root: Path, manifest: dict[str, Any], key: str) -> list[str]:

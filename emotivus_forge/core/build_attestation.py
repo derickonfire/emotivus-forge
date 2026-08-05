@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from .common import sha256_file as _sha256
+
 import hashlib
 import json
 import zipfile
@@ -21,14 +23,6 @@ TRUTH_BOUNDARY = (
     "access or retain a private key, authenticate the human controller of the public key, prove that "
     "the declared source produced the package, or authorize release."
 )
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _packaged_manifest_identity(path: Path) -> dict[str, Any]:

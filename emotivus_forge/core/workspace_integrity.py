@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from typing import Any, Iterable
 
-from .common import normalize_rel, utc_now
+from .common import normalize_rel, utc_now, sha256_file as _sha256_file
 from .state import load_state, save_state
 
 WORKSPACE_INTEGRITY_SCHEMA = 1
@@ -28,14 +28,6 @@ TRUTH_BOUNDARY = (
 
 def _excluded(relative: Path) -> bool:
     return any(part in EXCLUDED_PARTS for part in relative.parts)
-
-
-def _sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def fingerprint_workspace(

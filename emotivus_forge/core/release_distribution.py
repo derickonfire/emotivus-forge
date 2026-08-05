@@ -11,7 +11,7 @@ from .common import normalize_rel, sha256_file, utc_now, write_json
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths
-from .project_identity import project_identity_record
+from .project_identity import project_identity_record, current_build_id as _current_build_id
 from .release_package import evaluate_release_package, release_package_records
 from .remote_release import validate_remote_verification, verify_remote_channels
 from .state import load_settings
@@ -71,14 +71,6 @@ def _read_json(path: Path, label: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be a JSON object.")
     return value
-
-
-def _current_build_id(project_root: Path) -> str:
-    record = project_identity_record(project_root)
-    if record.get("lifecycle_status") != "active":
-        return ""
-    identity = record.get("identity", {}) if isinstance(record.get("identity"), dict) else {}
-    return str(identity.get("build_id", "")).strip()
 
 
 def _active_release_package(project_root: Path, package_id: str) -> dict[str, Any]:

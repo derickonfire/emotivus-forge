@@ -6,6 +6,16 @@ release authorization, or release readiness.
 """
 from __future__ import annotations
 
+from .common import (
+    canonical_bytes,
+    pretty_bytes,
+    sha256_bytes,
+    sha256_file,
+    safe_member,
+    member_is_symlink,
+    ZIP_TIMESTAMP,
+)
+
 import base64
 import hashlib
 import json
@@ -22,7 +32,6 @@ from .evidence_kit import verify_portable_evidence_kit
 
 RETURN_SCHEMA = "forge-external-evidence-return/1"
 REVIEW_SCHEMA = "forge-external-evidence-review/1"
-ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 MAX_RETURN_MEMBERS = 16
 MAX_RETURN_MEMBER_BYTES = 8 * 1024 * 1024
 MAX_RETURN_TOTAL_BYTES = 24 * 1024 * 1024
@@ -50,36 +59,6 @@ RETURN_TRUTH_BOUNDARY = (
 
 class ExternalEvidenceError(ValueError):
     """Raised when a returned evidence bundle cannot be trusted."""
-
-
-def canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def pretty_bytes(value: Any) -> bytes:
-    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def sha256_bytes(value: bytes) -> str:
-    return hashlib.sha256(value).hexdigest()
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def safe_member(name: str) -> bool:
-    normalized = name.replace("\\", "/")
-    path = PurePosixPath(normalized)
-    return bool(normalized) and not normalized.startswith("/") and ".." not in path.parts
-
-
-def member_is_symlink(info: zipfile.ZipInfo) -> bool:
-    return stat.S_ISLNK((info.external_attr >> 16) & 0xFFFF)
 
 
 def _single_root(names: Iterable[str]) -> str:
