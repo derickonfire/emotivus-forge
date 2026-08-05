@@ -264,6 +264,7 @@ def _classify_actual_top_level(name: str) -> tuple[list[str], str]:
         ".gitattributes": (["PACKAGING", "REFERENCE"], "KEEP"),
         "FORGE-2029-VERDICT.md": (["G3_EVOLUTION_KERNEL", "REFERENCE"], "KEEP"),
         "ROADMAP-2029.md": (["G3_EVOLUTION_KERNEL", "WEB_DOCUMENTATION"], "KEEP"),
+        "DEVELOPMENT-ROADMAP.md": (["G3_EVOLUTION_KERNEL", "WEB_DOCUMENTATION"], "KEEP"),
     }
     return mapping.get(name, (["UNCLASSIFIED"], "REVIEW"))
 

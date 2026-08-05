@@ -4,8 +4,8 @@
   "version": "0.552",
   "release_state": "core-reduction-mapping-candidate",
   "updated": "2026-08-05",
-  "tagline": "Portable project truth and continuity that works with any AI model.",
-  "summary": "Forge 0.552 maps every active runtime module, public command path, and top-level project surface before any code reduction. The map preserves Forge's model-collaboration boundary: Forge supplies exact project truth and continuity while AI models retain reasoning and development responsibility.",
+  "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.552 maps every active runtime module, command path, and top-level surface before any code reduction, preserving the boundary: Forge supplies exact truth and continuity while models retain reasoning and development.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
