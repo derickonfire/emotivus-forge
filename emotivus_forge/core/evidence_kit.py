@@ -9,7 +9,6 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import stat
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
@@ -24,7 +23,6 @@ from .common import (
     member_is_symlink as _zip_member_is_symlink,
     zip_info as _zip_info,
     verify_archive_hygiene,
-    ZIP_TIMESTAMP,
 )
 
 KIT_SCHEMA = "forge-portable-evidence-kit/1"

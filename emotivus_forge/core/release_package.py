@@ -19,7 +19,7 @@ from .confidentiality_boundary import (
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths
-from .project_identity import project_identity_record, current_build_id as _current_build_id
+from .project_identity import current_build_id as _current_build_id
 from .provenance import evaluate_artifact_provenance, provenance_records
 from .state import load_settings
 

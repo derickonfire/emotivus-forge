@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.554",
+  "version": "0.555",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.554 maps every active runtime module, command path, and top-level surface before any code reduction, preserving the boundary: Forge supplies exact truth and continuity while models retain reasoning and development.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.555 maps every active runtime module, command path, and top-level surface before any code reduction, preserving the boundary: Forge supplies exact truth and continuity while models retain reasoning and development.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -258,7 +258,7 @@
       "id": "P1-06",
       "phase": "Core reduction",
       "work": "Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior.",
-      "status": "ACTIVE",
+      "status": "COMPLETE",
       "timebox": "15–20 min",
       "target_release": "0.552"
     },
@@ -266,7 +266,7 @@
       "id": "P1-07",
       "phase": "Core reduction",
       "work": "Rebuild public/development boundaries and prove no retained behavior or history was lost.",
-      "status": "QUEUED",
+      "status": "COMPLETE",
       "timebox": "15–20 min",
       "target_release": "0.552"
     },
@@ -274,7 +274,7 @@
       "id": "P2-01",
       "phase": "Goal 1",
       "work": "Define the minimal project-truth schema and migration from the legacy eight-state representation.",
-      "status": "QUEUED",
+      "status": "ACTIVE",
       "timebox": "15–20 min",
       "target_release": "0.553"
     },
@@ -631,7 +631,7 @@
           "status": "FOUNDATION_ACTIVE"
         }
       ],
-      "active_chunk": "P1-06"
+      "active_chunk": "P2-01"
     }
   },
   "release_highlights": [
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.554",
+  "display_version": "0.555",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [
@@ -810,7 +810,7 @@
         "id": "P1-06",
         "phase": "Core reduction",
         "work": "Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior.",
-        "status": "ACTIVE",
+        "status": "COMPLETE",
         "timebox": "15–20 min",
         "target_release": "0.552"
       },
@@ -818,7 +818,7 @@
         "id": "P1-07",
         "phase": "Core reduction",
         "work": "Rebuild public/development boundaries and prove no retained behavior or history was lost.",
-        "status": "QUEUED",
+        "status": "COMPLETE",
         "timebox": "15–20 min",
         "target_release": "0.552"
       },
@@ -826,7 +826,7 @@
         "id": "P2-01",
         "phase": "Goal 1",
         "work": "Define the minimal project-truth schema and migration from the legacy eight-state representation.",
-        "status": "QUEUED",
+        "status": "ACTIVE",
         "timebox": "15–20 min",
         "target_release": "0.553"
       },
@@ -1136,7 +1136,7 @@
       "G3": "FOUNDATION_ACTIVE"
     },
     "completed_chunks": 10,
-    "active_chunk": "P1-06",
+    "active_chunk": "P2-01",
     "efficacy_status": "The controlled six-defect scoreboard remains experimental 0.550 testimony and is not promoted; this release measures reachability and purpose, not defect-catching efficacy."
   }
 }

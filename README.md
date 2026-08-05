@@ -1,12 +1,12 @@
-# Emotivus Forge 0.554
+# Emotivus Forge 0.555
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
-## What 0.554 changes
+## What 0.555 changes
 
-- Completes roadmap chunk P1-04: consolidates duplicated deterministic plumbing (archive/hash primitives, kit-archive hygiene, the identity build-id read) into the shared truth boundary (`common.py`, `project_identity.py`); genuinely distinct services are kept distinct.
-- Completes roadmap chunk P1-05: reduces the capability-activation ceremony to a minimal enabled/reason/scope/evidence record, dropping the `focused_regressions`, `native_advantage`, and `allow_repairs` attestations while preserving every safety gate (containment, budget caps, runtime-proof egress, fingerprint binding).
-- Removes ~120 net lines across 15 modules with no behavior change; activates P1-06 (fold-orphaned module removal).
+- Completes roadmap chunks P1-06 and P1-07, closing the core-reduction phase.
+- Retires the fold-orphaned imports left by the P1-04/P1-05 consolidations; confirms no whole module was orphaned (88 reachable, zero unreachable) and no ceremony-requirement test needed retiring.
+- Rebuilds and independently proves the public and development editions: the public edition passes the full 523/54 suite from its own extracted bytes, and no history was lost (git history intact, `docs/history/` retains the relocated documents).
 - Keeps the certified suite at 523 focused public-neutral regressions across 54 deterministic isolated modules; no test added or removed.
 - Preserves the four-page website design and active generator.
 

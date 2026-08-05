@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.554  
+**Current build:** 0.555  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -12,13 +12,15 @@
 
 ## Core reduction phase
 
-- Completed roadmap chunks: **13**
+- Completed roadmap chunks: **15**
 - P1-01: **COMPLETE** — 88 runtime modules mapped across CLI, standalone tools, and verification roots.
 - P1-02: **COMPLETE** — every active top-level path classified by durable purpose and disposition.
 - P1-03: **COMPLETE** — historical and explanatory-only documents relocated into `docs/history/`, out of required reading.
 - P1-04: **COMPLETE** — duplicated deterministic plumbing and kit hygiene consolidated into the shared truth boundary; distinct-by-design services kept.
 - P1-05: **COMPLETE** — capability-activation ceremony reduced to a minimal enabled/reason/scope/evidence record with every safety gate preserved.
-- Next active chunk: **P1-06 · remove only modules made unreachable by completed folds, with exact behavior verification**
+- P1-06: **COMPLETE** — fold-orphaned imports retired; no whole module orphaned; no ceremony-requirement test existed.
+- P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 523/54 from its own bytes).
+- Core-reduction phase (P1) complete. Next active chunk: **P2-01 · define the minimal project-truth schema and migration from the legacy eight-state representation**
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
 - Unclassified active top-level paths: **0**

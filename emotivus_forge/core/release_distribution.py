@@ -11,7 +11,7 @@ from .common import normalize_rel, sha256_file, utc_now, write_json
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths
-from .project_identity import project_identity_record, current_build_id as _current_build_id
+from .project_identity import current_build_id as _current_build_id
 from .release_package import evaluate_release_package, release_package_records
 from .remote_release import validate_remote_verification, verify_remote_channels
 from .state import load_settings

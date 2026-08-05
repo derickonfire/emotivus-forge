@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .common import normalize_rel, read_json, read_jsonl, unique_strings, utc_now, write_json
+from .common import normalize_rel, read_jsonl, unique_strings, utc_now, write_json
 from .ledger import record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths

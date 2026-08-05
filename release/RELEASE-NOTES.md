@@ -1,4 +1,10 @@
-# Emotivus Forge 0.554 — Service Fold and Ceremony Reduction
+# Emotivus Forge 0.555 — Core-Reduction Close: Orphan Retirement and Edition Proof
+
+- Completes chunk P1-06: retires the fold-orphaned imports left by the P1-04/P1-05 consolidations; confirms no whole module was orphaned and no ceremony-requirement test needed retiring.
+- Completes chunk P1-07: rebuilds and independently proves the public and development editions — the public runtime passes 523/54 from its own extracted bytes — with no lost behavior or history. Closes the core-reduction phase.
+- Advances the active chunk to P2-01 (Goal 1). Keeps the certified suite unchanged at 523 focused public-neutral regressions across 54 deterministic isolated modules; release authorization remains false.
+
+## Prior release — 0.554 — Service Fold and Ceremony Reduction
 
 - Completes chunk P1-04: consolidates duplicated deterministic plumbing (archive/hash primitives, kit-archive hygiene, the identity build-id read) into the shared truth boundary; distinct-by-design services kept distinct.
 - Completes chunk P1-05: reduces the capability-activation ceremony to a minimal enabled/reason/scope/evidence record, preserving every safety gate.

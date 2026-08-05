@@ -10,12 +10,9 @@ from .common import (
     member_is_symlink as _member_is_symlink,
     zip_info as _zip_info,
     verify_archive_hygiene,
-    ZIP_TIMESTAMP,
 )
 
-import hashlib
 import json
-import stat
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any

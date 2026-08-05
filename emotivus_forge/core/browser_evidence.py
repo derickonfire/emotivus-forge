@@ -18,7 +18,6 @@ from .common import (
 )
 
 import argparse
-import hashlib
 import json
 import mimetypes
 import os

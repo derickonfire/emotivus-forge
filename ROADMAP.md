@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.554  
+**Current release:** 0.555  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -36,9 +36,9 @@ G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundatio
 | P1-03 | Core reduction | 15–20 min | 0.553 | **COMPLETE** | Move historical and explanatory-only documents from active docs into reference/history (`docs/history/`). |
 | P1-04 | Core reduction | 15–20 min | 0.554 | **COMPLETE** | Fold overlapping release, evidence, rollback, and authority services into the project-truth boundary (deterministic plumbing + kit hygiene folded; distinct-by-design services kept). |
 | P1-05 | Core reduction | 12–18 min | 0.554 | **COMPLETE** | Replace capability activation ceremony with a minimal enabled/reason/scope/evidence record where safety still requires it. |
-| P1-06 | Core reduction | 15–20 min | 0.555 | **ACTIVE** | Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior. |
-| P1-07 | Core reduction | 15–20 min | 0.552 | **QUEUED** | Rebuild public/development boundaries and prove no retained behavior or history was lost. |
-| P2-01 | Goal 1 | 15–20 min | 0.553 | **QUEUED** | Define the minimal project-truth schema and migration from the legacy eight-state representation. |
+| P1-06 | Core reduction | 15–20 min | 0.555 | **COMPLETE** | Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior (fold-orphaned imports retired; no module orphaned; no ceremony test existed). |
+| P1-07 | Core reduction | 15–20 min | 0.555 | **COMPLETE** | Rebuild public/development boundaries and prove no retained behavior or history was lost (public edition passes 523/54 from its own bytes; git + docs/history preserve all history). |
+| P2-01 | Goal 1 | 15–20 min | 0.556 | **ACTIVE** | Define the minimal project-truth schema and migration from the legacy eight-state representation. |
 | P2-02 | Goal 1 | 12–18 min | 0.553 | **QUEUED** | Consolidate file, tree, package, edition, and embedded-runtime identity. |
 | P2-03 | Goal 1 | 12–18 min | 0.553 | **QUEUED** | Consolidate owner authority, exact baseline, and NOT_RUN-before-authority semantics. |
 | P2-04 | Goal 1 | 15–20 min | 0.553 | **QUEUED** | Consolidate parent, fork, supersession, collision, and quarantine lineage. |

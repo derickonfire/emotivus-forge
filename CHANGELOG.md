@@ -1,5 +1,12 @@
 # Emotivus Forge changelog
 
+## 0.555 — Core-Reduction Close: Orphan Retirement and Edition Proof
+
+- Completed Durable Core chunk **P1-06**: retired the fold-orphaned imports left by the P1-04/P1-05 consolidations (`stat`, `hashlib`, `ZIP_TIMESTAMP`, `read_json`, and the now-unused `project_identity_record` imports across the release modules; `release_proof` also carried a never-called `_current_build_id` helper). Confirmed no whole module was orphaned (88 reachable, zero unreachable) and no ceremony-requirement test existed to retire. Genuinely pre-existing dead imports were left in scope for a later dedicated pass.
+- Completed Durable Core chunk **P1-07**: rebuilt and independently proved the public and development editions. The public `RUN-FORGE.zip` passes the full 523/54 suite from its own extracted bytes and runs `python3 forge.py`; no history was lost (git history, `docs/history/`, and the changelog retain every fold and prior version). This closes the core-reduction phase.
+- Advanced the active chunk to **P2-01** (Goal 1: define the minimal project-truth schema).
+- Preserved the certified suite unchanged at 523 focused public-neutral regressions across 54 deterministic isolated modules. Release authorization remains false.
+
 ## 0.554 — Service Fold and Ceremony Reduction
 
 - Completed Durable Core chunk **P1-04**: consolidated duplicated deterministic plumbing into the shared truth boundary — the archive/hash primitives and kit-archive hygiene into `core/common.py`, and the active build-id read into `core/project_identity.current_build_id`. Routed the four evidence modules, three release modules, and four integrity modules through them. The genuinely distinct services (receipt evaluators, kit verifiers' identity logic) were evaluated and correctly left distinct-by-design.

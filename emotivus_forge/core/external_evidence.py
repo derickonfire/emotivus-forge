@@ -17,9 +17,7 @@ from .common import (
 )
 
 import base64
-import hashlib
 import json
-import stat
 import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
