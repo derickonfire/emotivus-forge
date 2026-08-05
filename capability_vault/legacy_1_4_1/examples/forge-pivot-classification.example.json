@@ -1,0 +1,20 @@
+{
+  "obligations": {
+    "OBL-BEHAVIOR": "retain",
+    "OBL-LEGACY": {
+      "disposition": "retire",
+      "reason": "The new implementation replaces this architecture-bound requirement."
+    }
+  },
+  "quality_evidence": {
+    "security": ["gate:section"],
+    "reliability": ["lab:critical-flow"],
+    "performance": ["external:comparable-performance-run"],
+    "efficiency": ["manual:resource-budget-reviewed"],
+    "accessibility": ["lab:accessibility"],
+    "user_experience": ["lab:critical-user-journey"],
+    "maintainability": ["manual:architecture-review"],
+    "compatibility": ["lab:migration-compatibility"],
+    "privacy": ["manual:privacy-contract-reviewed"]
+  }
+}

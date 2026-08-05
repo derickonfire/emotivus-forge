@@ -1,0 +1,24 @@
+{
+  "title": "Replace a major subsystem",
+  "objective": "Adopt a better architecture while preserving enduring product behavior and release obligations.",
+  "entry_mode": "exploration",
+  "changed_paths": ["src/legacy-system", "src/new-system"],
+  "obligations": [
+    {
+      "id": "OBL-BEHAVIOR",
+      "title": "The user-facing behavior remains available",
+      "kind": "behavior",
+      "stability": "enduring",
+      "quality_dimensions": ["user_experience", "accessibility"]
+    },
+    {
+      "id": "OBL-LEGACY",
+      "title": "The legacy implementation remains in place",
+      "kind": "implementation",
+      "stability": "architecture-bound"
+    }
+  ],
+  "intentional_breakage": ["The legacy implementation will no longer be a runtime dependency"],
+  "release_evidence": ["gate:release"],
+  "completion_criteria": ["Every enduring obligation has current evidence"]
+}

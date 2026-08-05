@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "capability_id": "doctor",
+  "authority": "owner",
+  "trigger": {
+    "description": "A concrete environment mismatch requires bounded local diagnosis.",
+    "evidence_paths": [
+      "docs/environment-incident.md"
+    ]
+  },
+  "scope": {
+    "included": [
+      "local runtime versions",
+      "exact project runtime pins",
+      "required PHP extensions"
+    ],
+    "excluded": [
+      "production equivalence",
+      "database state",
+      "automatic repair"
+    ]
+  },
+  "budget": {
+    "runtime_seconds": 10,
+    "file_limit": 40,
+    "output_characters": 8000
+  },
+  "focused_regressions": [
+    "doctor.inactive-by-default",
+    "doctor.explicit-contract",
+    "doctor.diagnose-only",
+    "doctor.budget-bound",
+    "doctor.contract-change-requires-reactivation"
+  ],
+  "native_advantage": {
+    "status": "distinct-value",
+    "explanation": "Doctor compares declared environment expectations with the local CLI without replacing the project-native quality gate."
+  },
+  "allow_repairs": false
+}

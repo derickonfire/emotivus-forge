@@ -1,0 +1,26 @@
+{
+  "schema": 2,
+  "validation_id": "public-release-cold-trial",
+  "title": "Matched cold-session continuation validation",
+  "authority": "owner",
+  "host_release_package_id": "public-release",
+  "forge_runtime_artifact_path": "release/cold/RUN-FORGE.zip",
+  "minimum_pairs": 3,
+  "minimum_models": 2,
+  "minimum_distinct_task_packets": 3,
+  "minimum_distinct_host_baselines": 2,
+  "minimum_external_review_pairs": 1,
+  "maximum_receipt_age_days": 45,
+  "required_scenarios": ["continuation", "defect-investigation"],
+  "pair_receipts": [
+    "release/cold/pair-001.json",
+    "release/cold/pair-002.json",
+    "release/cold/pair-003.json"
+  ],
+  "thresholds": {
+    "max_forge_incorrect_objective_rate": 0.0,
+    "max_forge_incorrect_first_action_rate": 0.0,
+    "max_forge_owner_corrections_per_pair": 1.0
+  },
+  "truth_boundary": "These human-reviewed matched fresh-agent observations are bounded field evidence for one exact host package and one exact Forge runtime. They are not universal causal proof, commercial validation, authenticated reviewer identity, or evidence for every project, provider, model, or task."
+}

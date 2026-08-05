@@ -1,0 +1,20 @@
+{
+  "schema": "forge-native-evidence/1",
+  "candidate_id": "native:tools/run_all_checks.sh",
+  "gate_fingerprint": "REPLACE_WITH_CURRENT_64_CHARACTER_SHA256",
+  "execution_authority": "owner",
+  "executed_utc": "2026-08-01T16:00:00-04:00",
+  "verification_tier": "sandbox",
+  "status": "PASS",
+  "returncode": 0,
+  "entries": [
+    {
+      "id": "unit.core",
+      "status": "PASS",
+      "type": "unit",
+      "surfaces": [
+        "core"
+      ]
+    }
+  ]
+}

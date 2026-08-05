@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "guardrail_id": "consumer-labels-atomic",
+  "title": "Consumer labels must land atomically",
+  "authority": "product-owner",
+  "rationale": "A partial implementation can display a consumer-facing claim that is unsupported by stored application data.",
+  "mode": "atomic-change-set",
+  "evidence_paths": [
+    "DECISIONS.md"
+  ],
+  "trigger_paths": [
+    "migrations/**",
+    "admin/**",
+    "public/**"
+  ],
+  "required_surfaces": [
+    {
+      "id": "storage",
+      "description": "Schema and migration support for persisted labels",
+      "path_patterns": [
+        "migrations/**"
+      ]
+    },
+    {
+      "id": "editor",
+      "description": "Administrative controls that set the labels",
+      "path_patterns": [
+        "admin/**"
+      ]
+    },
+    {
+      "id": "public-display",
+      "description": "Customer-facing rendering of the labels",
+      "path_patterns": [
+        "public/**"
+      ]
+    }
+  ],
+  "unsafe_partial_state": "A false consumer-facing claim may appear configured or public without a trustworthy persisted value behind it.",
+  "verification_boundary": "Changing every declared surface does not prove correctness, migration safety, accessibility, runtime behavior, or release readiness."
+}

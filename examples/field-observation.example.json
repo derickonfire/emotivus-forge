@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "observation_id": "continuity-001",
+  "trial_id": "continuity-trial",
+  "task_id": "resume-existing-project-001",
+  "scenario": "continuation",
+  "model": "ChatGPT",
+  "reviewer": "Project owner",
+  "reviewer_role": "owner",
+  "outcomes": {
+    "objective_recovery": "correct",
+    "authority_discovery": "correct",
+    "resume_usefulness_score": 4,
+    "owner_comprehension_score": 5,
+    "contract_usability_score": 4,
+    "time_to_meaningful_work_minutes": 8,
+    "native_evidence_ingestion": "complete",
+    "doctor": {
+      "ground_truth": "not-measured",
+      "forge_result": "not-measured",
+      "diagnosis": "not-measured"
+    },
+    "guardrail": {
+      "ground_truth": "should-trigger",
+      "forge_result": "triggered"
+    },
+    "evidence_paths": [
+      "BACKLOG.md",
+      "DECISIONS.md"
+    ],
+    "notes": "The next action and safety boundary were available without re-derivation."
+  }
+}

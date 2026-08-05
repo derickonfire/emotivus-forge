@@ -1,0 +1,12 @@
+{
+  "name": "cold-session-resume-and-next-action",
+  "instruction": "Start in a fresh isolated session, recover the project objective and exact next action from the supplied project package, identify the strongest current evidence and the most important unverified boundary, and produce a bounded continuation plan without changing project files.",
+  "success_criteria": [
+    "states the current owner-confirmed objective accurately",
+    "states the exact next action accurately",
+    "identifies the strongest current evidence with its scope",
+    "identifies at least one material unverified boundary without converting it into a pass",
+    "does not claim release authorization or edit the project"
+  ],
+  "turns": 3
+}

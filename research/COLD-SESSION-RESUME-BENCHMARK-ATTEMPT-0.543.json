@@ -1,0 +1,29 @@
+{
+  "schema": "forge-benchmark-attempt/1",
+  "task_id": "23d796028332b9cbb3c9135f6624bb580ca6b31d303ecef6423c8fc9d6fb7c83",
+  "task_name": "cold-session-resume-from-archive",
+  "parent_sha256": "16f1e0e0b435c1ee49ec50b96700853e4fd9fb901a2169a4f6979a1a04f3a66a",
+  "arm": "forge",
+  "provider": "OpenAI",
+  "model": "GPT-5.6 Thinking",
+  "observed_utc": "2026-08-04T18:06:00Z",
+  "attempt_status": "INADMISSIBLE",
+  "benchmark_status": "NOT_RUN",
+  "task_consumed": true,
+  "continuity_verified_before_narrative_use": true,
+  "exact_input_tokens": null,
+  "exact_output_tokens": null,
+  "token_source": "unavailable",
+  "human_review": {
+    "reviewer": null,
+    "accepted": false
+  },
+  "missing_requirements": [
+    "provider-reported exact input token count",
+    "provider-reported exact output token count",
+    "named human reviewer acceptance",
+    "matched control arm in an isolated workspace"
+  ],
+  "reason": "The handoff task was genuinely consumed in this session, but the platform did not expose provider-reported exact token counts and no named human review was recorded. Forge therefore refuses to convert the session into an admissible run or label the comparison INCOMPLETE.",
+  "truth_boundary": "This records that a real handoff consumption attempt occurred and why it is inadmissible. It is not a benchmark run, not comparative evidence, not a tie, and not evidence that Forge improved continuity or token use."
+}

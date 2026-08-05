@@ -1,0 +1,179 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import tempfile
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterable
+
+
+class ForgeStateError(RuntimeError):
+    """Raised when persisted Forge state cannot be trusted safely."""
+
+    def __init__(self, path: Path, message: str, *, line: int | None = None) -> None:
+        self.path = path
+        self.line = line
+        location = f"{path}:{line}" if line is not None else str(path)
+        super().__init__(f"{location}: {message}")
+
+
+@dataclass(frozen=True)
+class JsonlIssue:
+    path: str
+    line: int
+    message: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"path": self.path, "line": self.line, "message": self.message}
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def normalize_rel(path: str | Path) -> str:
+    value = Path(path).as_posix()
+    while value.startswith("./"):
+        value = value[2:]
+    return "" if value == "." else value
+
+
+def sha256_file(path: Path, *, chunk_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        while chunk := handle.read(chunk_size):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _is_forge_state_path(path: Path) -> bool:
+    return ".forge" in path.parts
+
+
+def read_json(path: Path, default: Any = None, *, strict: bool | None = None) -> Any:
+    """Read JSON without hiding corruption in persisted Forge state.
+
+    Project-owned source/config files remain tolerant by default. Files below `.forge`
+    are strict automatically so malformed continuity state cannot silently become an
+    empty object and then be overwritten.
+    """
+    if not path.is_file():
+        return default
+    strict_mode = _is_forge_state_path(path) if strict is None else strict
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        if strict_mode:
+            raise ForgeStateError(path, f"could not be read: {exc}") from exc
+    except UnicodeDecodeError as exc:
+        if strict_mode:
+            raise ForgeStateError(path, "is not valid UTF-8") from exc
+    except json.JSONDecodeError as exc:
+        if strict_mode:
+            raise ForgeStateError(path, f"invalid JSON: {exc.msg}", line=exc.lineno) from exc
+    return default
+
+
+def _fsync_parent(path: Path) -> None:
+    """Best-effort directory sync after an atomic replace."""
+    if os.name == "nt":
+        return
+    flags = getattr(os, "O_DIRECTORY", 0) | os.O_RDONLY
+    try:
+        directory_fd = os.open(str(path.parent), flags)
+    except OSError:
+        return
+    try:
+        os.fsync(directory_fd)
+    except OSError:
+        pass
+    finally:
+        os.close(directory_fd)
+
+
+def write_json(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = json.dumps(value, indent=2, ensure_ascii=False) + "\n"
+    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary_name, path)
+        _fsync_parent(path)
+    finally:
+        try:
+            os.unlink(temporary_name)
+        except FileNotFoundError:
+            pass
+
+
+def write_text_atomic(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary_name, path)
+        _fsync_parent(path)
+    finally:
+        try:
+            os.unlink(temporary_name)
+        except FileNotFoundError:
+            pass
+
+
+def append_jsonl(path: Path, value: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def read_jsonl_report(path: Path) -> tuple[list[dict[str, Any]], list[JsonlIssue]]:
+    """Recover valid JSONL rows while reporting each malformed line separately."""
+    rows: list[dict[str, Any]] = []
+    issues: list[JsonlIssue] = []
+    if not path.is_file():
+        return rows, issues
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            for number, raw_line in enumerate(handle, 1):
+                line = raw_line.strip()
+                if not line:
+                    continue
+                try:
+                    value = json.loads(line)
+                except json.JSONDecodeError as exc:
+                    issues.append(JsonlIssue(str(path), number, f"invalid JSONL: {exc.msg}"))
+                    continue
+                if isinstance(value, dict):
+                    rows.append(value)
+                else:
+                    issues.append(JsonlIssue(str(path), number, "JSONL record must be an object"))
+    except OSError as exc:
+        issues.append(JsonlIssue(str(path), 0, f"could not be read: {exc}"))
+    except UnicodeDecodeError:
+        issues.append(JsonlIssue(str(path), 0, "is not valid UTF-8"))
+    return rows, issues
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows, _issues = read_jsonl_report(path)
+    return rows
+
+
+def unique_strings(values: Iterable[object]) -> list[str]:
+    result: list[str] = []
+    for raw in values:
+        value = str(raw).strip()
+        if value and value not in result:
+            result.append(value)
+    return result

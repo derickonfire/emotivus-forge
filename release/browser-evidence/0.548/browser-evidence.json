@@ -1,0 +1,775 @@
+{
+  "browser": {
+    "bytes": 5064,
+    "driver": {
+      "bundled": false,
+      "name": "playwright",
+      "version": "1.57.0"
+    },
+    "requested": "/usr/bin/chromium",
+    "resolved": "/usr/bin/chromium",
+    "sha256": "2c8d32d29dc6781c35ae196ea83299d507ac88fc339301abe74672feda299779",
+    "version_output": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)"
+  },
+  "environment": {
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "python": "3.13.5",
+    "release": "6.12.13",
+    "system": "Linux",
+    "version": "#1 SMP Thu Jul 23 17:57:28 UTC 2026"
+  },
+  "observed_at": "2026-08-04T23:45:41+00:00",
+  "problems": [],
+  "profiles": [
+    {
+      "color_scheme": "light",
+      "height": 900,
+      "id": "desktop-light",
+      "mobile_claimed": false,
+      "width": 1440
+    },
+    {
+      "color_scheme": "dark",
+      "height": 844,
+      "id": "mobile-dark",
+      "mobile_claimed": false,
+      "width": 390
+    }
+  ],
+  "receipt_id": "cac9a40943f86fe471211852926a3183522651cd8ec428b0b3642ec7cb55d298",
+  "render_count": 12,
+  "renders": [
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 8364,
+        "bytes": 19347,
+        "canonical": "https://forge.emotivus.com/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/home.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 6941,
+        "scroll_width": 1440,
+        "sha256": "4bc9e7188ab1f99f7f8d684a8a61cb7217ca39685c229fbd5738f0201fe900d5",
+        "title": "Home — Emotivus Forge"
+      },
+      "duration_ms": 659,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/home.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/",
+      "screenshot": {
+        "bytes": 313673,
+        "height": 900,
+        "path": "renders/desktop-light/home.png",
+        "sha256": "cd963ee387596e0f2638c11e9babd883f2a703743014d37852e8e2a51f315025",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 19289,
+        "path": "index.html",
+        "sha256": "ba9ededc2783961c8043397666d57cd36eae865c4df89a334a50dd457f9b4479"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 1986,
+        "bytes": 5964,
+        "canonical": "https://forge.emotivus.com/run/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/run.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 2009,
+        "scroll_width": 1440,
+        "sha256": "859e9ef2f40395d71eb8f7a74270d8cdd90df78a1e21ad2bdeb4c30569e4390b",
+        "title": "Run Forge — Emotivus Forge"
+      },
+      "duration_ms": 641,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/run.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/run/",
+      "screenshot": {
+        "bytes": 239533,
+        "height": 900,
+        "path": "renders/desktop-light/run.png",
+        "sha256": "07525b6a818ff1d90e49504e0d6c6ae4e0f353b03a0074ac840ee0b2cc363dce",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 5902,
+        "path": "run/index.html",
+        "sha256": "43162fb068a51bf23c5835f0ef5050189b6802e2bb206779eadb0ed0dc68d6a5"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 21232,
+        "bytes": 26563,
+        "canonical": "https://forge.emotivus.com/docs/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/docs.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 14358,
+        "scroll_width": 1440,
+        "sha256": "d789344f55f6cc6fbd92fcbfaa81a9b4352584c91034c06a50a217401f7b438f",
+        "title": "Documentation — Emotivus Forge"
+      },
+      "duration_ms": 642,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/docs.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/docs/",
+      "screenshot": {
+        "bytes": 238821,
+        "height": 900,
+        "path": "renders/desktop-light/docs.png",
+        "sha256": "9c87dad7d0e2033d7db52eeebdea2885091dbcbb0fdabb687c5e6f8336e3ccc6",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 26500,
+        "path": "docs/index.html",
+        "sha256": "3176fadd04a0ac14136a1afb0b4ac481e8acc55645dc62c258d8333c24e645dd"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 18253,
+        "bytes": 26775,
+        "canonical": "https://forge.emotivus.com/roadmap/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/roadmap.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 11390,
+        "scroll_width": 1440,
+        "sha256": "7b21f1e685688ba0caa94c55e7cc7fd93a5d81bbd810ab59da76c93c79607164",
+        "title": "Roadmap — Emotivus Forge"
+      },
+      "duration_ms": 619,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/roadmap.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/roadmap/",
+      "screenshot": {
+        "bytes": 296434,
+        "height": 900,
+        "path": "renders/desktop-light/roadmap.png",
+        "sha256": "321c887f052854f5cfd42531a807d6033bb5ec8abe6c915ff2a3a91cba4ef256",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 26709,
+        "path": "roadmap/index.html",
+        "sha256": "c68f1942eab5f46a921bb3d6882662e65aefa7f9448f2c855363259f7bfdad14"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 10356,
+        "bytes": 17436,
+        "canonical": "https://forge.emotivus.com/trust/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/trust.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 7006,
+        "scroll_width": 1440,
+        "sha256": "6b6628aa273ac56b5aa962a764e4e2150159cb3a0c5383b88a9a75d91fb895b4",
+        "title": "Trust — Emotivus Forge"
+      },
+      "duration_ms": 632,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/trust.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/trust/",
+      "screenshot": {
+        "bytes": 303701,
+        "height": 900,
+        "path": "renders/desktop-light/trust.png",
+        "sha256": "978ca6cef0de0c7bbd1490c1dceb755b7f556631cd96702aec91634d0516a246",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 17372,
+        "path": "trust/index.html",
+        "sha256": "a519848dfcec5301ff088024d8e0421c7a4843871f027430457674e1c6f01e8f"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 3958,
+        "bytes": 7870,
+        "canonical": "https://forge.emotivus.com/changelog/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 900,
+        "inner_width": 1440,
+        "main_count": 1,
+        "path": "renders/desktop-light/changelog.html",
+        "prefers_dark": false,
+        "ready_state": "complete",
+        "scroll_height": 2131,
+        "scroll_width": 1440,
+        "sha256": "f3c98f760fcf40718329c2bfe028aacaea81f20fada52b6770d37ca833f8f374",
+        "title": "Changelog — Emotivus Forge"
+      },
+      "duration_ms": 622,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/desktop-light/changelog.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "light",
+        "height": 900,
+        "id": "desktop-light",
+        "mobile_claimed": false,
+        "width": 1440
+      },
+      "route": "/changelog/",
+      "screenshot": {
+        "bytes": 327547,
+        "height": 900,
+        "path": "renders/desktop-light/changelog.png",
+        "sha256": "6f57ec4080b27276d236e258eb957474221c1cb45545c3289e68d95617f2e7c8",
+        "width": 1440
+      },
+      "source": {
+        "bytes": 7802,
+        "path": "changelog/index.html",
+        "sha256": "b4e1299db7096b1c961ab767497f5385d1fbbbb3ce259db291a50d453bcc646d"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 8317,
+        "bytes": 19347,
+        "canonical": "https://forge.emotivus.com/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/home.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 13187,
+        "scroll_width": 390,
+        "sha256": "4bc9e7188ab1f99f7f8d684a8a61cb7217ca39685c229fbd5738f0201fe900d5",
+        "title": "Home — Emotivus Forge"
+      },
+      "duration_ms": 629,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/home.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/",
+      "screenshot": {
+        "bytes": 234094,
+        "height": 844,
+        "path": "renders/mobile-dark/home.png",
+        "sha256": "e2199619c80a2ba187f00d1aeac7d3d01b855e33fe696c71c69d8773921fcc59",
+        "width": 390
+      },
+      "source": {
+        "bytes": 19289,
+        "path": "index.html",
+        "sha256": "ba9ededc2783961c8043397666d57cd36eae865c4df89a334a50dd457f9b4479"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 1939,
+        "bytes": 5964,
+        "canonical": "https://forge.emotivus.com/run/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/run.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 2980,
+        "scroll_width": 390,
+        "sha256": "859e9ef2f40395d71eb8f7a74270d8cdd90df78a1e21ad2bdeb4c30569e4390b",
+        "title": "Run Forge — Emotivus Forge"
+      },
+      "duration_ms": 618,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/run.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/run/",
+      "screenshot": {
+        "bytes": 139859,
+        "height": 844,
+        "path": "renders/mobile-dark/run.png",
+        "sha256": "358291aa8e9489437499bc1666db6958a2aa2d3bfbe82cd7e5e31ea9c767070d",
+        "width": 390
+      },
+      "source": {
+        "bytes": 5902,
+        "path": "run/index.html",
+        "sha256": "43162fb068a51bf23c5835f0ef5050189b6802e2bb206779eadb0ed0dc68d6a5"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 21185,
+        "bytes": 26563,
+        "canonical": "https://forge.emotivus.com/docs/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/docs.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 20953,
+        "scroll_width": 390,
+        "sha256": "d789344f55f6cc6fbd92fcbfaa81a9b4352584c91034c06a50a217401f7b438f",
+        "title": "Documentation — Emotivus Forge"
+      },
+      "duration_ms": 621,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/docs.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/docs/",
+      "screenshot": {
+        "bytes": 104486,
+        "height": 844,
+        "path": "renders/mobile-dark/docs.png",
+        "sha256": "cde8e12c8f8505a4f853d850168dc251f24ad6283945e0b4ad76d24226b06b2e",
+        "width": 390
+      },
+      "source": {
+        "bytes": 26500,
+        "path": "docs/index.html",
+        "sha256": "3176fadd04a0ac14136a1afb0b4ac481e8acc55645dc62c258d8333c24e645dd"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 18206,
+        "bytes": 26775,
+        "canonical": "https://forge.emotivus.com/roadmap/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/roadmap.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 22483,
+        "scroll_width": 390,
+        "sha256": "7b21f1e685688ba0caa94c55e7cc7fd93a5d81bbd810ab59da76c93c79607164",
+        "title": "Roadmap — Emotivus Forge"
+      },
+      "duration_ms": 627,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/roadmap.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/roadmap/",
+      "screenshot": {
+        "bytes": 124893,
+        "height": 844,
+        "path": "renders/mobile-dark/roadmap.png",
+        "sha256": "19a6d0032d8399c4706a9112ad7ccf4df83c40ebde9c18c9c9e9dc4f408b675e",
+        "width": 390
+      },
+      "source": {
+        "bytes": 26709,
+        "path": "roadmap/index.html",
+        "sha256": "c68f1942eab5f46a921bb3d6882662e65aefa7f9448f2c855363259f7bfdad14"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 10309,
+        "bytes": 17436,
+        "canonical": "https://forge.emotivus.com/trust/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/trust.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 14402,
+        "scroll_width": 390,
+        "sha256": "6b6628aa273ac56b5aa962a764e4e2150159cb3a0c5383b88a9a75d91fb895b4",
+        "title": "Trust — Emotivus Forge"
+      },
+      "duration_ms": 628,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/trust.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/trust/",
+      "screenshot": {
+        "bytes": 128823,
+        "height": 844,
+        "path": "renders/mobile-dark/trust.png",
+        "sha256": "f83f3c0d79f9ef597d77a770ee7ffc285d2f5be26fab5405f4c0ab7475ebb7ae",
+        "width": 390
+      },
+      "source": {
+        "bytes": 17372,
+        "path": "trust/index.html",
+        "sha256": "a519848dfcec5301ff088024d8e0421c7a4843871f027430457674e1c6f01e8f"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    },
+    {
+      "document_source_status": 200,
+      "dom": {
+        "body_text_chars": 3911,
+        "bytes": 7870,
+        "canonical": "https://forge.emotivus.com/changelog/",
+        "device_pixel_ratio": 1,
+        "h1_count": 1,
+        "horizontal_overflow": false,
+        "html_lang": "en",
+        "inner_height": 844,
+        "inner_width": 390,
+        "main_count": 1,
+        "path": "renders/mobile-dark/changelog.html",
+        "prefers_dark": true,
+        "ready_state": "complete",
+        "scroll_height": 3761,
+        "scroll_width": 390,
+        "sha256": "f3c98f760fcf40718329c2bfe028aacaea81f20fada52b6770d37ca833f8f374",
+        "title": "Changelog — Emotivus Forge"
+      },
+      "duration_ms": 619,
+      "events": {
+        "bytes": 651,
+        "console_count": 0,
+        "console_error_count": 0,
+        "external_request_count": 0,
+        "failed_request_count": 0,
+        "package_error_count": 0,
+        "package_request_count": 3,
+        "page_error_count": 0,
+        "path": "renders/mobile-dark/changelog.events.json",
+        "sha256": "93cf301c32776a91f0eec7746dba71543ea8bb585c71e49c4f33f5fec497f7b5"
+      },
+      "problems": [],
+      "profile": {
+        "color_scheme": "dark",
+        "height": 844,
+        "id": "mobile-dark",
+        "mobile_claimed": false,
+        "width": 390
+      },
+      "route": "/changelog/",
+      "screenshot": {
+        "bytes": 183001,
+        "height": 844,
+        "path": "renders/mobile-dark/changelog.png",
+        "sha256": "8bcd750de7ad651a0c274bfe8b004b02405a1c8d3328cc72df3d77383e77d119",
+        "width": 390
+      },
+      "source": {
+        "bytes": 7802,
+        "path": "changelog/index.html",
+        "sha256": "b4e1299db7096b1c961ab767497f5385d1fbbbb3ce259db291a50d453bcc646d"
+      },
+      "status": "PASS",
+      "transport": "network-isolated-package-routing"
+    }
+  ],
+  "routes": [
+    "/",
+    "/run/",
+    "/docs/",
+    "/roadmap/",
+    "/trust/",
+    "/changelog/"
+  ],
+  "schema": "forge-browser-viewport-evidence/1",
+  "status": "PASS",
+  "truth": {
+    "accessibility_conformance_claimed": false,
+    "assistive_technology_tested": false,
+    "browser_executed": true,
+    "exact_website_bound": true,
+    "http_server_executed": false,
+    "independent_reviewed": false,
+    "loopback_only_serving": false,
+    "manual_visual_reviewed": false,
+    "network_isolated_package_routing": true,
+    "physical_device_tested": false,
+    "production_origin_tested": false,
+    "release_authorized": false,
+    "release_ready": false,
+    "rendered_dom_captured": true,
+    "screenshots_captured": true,
+    "touch_input_tested": false
+  },
+  "truth_boundary": "This receipt proves that one named local Chromium-family executable rendered exact HTML and package-relative resources from the recorded website ZIP under network-isolated package routing, viewport shapes, color-mode settings, and execution environment. It does not prove HTTP-server, production-origin, physical-device, touch-input, or assistive-technology compatibility, accessibility conformance, manual visual correctness, remote-network behavior, independent control, reviewer identity, release authorization, or release readiness.",
+  "website": {
+    "bytes": 742442,
+    "filename": "Emotivus-Forge-0.548-Website.zip",
+    "member_count": 17,
+    "sha256": "e4ee2bbe874803913ee59bd801c6ef72d271f2d5e283b6486ab77dd42e874a20"
+  }
+}

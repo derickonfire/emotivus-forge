@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "inventory_id": "example-static-lineage-no-migrations",
+  "authority": "owner",
+  "lineage_id": "example-static-site-1.0.0",
+  "engine": "none",
+  "mode": "none",
+  "source": {
+    "kind": "project-tree"
+  },
+  "entries": [],
+  "no_migrations_reason": "This exact lineage has no persisted application schema or migration execution surface.",
+  "applied_observation": {},
+  "reconciliations": [],
+  "truth_boundary": "Forge verifies this explicit project-owned declaration against the exact lineage tree but does not infer future migration requirements."
+}

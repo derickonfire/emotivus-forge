@@ -1,0 +1,27 @@
+{
+  "project_name": "Example Project",
+  "preset": "balanced",
+  "deployment": "auto",
+  "versioning": "auto",
+  "tests": "auto",
+  "documentation": "optional",
+  "warnings": "allow",
+  "baseline": "auto",
+  "existing_tools": "audit",
+  "graph": "auto",
+  "learn": "on",
+  "lab": "plan",
+  "required_files": [],
+  "test_entry_points": [],
+  "required_executables": [],
+  "required_env": [],
+  "expected_layout": [],
+  "objective_sources": [
+    "ACTIVE-BUILD-PROMPT.md",
+    "BACKLOG.md",
+    "ROADMAP.md",
+    "Planning/ACTIVE-BUILD-PROMPT.md"
+  ],
+  "next_action": "",
+  "live_checks": []
+}

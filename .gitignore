@@ -1,0 +1,17 @@
+# Forge runtime state (created per-project by Run Forge)
+.forge/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Build / deploy output
+deploy/
+dist/
+build/
+
+# OS / editor
+.DS_Store
+*.swp

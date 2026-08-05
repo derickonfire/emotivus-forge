@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "inventory_id": "example-product-reconciled-migrations",
+  "authority": "owner",
+  "lineage_id": "example-product-1.3.0-reconciled",
+  "engine": "sql",
+  "mode": "tracked",
+  "source": {
+    "kind": "project-tree"
+  },
+  "entries": [
+    {
+      "sequence": "052",
+      "semantic_id": "branch-b-example-items-v1",
+      "path": "migrations/052_branch_b_example_items.sql",
+      "body_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "description": "Historical migration body retained exactly for the active branch."
+    },
+    {
+      "sequence": "060",
+      "semantic_id": "reconcile-branch-a-and-b-v1",
+      "path": "migrations/060_reconcile_branch_a_and_b.sql",
+      "body_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "description": "Append-only reconciliation for the known branch migration collision."
+    }
+  ],
+  "no_migrations_reason": "",
+  "applied_observation": {},
+  "reconciliations": [
+    {
+      "reconciliation_id": "lineage-a-b-sequence-052",
+      "collision_sequences": ["052"],
+      "lineage_ids": ["example-product-branch-a", "example-product-branch-b"],
+      "strategy": "append-after-highest",
+      "new_sequence": "060",
+      "semantic_id": "reconcile-branch-a-and-b-v1",
+      "reason": "The two historical branches assigned different bodies to sequence 052; migration 060 reconciles supported database shapes without rewriting history."
+    }
+  ],
+  "truth_boundary": "The catalog identifies exact retained and reconciliation bytes. Separate runtime-state evidence must prove supported upgrades and rollback behavior."
+}

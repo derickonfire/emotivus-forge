@@ -1,0 +1,17 @@
+{
+  "title": "Primary route remains registered",
+  "invariant": "The application's primary route must remain represented in the architecture graph.",
+  "symptom": "The main page returned a 404 after a route refactor.",
+  "root_cause": "The route registration was removed while the handler remained.",
+  "fix": "Restore the route registration and connect it to the handler.",
+  "severity": "error",
+  "category": "routing",
+  "scope": "project",
+  "affected_paths": ["src/routes.js"],
+  "gate": "section",
+  "regression": {
+    "kind": "graph_node",
+    "node_type": "route",
+    "name_contains": "/"
+  }
+}

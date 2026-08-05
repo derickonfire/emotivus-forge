@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "review_id": "security-review-2026-08-02",
+  "review_type": "security",
+  "status": "PASS",
+  "authority": "named-review-authority",
+  "candidate_build_id": "2026-08-02.1",
+  "package_sha256": "REPLACE_WITH_FINAL_PACKAGE_SHA256",
+  "evidence_path": "release/reviews/security-report.md",
+  "evidence_sha256": "REPLACE_WITH_REVIEW_EVIDENCE_SHA256",
+  "reviewed_utc": "2026-08-02T01:00:00Z",
+  "limitations": [
+    "The review covers the named package and evidence only.",
+    "It does not replace runtime, deployment, signing, or release-channel proof."
+  ]
+}

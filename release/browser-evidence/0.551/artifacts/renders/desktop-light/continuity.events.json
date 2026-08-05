@@ -1,0 +1,26 @@
+{
+  "console": [],
+  "external_requests_blocked": [],
+  "failed_requests": [],
+  "package_requests": [
+    {
+      "bytes": 13245,
+      "path": "/assets/styles.css",
+      "sha256": "8d038d0e4223c6771b8fbc281ccb4587544250a515803792c7e3307c317b84f0",
+      "status": 200
+    },
+    {
+      "bytes": 1044,
+      "path": "/assets/app.js",
+      "sha256": "214dcbb5988468169d25a85e50adaea8b32e4100d982d9020cea9938dfc214be",
+      "status": 200
+    },
+    {
+      "bytes": 928,
+      "path": "/assets/forge-mark.svg",
+      "sha256": "60fed51294556e6944b7b727a31fd9c552c6bd04253d873b0dbd961ee226508e",
+      "status": 200
+    }
+  ],
+  "page_errors": []
+}

@@ -1,0 +1,76 @@
+{
+  "browser": {
+    "bytes": 5064,
+    "driver": {
+      "bundled": false,
+      "name": "playwright",
+      "version": "1.57.0"
+    },
+    "requested": "/usr/bin/chromium",
+    "resolved": "/usr/bin/chromium",
+    "sha256": "2c8d32d29dc6781c35ae196ea83299d507ac88fc339301abe74672feda299779",
+    "version_output": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)"
+  },
+  "bundle": {
+    "bundle_id": "0ae24d8101788f84991f9418bf9b2ddc4ac591a671ec332d56b6317ced5d75ba",
+    "bytes": 2679151,
+    "payload_count": 37,
+    "schema": "forge-browser-evidence-bundle/1",
+    "sha256": "66c246ae6a38eb73160d35ab3ed6383076132288f02bbb65ecd78de6115d864a"
+  },
+  "profiles": [
+    {
+      "color_scheme": "light",
+      "height": 900,
+      "id": "desktop-light",
+      "mobile_claimed": false,
+      "width": 1440
+    },
+    {
+      "color_scheme": "dark",
+      "height": 844,
+      "id": "mobile-dark",
+      "mobile_claimed": false,
+      "width": 390
+    }
+  ],
+  "release_authorized": false,
+  "release_ready": false,
+  "render_count": 12,
+  "routes": [
+    "/",
+    "/run/",
+    "/docs/",
+    "/roadmap/",
+    "/trust/",
+    "/changelog/"
+  ],
+  "schema": "forge-browser-evidence-release-record/1",
+  "status": "PASS",
+  "truth": {
+    "accessibility_conformance_claimed": false,
+    "assistive_technology_tested": false,
+    "browser_executed": true,
+    "exact_website_bound": true,
+    "http_server_executed": false,
+    "independent_reviewed": false,
+    "loopback_only_serving": false,
+    "manual_visual_reviewed": false,
+    "network_isolated_package_routing": true,
+    "physical_device_tested": false,
+    "production_origin_tested": false,
+    "release_authorized": false,
+    "release_ready": false,
+    "rendered_dom_captured": true,
+    "screenshots_captured": true,
+    "touch_input_tested": false
+  },
+  "truth_boundary": "This receipt proves that one named local Chromium-family executable rendered exact HTML and package-relative resources from the recorded website ZIP under network-isolated package routing, viewport shapes, color-mode settings, and execution environment. It does not prove HTTP-server, production-origin, physical-device, touch-input, or assistive-technology compatibility, accessibility conformance, manual visual correctness, remote-network behavior, independent control, reviewer identity, release authorization, or release readiness.",
+  "version": "0.548",
+  "website": {
+    "bytes": 742442,
+    "filename": "Emotivus-Forge-0.548-Website.zip",
+    "member_count": 17,
+    "sha256": "e4ee2bbe874803913ee59bd801c6ef72d271f2d5e283b6486ab77dd42e874a20"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 2,
+  "mode": "public-neutral-metadata-only",
+  "description": "Generic Forge source and distribution confidentiality policy. Tiered screening classifies findings as BLOCK, REVIEW, or INFORMATIONAL. Private project denylists are supplied externally via FORGE_PRIVATE_POLICY and are never packaged with Forge.",
+  "allow_paths": [],
+  "synthetic_fixture_paths": [
+    "tests/fixtures/security",
+    "tests/test_secret_screening.py",
+    "capability_vault/legacy_1_4_1/tests/test_forge_core.py"
+  ],
+  "forbidden_terms": [],
+  "forbidden_sha256": [],
+  "forbidden_normalized_sha256": [],
+  "forbidden_path_patterns": [],
+  "levels": [
+    "BLOCK",
+    "REVIEW",
+    "INFORMATIONAL"
+  ],
+  "review_terms": [],
+  "informational_terms": [],
+  "review_path_patterns": [],
+  "block_path_patterns": [],
+  "never_mutates_scanned_bytes": true,
+  "truth_boundary": "A PASS means no configured rule matched. It is not proof that a distribution is free of private information."
+}

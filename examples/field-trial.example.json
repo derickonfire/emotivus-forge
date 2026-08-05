@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "trial_id": "continuity-trial",
+  "title": "Cross-model continuity field trial",
+  "authority": "owner",
+  "rationale": "The project needs observed evidence before making claims about Forge continuity value or recommendation accuracy.",
+  "project_profile": "zip-multi-session",
+  "models": [
+    "ChatGPT",
+    "Claude"
+  ],
+  "scenarios": [
+    "first-contact",
+    "continuation",
+    "defect-investigation"
+  ],
+  "ground_truth_paths": [
+    "BACKLOG.md",
+    "DECISIONS.md"
+  ],
+  "minimum_observations": 3,
+  "measures": [
+    "objective-recovery",
+    "authority-discovery",
+    "resume-usefulness",
+    "owner-comprehension",
+    "time-to-meaningful-work",
+    "native-evidence-ingestion",
+    "doctor-recommendation",
+    "doctor-diagnosis",
+    "guardrail-trigger",
+    "contract-usability"
+  ],
+  "truth_boundary": "Human or controlled-fixture observations describe only this project-local sample and cannot establish universal accuracy, causality, commercial value, or release readiness."
+}

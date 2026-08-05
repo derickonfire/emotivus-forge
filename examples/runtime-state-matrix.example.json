@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "matrix_id": "staging-upgrade",
+  "title": "Staging upgrade from the current persisted baseline",
+  "authority": "owner",
+  "candidate_fields": [
+    "build_id",
+    "components.server.version"
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "upgrade-current-state",
+      "target_environment": "project-staging",
+      "deployment_stage": "staging",
+      "verification_tier": "staging",
+      "prior_state": {
+        "state_id": "controlled-baseline-copy",
+        "description": "A controlled copy of the currently declared persisted-state baseline.",
+        "source": "owner"
+      },
+      "baseline_field": "baseline.build_id",
+      "migration_mode": "upgrade",
+      "migration_paths": [
+        "migrations/current-upgrade.sql"
+      ],
+      "runtime_recipe_ids": [
+        "candidate-homepage"
+      ],
+      "evidence_authorities": [
+        "owner",
+        "external-ci"
+      ],
+      "exclusions": [
+        "production traffic",
+        "data completeness",
+        "rollback",
+        "browser JavaScript",
+        "release readiness"
+      ]
+    }
+  ],
+  "verification_boundary": "This matrix binds external deployment and migration testimony to the exact recorded candidate, prior-state identity, baseline, migration bytes, and same-Check runtime evidence without claiming Forge performed those operations."
+}

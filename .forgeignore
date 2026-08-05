@@ -1,0 +1,8 @@
+# Forge self-development orientation exclusions.
+# These surfaces remain package inputs, but they are not active project authority.
+examples/
+capability_vault/
+docs-site/downloads/
+deploy/
+.release-checks/
+Emotivus-Forge/

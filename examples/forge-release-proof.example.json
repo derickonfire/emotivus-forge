@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "release_proof_id": "public-release-proof",
+  "title": "Bounded public release assurance map",
+  "authority": "release-owner",
+  "release_package_id": "public-release",
+  "surfaces": [
+    {
+      "surface_id": "runtime",
+      "kind": "entrypoint",
+      "description": "Primary packaged command-line runtime and launchers",
+      "package_members": [
+        "Emotivus-Forge/forge.py",
+        "Emotivus-Forge/forge"
+      ]
+    },
+    {
+      "surface_id": "operator-guide",
+      "kind": "documentation",
+      "description": "Packaged operator-facing setup and usage guidance",
+      "package_members": [
+        "Emotivus-Forge/README.md",
+        "Emotivus-Forge/docs/QUICKSTART.md"
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "domain_id": "security",
+      "applicability": "required",
+      "rationale": "The public runtime processes project-local state and release evidence, so bounded security review is required.",
+      "obligation_ids": ["security-runtime-review"]
+    },
+    {
+      "domain_id": "privacy",
+      "applicability": "required",
+      "rationale": "The public runtime reads project-owned files and must preserve its declared local-first and value-minimizing boundaries.",
+      "obligation_ids": ["privacy-boundary-review"]
+    },
+    {
+      "domain_id": "accessibility",
+      "applicability": "required",
+      "rationale": "Operator-facing command output and packaged documentation require a bounded accessibility review.",
+      "obligation_ids": ["operator-accessibility-review"]
+    },
+    {
+      "domain_id": "compatibility",
+      "applicability": "required",
+      "rationale": "The packaged runtime claims support for declared Python and operating-system environments.",
+      "obligation_ids": ["runtime-compatibility-review"]
+    },
+    {
+      "domain_id": "installation",
+      "applicability": "required",
+      "rationale": "The public package includes operator installation and first-run instructions that must be exercised.",
+      "obligation_ids": ["installation-review"]
+    },
+    {
+      "domain_id": "upgrade",
+      "applicability": "required",
+      "rationale": "Existing Forge state may be opened by the new runtime and therefore requires an upgrade-path review.",
+      "obligation_ids": ["upgrade-review"]
+    },
+    {
+      "domain_id": "rollback",
+      "applicability": "required",
+      "rationale": "The release procedure must document how the prior public runtime can be restored without corrupting project state.",
+      "obligation_ids": ["rollback-review"]
+    },
+    {
+      "domain_id": "runtime",
+      "applicability": "required",
+      "rationale": "The primary CLI entrypoint must execute against the declared exact package in representative environments.",
+      "obligation_ids": ["runtime-execution-review"]
+    },
+    {
+      "domain_id": "deployment",
+      "applicability": "not-applicable",
+      "rationale": "This package is a local CLI distribution and does not itself deploy or operate a hosted production service.",
+      "obligation_ids": []
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "security-runtime-review",
+      "domain_id": "security",
+      "description": "Review the declared runtime and guide surfaces for bounded security release risks.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["static", "integration", "manual-review"],
+      "require_independent_reviewer": true,
+      "receipt_path": "release/proof/security-runtime-review.json"
+    },
+    {
+      "obligation_id": "privacy-boundary-review",
+      "domain_id": "privacy",
+      "description": "Verify the documented local-first and evidence-retention boundaries against the packaged runtime.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["static", "integration", "manual-review"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/privacy-boundary-review.json"
+    },
+    {
+      "obligation_id": "operator-accessibility-review",
+      "domain_id": "accessibility",
+      "description": "Review command output and packaged guidance for the declared operator accessibility requirements.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["manual-review", "entrypoint-execution"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/operator-accessibility-review.json"
+    },
+    {
+      "obligation_id": "runtime-compatibility-review",
+      "domain_id": "compatibility",
+      "description": "Exercise the exact runtime package across every claimed representative environment.",
+      "surface_ids": ["runtime"],
+      "accepted_evidence_tiers": ["integration", "entrypoint-execution", "device"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/runtime-compatibility-review.json"
+    },
+    {
+      "obligation_id": "installation-review",
+      "domain_id": "installation",
+      "description": "Follow the packaged first-install instructions from a clean environment and record the evidence.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["entrypoint-execution", "device", "manual-review"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/installation-review.json"
+    },
+    {
+      "obligation_id": "upgrade-review",
+      "domain_id": "upgrade",
+      "description": "Open representative prior Forge state with the exact package and verify the declared migration behavior.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["integration", "entrypoint-execution"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/upgrade-review.json"
+    },
+    {
+      "obligation_id": "rollback-review",
+      "domain_id": "rollback",
+      "description": "Exercise and review the declared restoration path to the prior package without project-state damage.",
+      "surface_ids": ["runtime", "operator-guide"],
+      "accepted_evidence_tiers": ["integration", "entrypoint-execution", "manual-review"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/rollback-review.json"
+    },
+    {
+      "obligation_id": "runtime-execution-review",
+      "domain_id": "runtime",
+      "description": "Execute the primary CLI entrypoint from the exact package and verify the declared bounded behavior.",
+      "surface_ids": ["runtime"],
+      "accepted_evidence_tiers": ["entrypoint-execution", "integration", "device"],
+      "require_independent_reviewer": false,
+      "receipt_path": "release/proof/runtime-execution-review.json"
+    }
+  ],
+  "truth_boundary": "This contract proves only declared exact-package surface presence and current package-bound receipts for explicitly classified assurance domains; it cannot discover undeclared surfaces, validate reviewer competence, execute tests, or authorize release."
+}

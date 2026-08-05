@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "id": "node",
+  "name": "Node.js Project",
+  "detect": ["package.json"],
+  "checks": ["package.json syntax", "detected npm lint/test scripts", "JavaScript syntax"]
+}

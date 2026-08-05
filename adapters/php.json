@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "id": "php",
+  "name": "PHP",
+  "detect": ["**/*.php", "**/*.phtml", "composer.json"],
+  "checks": ["PHP CLI lint", "structural comment/string balance", "runtime version policy when configured"],
+  "recommended_commands": ["php -l <file>"]
+}

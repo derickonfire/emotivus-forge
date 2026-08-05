@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "provenance_id": "public-package",
+  "title": "Public package lineage",
+  "authority": "owner",
+  "artifact_path": "dist/public-package.zip",
+  "generator": {
+    "command": "python tools/build_public_package.py",
+    "source_paths": [
+      "tools/build_public_package.py"
+    ]
+  },
+  "input_paths": [
+    "src/**",
+    "release.json"
+  ],
+  "file_limit": 1000,
+  "baseline_build_id": "2026-07-31.2",
+  "deliverable": true,
+  "truth_boundary": "This record binds current bytes to declared inputs, generator source, and baseline observations; it does not prove the command ran, the package works, or delivery succeeded."
+}

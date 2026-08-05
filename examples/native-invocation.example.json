@@ -1,0 +1,26 @@
+{
+  "schema": "forge-native-invocation/1",
+  "candidate_id": "canonical",
+  "authority": "owner",
+  "argv": [
+    "bash",
+    "tools/run_all_checks.sh",
+    ".",
+    "Release/Full-Site.zip",
+    "Release/Changed-Files.zip"
+  ],
+  "working_directory": ".",
+  "environment": {
+    "APP_ENV": "test"
+  },
+  "expected_checks": [
+    "unit.core",
+    "integration.database",
+    "package.full",
+    "package.delta"
+  ],
+  "coverage_policy": "exact",
+  "timeout_seconds": 300,
+  "verification_tier": "sandbox",
+  "rationale": "The owner confirmed the exact native command and all expected gate members."
+}

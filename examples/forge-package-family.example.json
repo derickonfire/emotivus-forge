@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "family_id": "release-family-1.2.0",
+  "authority": "owner",
+  "lineage_id": "lineage-1.2.0",
+  "release_version": "1.2.0",
+  "build_id": "build-120",
+  "artifacts": [
+    {
+      "artifact_id": "parent-full-site",
+      "role": "full-site",
+      "path": "Project-1.1.0.zip",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 12345,
+      "strip_prefix": "Project",
+      "tree_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "tree_file_count": 100
+    },
+    {
+      "artifact_id": "result-full-site",
+      "role": "full-site",
+      "path": "Project-1.2.0.zip",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "bytes": 13000,
+      "strip_prefix": "Project",
+      "tree_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "tree_file_count": 103
+    },
+    {
+      "artifact_id": "changed-files",
+      "role": "changed-files",
+      "path": "Project-1.2.0-Changed-Files.zip",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "bytes": 3200,
+      "strip_prefix": "Payload",
+      "tree_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "tree_file_count": 7
+    }
+  ],
+  "outer_bundles": [],
+  "deltas": [
+    {
+      "delta_id": "1.1.0-to-1.2.0",
+      "parent_artifact_id": "parent-full-site",
+      "delta_artifact_id": "changed-files",
+      "result_artifact_id": "result-full-site",
+      "payload_prefix": "Payload",
+      "control_paths": [],
+      "added_paths": ["new.php"],
+      "modified_paths": ["index.php"],
+      "deleted_paths": ["old.php"],
+      "renamed_paths": [
+        {"from": "docs/old-name.md", "to": "docs/new-name.md"}
+      ]
+    }
+  ],
+  "truth_boundary": "Forge verifies exact package-family bytes and deterministic delta reconstruction but does not execute the application or prove semantic upgrade safety."
+}

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "release_package_id": "public-release",
+  "title": "Exact public release package",
+  "authority": "owner",
+  "artifact_path": "dist/application.zip",
+  "artifact_provenance_id": "public-package-provenance",
+  "expected_build_id": "2026-08-02.1",
+  "scan": {
+    "max_entries": 5000,
+    "max_entry_bytes": 2000000,
+    "max_total_text_bytes": 10000000,
+    "forbidden_path_patterns": [
+      "private/**",
+      "internal/**"
+    ],
+    "forbidden_literals": [
+      {
+        "label": "private-project-name",
+        "value": "REPLACE_WITH_LOCAL_PRIVATE_TERM",
+        "case_sensitive": false
+      }
+    ],
+    "allow_template_paths": true
+  },
+  "required_review_types": [
+    "security",
+    "privacy",
+    "accessibility",
+    "compatibility",
+    "installation",
+    "upgrade",
+    "rollback"
+  ],
+  "review_receipts": [
+    "release/reviews/security.json",
+    "release/reviews/privacy.json",
+    "release/reviews/accessibility.json",
+    "release/reviews/compatibility.json",
+    "release/reviews/installation.json",
+    "release/reviews/upgrade.json",
+    "release/reviews/rollback.json"
+  ],
+  "truth_boundary": "This binds one exact ZIP to current owner identity, registered artifact provenance, a bounded complete confidentiality scan, and project-owned review receipts. It does not prove every possible secret is absent, validate review methodology, sign the artifact, secure a release channel, or establish release readiness."
+}

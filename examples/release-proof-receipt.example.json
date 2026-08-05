@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "release_proof_id": "public-release-proof",
+  "obligation_id": "security-runtime-review",
+  "release_package_id": "public-release",
+  "package_sha256": "REPLACE_WITH_EXACT_64_CHARACTER_SHA256",
+  "package_bytes": 123456,
+  "build_id": "OWNER_DECLARED_BUILD_ID",
+  "verdict": "PASS",
+  "observed_utc": "2026-08-02T12:00:00Z",
+  "valid_until_utc": "2026-09-02T12:00:00Z",
+  "evidence_tier": "manual-review",
+  "method": "Reviewed the declared exact-package runtime and operator-guide surfaces against the approved bounded security checklist.",
+  "surface_ids": [
+    "runtime",
+    "operator-guide"
+  ],
+  "reviewer": {
+    "authority": "independent-security-reviewer",
+    "role": "Security reviewer",
+    "independent": true
+  },
+  "evidence_artifacts": [
+    {
+      "path": "release/proof/security-runtime-review.md",
+      "sha256": "REPLACE_WITH_EVIDENCE_FILE_SHA256",
+      "bytes": 4321
+    }
+  ],
+  "limitations": [
+    "The assessment covered only the contract-declared package members and checklist scope.",
+    "No claim is made about undeclared integrations or future package versions."
+  ],
+  "truth_boundary": "This receipt records one bounded assessment against exact package bytes and named evidence; it does not prove universal correctness, reviewer competence, or release authorization."
+}

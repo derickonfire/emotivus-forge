@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "contract_id": "admin-authorization",
+  "kind": "authorization",
+  "contract_fingerprint": "read from FORGE_RUNTIME_CONTRACT_FINGERPRINT",
+  "evidence_boundary": "staging",
+  "status": "PASS",
+  "cases": [
+    {
+      "id": "manager-self-promote",
+      "category": "privilege-management",
+      "actor": "manager",
+      "action": "assign-owner",
+      "target": "self",
+      "expected": "DENY",
+      "status": "PASS",
+      "detail": "The mutation was rejected and the role remained unchanged."
+    }
+  ]
+}

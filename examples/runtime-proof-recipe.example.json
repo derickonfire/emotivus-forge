@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "recipe_id": "public-homepage",
+  "title": "Public homepage renders its expected application shell",
+  "verification_tier": "staging",
+  "request": {
+    "url": "https://staging.example.invalid/",
+    "method": "GET",
+    "timeout_seconds": 5,
+    "max_response_bytes": 500000,
+    "headers": {
+      "Accept": "text/html"
+    }
+  },
+  "assertions": {
+    "status_in": [200],
+    "content_type_in": ["text/html"],
+    "min_bytes": 2000,
+    "must_contain": ["<main", "Example Application"],
+    "must_not_contain": ["Fatal error", "Traceback", "Database unavailable"]
+  },
+  "exclusions": [
+    "JavaScript execution",
+    "visual layout",
+    "authenticated behavior",
+    "database state",
+    "deployment completeness",
+    "release readiness"
+  ]
+}

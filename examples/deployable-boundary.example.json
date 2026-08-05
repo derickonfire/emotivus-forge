@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "boundary_id": "release-boundary",
+  "title": "Release delivery roles",
+  "authority": "owner",
+  "strict_unclassified": true,
+  "roles": [
+    {
+      "role": "deployable",
+      "patterns": ["app/**", "public/**"]
+    },
+    {
+      "role": "development-only",
+      "patterns": ["tests/**", "tools/**", "planning/**"]
+    },
+    {
+      "role": "release-evidence",
+      "patterns": ["release/**", "dist/**"]
+    },
+    {
+      "role": "prohibited",
+      "patterns": ["secrets/**", ".env"]
+    }
+  ],
+  "blocked_from_delivery": ["development-only", "prohibited"],
+  "delta_artifacts": [
+    {
+      "id": "changed-files",
+      "provenance_id": "changed-files-package",
+      "mode": "exact",
+      "allowed_roles": ["deployable"],
+      "computed_for_baseline_build_id": "2026-07-31.2",
+      "member_prefix": ""
+    }
+  ],
+  "verification_boundary": "This classifies the canonical observed changed set and compares registered delta members; it does not prove deployment or release readiness."
+}

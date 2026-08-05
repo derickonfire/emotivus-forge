@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "vault": "Emotivus Forge cold capability vault",
+  "status": "inactive",
+  "source_reference": {
+    "version": "1.4.1-dev",
+    "archive": "references/Emotivus-Forge-1.4.1-dev-Development.zip",
+    "sha256": "7cc37e7bd045fd3a7cd97a63d9f1dc79b0640f8c36f339b185f4680487c86f0a",
+    "immutable": true
+  },
+  "runtime_rules": {
+    "imported_by_help": false,
+    "imported_by_adopt": false,
+    "imported_by_resume": false,
+    "imported_by_ordinary_check": false,
+    "included_in_resume_packets": false,
+    "included_in_project_scans": false,
+    "registers_commands": false,
+    "side_effects_allowed": false
+  },
+  "activation_requirements": [
+    "relevant project trigger",
+    "explicit capability manifest entry",
+    "activation contract",
+    "focused neutral regressions",
+    "token and runtime budget",
+    "scope and exclusions",
+    "evidence that the capability improves on the project's native tool"
+  ],
+  "capabilities": [
+    {
+      "id": "doctor",
+      "name": "Forge Doctor",
+      "legacy_modules": [
+        "doctor.py",
+        "remediation.py"
+      ],
+      "status": "legacy-vaulted",
+      "trigger": "Explicit environment diagnosis after a concrete environment failure.",
+      "known_defects": [
+        "Legacy remediation can imply repair authority; automatic repair is prohibited."
+      ],
+      "disposition": "legacy research only; clean-room diagnose-only replacement is contract-gated in the active core",
+      "active_replacement": {
+        "implementation": "emotivus_forge/services/doctor.py",
+        "mode": "diagnose-only",
+        "activation": "project-owned fingerprint-bound contract",
+        "imports_legacy_code": false
+      }
+    },
+    {
+      "id": "graph",
+      "name": "Forge Graph",
+      "legacy_modules": [
+        "graph.py"
+      ],
+      "status": "vaulted",
+      "trigger": "Repeated work establishes enough observed relationships to justify a progressive graph.",
+      "known_defects": [
+        "Legacy graph is built too early and can classify speculative relationships as authoritative."
+      ],
+      "disposition": "advanced progressive model"
+    },
+    {
+      "id": "lab",
+      "name": "Forge Lab",
+      "legacy_modules": [
+        "lab.py"
+      ],
+      "status": "vaulted",
+      "trigger": "A specific state or failure hypothesis requires a disposable experiment.",
+      "known_defects": [
+        "Legacy Adopt initializes Lab before a real experiment is needed."
+      ],
+      "disposition": "advanced targeted experiment"
+    },
+    {
+      "id": "evidence",
+      "name": "Forge Evidence",
+      "legacy_modules": [
+        "evidence.py",
+        "failures.py"
+      ],
+      "status": "vaulted",
+      "trigger": "Typed evidence volume exceeds the compact Ledger reference model.",
+      "known_defects": [
+        "Legacy evidence is coupled to broad release machinery and first-run state."
+      ],
+      "disposition": "advanced typed index"
+    },
+    {
+      "id": "runtime-proof",
+      "name": "Runtime Proof",
+      "legacy_modules": [
+        "runtime_contracts.py"
+      ],
+      "status": "legacy-vaulted",
+      "trigger": "A specific HTTP surface needs bounded content-aware runtime evidence.",
+      "known_defects": [
+        "Default contracts can be empty and therefore cannot support broad assurance claims."
+      ],
+      "disposition": "legacy research only; clean-room content-aware HTTP replacement is contract-gated in the active core",
+      "active_replacement": {
+        "implementation": "emotivus_forge/services/runtime_proof.py",
+        "mode": "content-aware-http",
+        "activation": "project-owned fingerprint-bound contract with exact-origin recipe attachments",
+        "imports_legacy_code": false
+      }
+    },
+    {
+      "id": "release-proof",
+      "name": "Release Proof",
+      "legacy_modules": [
+        "release_proof.py",
+        "release.py",
+        "delivery.py",
+        "package.py"
+      ],
+      "status": "vaulted",
+      "trigger": "An explicit release candidate requires comprehensive scoped assurance.",
+      "known_defects": [
+        "Legacy surface discovery overlaps Graph and can undercount public entrypoints."
+      ],
+      "disposition": "Ship layer"
+    },
+    {
+      "id": "confidentiality",
+      "name": "Confidentiality",
+      "legacy_modules": [
+        "confidentiality.py",
+        "security.py",
+        "hygiene.py"
+      ],
+      "status": "vaulted",
+      "trigger": "Packaging, Ship, or an explicit targeted privacy/security scan.",
+      "known_defects": [
+        "Placeholder handling requires explicit project context."
+      ],
+      "disposition": "Ship plus targeted checks"
+    },
+    {
+      "id": "native-tool-migration",
+      "name": "Legacy Tool Absorb/Migration",
+      "legacy_modules": [
+        "tool_migration.py"
+      ],
+      "status": "retired-from-core",
+      "trigger": "None; replace with the Native Tool Registry.",
+      "known_defects": [
+        "Absorbing subordinate scripts obscures the project's canonical quality ecosystem."
+      ],
+      "disposition": "research reference only"
+    },
+    {
+      "id": "ci-bridge",
+      "name": "CI Bridge",
+      "legacy_modules": [
+        "ci_bridge.py"
+      ],
+      "status": "deferred",
+      "trigger": "A stable Git/CI installation stage exists.",
+      "known_defects": [
+        "Premature before Forge has a stable installer and authority contract."
+      ],
+      "disposition": "defer"
+    },
+    {
+      "id": "update",
+      "name": "Forge Update",
+      "legacy_modules": [
+        "update.py"
+      ],
+      "status": "deferred",
+      "trigger": "A stable installer and rollback contract exists.",
+      "known_defects": [
+        "No stable public installation/update contract exists yet."
+      ],
+      "disposition": "defer"
+    },
+    {
+      "id": "mirror",
+      "name": "Forge Mirror",
+      "legacy_modules": [
+        "mirror.py"
+      ],
+      "status": "internal-only",
+      "trigger": "Forge self-certification only.",
+      "known_defects": [],
+      "disposition": "internal certification"
+    },
+    {
+      "id": "legacy-memory",
+      "name": "Legacy Project Memory",
+      "legacy_modules": [
+        "project_memory.py",
+        "brief.py",
+        "learn.py",
+        "guardrails.py"
+      ],
+      "status": "migration-reference",
+      "trigger": "One-way migration of confirmed records into the new Ledger.",
+      "known_defects": [
+        "Over-modeled lifecycle with weak authority and objective recovery."
+      ],
+      "disposition": "extract useful records; do not reactivate wholesale"
+    }
+  ]
+}

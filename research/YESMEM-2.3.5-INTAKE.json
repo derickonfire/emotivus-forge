@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "intake_id": "yesmem-2.3.5-review",
+  "authority": "owner",
+  "upstream_project": "YesMem",
+  "upstream_version": "2.3.5",
+  "upstream_archive_name": "yesmem-2.3.5.zip",
+  "upstream_archive_sha256": "a5e9ac2fc3814b7cc84c07dc9515664fd6ae319eaf17c1ac561426df8f47e1e6",
+  "upstream_archive_bytes": 105882333,
+  "license": {
+    "spdx": "Apache-2.0",
+    "copyright": "Papoo Software & Media GmbH",
+    "upstream_file": "yesmem-2.3.5/LICENSE",
+    "sha256": "3e8972fbe615a763e13f3f6e2a57be43c21a55fe64b8529be0abf022864fc94c",
+    "notice_file": ""
+  },
+  "full_source_distribution": "external-only",
+  "candidates": [
+    {
+      "mission_fit": "The reviewed material informs a bounded Forge capability while preserving five commands, eight state files, and no required daemon, proxy, database, or orchestrator.",
+      "retained_behaviors": [
+        "Recognize high-confidence provider API keys, access tokens, private-key blocks, JWTs, bearer tokens, inline URL credentials, and AWS secret-key labels using bounded static patterns.",
+        "Preserve upstream false-positive regressions for URL ports and common token boundaries where they fit Forge confidentiality screening."
+      ],
+      "changed_behaviors": [
+        "Report redaction-safe BLOCK, REVIEW, or INFORMATIONAL findings instead of replacing matched text.",
+        "Never retain matched values and never mutate source, evidence, or package bytes.",
+        "Treat placeholders and declared synthetic fixtures as visible informational findings rather than silent allowlist exemptions.",
+        "Reject email, phone, public-IPv4, and arbitrary long-hex patterns from Forge defaults because they would classify ordinary contact data, documentation addresses, and evidence digests as secrets."
+      ],
+      "trust_semantic_differences": [
+        "A matched shape is not proof that a credential is live; BLOCK and REVIEW express distribution handling, not project authority or release readiness.",
+        "A clean scan means no configured pattern matched and does not prove absence of confidential or personal information."
+      ],
+      "security_review": "The source was reviewed statically and not executed; only exact declared members may inform implementation.",
+      "confidentiality_review": "The full source archive, runtime data, credentials, sessions, and private project material remain external to Forge distributions.",
+      "update_retirement_procedure": "Bind any replacement to a new exact upstream archive and repeat license, dependency, security, test, and distribution review.",
+      "candidate_id": "secret-detection-patterns",
+      "classification": "adapt",
+      "stage": "implemented",
+      "distribution": "public",
+      "intended_capability": "Tiered secret and confidentiality detection",
+      "upstream_files": [
+        {
+          "path": "yesmem-2.3.5/internal/sanitize/secrets.go",
+          "sha256": "6e357104a73567d9fd5870ac0507c4f031ee05e34532d057ecf2db3ddc637e04",
+          "bytes": 7603
+        },
+        {
+          "path": "yesmem-2.3.5/internal/sanitize/secrets_test.go",
+          "sha256": "c079bfc9b4db2b74420a446cc2b7600e62c8dbbaef81a9bfdedef65e643597e5",
+          "bytes": 17146
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "Go standard library patterns translated to Python standard library",
+          "type": "standard-library",
+          "version": "Go source reviewed; Python implementation planned",
+          "license": "Apache-2.0 source; Python runtime license",
+          "required": true,
+          "note": "No YesMem runtime dependency will be imported."
+        }
+      ],
+      "original_tests": [
+        "yesmem-2.3.5/internal/sanitize/secrets_test.go"
+      ],
+      "forge_tests": [
+        "tests/test_secret_screening.py"
+      ],
+      "forge_files": [
+        "emotivus_forge/core/secret_screening.py",
+        "docs/CONFIDENTIALITY-TIERS.md",
+        "THIRD-PARTY-NOTICES.md",
+        "THIRD-PARTY-LICENSES/YesMem-Apache-2.0.txt"
+      ],
+      "attribution_notice": "Selected provider-key patterns and neutral regression vectors adapted from YesMem 2.3.5 under Apache-2.0; modified for Forge report-only BLOCK/REVIEW/INFORMATIONAL classification, placeholder visibility, no value retention, and immutable scanned bytes."
+    },
+    {
+      "mission_fit": "The reviewed material informs a bounded Forge capability while preserving five commands, eight state files, and no required daemon, proxy, database, or orchestrator.",
+      "retained_behaviors": [
+        "Preserve the useful bounded behavior or test expectation identified during review."
+      ],
+      "changed_behaviors": [
+        "Reframe the behavior around exact project support, explicit truth boundaries, and non-authoritative retrieval or reporting."
+      ],
+      "trust_semantic_differences": [
+        "Frequency, similarity, and reuse never promote project authority or release truth."
+      ],
+      "security_review": "The source was reviewed statically and not executed; only exact declared members may inform implementation.",
+      "confidentiality_review": "The full source archive, runtime data, credentials, sessions, and private project material remain external to Forge distributions.",
+      "update_retirement_procedure": "Bind any replacement to a new exact upstream archive and repeat license, dependency, security, test, and distribution review.",
+      "candidate_id": "text-normalization-vectors",
+      "classification": "adapt",
+      "stage": "planned",
+      "distribution": "public",
+      "intended_capability": "Normalized technical-token matching and similarity regression vectors",
+      "upstream_files": [
+        {
+          "path": "yesmem-2.3.5/internal/textutil/hash.go",
+          "sha256": "353bbfebe447255dd5cbe9fd884a01519215cadccf64f288451b67c187452ff7",
+          "bytes": 630
+        },
+        {
+          "path": "yesmem-2.3.5/internal/textutil/similarity.go",
+          "sha256": "88ae1dce8c0fa5ad357e6461cc83d8a9dee3cbe58bbc506c12fddf2a64c384d2",
+          "bytes": 1020
+        },
+        {
+          "path": "yesmem-2.3.5/internal/textutil/similarity_test.go",
+          "sha256": "62119ecb70701b3517a3bdffe8c7eb90849acfa0524104da970a557e461c2307",
+          "bytes": 2443
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "No imported runtime dependency",
+          "type": "none",
+          "version": "",
+          "license": "",
+          "required": false,
+          "note": "Forge-native implementation or documentation-only reference."
+        }
+      ],
+      "original_tests": [
+        "yesmem-2.3.5/internal/textutil/similarity_test.go"
+      ],
+      "forge_tests": [
+        "tests/test_bounded_retrieval.py"
+      ],
+      "forge_files": [
+        "emotivus_forge/core/bounded_retrieval.py"
+      ],
+      "attribution_notice": "Planned adaptation of selected YesMem 2.3.5 text-normalization and similarity test vectors under Apache-2.0; Forge implementation remains authority-aware and Python-native."
+    },
+    {
+      "mission_fit": "The reviewed material informs a bounded Forge capability while preserving five commands, eight state files, and no required daemon, proxy, database, or orchestrator.",
+      "retained_behaviors": [
+        "Preserve the useful bounded behavior or test expectation identified during review."
+      ],
+      "changed_behaviors": [
+        "Reframe the behavior around exact project support, explicit truth boundaries, and non-authoritative retrieval or reporting."
+      ],
+      "trust_semantic_differences": [
+        "Frequency, similarity, and reuse never promote project authority or release truth."
+      ],
+      "security_review": "The source was reviewed statically and not executed; only exact declared members may inform implementation.",
+      "confidentiality_review": "The full source archive, runtime data, credentials, sessions, and private project material remain external to Forge distributions.",
+      "update_retirement_procedure": "Bind any replacement to a new exact upstream archive and repeat license, dependency, security, test, and distribution review.",
+      "candidate_id": "traceable-bounded-retrieval",
+      "classification": "reimplement",
+      "stage": "implemented",
+      "distribution": "public",
+      "intended_capability": "Traceable bounded retrieval over Forge continuity records",
+      "upstream_files": [
+        {
+          "path": "yesmem-2.3.5/internal/briefing/dedup.go",
+          "sha256": "d8e8eea77855250f75a6ea1a04a8bce1c51ed37bd65386e4933a9e396e5be3ae",
+          "bytes": 3990
+        },
+        {
+          "path": "yesmem-2.3.5/internal/storage/messages.go",
+          "sha256": "91fd87c29ae47d922d33a0c5b860fcc3119369b272bed279498397c7c96f74cc",
+          "bytes": 18694
+        },
+        {
+          "path": "yesmem-2.3.5/internal/briefing/fade.go",
+          "sha256": "ace9a26bff0616636bb5ea22dc0b1de71095876b58e7714be26ab242e318f16b",
+          "bytes": 742
+        },
+        {
+          "path": "yesmem-2.3.5/internal/graph/graph.go",
+          "sha256": "5dde1e08c63d25fb2136f37c1d096d7aa8894d19ae50080398067c8849563db6",
+          "bytes": 2722
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "No imported runtime dependency",
+          "type": "none",
+          "version": "",
+          "license": "",
+          "required": false,
+          "note": "Forge-native implementation or documentation-only reference."
+        }
+      ],
+      "original_tests": [],
+      "forge_tests": [
+        "tests/test_bounded_retrieval.py"
+      ],
+      "forge_files": [
+        "emotivus_forge/core/bounded_retrieval.py"
+      ],
+      "attribution_notice": ""
+    },
+    {
+      "mission_fit": "The reviewed material informs a bounded Forge capability while preserving five commands, eight state files, and no required daemon, proxy, database, or orchestrator.",
+      "retained_behaviors": [
+        "Preserve the useful bounded behavior or test expectation identified during review."
+      ],
+      "changed_behaviors": [
+        "Reframe the behavior around exact project support, explicit truth boundaries, and non-authoritative retrieval or reporting."
+      ],
+      "trust_semantic_differences": [
+        "Frequency, similarity, and reuse never promote project authority or release truth."
+      ],
+      "security_review": "The source was reviewed statically and not executed; only exact declared members may inform implementation.",
+      "confidentiality_review": "The full source archive, runtime data, credentials, sessions, and private project material remain external to Forge distributions.",
+      "update_retirement_procedure": "Bind any replacement to a new exact upstream archive and repeat license, dependency, security, test, and distribution review.",
+      "candidate_id": "continuity-benchmark-reference",
+      "classification": "design-reference",
+      "stage": "reviewed",
+      "distribution": "development-only",
+      "intended_capability": "Reproducible matched continuity benchmark workspace",
+      "upstream_files": [
+        {
+          "path": "yesmem-2.3.5/docs/BENCHMARK.md",
+          "sha256": "dbe6b8e9a2a817bce0c777af42b558e773e258d9ed860a6e88beecbbe2681529",
+          "bytes": 9726
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "No imported runtime dependency",
+          "type": "none",
+          "version": "",
+          "license": "",
+          "required": false,
+          "note": "Forge-native implementation or documentation-only reference."
+        }
+      ],
+      "original_tests": [],
+      "forge_tests": [],
+      "forge_files": [],
+      "attribution_notice": ""
+    },
+    {
+      "mission_fit": "The reviewed material informs a bounded Forge capability while preserving five commands, eight state files, and no required daemon, proxy, database, or orchestrator.",
+      "retained_behaviors": [
+        "Preserve the useful bounded behavior or test expectation identified during review."
+      ],
+      "changed_behaviors": [
+        "Reframe the behavior around exact project support, explicit truth boundaries, and non-authoritative retrieval or reporting."
+      ],
+      "trust_semantic_differences": [
+        "Frequency, similarity, and reuse never promote project authority or release truth."
+      ],
+      "security_review": "The source was reviewed statically and not executed; only exact declared members may inform implementation.",
+      "confidentiality_review": "The full source archive, runtime data, credentials, sessions, and private project material remain external to Forge distributions.",
+      "update_retirement_procedure": "Bind any replacement to a new exact upstream archive and repeat license, dependency, security, test, and distribution review.",
+      "candidate_id": "daemon-proxy-agent-platform",
+      "classification": "reject",
+      "stage": "rejected",
+      "distribution": "rejected",
+      "intended_capability": "Always-running memory proxy and autonomous agent orchestration",
+      "upstream_files": [
+        {
+          "path": "yesmem-2.3.5/docs/features/proxy.md",
+          "sha256": "9420f23804d744d5b8744059f50bd98dcc73fad7ac9608addb5609522b95428f",
+          "bytes": 28375
+        },
+        {
+          "path": "yesmem-2.3.5/docs/features/multi-agent.md",
+          "sha256": "335b87017fef5473c77f8a3673f5f5d702ea921d25fc6dcbac78510dcd1d4cbd",
+          "bytes": 18241
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "No imported runtime dependency",
+          "type": "none",
+          "version": "",
+          "license": "",
+          "required": false,
+          "note": "Forge-native implementation or documentation-only reference."
+        }
+      ],
+      "original_tests": [],
+      "forge_tests": [],
+      "forge_files": [],
+      "attribution_notice": ""
+    }
+  ],
+  "truth_boundary": "This intake proves exact reviewed YesMem source identity and declared reuse decisions. It does not provide legal advice, prove correctness or security, import the YesMem runtime, or authorize a Forge release."
+}

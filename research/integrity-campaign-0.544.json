@@ -1,0 +1,103 @@
+{
+  "schema": "forge-integrity-campaign/1",
+  "campaign_id": "workspace-and-artifact-integrity-0.544",
+  "forge_version": "0.544",
+  "generated_utc": "2026-08-04T19:42:12+00:00",
+  "environment": {
+    "python": "3.13.5",
+    "implementation": "CPython",
+    "system": "Linux",
+    "release": "6.12.13",
+    "machine": "x86_64"
+  },
+  "fixture_policy": {
+    "public_neutral": true,
+    "real_user_or_project_data": false,
+    "external_writer_processes": true,
+    "private_key_material": false
+  },
+  "summary": {
+    "status": "PASS",
+    "passed": 6,
+    "failed": 0,
+    "total": 6
+  },
+  "scenarios": [
+    {
+      "scenario_id": "external-writer-after-checkpoint",
+      "expected": "DRIFTED",
+      "observed": "DRIFTED",
+      "status": "PASS",
+      "evidence": {
+        "checkpoint_status": "PASS",
+        "writer_process_returncode": 0,
+        "release_ready": false,
+        "expected_fingerprint": "790387978909030c1af3510b61d392bfae04ef8c6b7b2cb6a543b5bf38632307",
+        "observed_fingerprint": "f381e86b008df85f8e802c9f885f3f42486106995daf5b2c9b1e69b405829b43"
+      }
+    },
+    {
+      "scenario_id": "package-source-drift-before-publication",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "evidence": {
+        "before_publish_boundary_reached": true,
+        "error_descriptor": "Selected package source bytes drifted during the build; output was not published.",
+        "final_output_exists": false,
+        "temporary_output_exists": false
+      }
+    },
+    {
+      "scenario_id": "same-name-same-version-rival-artifacts",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "status": "PASS",
+      "evidence": {
+        "distinct_sha256_count": 2,
+        "artifact_sha256": [
+          "437d863fd5b66ed4195ade61207d30cc82aba8b9b20db230f2b658268183741a",
+          "e2b2ce2f66e56d468eb95f216c8efc26d7855024d5eff905e0f55721c3f5cbb9"
+        ]
+      }
+    },
+    {
+      "scenario_id": "filename-manifest-version-disagreement",
+      "expected": "FAIL",
+      "observed": "FAIL",
+      "status": "PASS",
+      "evidence": {
+        "problems": [
+          {
+            "path": "RUN-FORGE-9.9.9.zip",
+            "problem": "filename version 9.9.9 differs from packaged manifest version 9.9.10"
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "explicit-collision-quarantine-recovery",
+      "expected": "PASS",
+      "observed": "PASS",
+      "status": "PASS",
+      "evidence": {
+        "status_before_quarantine": "FAIL",
+        "quarantined_sha256": "e2b2ce2f66e56d468eb95f216c8efc26d7855024d5eff905e0f55721c3f5cbb9",
+        "active_artifacts_scanned_after": 1
+      }
+    },
+    {
+      "scenario_id": "project-ignore-bounds-artifact-observation",
+      "expected": "PASS",
+      "observed": "PASS",
+      "status": "PASS",
+      "evidence": {
+        "artifacts_scanned": 0,
+        "project_ignore_patterns": [
+          "reference/**"
+        ]
+      }
+    }
+  ],
+  "truth_boundary": "These are controlled synthetic public-neutral filesystem campaigns in one local environment. They demonstrate the observed detector and refusal behavior for the exact tested source. They do not authenticate a writer, prove all operating systems or filesystems, establish production correctness, exercise owner key custody, or authorize release."
+}

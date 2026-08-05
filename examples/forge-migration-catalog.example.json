@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "inventory_id": "example-product-lineage-1-migrations",
+  "authority": "owner",
+  "lineage_id": "example-product-1.2.0",
+  "engine": "sql",
+  "mode": "tracked",
+  "source": {
+    "kind": "project-tree"
+  },
+  "entries": [
+    {
+      "sequence": "052",
+      "semantic_id": "create-example-items-v1",
+      "path": "migrations/052_create_example_items.sql",
+      "body_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "description": "Creates the example_items table for this exact lineage."
+    }
+  ],
+  "no_migrations_reason": "",
+  "applied_observation": {
+    "evidence_path": "evidence/applied-migrations.json",
+    "evidence_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "observed_utc": "2026-08-02T12:00:00Z",
+    "entries": [
+      {
+        "sequence": "052",
+        "semantic_id": "create-example-items-v1",
+        "body_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "truth_boundary": "This project-owned export identifies recorded migration ledger values but does not prove the live database schema or safe execution."
+  },
+  "reconciliations": [],
+  "truth_boundary": "Forge verifies exact migration identities and supplied ledger testimony but does not execute upgrades or prove database correctness."
+}

@@ -1,0 +1,1142 @@
+{
+  "schema": 1,
+  "name": "Emotivus Forge",
+  "version": "0.552",
+  "release_state": "core-reduction-mapping-candidate",
+  "updated": "2026-08-05",
+  "tagline": "Portable project truth and continuity that works with any AI model.",
+  "summary": "Forge 0.552 maps every active runtime module, public command path, and top-level project surface before any code reduction. The map preserves Forge's model-collaboration boundary: Forge supplies exact project truth and continuity while AI models retain reasoning and development responsibility.",
+  "positioning": [
+    "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
+    "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
+    "The AI model owns reasoning, implementation choices, code generation, debugging strategy, and communication.",
+    "Run Forge is the normal human invocation; named commands remain internal operations and expert overrides during the transition.",
+    "No roadmap percentage is used as a proxy for efficacy, completion, release readiness, or value."
+  ],
+  "public_commands": [
+    {
+      "name": "Help",
+      "command": "forge help --project .",
+      "description": "Inspect minimal Forge state and recommend the exact next public command.",
+      "when_to_use": "Use first or whenever project state is unclear.",
+      "outputs": [
+        "Project state",
+        "Changed-path count",
+        "One recommended command"
+      ],
+      "next": "Run the recommended command."
+    },
+    {
+      "name": "Adopt",
+      "command": "forge adopt .",
+      "description": "Create or refresh lightweight project understanding without advancing an existing observed checkpoint; explicitly record an exact-fingerprint authority baseline only as a separate reviewed operation.",
+      "when_to_use": "Use on first contact or after material project-structure changes.",
+      "outputs": [
+        "Minimal Project Passport",
+        "Ranked and confirmed authority registry",
+        "Canonical native quality ecosystem",
+        "Bounded source snapshot",
+        "Optional owner-controlled multi-component identity",
+        "Optional authority-confirmed project events",
+        "Optional Ledger-backed fork resolution",
+        "Optional authority-recorded atomic or event guardrails",
+        "Optional project-local field-validation trial plans",
+        "Forge self-currency assessment",
+        "Optional authority-recorded Ledger assertions",
+        "Optional fingerprint-bound native-check qualifications",
+        "Optional artifact provenance contracts with exact recorded digests",
+        "Optional project-owned deployable-boundary contracts",
+        "Optional explicit canonical-claim contracts",
+        "Optional authority-recorded runtime-state matrix contracts",
+        "Optional authority-recorded persisted-state transition and rollback contracts",
+        "Optional exact final-package, confidentiality, and public-review contract",
+        "Optional cross-model presentation contract",
+        "Optional detached-signature and signed release-channel distribution contract",
+        "Optional matched cold-session validation contract",
+        "Preserved observed checkpoint across refreshes",
+        "Optional exact-fingerprint project-authority baseline authorization"
+      ],
+      "next": "Run `forge resume .`."
+    },
+    {
+      "name": "Resume",
+      "command": "forge resume .",
+      "description": "Generate layered continuation context with the exact next action plus compact authority-quarantine, evidence, identity, delivery, truth-state, and self-currency summaries.",
+      "when_to_use": "Use at the beginning of each new session or handoff.",
+      "outputs": [
+        "Owner summary",
+        "Builder detail",
+        "Continuity freshness",
+        "Evidence references",
+        "Authority-baseline status and quarantined-path exceptions",
+        "Exact next action",
+        "Pending decision forks",
+        "Governing decisions and contradiction warnings",
+        "Efficiency telemetry and break-even status",
+        "Compact project identity plus active atomic and event guardrails",
+        "Human-grounded field-validation sample summaries",
+        "Compact truth-state summary",
+        "Forge self-currency status",
+        "Compact active Ledger assertion summary",
+        "Compact native-check qualification summary",
+        "Compact artifact-provenance and delivery-perimeter summary",
+        "Compact deployable-boundary summary",
+        "Compact canonical-claim summary",
+        "Compact runtime-state matrix summary",
+        "Compact final-package, confidentiality, and public-review summary",
+        "Compact cross-model presentation instruction",
+        "Compact signature and release-channel status",
+        "Compact matched cold-session evidence status"
+      ],
+      "next": "Perform the bounded work, then run `forge check .`."
+    },
+    {
+      "name": "Check",
+      "command": "forge check .",
+      "description": "Reconcile canonical observed changes, expose authority quarantine separately, run only authorized verification, and evaluate current contracts and evidence.",
+      "when_to_use": "Use after meaningful source, configuration, or documentation changes.",
+      "outputs": [
+        "Canonical observed change ID",
+        "Exact current snapshot fingerprint for explicit authority review",
+        "Separate authority-baseline and mutation-quarantine status",
+        "Affected surfaces and impact dimensions",
+        "Required and executed scoped checks",
+        "Identity single-source warnings plus atomic and event-obligation evaluations",
+        "Targeted evidence invalidation",
+        "Optional native evidence and Session Close",
+        "Exact PASS scope and exclusions",
+        "Optional exact provider-token and interaction telemetry",
+        "Optional field observation linked to Session Close",
+        "Truth-state and verification-tier summary",
+        "Forge self-currency assessment",
+        "Deterministic Ledger assertion evaluation",
+        "Qualified, unqualified, or stale native-check status",
+        "Artifact provenance currency and unregistered-deliverable warnings",
+        "Deployable-role classification and registered delta comparison",
+        "Explicit canonical-claim evaluation",
+        "Candidate-bound runtime-state and deployment-matrix evaluation"
+      ],
+      "next": "Fix failures, or checkpoint and close a passing development session."
+    },
+    {
+      "name": "Ship",
+      "command": "forge ship .",
+      "description": "Assess a cumulative evidence ladder from observed checkpoint through explicit authority baseline, exact package, remote verification, Release Proof, and cold-session evidence while requiring every cumulative lower claim plus separate exact-package authorization before release-ready.",
+      "when_to_use": "Use to see the highest bounded claim currently supported for the exact candidate; never use a lower claim as release approval.",
+      "outputs": [
+        "Highest supported lower claim",
+        "Explicit authority-recorded candidate status",
+        "Exact final-package and confidentiality status",
+        "Package-bound public-review status",
+        "Detached signature verification status",
+        "Signed release-channel manifest and receipt status",
+        "Fresh remote-channel exact-byte verification status",
+        "Matched cold-session validation status",
+        "Per-level requirements and exclusions",
+        "Bounded release-ready status"
+      ],
+      "next": "Resolve the named gaps; release-ready remains unavailable unless every cumulative requirement and exact-package authorization are current."
+    }
+  ],
+  "advanced_engines": [
+    "Doctor",
+    "Graph",
+    "Lab",
+    "Evidence",
+    "Runtime Proof",
+    "Confidentiality",
+    "CI Bridge",
+    "Update",
+    "Mirror"
+  ],
+  "roadmap": [
+    {
+      "id": "P0-01",
+      "phase": "Reset",
+      "work": "Seal 0.549 as the last legacy-roadmap authority and preserve its exact artifacts.",
+      "status": "COMPLETE",
+      "timebox": "8–12 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-02",
+      "phase": "Reset",
+      "work": "Classify the incomplete 0.550 outputs as experimental and never promote them as a certified release.",
+      "status": "COMPLETE",
+      "timebox": "8–10 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-03",
+      "phase": "Reset",
+      "work": "Retire the seven-axis percentage roadmap and replace it with three outcome goals.",
+      "status": "COMPLETE",
+      "timebox": "10–15 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-04",
+      "phase": "Reset",
+      "work": "Write the AI-collaboration boundary: provide verified context; do not prescribe model reasoning.",
+      "status": "COMPLETE",
+      "timebox": "8–12 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-05",
+      "phase": "Reset",
+      "work": "Reduce the public website to four pages while preserving its design assets and generator.",
+      "status": "COMPLETE",
+      "timebox": "15–20 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-06",
+      "phase": "Reset",
+      "work": "Create the durable-core inventory and classify active, folded, frozen, reference, and removable surfaces.",
+      "status": "COMPLETE",
+      "timebox": "12–18 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-07",
+      "phase": "Reset",
+      "work": "Synchronize product metadata, tests, release notes, website, and continuity records.",
+      "status": "COMPLETE",
+      "timebox": "15–20 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P0-08",
+      "phase": "Reset",
+      "work": "Certify and seal the complete 0.551 delivery from exact final bytes.",
+      "status": "COMPLETE",
+      "timebox": "15–20 min",
+      "target_release": "0.551"
+    },
+    {
+      "id": "P1-01",
+      "phase": "Core reduction",
+      "work": "Generate an import and command reachability map for the active runtime.",
+      "status": "COMPLETE",
+      "timebox": "12–18 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-02",
+      "phase": "Core reduction",
+      "work": "Map every active top-level path to G1, G2, G3, web documentation, testing, packaging, or migration.",
+      "status": "COMPLETE",
+      "timebox": "10–15 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-03",
+      "phase": "Core reduction",
+      "work": "Move historical and explanatory-only documents from active docs into reference/history.",
+      "status": "ACTIVE",
+      "timebox": "15–20 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-04",
+      "phase": "Core reduction",
+      "work": "Fold overlapping release, evidence, rollback, and authority services into the project-truth boundary.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-05",
+      "phase": "Core reduction",
+      "work": "Replace capability activation ceremony with a minimal enabled/reason/scope/evidence record where safety still requires it.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-06",
+      "phase": "Core reduction",
+      "work": "Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P1-07",
+      "phase": "Core reduction",
+      "work": "Rebuild public/development boundaries and prove no retained behavior or history was lost.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.552"
+    },
+    {
+      "id": "P2-01",
+      "phase": "Goal 1",
+      "work": "Define the minimal project-truth schema and migration from the legacy eight-state representation.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.553"
+    },
+    {
+      "id": "P2-02",
+      "phase": "Goal 1",
+      "work": "Consolidate file, tree, package, edition, and embedded-runtime identity.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.553"
+    },
+    {
+      "id": "P2-03",
+      "phase": "Goal 1",
+      "work": "Consolidate owner authority, exact baseline, and NOT_RUN-before-authority semantics.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.553"
+    },
+    {
+      "id": "P2-04",
+      "phase": "Goal 1",
+      "work": "Consolidate parent, fork, supersession, collision, and quarantine lineage.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.553"
+    },
+    {
+      "id": "P2-05",
+      "phase": "Goal 1",
+      "work": "Consolidate exact evidence binding, returned receipt intake, and conflict lifecycle.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.554"
+    },
+    {
+      "id": "P2-06",
+      "phase": "Goal 1",
+      "work": "Retain browser pixels, DOM, overflow, and resource identity as package-bound evidence.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.554"
+    },
+    {
+      "id": "P2-07",
+      "phase": "Goal 1",
+      "work": "Bind owner authorization to one exact package while keeping human identity and legal authority explicit.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.554"
+    },
+    {
+      "id": "P2-08",
+      "phase": "Goal 1",
+      "work": "Run adversarial wrong-package, same-version collision, tampering, and stale-evidence trials.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.555"
+    },
+    {
+      "id": "P2-09",
+      "phase": "Goal 1",
+      "work": "Run independent exact-byte verification twice and declare G1 COMPLETE only if every gate passes.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.555"
+    },
+    {
+      "id": "P3-01",
+      "phase": "Goal 2",
+      "work": "Implement one deterministic state classifier behind Run Forge.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.556"
+    },
+    {
+      "id": "P3-02",
+      "phase": "Goal 2",
+      "work": "Route new projects to adopt-and-orient without requiring the user to know Adopt.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.556"
+    },
+    {
+      "id": "P3-03",
+      "phase": "Goal 2",
+      "work": "Route unchanged projects to compact Resume only.",
+      "status": "QUEUED",
+      "timebox": "8–12 min",
+      "target_release": "0.556"
+    },
+    {
+      "id": "P3-04",
+      "phase": "Goal 2",
+      "work": "Route changed projects to scoped checks plus refreshed continuity.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.557"
+    },
+    {
+      "id": "P3-05",
+      "phase": "Goal 2",
+      "work": "Detect session-close intent and produce the handoff, continuity export, and exact next action.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.557"
+    },
+    {
+      "id": "P3-06",
+      "phase": "Goal 2",
+      "work": "Detect release candidates without automatically shipping or authorizing them.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.557"
+    },
+    {
+      "id": "P3-07",
+      "phase": "Goal 2",
+      "work": "Replace verbose recommended prompts with structured state and one resolving question only when ambiguity is real.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.558"
+    },
+    {
+      "id": "P3-08",
+      "phase": "Goal 2",
+      "work": "Run new, unchanged, changed, conflicting, close, and release-candidate cold trials.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.558"
+    },
+    {
+      "id": "P3-09",
+      "phase": "Goal 2",
+      "work": "Run one cross-vendor handoff and declare G2 COMPLETE only after the scored acceptance gate.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.559"
+    },
+    {
+      "id": "P4-01",
+      "phase": "Goal 3",
+      "work": "Define a vendor-neutral continuity kernel that stores truth rather than model instructions.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.560"
+    },
+    {
+      "id": "P4-02",
+      "phase": "Goal 3",
+      "work": "Preserve unknown fields and historical meaning through forward migrations.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.560"
+    },
+    {
+      "id": "P4-03",
+      "phase": "Goal 3",
+      "work": "Create explicit retain, fold, freeze, retire, and replace lifecycle records.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.560"
+    },
+    {
+      "id": "P4-04",
+      "phase": "Goal 3",
+      "work": "Require an observed miss and scored trial before adding any new instrument.",
+      "status": "QUEUED",
+      "timebox": "10–15 min",
+      "target_release": "0.561"
+    },
+    {
+      "id": "P4-05",
+      "phase": "Goal 3",
+      "work": "Allow newer models to propose simplifications while Forge verifies preserved invariants.",
+      "status": "QUEUED",
+      "timebox": "12–18 min",
+      "target_release": "0.561"
+    },
+    {
+      "id": "P4-06",
+      "phase": "Goal 3",
+      "work": "Run a future-model replacement trial against an older sealed Forge package.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.561"
+    },
+    {
+      "id": "P4-07",
+      "phase": "Goal 3",
+      "work": "Run a second-provider continuity round trip and compare exact preserved truth.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.562"
+    },
+    {
+      "id": "P4-08",
+      "phase": "Goal 3",
+      "work": "Certify the evolution foundation, then keep G3 continuous rather than falsely complete.",
+      "status": "QUEUED",
+      "timebox": "15–20 min",
+      "target_release": "0.562"
+    }
+  ],
+  "boundaries": {
+    "local_first": true,
+    "model_independent": true,
+    "git_required": false,
+    "private_data_in_distribution": false,
+    "validation_data": "Neutral synthetic fixtures or properly licensed public projects only",
+    "vault_inactive_by_default": true,
+    "version_authority": "Owner-declared; Forge does not independently assign milestone versions."
+  },
+  "limitations": [
+    "This is a 0.548 controlled-core development candidate, not a public commercial release.",
+    "A project-authority baseline is a project-declared record bound to observed snapshot bytes and metadata. Forge does not authenticate the named human, prove authorship, identify which process changed a file, or establish that every behavior was substantively reviewed. Bounded snapshots cannot support the authority-recorded Ship claim.",
+    "Ship can report a bounded release-ready PASS only when every cumulative project-declared requirement and a separate exact-package authorization are current. Scoped Check, Doctor diagnosis, and content-aware HTTP recipes alone never imply release assurance.",
+    "Forge notices summarize only structured Forge results. They do not replace the underlying Passport, Resume, Ledger, findings, or native evidence.",
+    "State transactions protect the eight top-level continuity files; raw native evidence created by an external process may remain as orphaned evidence if a later operation is interrupted.",
+    "Ledger hash chaining detects accidental or unauthorized content changes but is not a cryptographic signature or remote attestation system.",
+    "Forge Doctor runs only after explicit project-owned activation and remains diagnose-only; it never repairs or installs anything.",
+    "Capability recommendations are non-binding metadata and never activate or execute a capability.",
+    "Provider token counts are exact only when copied from the named provider. Character estimates remain heuristic.",
+    "Field-trial observations remain human- or fixture-supplied local evidence and do not establish causality, universal accuracy, commercial value, or release readiness.",
+    "Verification tiers describe where evidence was observed; a higher tier never implies that lower tiers ran or that the full product is correct.",
+    "Forge self-currency verifies references, fingerprints, and freshness boundaries, not the semantic correctness of the project objective or owner-facing documents.",
+    "Project identity values are owner-declared. Forge validates shape, source currency, exact copied literals in configured paths, and monotonic relationships; it does not choose versions or prove packages were built or deployed.",
+    "Event obligations activate only after an authority-confirmed project event. File coverage does not prove the obligation is semantically satisfied, so authority review remains required before retirement.",
+    "Shared lifecycle status proves source currency and authority state only; it does not prove contract correctness.",
+    "Ledger assertions use a bounded deterministic assertion vocabulary. They do not execute arbitrary project commands, prove semantic correctness, or replace project-native tests.",
+    "A qualified check has recorded evidence that its current source rejected declared known-bad cases. Qualification does not prove complete defect coverage or correctness outside the recorded boundary.",
+    "Current artifact provenance proves only that present bytes still match authority-recorded artifact, input, generator-source, and baseline digests. It does not prove the declared generator actually ran, the artifact works, delivery occurred, or deployment succeeded.",
+    "Confirmed relationships are project-owned impact context. Forge does not infer unrecorded dependencies, prove runtime reachability or behavior, or authorize deletion of code merely because no relationship is recorded.",
+    "Runtime Proof is GET-only, exact-origin, unauthenticated, content-aware HTTP evidence. It stores no response body and does not execute JavaScript, inspect layout, prove database state, or certify release readiness.",
+    "An exact invocation proves which argv, working directory, bounded environment, and declared gate members were requested and reported. It does not prove the native gate is correct, qualified, exhaustive, or release-sufficient.",
+    "A continuity companion proves only that restored Forge state and bounded structured evidence match its manifest and optional development-package digest. It is project-private and does not prove the application package or release is correct.",
+    "A confirmed persisted-state transition proves only that supplied exact or semantic snapshots, bounded validator results, coverage status, receipts, artifact bytes, migration evidence, and same-Check runtime proof agree with the authority-recorded contract. Forge does not deploy, migrate, restore, run arbitrary validators, inspect hidden data, or prove operational rollback safety beyond the supplied evidence.",
+    "Final-package binding proves only that current owner identity, exact ZIP bytes, and registered provenance agree. It does not prove the package runs, was signed, or was delivered through a secure channel.",
+    "The bounded confidentiality scan checks configured archive structure, sensitive paths, private-key markers, non-placeholder secret assignments, and owner-declared literal terms. It cannot prove every possible secret or confidential fact is absent, and it retains no scanned values.",
+    "Public-review receipts prove that named authorities recorded bounded reviews against the exact package and evidence bytes. Forge does not perform the reviews or validate their methodology.",
+    "A remote-channel-verified result proves only that a fresh bounded HTTPS GET returned bytes identical to the exact final package at assessment time. It does not prove future availability, continuous CDN integrity, signer custody, or release readiness.",
+    "A bounded Release Proof result covers only project-declared exact-package surfaces and explicitly classified domains. It does not discover undeclared surfaces, establish reviewer competence, validate substantive methodology, execute tests, prove future evidence validity, or authorize release.",
+    "Ship claim levels are cumulative evidence summaries. No lower claim implies release readiness. A bounded release-ready PASS requires every prior level plus a current exact-package project-declared authorization, and still does not authenticate the human, prove universal correctness, or guarantee future package or channel state.",
+    "Roadmap percentages are owner-facing implementation-and-validation estimates sourced from one canonical progress record. They are not release evidence, release authority, or permission to publish.",
+    "Third-party intake verifies exact reviewed source identity and declared reuse boundaries. It does not provide legal advice, prove correctness or security, discover undeclared dependencies, or authorize release.",
+    "Bounded retrieval is orientation-only. Similarity, recency, frequency, rank fusion, and graph proximity do not promote trust, validate stale support, change project authority, or authorize release.",
+    "Project-owned `.forgeignore` patterns bound ordinary orientation and artifact-collision observation only. They do not remove files from deterministic package construction, confidentiality screening, an explicit exact-package contract, or project authority by themselves; an unsafe ignore policy can hide active artifacts from those ordinary observations and therefore remains a project-owned trust boundary.",
+    "A passing external-evidence review proves exact returned files and bounded workflow semantics against one original sealed kit. It does not authenticate the reviewer, owner, operators, administrative independence, provider reports, benchmark generality, release authority, or release readiness. Review-receipt verification checks receipt content identity and truth flags; re-adjudication requires retaining the original kit and return bundle.",
+    "A passing browser-evidence receipt proves that the recorded external browser and driver rendered exact route HTML and package-relative resources from one exact website ZIP under the recorded viewport and color profiles. It does not prove HTTP-server or production-origin behavior, physical-device or touch behavior, assistive-technology compatibility, accessibility conformance, manual visual correctness, independent review, owner authorization, or release readiness."
+  ],
+  "headline": "Map the active core before reducing it.",
+  "operating_model": {
+    "type": "portable local continuity and control layer",
+    "who_runs_it": "The active coding AI, developer, or project operator runs Forge inside the project workspace.",
+    "first_contact": "Extract Emotivus-Forge beside the application, work from the project root, and say “Run Forge.”",
+    "continuation": "Keep the eight-file `.forge/` continuity state with the project, close meaningful sessions through Check, and start later sessions with Resume.",
+    "delivery": "Ship assesses bounded cumulative evidence claims only after explicit use; release-ready requires the complete current ladder plus separate exact-package authorization, and deployment stays external.",
+    "not_a_coding_agent": true,
+    "does_not_copy_host_source_into_forge_core": true,
+    "default_when_no_command": "Bounded active Run Forge pass: internal Adopt/Resume/Quick Check phases as needed, one Forge Brief, then passive sidecar. Ship is never automatic."
+  },
+  "interface": {
+    "primary_command_count": 5,
+    "primary_commands": [
+      "help",
+      "adopt",
+      "resume",
+      "check",
+      "ship"
+    ],
+    "default_when_no_command": "Safe smart start: Progressive Adopt + Resume, Resume, or scoped Check + Resume. Ship is never automatic.",
+    "expert_entry": "forge advanced",
+    "legacy_routes_publicly_marketized": false,
+    "principle": "The active core stays small; advanced capability runs only after a real trigger and fingerprint-bound project-owned activation contract.",
+    "aliases": {
+      "forge": "canonical",
+      "frg": "optional launcher alias"
+    }
+  },
+  "starter_prompt": "Run Forge.",
+  "token_conservation": {
+    "major_product_goal": true,
+    "mechanism": "A compact Passport and layered Resume packet reduce repeated project rediscovery; 0.529 keeps native invocation contracts, coverage details, raw evidence, authority traces, relationship maps, artifact manifests, runtime-state matrices, persisted-state fixtures, coverage matrices, semantic validator outcomes, deployment and rollback receipt digests, and detailed truth records in local structured state while routine Resume emits only compact counts and actionable exceptions. The copy-ready recommended prompt remains capped at 680 characters. Portable continuity companions retain the eight state files and bounded structured result manifests while excluding raw logs, response bodies, credentials, project source, and database contents. Ship reports compact claim statuses and failed requirements while retaining underlying check, transition, and evidence detail locally. Final-package hashes, signatures, public keys, channel receipts, pair receipts, archive findings, literal values, and review evidence remain local; Resume emits only compact package, signing, channel, cold-session, scan, and review counts.",
+    "measurement": "Forge records observed initialization duration, files scanned, Resume/output size, cached records reused, evidence reused or invalidated, retries, corrections, and exact provider tokens only when explicitly supplied.",
+    "benchmark_rule": "A practical break-even observation requires at least three matched task pairs using the same provider, model, settings, and exact provider token reports.",
+    "truth_boundary": "Character-based estimates are labeled heuristic. Workspace bytes and estimates are never reported as actual provider-token savings, and matched results are limited to the measured sample.",
+    "field_validation": "Project-local field observations can pair time-to-meaningful-work and quality judgments with exact provider telemetry, but Forge keeps reviewer judgment and token measurement as separate evidence classes."
+  },
+  "natural_language_launcher": {
+    "phrase": "Run Forge.",
+    "behavior": "Perform bounded Progressive Adopt, Resume, or scoped Check, then point the active AI to the Resume packet.",
+    "automatic_actions": [
+      "Progressive Adopt",
+      "Resume",
+      "Scoped changed-file Check"
+    ],
+    "explicit_only": [
+      "Native gate execution",
+      "Doctor activation and execution",
+      "Ship",
+      "deployment",
+      "production migration",
+      "deletion",
+      "environment repair",
+      "any vaulted capability reconnection"
+    ]
+  },
+  "website": {
+    "base_url": "https://forge.emotivus.com",
+    "parent_url": "https://emotivus.com",
+    "deployment_target": "forge.emotivus.com",
+    "primary_navigation": [
+      "Home",
+      "Run Forge",
+      "Project Truth",
+      "Continuity & Evidence"
+    ],
+    "supporting_pages": [],
+    "canonical_source": "FORGE-PRODUCT.json",
+    "release_rule": "A Forge release is incomplete when the four generated pages, downloads, release notes, checksums, product metadata, or goal/chunk statuses disagree.",
+    "identity": {
+      "name": "Tempered Continuity",
+      "mark": "Open continuity ring integrated as the O in FORGE",
+      "meaning": "Ember-to-gold creation transitions to a blue verified handoff endpoint.",
+      "palette": {
+        "ink": "#090706",
+        "panel": "#15100c",
+        "cream": "#f6ead8",
+        "ember": "#ff5d18",
+        "orange": "#ff7a18",
+        "gold": "#ffc33c",
+        "yellow": "#ffe07a",
+        "blue": "#58b9ff",
+        "blue_deep": "#316e9c",
+        "green": "#93e7bc"
+      }
+    },
+    "roadmap_summary": {
+      "reporting_model": "goal-status",
+      "goals": [
+        {
+          "id": "G1",
+          "name": "Provable Project Truth",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "G2",
+          "name": "One-Command Session Continuity",
+          "status": "ACTIVE"
+        },
+        {
+          "id": "G3",
+          "name": "Cross-Model Evolution Kernel",
+          "status": "FOUNDATION_ACTIVE"
+        }
+      ],
+      "active_chunk": "P1-03"
+    }
+  },
+  "release_highlights": [
+    "Inventories all 88 active runtime modules and classifies each against the durable goals or shared runtime.",
+    "Traces Run Forge plus Help, Adopt, Resume, Check, and Ship in bounded neutral fixtures.",
+    "Classifies every active top-level project surface by purpose and disposition.",
+    "Finds no currently unreferenced active module once CLI, standalone tools, and verification entry points are included.",
+    "Prevents deletion from being inferred from one command trace or static non-observation.",
+    "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
+    "Preserves the four-page generated website and model-collaboration boundary."
+  ],
+  "display_version": "0.552",
+  "release_name": "Active Runtime Reachability and Path Classification",
+  "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
+  "active_advanced_capabilities": [
+    {
+      "name": "Forge Doctor",
+      "status": "contract-gated",
+      "mode": "diagnose-only",
+      "purpose": "Compare project-declared environment expectations with the local CLI under explicit budgets.",
+      "exclusions": [
+        "automatic repair",
+        "installation",
+        "production equivalence",
+        "database state",
+        "release assurance"
+      ]
+    },
+    {
+      "name": "Runtime Proof",
+      "status": "contract-gated",
+      "mode": "content-aware-http",
+      "purpose": "Verify bounded status and minimum viable HTTP content at exact project-approved origins.",
+      "exclusions": [
+        "JavaScript execution",
+        "visual layout",
+        "authentication",
+        "database state",
+        "deployment completeness",
+        "release assurance"
+      ]
+    }
+  ],
+  "active_roadmap": {
+    "schema": 2,
+    "reporting_model": "outcome-goals-and-timeboxed-chunks",
+    "goals": [
+      {
+        "id": "G1",
+        "name": "Provable Project Truth",
+        "status": "ACTIVE",
+        "definition": "Forge identifies the exact project, authority, lineage, changes, evidence, and authorized package without asking an AI model to infer them.",
+        "completion_gate": "Exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization all pass from independently verified bytes."
+      },
+      {
+        "id": "G2",
+        "name": "One-Command Session Continuity",
+        "status": "ACTIVE",
+        "definition": "Run Forge determines whether the model is entering, resuming, checking, closing, or assessing a release candidate and returns compact verified context.",
+        "completion_gate": "Cold models can enter and leave representative projects using Run Forge without selecting workflow commands, repeating completed work, or inventing authority."
+      },
+      {
+        "id": "G3",
+        "name": "Cross-Model Evolution Kernel",
+        "status": "FOUNDATION_ACTIVE",
+        "definition": "Forge preserves vendor-neutral project truth and a scored evolution loop so newer models can simplify or extend Forge without erasing history.",
+        "completion_gate": "The foundation is complete when another model/vendor can migrate an older package, preserve exact meaning, replace an obsolete component, and emit a compatible continuity package."
+      }
+    ],
+    "chunks": [
+      {
+        "id": "P0-01",
+        "phase": "Reset",
+        "work": "Seal 0.549 as the last legacy-roadmap authority and preserve its exact artifacts.",
+        "status": "COMPLETE",
+        "timebox": "8–12 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-02",
+        "phase": "Reset",
+        "work": "Classify the incomplete 0.550 outputs as experimental and never promote them as a certified release.",
+        "status": "COMPLETE",
+        "timebox": "8–10 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-03",
+        "phase": "Reset",
+        "work": "Retire the seven-axis percentage roadmap and replace it with three outcome goals.",
+        "status": "COMPLETE",
+        "timebox": "10–15 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-04",
+        "phase": "Reset",
+        "work": "Write the AI-collaboration boundary: provide verified context; do not prescribe model reasoning.",
+        "status": "COMPLETE",
+        "timebox": "8–12 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-05",
+        "phase": "Reset",
+        "work": "Reduce the public website to four pages while preserving its design assets and generator.",
+        "status": "COMPLETE",
+        "timebox": "15–20 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-06",
+        "phase": "Reset",
+        "work": "Create the durable-core inventory and classify active, folded, frozen, reference, and removable surfaces.",
+        "status": "COMPLETE",
+        "timebox": "12–18 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-07",
+        "phase": "Reset",
+        "work": "Synchronize product metadata, tests, release notes, website, and continuity records.",
+        "status": "COMPLETE",
+        "timebox": "15–20 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P0-08",
+        "phase": "Reset",
+        "work": "Certify and seal the complete 0.551 delivery from exact final bytes.",
+        "status": "COMPLETE",
+        "timebox": "15–20 min",
+        "target_release": "0.551"
+      },
+      {
+        "id": "P1-01",
+        "phase": "Core reduction",
+        "work": "Generate an import and command reachability map for the active runtime.",
+        "status": "COMPLETE",
+        "timebox": "12–18 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-02",
+        "phase": "Core reduction",
+        "work": "Map every active top-level path to G1, G2, G3, web documentation, testing, packaging, or migration.",
+        "status": "COMPLETE",
+        "timebox": "10–15 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-03",
+        "phase": "Core reduction",
+        "work": "Move historical and explanatory-only documents from active docs into reference/history.",
+        "status": "ACTIVE",
+        "timebox": "15–20 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-04",
+        "phase": "Core reduction",
+        "work": "Fold overlapping release, evidence, rollback, and authority services into the project-truth boundary.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-05",
+        "phase": "Core reduction",
+        "work": "Replace capability activation ceremony with a minimal enabled/reason/scope/evidence record where safety still requires it.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-06",
+        "phase": "Core reduction",
+        "work": "Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P1-07",
+        "phase": "Core reduction",
+        "work": "Rebuild public/development boundaries and prove no retained behavior or history was lost.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.552"
+      },
+      {
+        "id": "P2-01",
+        "phase": "Goal 1",
+        "work": "Define the minimal project-truth schema and migration from the legacy eight-state representation.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.553"
+      },
+      {
+        "id": "P2-02",
+        "phase": "Goal 1",
+        "work": "Consolidate file, tree, package, edition, and embedded-runtime identity.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.553"
+      },
+      {
+        "id": "P2-03",
+        "phase": "Goal 1",
+        "work": "Consolidate owner authority, exact baseline, and NOT_RUN-before-authority semantics.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.553"
+      },
+      {
+        "id": "P2-04",
+        "phase": "Goal 1",
+        "work": "Consolidate parent, fork, supersession, collision, and quarantine lineage.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.553"
+      },
+      {
+        "id": "P2-05",
+        "phase": "Goal 1",
+        "work": "Consolidate exact evidence binding, returned receipt intake, and conflict lifecycle.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.554"
+      },
+      {
+        "id": "P2-06",
+        "phase": "Goal 1",
+        "work": "Retain browser pixels, DOM, overflow, and resource identity as package-bound evidence.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.554"
+      },
+      {
+        "id": "P2-07",
+        "phase": "Goal 1",
+        "work": "Bind owner authorization to one exact package while keeping human identity and legal authority explicit.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.554"
+      },
+      {
+        "id": "P2-08",
+        "phase": "Goal 1",
+        "work": "Run adversarial wrong-package, same-version collision, tampering, and stale-evidence trials.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.555"
+      },
+      {
+        "id": "P2-09",
+        "phase": "Goal 1",
+        "work": "Run independent exact-byte verification twice and declare G1 COMPLETE only if every gate passes.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.555"
+      },
+      {
+        "id": "P3-01",
+        "phase": "Goal 2",
+        "work": "Implement one deterministic state classifier behind Run Forge.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.556"
+      },
+      {
+        "id": "P3-02",
+        "phase": "Goal 2",
+        "work": "Route new projects to adopt-and-orient without requiring the user to know Adopt.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.556"
+      },
+      {
+        "id": "P3-03",
+        "phase": "Goal 2",
+        "work": "Route unchanged projects to compact Resume only.",
+        "status": "QUEUED",
+        "timebox": "8–12 min",
+        "target_release": "0.556"
+      },
+      {
+        "id": "P3-04",
+        "phase": "Goal 2",
+        "work": "Route changed projects to scoped checks plus refreshed continuity.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.557"
+      },
+      {
+        "id": "P3-05",
+        "phase": "Goal 2",
+        "work": "Detect session-close intent and produce the handoff, continuity export, and exact next action.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.557"
+      },
+      {
+        "id": "P3-06",
+        "phase": "Goal 2",
+        "work": "Detect release candidates without automatically shipping or authorizing them.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.557"
+      },
+      {
+        "id": "P3-07",
+        "phase": "Goal 2",
+        "work": "Replace verbose recommended prompts with structured state and one resolving question only when ambiguity is real.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.558"
+      },
+      {
+        "id": "P3-08",
+        "phase": "Goal 2",
+        "work": "Run new, unchanged, changed, conflicting, close, and release-candidate cold trials.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.558"
+      },
+      {
+        "id": "P3-09",
+        "phase": "Goal 2",
+        "work": "Run one cross-vendor handoff and declare G2 COMPLETE only after the scored acceptance gate.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.559"
+      },
+      {
+        "id": "P4-01",
+        "phase": "Goal 3",
+        "work": "Define a vendor-neutral continuity kernel that stores truth rather than model instructions.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.560"
+      },
+      {
+        "id": "P4-02",
+        "phase": "Goal 3",
+        "work": "Preserve unknown fields and historical meaning through forward migrations.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.560"
+      },
+      {
+        "id": "P4-03",
+        "phase": "Goal 3",
+        "work": "Create explicit retain, fold, freeze, retire, and replace lifecycle records.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.560"
+      },
+      {
+        "id": "P4-04",
+        "phase": "Goal 3",
+        "work": "Require an observed miss and scored trial before adding any new instrument.",
+        "status": "QUEUED",
+        "timebox": "10–15 min",
+        "target_release": "0.561"
+      },
+      {
+        "id": "P4-05",
+        "phase": "Goal 3",
+        "work": "Allow newer models to propose simplifications while Forge verifies preserved invariants.",
+        "status": "QUEUED",
+        "timebox": "12–18 min",
+        "target_release": "0.561"
+      },
+      {
+        "id": "P4-06",
+        "phase": "Goal 3",
+        "work": "Run a future-model replacement trial against an older sealed Forge package.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.561"
+      },
+      {
+        "id": "P4-07",
+        "phase": "Goal 3",
+        "work": "Run a second-provider continuity round trip and compare exact preserved truth.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.562"
+      },
+      {
+        "id": "P4-08",
+        "phase": "Goal 3",
+        "work": "Certify the evolution foundation, then keep G3 continuous rather than falsely complete.",
+        "status": "QUEUED",
+        "timebox": "15–20 min",
+        "target_release": "0.562"
+      }
+    ],
+    "percentages_retired": true
+  },
+  "capabilities": [
+    "core-state-schema-3",
+    "observed-checkpoint-preservation",
+    "explicit-project-authority-baseline",
+    "exact-snapshot-fingerprint-authorization",
+    "separate-adopt-authorization-operation",
+    "durable-authorization-rationale-and-source",
+    "unexpected-mutation-quarantine",
+    "authority-quarantine-survives-observed-checkpoint",
+    "legacy-observed-only-migration",
+    "post-authorization-checkpoint-revalidation",
+    "authority-recorded-candidate-claim",
+    "human-readable-full-review-fingerprint",
+    "exact-package-release-authorization",
+    "separate-release-authorization-adopt-operation",
+    "authorization-expiration-and-source-drift-invalidation",
+    "owner-release-authorized-claim",
+    "bounded-release-ready-claim",
+    "canonical-owner-progress-status",
+    "exact-project-lineage",
+    "same-version-collision-declaration",
+    "merge-candidate-quarantine",
+    "lineage-identified-candidate-claim",
+    "exact-migration-catalogs",
+    "migration-sequence-semantic-body-binding",
+    "explicit-no-migrations-declaration",
+    "applied-migration-identity-truth-states",
+    "cross-lineage-migration-number-collision-detection",
+    "cross-lineage-semantic-body-collision-detection",
+    "append-after-highest-migration-reconciliation",
+    "migration-history-identified-candidate-claim",
+    "settings-schema-15",
+    "governed-continuity-register",
+    "trust-ranked-continuity-facts",
+    "explicit-knowledge-gap-tracking",
+    "continuity-support-drift-detection",
+    "continuity-supersession-protection",
+    "continuity-gap-resolution-and-retirement-controls",
+    "bounded-session-sidecar",
+    "core-state-schema-4",
+    "third-party-capability-intake",
+    "exact-upstream-archive-and-member-binding",
+    "third-party-license-dependency-and-distribution-boundaries",
+    "upstream-archive-absorption-detection",
+    "traceable-bounded-retrieval",
+    "normalized-technical-token-similarity",
+    "authority-aware-continuity-deduplication",
+    "reciprocal-rank-fusion",
+    "never-fade-continuity-blockers",
+    "bounded-support-relationship-trace",
+    "settings-schema-21",
+    "bounded-run-forge-active-pass",
+    "transient-distilled-session-context",
+    "raw-transcript-rejection",
+    "request-claim-code-evidence-reconciliation",
+    "structured-forge-brief",
+    "passive-sidecar-after-active-pass",
+    "session-close-auto-resume-refresh",
+    "core-state-schema-5",
+    "content-addressed-workspace-integrity",
+    "exact-seal-candidate",
+    "post-checkpoint-drift-refusal",
+    "observed-exact-byte-artifact-collision-detection",
+    "stable-package-source-selection",
+    "native-narrative-integrity-certification",
+    "deterministic-build-manifest",
+    "optional-external-key-build-attestation",
+    "handoff-benchmark-attempt-truthful-not-run",
+    "proxy-observation-audit",
+    "deterministic-portable-evidence-kits",
+    "exact-public-runtime-evidence-kit-binding",
+    "separately-invoked-writer-candidate-protocol",
+    "sealed-matched-handoff-benchmark-packets",
+    "exact-token-and-human-review-benchmark-finalization",
+    "build-manifest-schema-2-packaged-manifest-binding",
+    "deterministic-owner-attestation-ceremony-kits",
+    "precommitted-owner-public-key-fingerprints",
+    "external-detached-signature-finalization",
+    "content-addressed-attestation-receipts",
+    "independent-attestation-receipt-reverification",
+    "exact-browser-viewport-evidence",
+    "bounded-website-zip-extraction",
+    "optional-external-playwright-driver",
+    "operator-supplied-browser-identity-binding",
+    "network-isolated-package-resource-routing",
+    "rendered-dom-and-png-evidence",
+    "browser-console-page-request-failure-capture",
+    "browser-color-scheme-and-overflow-metrics",
+    "deterministic-browser-evidence-bundles",
+    "exact-browser-evidence-reverification"
+  ],
+  "inactive_capabilities": [
+    "legacy-confidentiality-engine"
+  ],
+  "progress_status": {
+    "source": "FORGE-PRODUCT.json active_roadmap",
+    "reporting_rule": "Report goal state, completed chunks, active chunk, and scored efficacy. Never average unlike goals into a percentage.",
+    "goal_status": {
+      "G1": "ACTIVE",
+      "G2": "ACTIVE",
+      "G3": "FOUNDATION_ACTIVE"
+    },
+    "completed_chunks": 10,
+    "active_chunk": "P1-03",
+    "efficacy_status": "The controlled six-defect scoreboard remains experimental 0.550 testimony and is not promoted; this release measures reachability and purpose, not defect-catching efficacy."
+  }
+}
