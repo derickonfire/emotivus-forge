@@ -84,6 +84,42 @@ def zip_info(name: str) -> zipfile.ZipInfo:
     return info
 
 
+def verify_archive_hygiene(archive: zipfile.ZipFile, problems: list[str]) -> tuple[list[str], str, str, dict[str, Any]]:
+    """Shared kit-archive hygiene: duplicate / unsafe / encrypted / symlink /
+    timestamp checks, single top-level root enforcement, and MANIFEST.json load.
+    Appends any problems in place and returns (names, root_name, manifest_name,
+    manifest). Callers keep their own schema, payload, and kit_id logic."""
+    infos = archive.infolist()
+    names = [info.filename for info in infos if not info.is_dir()]
+    if len(names) != len(set(names)):
+        problems.append("archive contains duplicate member names")
+    if any(not safe_member(name) for name in names):
+        problems.append("archive contains unsafe member paths")
+    if any(info.flag_bits & 0x1 for info in infos):
+        problems.append("archive contains encrypted members")
+    if any(member_is_symlink(info) for info in infos):
+        problems.append("archive contains symbolic-link members")
+    if any(info.date_time != ZIP_TIMESTAMP for info in infos):
+        problems.append("archive member timestamps are not deterministic")
+    roots = {PurePosixPath(name).parts[0] for name in names if PurePosixPath(name).parts}
+    if len(roots) != 1:
+        problems.append("archive must contain exactly one top-level kit directory")
+        root_name = ""
+    else:
+        root_name = next(iter(roots))
+    manifest_name = f"{root_name}/MANIFEST.json" if root_name else ""
+    manifest: dict[str, Any] = {}
+    if not manifest_name or manifest_name not in names:
+        problems.append("archive does not contain MANIFEST.json at the kit root")
+    else:
+        try:
+            loaded = json.loads(archive.read(manifest_name).decode("utf-8"))
+            manifest = loaded if isinstance(loaded, dict) else {}
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            problems.append(f"MANIFEST.json is invalid: {exc}")
+    return names, root_name, manifest_name, manifest
+
+
 def _is_forge_state_path(path: Path) -> bool:
     return ".forge" in path.parts
 

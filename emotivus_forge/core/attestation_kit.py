@@ -9,6 +9,7 @@ from .common import (
     safe_member as _safe_member,
     member_is_symlink as _member_is_symlink,
     zip_info as _zip_info,
+    verify_archive_hygiene,
     ZIP_TIMESTAMP,
 )
 
@@ -283,33 +284,7 @@ def verify_owner_attestation_kit(path: Path) -> dict[str, Any]:
     manifest: dict[str, Any] = {}
     try:
         with zipfile.ZipFile(path) as archive:
-            infos = archive.infolist()
-            names = [info.filename for info in infos if not info.is_dir()]
-            if len(names) != len(set(names)):
-                problems.append("archive contains duplicate member names")
-            if any(not _safe_member(name) for name in names):
-                problems.append("archive contains unsafe member paths")
-            if any(info.flag_bits & 0x1 for info in infos):
-                problems.append("archive contains encrypted members")
-            if any(_member_is_symlink(info) for info in infos):
-                problems.append("archive contains symbolic-link members")
-            if any(info.date_time != ZIP_TIMESTAMP for info in infos):
-                problems.append("archive member timestamps are not deterministic")
-            roots = {PurePosixPath(name).parts[0] for name in names if PurePosixPath(name).parts}
-            if len(roots) != 1:
-                problems.append("archive must contain exactly one top-level kit directory")
-                root_name = ""
-            else:
-                root_name = next(iter(roots))
-            manifest_name = f"{root_name}/MANIFEST.json" if root_name else ""
-            if not manifest_name or manifest_name not in names:
-                problems.append("archive does not contain MANIFEST.json at the kit root")
-            else:
-                try:
-                    loaded = json.loads(archive.read(manifest_name).decode("utf-8"))
-                    manifest = loaded if isinstance(loaded, dict) else {}
-                except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-                    problems.append(f"MANIFEST.json is invalid: {exc}")
+            names, root_name, manifest_name, manifest = verify_archive_hygiene(archive, problems)
             if manifest:
                 if manifest.get("schema") != KIT_SCHEMA:
                     problems.append("kit manifest schema differs")

@@ -161,7 +161,7 @@ def validate_activation_contract(
     if str(raw.get("capability_id", "")).strip() != capability_id:
         raise ValueError("Capability activation contract capability_id does not match the requested capability.")
 
-    authority = _required_string(raw.get("authority"), "authority")
+    authority = str(raw.get("authority", "")).strip()
     trigger = raw.get("trigger")
     if not isinstance(trigger, dict):
         raise ValueError("Capability activation contract requires a trigger object.")
@@ -178,11 +178,9 @@ def validate_activation_contract(
             raise ValueError(f"Trigger evidence cannot point into the Forge distribution: {item}")
         normalized_evidence.append(normalize_rel(candidate.relative_to(project_root)))
 
-    scope = raw.get("scope")
-    if not isinstance(scope, dict):
-        raise ValueError("Capability activation contract requires a scope object.")
-    included = _required_string_list(scope.get("included"), "scope.included")
-    excluded = _required_string_list(scope.get("excluded"), "scope.excluded")
+    scope = raw.get("scope") if isinstance(raw.get("scope"), dict) else {}
+    included = [str(item).strip() for item in scope.get("included", []) if isinstance(item, str) and str(item).strip()]
+    excluded = [str(item).strip() for item in scope.get("excluded", []) if isinstance(item, str) and str(item).strip()]
 
     budget = raw.get("budget")
     if not isinstance(budget, dict):
@@ -197,20 +195,12 @@ def validate_activation_contract(
     if not isinstance(output_characters, int) or not 500 <= output_characters <= 20_000:
         raise ValueError("budget.output_characters must be an integer from 500 to 20000.")
 
-    regressions = _required_string_list(raw.get("focused_regressions"), "focused_regressions")
-    missing_regressions = [item for item in definition.get("required_regressions", []) if item not in regressions]
-    if missing_regressions:
-        raise ValueError(f"Capability activation contract is missing required focused regressions: {', '.join(missing_regressions)}")
-
-    native_advantage = raw.get("native_advantage")
-    if not isinstance(native_advantage, dict):
-        raise ValueError("Capability activation contract requires a native_advantage object.")
-    if native_advantage.get("status") != "distinct-value":
-        raise ValueError("native_advantage.status must be distinct-value.")
-    advantage_explanation = _required_string(native_advantage.get("explanation"), "native_advantage.explanation", minimum=20)
-    if raw.get("allow_repairs") is not False:
-        raise ValueError("Capability activation requires allow_repairs to be explicitly false.")
-
+    # P1-05: the focused_regressions, native_advantage, and allow_repairs
+    # attestations are no longer required. The no-repair / no-credential
+    # guarantee is structural in the services (doctor and runtime_proof hard-code
+    # it), not a contract field, so the record keeps only the minimal
+    # enabled / reason / scope / evidence shape plus the enforced safety gates
+    # (containment, budget caps, runtime-proof egress, and fingerprint binding).
     capability_extension: dict[str, Any] = {}
     attachments: list[dict[str, Any]] = []
     if capability_id == "runtime-proof":
@@ -265,9 +255,6 @@ def validate_activation_contract(
             "file_limit": file_limit,
             "output_characters": output_characters,
         },
-        "focused_regressions": sorted(set(regressions)),
-        "native_advantage": {"status": "distinct-value", "explanation": advantage_explanation},
-        "allow_repairs": False,
         **capability_extension,
     }
     return {
@@ -353,7 +340,6 @@ def activate_capability(
         "trigger": validated["contract"]["trigger"],
         "scope": validated["contract"]["scope"],
         "budget": validated["contract"]["budget"],
-        "native_advantage": validated["contract"]["native_advantage"],
         "authority": validated["contract"]["authority"],
         "legacy_vault_loaded": False,
     })

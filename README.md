@@ -1,14 +1,13 @@
-# Emotivus Forge 0.553
+# Emotivus Forge 0.554
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
-## What 0.553 changes
+## What 0.554 changes
 
-- Maps all 88 active runtime modules across ordinary CLI, standalone evidence tools, and verification entry points.
-- Traces Run Forge, Help, Adopt, Resume, Check, and Ship in bounded neutral fixtures.
-- Classifies every active top-level path against G1, G2, G3, web documentation, testing, packaging, migration, or reference history.
-- Finds no module that can be deleted merely as unreachable; later removal must follow completed behavior folds.
-- Completes roadmap chunks P1-01 and P1-02 and activates P1-03 documentation reduction.
+- Completes roadmap chunk P1-04: consolidates duplicated deterministic plumbing (archive/hash primitives, kit-archive hygiene, the identity build-id read) into the shared truth boundary (`common.py`, `project_identity.py`); genuinely distinct services are kept distinct.
+- Completes roadmap chunk P1-05: reduces the capability-activation ceremony to a minimal enabled/reason/scope/evidence record, dropping the `focused_regressions`, `native_advantage`, and `allow_repairs` attestations while preserving every safety gate (containment, budget caps, runtime-proof egress, fingerprint binding).
+- Removes ~120 net lines across 15 modules with no behavior change; activates P1-06 (fold-orphaned module removal).
+- Keeps the certified suite at 523 focused public-neutral regressions across 54 deterministic isolated modules; no test added or removed.
 - Preserves the four-page website design and active generator.
 
 ## Current verification target

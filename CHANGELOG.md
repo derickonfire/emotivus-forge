@@ -1,5 +1,12 @@
 # Emotivus Forge changelog
 
+## 0.554 — Service Fold and Ceremony Reduction
+
+- Completed Durable Core chunk **P1-04**: consolidated duplicated deterministic plumbing into the shared truth boundary — the archive/hash primitives and kit-archive hygiene into `core/common.py`, and the active build-id read into `core/project_identity.current_build_id`. Routed the four evidence modules, three release modules, and four integrity modules through them. The genuinely distinct services (receipt evaluators, kit verifiers' identity logic) were evaluated and correctly left distinct-by-design.
+- Completed Durable Core chunk **P1-05**: reduced the capability-activation ceremony to a minimal enabled/reason/scope/evidence record. Dropped the `focused_regressions`, `native_advantage`, and `allow_repairs` attestations and made `authority`/`scope` optional, while preserving every enforced safety gate (path/evidence containment, budget caps, runtime-proof egress allowlist, and fingerprint binding). The no-repair / no-credential guarantee is structural in the services, not a contract field.
+- Removed ~120 net lines across 15 modules with no behavior change. Advanced the active chunk to **P1-06** (remove only modules made unreachable by completed folds).
+- Preserved the certified suite unchanged at 523 focused public-neutral regressions across 54 deterministic isolated modules; runtime inventory holds at 88 modules with zero unreachable and zero unclassified. Release authorization remains false.
+
 ## 0.553 — Reorientation and Documentation Reduction
 
 - Repositioned Forge as the trust layer for AI-built software (verdict in `FORGE-2029-VERDICT.md`), keeping the model-collaboration boundary intact.

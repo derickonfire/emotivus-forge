@@ -1,12 +1,12 @@
 {
   "forge_schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.553",
+  "version": "0.554",
   "updated": "2026-08-05",
   "state": "development-candidate",
   "edition": "development",
   "archive_root": "Emotivus-Forge",
-  "previous_version": "0.552",
+  "previous_version": "0.553",
   "version_authority": "owner-declared",
   "canonical_paths": [
     ".deployignore",
@@ -412,7 +412,7 @@
     "canonical_source": "FORGE-PRODUCT.json",
     "release_bound": true
   },
-  "display_version": "0.553",
+  "display_version": "0.554",
   "active_advanced_capabilities": [
     "doctor-diagnose-only-explicit",
     "runtime-proof-content-aware-http-explicit"

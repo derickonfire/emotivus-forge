@@ -1,4 +1,4 @@
-# Forge 0.553 implementation report
+# Forge 0.554 implementation report
 
 ## Scope
 
@@ -10,4 +10,4 @@ All 88 runtime modules are reachable through at least one declared active surfac
 
 ## Next reduction action
 
-P1-03 is complete: historical and explanatory-only documents were relocated into `docs/history/`, out of required reading. P1-04 is next — fold overlapping release, evidence, rollback, and authority services into the project-truth boundary before any module deletion.
+P1-04 and P1-05 are complete: duplicated deterministic plumbing was consolidated into the shared truth boundary (`common.py`, `project_identity.py`) and the capability-activation ceremony was reduced to a minimal enabled/reason/scope/evidence record with every safety gate preserved. P1-06 is next — remove only modules made unreachable by completed folds, with exact behavior verification.

@@ -282,7 +282,6 @@ def run_doctor(project_root: Path, activation: dict[str, Any]) -> dict[str, Any]
         "contract_source": activation.get("contract_source", ""),
         "contract_fingerprint": activation.get("contract_fingerprint", ""),
         "scope": contract.get("scope", {}),
-        "native_advantage": contract.get("native_advantage", {}),
         "budget": {
             "runtime_seconds": runtime_seconds,
             "file_limit": file_limit,

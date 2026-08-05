@@ -13,7 +13,7 @@ class ProgressStatusTests(ForgeTestCase):
         result=check_progress(FORGE_ROOT)
         self.assertEqual(result['status'],'PASS',result['problems'])
         self.assertEqual([g['id'] for g in result['goals']],['G1','G2','G3'])
-        self.assertEqual(result['active_chunks'],['P1-04'])
+        self.assertEqual(result['active_chunks'],['P1-06'])
 
     def test_website_goal_drift_is_detected(self) -> None:
         with tempfile.TemporaryDirectory() as d:
