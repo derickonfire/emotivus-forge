@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.552  
+**Current build:** 0.553  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -12,10 +12,11 @@
 
 ## Core reduction phase
 
-- Completed roadmap chunks: **10**
+- Completed roadmap chunks: **11**
 - P1-01: **COMPLETE** — 88 runtime modules mapped across CLI, standalone tools, and verification roots.
 - P1-02: **COMPLETE** — every active top-level path classified by durable purpose and disposition.
-- Next active chunk: **P1-03 · move historical and explanatory-only documents out of required reading**
+- P1-03: **COMPLETE** — historical and explanatory-only documents relocated into `docs/history/`, out of required reading.
+- Next active chunk: **P1-04 · fold overlapping release, evidence, rollback, and authority services into the project-truth boundary**
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
 - Unclassified active top-level paths: **0**

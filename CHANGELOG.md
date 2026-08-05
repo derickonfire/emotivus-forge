@@ -1,5 +1,14 @@
 # Emotivus Forge changelog
 
+## 0.553 — Reorientation and Documentation Reduction
+
+- Repositioned Forge as the trust layer for AI-built software (verdict in `FORGE-2029-VERDICT.md`), keeping the model-collaboration boundary intact.
+- Added the forward `ROADMAP-2029.md` and executable `DEVELOPMENT-ROADMAP.md` above the sealed chunk ledger, and recorded the agent-native invocation miss (`F-553-003`) under the expansion rule.
+- Classified version-control metadata (`.git/`, `.github/`, `.gitignore`, `.gitattributes`) in the runtime reachability mapper now that Forge lives under version control (`F-553-001`).
+- Completed Durable Core chunk **P1-03**: relocated historical and explanatory-only documents into `docs/history/`, out of required reading, with no lost history. Advanced the active chunk to **P1-04**.
+- Refreshed the four-page website copy to the trust-layer positioning while retaining the design system, logo, palette, and generator.
+- Preserved the certified regression suite unchanged at 523 focused public-neutral regressions across 54 deterministic isolated modules; no behavior added or removed.
+
 ## 0.552 — Active Runtime Reachability and Path Classification
 
 - Completed Durable Core chunks P1-01 and P1-02.

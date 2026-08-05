@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.552  
+**Current release:** 0.553  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -33,8 +33,8 @@ G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundatio
 | P0-08 | Reset | 15–20 min | 0.551 | **COMPLETE** | Certify and seal the complete 0.551 delivery from exact final bytes. |
 | P1-01 | Core reduction | 12–18 min | 0.552 | **COMPLETE** | Generate an import and command reachability map for the active runtime. |
 | P1-02 | Core reduction | 10–15 min | 0.552 | **COMPLETE** | Map every active top-level path to G1, G2, G3, web documentation, testing, packaging, or migration. |
-| P1-03 | Core reduction | 15–20 min | 0.552 | **ACTIVE** | Move historical and explanatory-only documents from active docs into reference/history. |
-| P1-04 | Core reduction | 15–20 min | 0.552 | **QUEUED** | Fold overlapping release, evidence, rollback, and authority services into the project-truth boundary. |
+| P1-03 | Core reduction | 15–20 min | 0.553 | **COMPLETE** | Move historical and explanatory-only documents from active docs into reference/history (`docs/history/`). |
+| P1-04 | Core reduction | 15–20 min | 0.553 | **ACTIVE** | Fold overlapping release, evidence, rollback, and authority services into the project-truth boundary. |
 | P1-05 | Core reduction | 12–18 min | 0.552 | **QUEUED** | Replace capability activation ceremony with a minimal enabled/reason/scope/evidence record where safety still requires it. |
 | P1-06 | Core reduction | 15–20 min | 0.552 | **QUEUED** | Remove only modules made unreachable by completed folds, and retire tests that verify removed ceremony rather than retained behavior. |
 | P1-07 | Core reduction | 15–20 min | 0.552 | **QUEUED** | Rebuild public/development boundaries and prove no retained behavior or history was lost. |

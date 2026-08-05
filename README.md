@@ -1,8 +1,8 @@
-# Emotivus Forge 0.552
+# Emotivus Forge 0.553
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
-## What 0.552 changes
+## What 0.553 changes
 
 - Maps all 88 active runtime modules across ordinary CLI, standalone evidence tools, and verification entry points.
 - Traces Run Forge, Help, Adopt, Resume, Check, and Ship in bounded neutral fixtures.

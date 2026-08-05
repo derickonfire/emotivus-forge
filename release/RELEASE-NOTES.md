@@ -1,4 +1,13 @@
-# Emotivus Forge 0.552 — Active Runtime Reachability and Path Classification
+# Emotivus Forge 0.553 — Reorientation and Documentation Reduction
+
+- Repositions Forge as the trust layer for AI-built software while keeping the model-collaboration boundary intact.
+- Completes Durable Core chunk P1-03: relocates historical and explanatory-only documents into `docs/history/`, out of required reading, with no lost history.
+- Advances the active roadmap chunk to P1-04 (folding overlapping release, evidence, rollback, and authority services).
+- Classifies version-control metadata in the reachability map now that Forge lives under version control.
+- Refreshes the four-page website copy to the trust-layer positioning while retaining the design system and generator.
+- Keeps the certified suite unchanged at 523 focused public-neutral regressions across 54 deterministic isolated modules; no behavior added or removed.
+
+## Prior release — 0.552 — Active Runtime Reachability and Path Classification
 
 - Completes P1-01 and P1-02 of the Durable Core roadmap.
 - Inventories all 88 active runtime modules.
