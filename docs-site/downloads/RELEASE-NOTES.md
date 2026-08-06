@@ -1,4 +1,9 @@
-# Emotivus Forge 0.557 — Project-Intelligence Completeness
+# Emotivus Forge 0.558 — Ecosystem Resolver
+
+- Ranked ecosystem resolver: primary-language dispatch across Python/Node/Go/Rust/Java/Ruby/PHP + static/notebook, so polyglot/framework projects get correct run/test/identity.
+- Extended identity (pom.xml/gemspec/<title>), broader test discovery and secret coverage (.npmrc/npm tokens). Certified suite unchanged at 523/54; release authorization remains false.
+
+## Prior release — 0.557 — Project-Intelligence Completeness
 
 - Completes the project-intelligence pass of the context digest: objective detection on explicit `## Objective`/`Goal:` headings, a deterministic architecture/layout summary, and broader secret coverage (Stripe/generic live tokens and extensionless credential files).
 - Certified suite unchanged at 523/54; release authorization remains false.

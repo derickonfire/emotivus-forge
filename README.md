@@ -1,10 +1,11 @@
-# Emotivus Forge 0.557
+# Emotivus Forge 0.558
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
-## What 0.557 changes
+## What 0.558 changes
 
-- Completes the project-intelligence pass of the context digest (objective detection, architecture/layout summary, broader secret coverage), continuing the observed-miss redirection of Goal 1.
+- Replaces the hardcoded language dispatch with a ranked ecosystem resolver (primary-language ranking) so polyglot/framework projects get correct run/test/identity: Laravel -> `php artisan`, Java -> `mvn`, Ruby -> `rake`, notebooks -> `jupyter`.
+- Extends identity to pom.xml/gemspec/static-site `<title>`; broadens test discovery (root test.js, *_test.go) and secret coverage (.npmrc/npm auth tokens); tidies descriptions (skip license headers, word-boundary truncation).
 - Detects explicit objectives (`## Objective`, `Goal:`) so Forge stops nagging when the objective is written down; adds a deterministic layout summary (top dirs, primary source, packages, tests, central files).
 - Broadens secret coverage: Stripe/generic live-token BLOCK rules and content-scanning of extensionless credential files (aws-credentials, .netrc, .pgpass).
 - Catches hardcoded secrets in ordinary source at orientation (not only filename-flagged files); the target-user case (a hardcoded API key in app.py) now BLOCKs where it was missed.

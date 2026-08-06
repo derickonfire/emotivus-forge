@@ -1,5 +1,12 @@
 # Emotivus Forge changelog
 
+## 0.558 — Ecosystem Resolver
+
+- Replaced the hardcoded if/elif language dispatch in `orientation.derive_orientation` with a ranked ecosystem resolver: source-file counts + manifest boost + app-framework boost (manage.py/artisan/config.ru) select the primary language, so polyglot/framework projects (Laravel with a Vite package.json, a Java lib with a docs site) no longer mis-dispatch. Correct run/test/entry across Python, Node, Go, Rust, Java (Maven/Gradle), Ruby (Rake/rack), PHP (composer/Laravel), notebooks, and static sites.
+- Identity fallback extended to pom.xml (name/artifactId, parent-stripped), `*.gemspec` name, and `<title>` for static sites. Test discovery now includes root `test.js`, `*.test.js`/`*.spec.js`, `*_test.go` via a shared `_looks_test`. `primary_source_dir` biases toward real source roots (src/app/lib/internal/pkg) over config/vendored dirs. Description hygiene skips license/copyright/SPDX lines and truncates at a word boundary.
+- Secret coverage: content-scan `.npmrc`/`.pypirc`/`.dockercfg`/`.git-credentials` and a new `npm-auth-token` BLOCK rule (quantifier form; self-screen stays clean).
+- Validated on the spectrum batch-1 failure cases: Laravel run `php artisan serve`, Java identity "Apache Commons CLI" + mvn, Ruby `rake test`, static site named from `<title>`, `.npmrc` token BLOCK. Additive; certified suite unchanged at 523/54; release authorization remains false.
+
 ## 0.557 — Project-Intelligence Completeness
 
 - Objective detection: `OBJECTIVE_HEADINGS` gained `objective`/`goal` and the inline regex now recognizes `Objective:`/`Goal:` (and `**bold**`), so an explicit `## Objective` heading resolves to status=explicit — Forge no longer nags when the objective is written down.
