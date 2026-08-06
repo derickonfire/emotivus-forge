@@ -77,8 +77,9 @@ def build_recommended_prompt(payload: dict[str, Any]) -> dict[str, Any]:
         kind = "resolve-blocker"
     elif not objective_text:
         prompt = (
-            "Review the project’s authoritative roadmap and confirm the current objective before changing code. "
-            "Then run Forge again and continue only from the confirmed objective."
+            "Orient and read the project freely first — Forge has already surfaced what it is, how to run and "
+            "test it, and any hardcoded secrets. Then review the project’s authoritative roadmap and confirm "
+            "the current objective before changing code, and run Forge again to continue from it."
         )
         kind = "confirm-objective"
     else:

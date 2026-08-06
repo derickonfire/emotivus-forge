@@ -171,12 +171,19 @@ class ObjectiveAndNativeAuthorityTests(ForgeTestCase):
             self.assertEqual(registry["approval"]["status"], "reapproval-required")
             self.assertEqual(registry["approval"]["execution_mode"], "owner-only")
 
-    def test_attention_items_are_prioritized_by_severity(self) -> None:
+    def test_missing_objective_is_a_warning_on_read_only_first_contact(self) -> None:
+        # A missing objective blocks changes and Ship, not orientation. On a clean
+        # read-only first contact it surfaces as a warning so Forge orients first;
+        # it becomes a blocker once there are changes to govern.
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "index.php").write_text("<?php echo 'ok';\n", encoding="utf-8")
             build_passport(root, FORGE_ROOT)
             resume = build_resume(root, FORGE_ROOT)
-            self.assertEqual(resume["attention_items"][0]["severity"], "blocker")
-            self.assertEqual(resume["attention_items"][0]["category"], "objective")
-            self.assertGreaterEqual(resume["attention_counts"]["blocker"], 1)
+            objective_items = [item for item in resume["attention_items"] if item["category"] == "objective"]
+            self.assertTrue(objective_items)
+            self.assertEqual(objective_items[0]["severity"], "warning")
+            self.assertEqual(resume["attention_counts"].get("blocker", 0), 0)
+            severities = [item["severity"] for item in resume["attention_items"]]
+            if "blocker" in severities and "warning" in severities:
+                self.assertLess(severities.index("blocker"), severities.index("warning"))

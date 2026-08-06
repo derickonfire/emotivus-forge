@@ -265,6 +265,19 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
             omit_prefixes.add("- **Confirmed relationships:")
         if not field_trials.get("active") and not field_trials.get("total_observations"):
             omit_prefixes.add("- **Field validation:")
+        # Lazy governance: an undeclared contract carries no signal on first contact.
+        # Collapse the empty base governance lines so the digest stays dense and
+        # token-light; they reappear the moment a project actually declares them.
+        if project_identity.get("status", "not-recorded") == "not-recorded":
+            omit_prefixes.add("- **Project identity:")
+        if project_lineage.get("status", "NOT_RECORDED") == "NOT_RECORDED":
+            omit_prefixes.add("- **Lineage:")
+        if migration_identity.get("status", "NOT_DECLARED") == "NOT_DECLARED":
+            omit_prefixes.add("- **Migration identity:")
+        if package_family.get("status", "NOT_DECLARED") == "NOT_DECLARED":
+            omit_prefixes.add("- **Package family:")
+        if release_package.get("final_package", "NOT_RUN") == "NOT_RUN" and release_package.get("confidentiality", "NOT_RUN") == "NOT_RUN":
+            omit_prefixes.add("- **Final release package:")
         lines = [line for line in lines if not any(line.startswith(prefix) for prefix in omit_prefixes)]
     if third_party_intakes.get("status") != "NOT_DECLARED":
         lines.append(
@@ -645,7 +658,14 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     for uncertainty in uncertainties:
         add_attention("warning", "uncertainty", str(uncertainty))
     if not objective_text:
-        add_attention("blocker", "objective", "Current objective is not confirmed.")
+        # A missing objective blocks changes and Ship, not orientation. On a clean
+        # read-only first contact, keep it a warning so Forge orients instead of
+        # blocking; it becomes a blocker once there are changes to govern.
+        add_attention(
+            "blocker" if changes.get("count", 0) else "warning",
+            "objective",
+            "Current objective is not confirmed.",
+        )
     if continuity.get("status") == "stale":
         add_attention("warning", "continuity", str(continuity.get("reason", "Continuity requires attention.")))
     if authority_baseline.get("status") == "NOT_ESTABLISHED":
