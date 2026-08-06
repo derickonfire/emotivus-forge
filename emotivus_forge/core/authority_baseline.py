@@ -17,7 +17,10 @@ TRUTH_BOUNDARY = (
     "Forge binds a project-declared authority record to the bounded bytes and metadata present in the project snapshot. "
     "It does not authenticate a human identity, prove authorship, identify which process changed a file, or establish that "
     "the authority substantively reviewed every behavior. A bounded snapshot may rely on size and modification time for "
-    "files outside the configured hash budgets; only an exact-strength baseline is eligible for the authority-bound Ship claim."
+    "files outside the configured hash budgets; only an exact-strength baseline is eligible for the authority-bound Ship claim. "
+    "Ledger corroboration uses an unkeyed hash chain that travels inside the project's .forge state: it proves the chain is "
+    "internally consistent and that a matching authorization event exists, but it is not a signature and cannot prove the "
+    "authorization was performed by this instance rather than imported or fabricated by anyone able to write .forge."
 )
 
 
@@ -86,8 +89,17 @@ def _corroborate_baseline(project_root: Path | None, record: dict[str, Any]) -> 
     for event in read_events(project_root, kinds={"authority-baseline-authorized"}):
         payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
         if str(payload.get("baseline_id", "")) == baseline_id and str(payload.get("snapshot_fingerprint", "")) == fingerprint:
-            return {"corroborated": True, "reason": "corroborated by a chain-verified authorization event in this instance's ledger", "authorized_utc": str(event.get("utc", ""))}
-    return {"corroborated": False, "reason": "no chain-verified authorization event in this instance's ledger matches this baseline; it was imported or recorded outside this instance"}
+            return {
+                "corroborated": True,
+                # Honest wording: the chain is unkeyed and travels with the project.
+                # A match proves internal consistency and that an authorization event
+                # exists — not that this instance (rather than an imported/fabricated
+                # package) performed it. See TRUTH_BOUNDARY.
+                "reason": "matched by a self-consistent authorization event in the project ledger (unkeyed chain — internal consistency, not a signature)",
+                "binding": "unkeyed-self-consistent",
+                "authorized_utc": str(event.get("utc", "")),
+            }
+    return {"corroborated": False, "binding": "none", "reason": "no self-consistent authorization event in the project ledger matches this baseline; it was imported or recorded outside this instance"}
 
 
 def assess_authority_baseline(

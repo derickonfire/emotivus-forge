@@ -200,6 +200,13 @@ class AuthorityBaselineTests(ForgeTestCase):
             # chain-verified authorization event; an imported one with no matching
             # ledger event is demoted to UNCORROBORATED and is not release-eligible.
             self.assertIs(assessment.get("corroboration", {}).get("corroborated"), True)
+            # 0.560 (DG-1..DG-5): corroboration is honest that the chain is unkeyed —
+            # it proves self-consistency, not cryptographic in-instance authorship.
+            self.assertEqual(assessment["corroboration"].get("binding"), "unkeyed-self-consistent")
+            self.assertIn("unkeyed", assessment["corroboration"].get("reason", ""))
+            self.assertNotIn("in this instance's ledger", assessment["corroboration"].get("reason", ""))
+            from emotivus_forge.core.authority_baseline import TRUTH_BOUNDARY
+            self.assertIn("unkeyed", TRUTH_BOUNDARY)
             fabricated = load_state(root)
             fabricated["authority_baseline"] = {**fabricated["authority_baseline"], "baseline_id": "f" * 20}
             imported = assess_authority_baseline(fabricated, fabricated["snapshot"], project_root=root)

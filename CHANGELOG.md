@@ -1,5 +1,14 @@
 # Emotivus Forge changelog
 
+## 0.560 — Honest Corroboration Boundary
+
+- A 15-agent adversarial re-test confirmed all five 0.559 Goal-1 fixes **held** (bounded change confidence, inferred-vs-confirmed labels, scoped secrets claim, gated run commands, and imported-baseline corroboration for ordinary tamper/mismatch cases). Three deeper-gate lenses also held (stale-evidence-as-current, NOT_RUN native gate → PASS, snapshot-fingerprint collision).
+- **Dominant deeper-gate finding — "self-consistent != authentic":** Forge's ledger/corroboration chain is an unkeyed public SHA-256 chain that travels inside the project's `.forge`, so a fabricated-but-consistent chain (or an imported legacy state) can spoof `authority-baseline-authorized` corroboration and artifact-provenance CONFIRMED. Recorded in `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
+- **0.560 response (bounded, honest):** corroboration wording and the authority `TRUTH_BOUNDARY` now state that the chain is unkeyed and travels with the project — a match proves internal consistency and that an authorization event exists, but is not a signature and cannot prove in-instance authorship. The over-claim "in this instance's ledger" is removed; corroboration carries `binding: unkeyed-self-consistent`.
+- **Ship bounded phrasing:** the `candidate-unchanged` requirement reason carries the size+mtime-only, not-byte-verified qualifier when un-hashed files exist (the M-G1-2 phrasing now reaches `ship_claims.py`).
+- **Recorded for the next increment (needs design, not a rushed seal):** cryptographic instance-binding (a per-instance key an imported package cannot reproduce) for authority + provenance, migration downgrade of imported `active` baselines, same-version-collision-by-bytes, and native-evidence source binding.
+- Additive; certified suite unchanged at 523/54 (regression extended in place); release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.559 — Provable-Truth Core (G1)
 
 - Driven by a 15-agent adversarial field test (`planning/G1-FIELD-TEST-OBSERVED-MISSES.md`) probing where a model could push Forge into asserting beyond its evidence. The spine held — tests never shown as passing, document signals never confer authority, self-metrics never authorization, same-version/different-bytes not conflated — and these fixes close the five certainty leaks it found.

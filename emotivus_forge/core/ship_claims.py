@@ -5,7 +5,7 @@ from typing import Any
 
 from .authority_registry import load_or_discover_authorities
 from .authority_baseline import assess_authority_baseline
-from .changes import detect_changes
+from .changes import change_count_phrase, detect_changes
 from .common import read_json
 from .native_tools import load_or_discover_native_tools
 from .paths import ForgePaths
@@ -205,7 +205,7 @@ def assess_ship_claims(project_root: Path, forge_root: Path, *, perform_remote: 
         _requirement("prior-level", "PASS" if levels[-1]["status"] == "PASS" else "FAIL", "Continuity-ready claim is required first."),
         _requirement("last-check-pass", "PASS" if last_check.get("status") == "PASS" else "NOT_RUN", "The latest scoped Check must pass."),
         _requirement("checkpointed", "PASS" if last_check.get("checkpointed") is True else "NOT_RUN", "The passing Check must explicitly checkpoint the observed candidate."),
-        _requirement("candidate-unchanged", "PASS" if changes.get("count") == 0 else "FAIL", "No project paths changed after the checkpoint." if changes.get("count") == 0 else f"{changes.get('count', 0)} path(s) changed after the checkpoint."),
+        _requirement("candidate-unchanged", "PASS" if changes.get("count") == 0 else "FAIL", (f"No project paths changed after the checkpoint by byte comparison, but {changes.get('unverified_count', len(changes.get('unverified', []) or []))} file(s) were compared by size+mtime only and are not byte-verified." if changes.get("unverified") else "No project paths changed after the checkpoint.") if changes.get("count") == 0 else f"{change_count_phrase(changes)} changed after the checkpoint."),
         _requirement("checkpoint-truth-resolved", "PASS" if not checkpoint_blockers else "FAIL", "No checkpoint-relevant stale, contradicted, blocked, or unknown truth records remain; native verification is assessed at the next claim level." if not checkpoint_blockers else f"The checkpoint has {len(checkpoint_blockers)} checkpoint-relevant unresolved truth-state record(s)."),
     ]
     levels.append(_level(

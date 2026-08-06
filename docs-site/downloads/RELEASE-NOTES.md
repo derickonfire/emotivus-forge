@@ -1,4 +1,9 @@
-# Emotivus Forge 0.559 — Provable-Truth Core (G1)
+# Emotivus Forge 0.560 — Honest Corroboration Boundary
+
+- A 15-agent adversarial re-test confirmed all five 0.559 Goal-1 fixes held. The dominant deeper-gate finding: Forge's ledger corroboration chain is unkeyed and travels inside the project's .forge, so a fabricated-consistent chain can spoof in-instance authorship.
+- 0.560 responds honestly and bounded: authority-baseline corroboration and the TRUTH_BOUNDARY now state the ledger chain is unkeyed/self-consistent (not a signature, not proof of in-instance authorship); the over-claim "in this instance's ledger" is removed.
+- Ship's candidate-unchanged claim carries the bounded size+mtime-only qualifier when un-hashed files exist. Certified suite unchanged at 523/54; release authorization remains false. Full cryptographic instance-binding is recorded as the next increment.
+
 
 - Hardens the Goal-1 provable-truth core, driven by a 15-agent adversarial field test that probed where a model could push Forge into asserting beyond its evidence. The spine held: tests never shown as passing, document signals never confer authority, self-metrics never authorization, same-version/different-bytes not conflated.
 - Imported authority baseline is corroborated against a chain-verified authorization event in this instance's ledger, or demoted to UNCORROBORATED and quarantined from release.

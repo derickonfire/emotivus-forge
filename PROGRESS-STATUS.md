@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.559  
+**Current build:** 0.560  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -25,6 +25,7 @@
 - 0.557: **Project-intelligence completeness** — objective detection on explicit headings, deterministic architecture/layout summary, broader secret coverage (Stripe/generic live tokens, extensionless credential files).
 - 0.558: **Ecosystem resolver** — ranked primary-language dispatch (Python/Node/Go/Rust/Java/Ruby/PHP + static/notebook), pom.xml/gemspec/<title> identity, broader test discovery and .npmrc secret coverage (validated on spectrum batch-1 failures).
 - 0.559: **Provable-truth core (G1)** — imported-baseline corroboration vs the chain-verified ledger, bounded change confidence on un-hashed files, and inferred-vs-confirmed labeling of derived identity/objective/description/commands; driven by the 15-agent G1 field test (`planning/G1-FIELD-TEST-OBSERVED-MISSES.md`).
+- 0.560: **Honest corroboration boundary** — after a 15-agent re-test confirmed the 0.559 fixes held, corroboration + TRUTH_BOUNDARY now state the ledger chain is unkeyed/self-consistent (not cryptographic in-instance proof), and Ship candidate-unchanged carries the bounded qualifier; cryptographic instance-binding recorded as the next increment (`planning/G1-RETEST-0559-OBSERVED-MISSES.md`).
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
