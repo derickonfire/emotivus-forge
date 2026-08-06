@@ -35,6 +35,22 @@ class RecommendedPromptTests(ForgeTestCase):
         recommendation = build_recommended_prompt(payload)
         self.assertEqual(recommendation["kind"], "confirm-objective")
         self.assertIn("confirm the current objective before changing code", recommendation["text"])
+        # M-G1-4: the no-objective prompt must not promise it surfaced *any*
+        # hardcoded secrets — screening is bounded, not a completeness guarantee.
+        self.assertNotIn("already surfaced", recommendation["text"])
+        self.assertIn("bounded, not exhaustive", recommendation["text"])
+        # M-G1-3: a derived, unconfirmed objective is not labeled "confirmed objective".
+        derived = build_recommended_prompt({
+            "status": "ATTENTION",
+            "action": "RESUME",
+            "objective": {"text": "Ship v2 to production", "status": "explicit", "source": "README.md"},
+            "next_action": {"text": ""},
+            "continuity": {"status": "current"},
+            "decision_forks": {"pending": []},
+            "attention_counts": {"blocker": 0},
+        })
+        self.assertIn("derived objective (unconfirmed)", derived["text"])
+        self.assertNotIn("confirmed objective", derived["text"])
 
     def test_blocker_recommendation_stops_project_changes(self) -> None:
         payload = {

@@ -9,7 +9,7 @@ from .authority_baseline import assess_authority_baseline
 from .change_ledger import build_check_plan
 from .relationships import evaluate_relationships, augment_check_plan
 from .capabilities import capability_summary
-from .changes import detect_changes
+from .changes import change_count_phrase, detect_changes
 from .decision_forks import analyze_decision_forks
 from .guardrails import guardrail_summary
 from .ledger_assertions import ledger_assertion_summary
@@ -87,7 +87,7 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     native_tools = load_or_discover_native_tools(project_root, refresh=refresh)
     self_currency = assess_self_currency(project_root, passport, authorities, native_tools)
     changes = detect_changes(project_root, forge_root, state.get("snapshot", {}), settings)
-    authority_baseline = assess_authority_baseline(state, changes["current_snapshot"])
+    authority_baseline = assess_authority_baseline(state, changes["current_snapshot"], project_root=project_root)
     relationships = evaluate_relationships(project_root, changes["paths"])
     current_check_plan = augment_check_plan(build_check_plan(changes), relationships)
     continuity = assess_continuity(project_root, current_snapshot=changes["current_snapshot"])
@@ -212,11 +212,11 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
         f"# Forge Resume — {passport.get('identity', {}).get('name', project_root.name)}",
         "",
         "## Owner summary",
-        f"- **Current objective:** {objective_text or 'Not yet confirmed.'}",
+        f"- **Current objective{'' if str(objective.get('status', '')).lower() == 'confirmed' else ' (derived, unconfirmed)'}:** {objective_text or 'Not yet confirmed.'}",
         f"- **Exact next action:** {next_action}",
         f"- **Continuity:** {continuity.get('status', 'unknown')} — {continuity.get('reason', '')}",
         continuity_governance_line,
-        f"- **Observed changes:** {changes['count']} path(s).",
+        f"- **Observed changes:** {change_count_phrase(changes)}.",
         f"- **Authority:** {authority_baseline.get('status', 'NOT_ESTABLISHED')}; {authority_baseline.get('pending_count', 0)} quarantined.",
         f"- **Forge maturity:** {passport.get('maturity', 'Orientation')}.",
         f"- **Bounded retrieval:** {retrieval.get('result_count', 0)}/{retrieval.get('candidate_count', 0)} traceable record(s) selected.",
@@ -318,13 +318,15 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     _brief = passport.get("orientation", {}).get("brief", {}) if isinstance(passport.get("orientation"), dict) else {}
     _orient_lines: list[str] = []
     if _brief.get("description"):
-        _orient_lines.append(f"- **What it is:** {_brief['description']}")
+        _src = _brief.get("description_source", "")
+        _tag = f"derived from {_src}, unverified" if _src else "derived, unverified"
+        _orient_lines.append(f"- **What it may be ({_tag}):** {_brief['description']}")
     if _brief.get("entry_points"):
-        _orient_lines.append(f"- **Entry points:** {', '.join(_brief['entry_points'])}")
+        _orient_lines.append(f"- **Entry points (inferred):** {', '.join(_brief['entry_points'])}")
     if _brief.get("run"):
-        _orient_lines.append(f"- **Run:** `{_brief['run']}`")
+        _orient_lines.append(f"- **Run (inferred, not executed):** `{_brief['run']}`")
     if _brief.get("test"):
-        _orient_lines.append(f"- **Test:** `{_brief['test']}`")
+        _orient_lines.append(f"- **Test (inferred, not executed):** `{_brief['test']}`")
     _layout = _brief.get("layout", {}) if isinstance(_brief.get("layout"), dict) else {}
     if _layout.get("top_level"):
         _dirs = ", ".join(f"{row['dir']}/ ({row['files']})" for row in _layout["top_level"][:5])

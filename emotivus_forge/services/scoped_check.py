@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 from ..core.change_ledger import build_change_record, build_check_plan
 from ..core.authority_baseline import assess_authority_baseline
 from ..core.capabilities import CAPABILITY_CATALOG, require_active_capability
-from ..core.changes import detect_changes
+from ..core.changes import change_count_phrase, detect_changes
 from ..core.common import read_json, utc_now, write_json
 from ..core.evidence_validity import invalidate_connected_evidence
 from ..core.guardrails import evaluate_guardrails
@@ -280,7 +280,7 @@ def run_scoped_check(
     state = load_state(project_root)
     previous_snapshot = state.get("snapshot", {}) if isinstance(state.get("snapshot"), dict) else {}
     changes = detect_changes(project_root, forge_root, previous_snapshot, settings, supplied_paths=supplied_paths)
-    authority_baseline = assess_authority_baseline(state, changes["current_snapshot"])
+    authority_baseline = assess_authority_baseline(state, changes["current_snapshot"], project_root=project_root)
     project_lineage = lineage_summary(project_root, forge_root)
     migration_identity = migration_identity_summary(project_root, forge_root)
     package_family = package_family_summary(project_root, forge_root)
@@ -1081,7 +1081,7 @@ def render_check(payload: dict[str, Any]) -> str:
     ledger = payload.get("change_ledger", {}) if isinstance(payload.get("change_ledger"), dict) else {}
     lines = [
         f"FORGE {payload.get('claim', 'Scoped Check')}",
-        f"Observed change set: {changes.get('count', 0)} path(s) · {ledger.get('id', 'unknown')}",
+        f"Observed change set: {change_count_phrase(changes)} · {ledger.get('id', 'unknown')}",
         f"Profile: {plan.get('profile', 'unknown')}",
         f"Affected surfaces: {', '.join(plan.get('affected_surfaces', [])) or 'none'}",
         f"Checked paths: {len(payload.get('checked_paths', []))}",

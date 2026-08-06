@@ -184,8 +184,27 @@ class AuthorityBaselineTests(ForgeTestCase):
                 reason="Accepted only within the configured bounded scan.",
             )
             self.assertEqual(authorization["strength"]["status"], "bounded")
-            assessment = assess_authority_baseline(load_state(root), load_state(root)["snapshot"])
+            assessment = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
             self.assertFalse(assessment["release_eligible"])
+            # M-G1-2: a bounded (un-hashed) comparison must report bounded change
+            # confidence, never a bare proven "0 changed".
+            self.assertEqual(assessment.get("change_confidence"), "bounded")
+            self.assertTrue(assessment.get("unverified_paths"))
+            from emotivus_forge.core.changes import change_count_phrase, compare_snapshots
+            same_unhashed = {"files": {"big.bin": {"size": 9, "mtime_ns": 1, "sha256": ""}}}
+            cmp = compare_snapshots(same_unhashed, same_unhashed)
+            self.assertEqual(cmp["count"], 0)
+            self.assertEqual(cmp["unverified"], ["big.bin"])
+            self.assertIn("bounded", change_count_phrase(cmp))
+            # M-G1-1: the legitimately authorized baseline is corroborated by a
+            # chain-verified authorization event; an imported one with no matching
+            # ledger event is demoted to UNCORROBORATED and is not release-eligible.
+            self.assertIs(assessment.get("corroboration", {}).get("corroborated"), True)
+            fabricated = load_state(root)
+            fabricated["authority_baseline"] = {**fabricated["authority_baseline"], "baseline_id": "f" * 20}
+            imported = assess_authority_baseline(fabricated, fabricated["snapshot"], project_root=root)
+            self.assertEqual(imported["status"], "UNCORROBORATED")
+            self.assertFalse(imported["release_eligible"])
 
     def test_cli_requires_baseline_authorization_as_separate_adopt_operation(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

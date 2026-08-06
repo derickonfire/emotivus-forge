@@ -39,6 +39,27 @@ class OrientationSafetyTests(ForgeTestCase):
             self.assertFalse(any(item.get("path", "").startswith("examples/") for item in authorities["candidates"]))
             forks = analyze_decision_forks(root, FORGE_ROOT, authorities=authorities)
             self.assertEqual(forks["pending"], [])
+        # M-G1-3 / M-G1-5: a name scraped from a README heading is inferred, never
+        # confirmed; a command line is never taken as a description; and `go run` is
+        # only suggested for an observed main package, not a library.
+        from emotivus_forge.core.orientation import derive_orientation, orient_project
+        from emotivus_forge.core.state import ensure_settings, load_settings
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "README.md").write_text("# Scraped Title\n\nnpm install && npm run build\n", encoding="utf-8")
+            (root / "go.mod").write_text("module example.com/lib\n", encoding="utf-8")
+            (root / "lib.go").write_text("package lib\n", encoding="utf-8")
+            brief = derive_orientation(root, {"README.md", "go.mod", "lib.go"})
+            self.assertEqual(brief["description"], "")            # command not used as identity
+            self.assertEqual(brief["run"], "go build ./...")      # library, not `go run`
+            self.assertEqual(brief["commands_tier"], "inferred")
+            ensure_settings(root)
+            identity = orient_project(root, FORGE_ROOT, load_settings(root))["identity"]
+            # A manifest-declared name is observed; a README/title scrape is inferred;
+            # neither is ever "confirmed" — that is reserved for the owner-recorded path.
+            self.assertEqual(identity["name_source"], "go.mod")
+            self.assertEqual(identity["status"], "observed")
+            self.assertNotEqual(identity["status"], "confirmed")
 
     def test_symlinked_files_outside_project_are_not_scanned(self) -> None:
         with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as external_directory:

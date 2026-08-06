@@ -1,5 +1,14 @@
 # Emotivus Forge changelog
 
+## 0.559 — Provable-Truth Core (G1)
+
+- Driven by a 15-agent adversarial field test (`planning/G1-FIELD-TEST-OBSERVED-MISSES.md`) probing where a model could push Forge into asserting beyond its evidence. The spine held — tests never shown as passing, document signals never confer authority, self-metrics never authorization, same-version/different-bytes not conflated — and these fixes close the five certainty leaks it found.
+- **Imported authority baseline (critical):** `assess_authority_baseline` now corroborates an `active` baseline against a chain-verified `authority-baseline-authorized` ledger event whose id + fingerprint re-derive; an imported/hand-edited baseline with no such event is demoted to `UNCORROBORATED`, `release_eligible=false`, and quarantined. It corroborates that authorization happened in this instance's tamper-evident history (it does not authenticate a human identity).
+- **Change confidence (high):** `compare_snapshots` records paths compared by size+mtime alone (un-hashed) as `unverified`; confidence caps at `bounded` whenever any exist, and the human surfaces print `0 path(s) (bounded: N file(s) … not byte-verified)` instead of a bare proven "0 changed". Authority `CURRENT` over un-hashed files carries the bounded qualifier.
+- **Evidence-tier labeling (high):** a scraped README/`<title>` name is `inferred` (manifest-declared `observed`), never `confirmed`; a derived objective renders "derived objective (unconfirmed)" not "confirmed objective"; description and run/test commands render as derived/inferred and not executed; a command line is rejected as a description; `go run` is gated on an observed `main` package.
+- **Completeness claim (high):** the no-objective recommended prompt no longer promises "any hardcoded secrets" surfaced; the claim is scoped as bounded, not exhaustive.
+- Additive; certified suite unchanged at 523/54 (regressions extended in place); release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.558 — Ecosystem Resolver
 
 - Replaced the hardcoded if/elif language dispatch in `orientation.derive_orientation` with a ranked ecosystem resolver: source-file counts + manifest boost + app-framework boost (manage.py/artisan/config.ru) select the primary language, so polyglot/framework projects (Laravel with a Vite package.json, a Java lib with a docs site) no longer mis-dispatch. Correct run/test/entry across Python, Node, Go, Rust, Java (Maven/Gradle), Ruby (Rake/rack), PHP (composer/Laravel), notebooks, and static sites.

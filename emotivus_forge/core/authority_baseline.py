@@ -7,8 +7,9 @@ from typing import Any
 
 from .changes import compare_snapshots, snapshot_fingerprint
 from .common import utc_now
-from .ledger import record_event
+from .ledger import read_events, record_event, verify_ledger_chain
 from .orientation import build_snapshot
+from .paths import ForgePaths
 from .state import load_settings, load_state, save_state
 
 
@@ -66,7 +67,35 @@ def _empty_assessment(current_snapshot: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def assess_authority_baseline(state: dict[str, Any], current_snapshot: dict[str, Any]) -> dict[str, Any]:
+def _corroborate_baseline(project_root: Path | None, record: dict[str, Any]) -> dict[str, Any]:
+    """Tie an at-rest 'active' authority baseline to a chain-verified authorization
+    event in this instance's own ledger. An imported or hand-edited state can carry
+    an internally-consistent baseline; without a matching, chain-verified
+    authorization event, Forge must not assert it as an established authority. This
+    does not authenticate a human identity (see TRUTH_BOUNDARY) — it corroborates
+    that the authorization happened in this instance's tamper-evident history."""
+    if project_root is None:
+        return {"corroborated": None, "reason": "authorization ledger not consulted (no project context)"}
+    baseline_id = str(record.get("baseline_id", "")).strip()
+    fingerprint = str(record.get("snapshot_fingerprint", "")).strip()
+    chain = verify_ledger_chain(ForgePaths(project_root).ledger)
+    if str(chain.get("status", "")) != "HEALTHY":
+        return {"corroborated": False, "reason": f"the authorization ledger chain is not verifiable ({len(chain.get('issues', []))} integrity issue(s))"}
+    if not baseline_id:
+        return {"corroborated": False, "reason": "the baseline record carries no baseline_id to corroborate"}
+    for event in read_events(project_root, kinds={"authority-baseline-authorized"}):
+        payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
+        if str(payload.get("baseline_id", "")) == baseline_id and str(payload.get("snapshot_fingerprint", "")) == fingerprint:
+            return {"corroborated": True, "reason": "corroborated by a chain-verified authorization event in this instance's ledger", "authorized_utc": str(event.get("utc", ""))}
+    return {"corroborated": False, "reason": "no chain-verified authorization event in this instance's ledger matches this baseline; it was imported or recorded outside this instance"}
+
+
+def assess_authority_baseline(
+    state: dict[str, Any],
+    current_snapshot: dict[str, Any],
+    *,
+    project_root: Path | None = None,
+) -> dict[str, Any]:
     record = state.get("authority_baseline", {}) if isinstance(state, dict) else {}
     if not isinstance(record, dict) or str(record.get("status", "")) != "active":
         return _empty_assessment(current_snapshot)
@@ -98,15 +127,48 @@ def assess_authority_baseline(state: dict[str, Any], current_snapshot: dict[str,
             "truth_boundary": TRUTH_BOUNDARY,
         }
 
+    corroboration = _corroborate_baseline(project_root, record)
+    if corroboration.get("corroborated") is False:
+        return {
+            "schema": 1,
+            "status": "UNCORROBORATED",
+            "baseline_id": str(record.get("baseline_id", "")),
+            "authority": str(record.get("authority", "")),
+            "authority_source": str(record.get("authority_source", "project-declared")),
+            "authorized_utc": str(record.get("authorized_utc", "")),
+            "reason": f"An 'active' authority baseline is on record, but {corroboration.get('reason', 'it could not be corroborated')}. Forge does not assert it as an established authority.",
+            "authorization_reason": str(record.get("reason", "")),
+            "current_fingerprint": current_fingerprint,
+            "baseline_fingerprint": recorded_fingerprint,
+            "pending_count": 0,
+            "pending_paths": [],
+            "changes": {"status": "unknown", "count": 0, "paths": [], "added": [], "modified": [], "deleted": [], "unverified": []},
+            "baseline_strength": baseline_strength,
+            "current_strength": current_strength,
+            "release_eligible": False,
+            "quarantined": True,
+            "corroboration": corroboration,
+            "next_action": "Re-establish authority in this instance: review the current tree and record an explicit authority baseline with --authorize-baseline against the exact current fingerprint. An imported baseline is not authority here.",
+            "truth_boundary": TRUTH_BOUNDARY,
+        }
+
     changes = compare_snapshots(stored_snapshot, current_snapshot)
     current = changes.get("count", 0) == 0
     status = "CURRENT" if current else "QUARANTINED"
     release_eligible = bool(current and baseline_strength.get("exact") and current_strength.get("exact"))
-    reason = (
-        "The current project tree matches the explicit authority baseline."
-        if current
-        else f"{changes.get('count', 0)} path(s) differ from the explicit authority baseline and remain quarantined from authority claims."
-    )
+    # A count of 0 only proves "unchanged" for files compared by hash. When some
+    # files were compared by size+mtime alone, the match is bounded, not proven.
+    unverified_paths = list(changes.get("unverified", []))
+    change_confidence = "bounded" if unverified_paths else "high"
+    if current and unverified_paths:
+        reason = (
+            f"The current tree matches the explicit authority baseline for all byte-verified files; "
+            f"{len(unverified_paths)} file(s) were compared by size and modification time only and are not byte-verified."
+        )
+    elif current:
+        reason = "The current project tree matches the explicit authority baseline."
+    else:
+        reason = f"{changes.get('count', 0)} path(s) differ from the explicit authority baseline and remain quarantined from authority claims."
     next_action = (
         "Run Check and explicitly checkpoint this unchanged authority-bound tree before Ship."
         if current
@@ -126,10 +188,13 @@ def assess_authority_baseline(state: dict[str, Any], current_snapshot: dict[str,
         "pending_count": int(changes.get("count", 0) or 0),
         "pending_paths": list(changes.get("paths", [])),
         "changes": changes,
+        "change_confidence": change_confidence,
+        "unverified_paths": unverified_paths[:50],
         "baseline_strength": baseline_strength,
         "current_strength": current_strength,
         "release_eligible": release_eligible,
         "quarantined": not current,
+        "corroboration": corroboration,
         "next_action": next_action,
         "truth_boundary": TRUTH_BOUNDARY,
     }

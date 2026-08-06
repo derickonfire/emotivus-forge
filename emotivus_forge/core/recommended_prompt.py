@@ -77,14 +77,20 @@ def build_recommended_prompt(payload: dict[str, Any]) -> dict[str, Any]:
         kind = "resolve-blocker"
     elif not objective_text:
         prompt = (
-            "Orient and read the project freely first — Forge has already surfaced what it is, how to run and "
-            "test it, and any hardcoded secrets. Then review the project’s authoritative roadmap and confirm "
-            "the current objective before changing code, and run Forge again to continue from it."
+            "Orient and read the project freely first — Forge has surfaced what it may be (unverified), how it "
+            "appears to run and test, and any hardcoded secrets it found while screening scanned text files "
+            "(bounded, not exhaustive — unscanned files may hold more). Then review the project’s authoritative "
+            "roadmap and confirm the current objective before changing code, and run Forge again to continue from it."
         )
         kind = "confirm-objective"
     else:
         target = next_action_text or objective_text
-        label = "exact next action" if next_action_text else "confirmed objective"
+        if next_action_text:
+            label = "exact next action"
+        elif str(objective.get("status", "")).lower() == "confirmed":
+            label = "confirmed objective"
+        else:
+            label = "derived objective (unconfirmed)"
         first = f"Continue this project from the {label}: {target}"
         safeguards = ["preserve confirmed decisions", "run only authorized checks", "state what remains unverified"]
         if authority_baseline.get("status") in {"NOT_ESTABLISHED", "QUARANTINED", "CONTRADICTED"}:

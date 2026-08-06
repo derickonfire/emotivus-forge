@@ -31,6 +31,18 @@ def snapshot_fingerprint(snapshot: dict[str, Any]) -> str:
     ).hexdigest()
 
 
+def change_count_phrase(changes: dict[str, Any]) -> str:
+    """A change-count phrase that never reads as a bare, proven "0 changed" when
+    some files were compared by size+mtime alone. Those files' unchanged verdict
+    is not byte-verified, so the phrase says so explicitly."""
+    count = int(changes.get("count", 0) or 0)
+    unverified = int(changes.get("unverified_count", len(changes.get("unverified", []) or [])) or 0)
+    phrase = f"{count} path(s)"
+    if unverified:
+        phrase += f" (bounded: {unverified} file(s) compared by size+mtime only, not byte-verified)"
+    return phrase
+
+
 def compare_snapshots(previous: dict[str, Any], current: dict[str, Any]) -> dict[str, Any]:
     before = previous.get("files", {}) if isinstance(previous, dict) else {}
     after = current.get("files", {}) if isinstance(current, dict) else {}
@@ -41,16 +53,23 @@ def compare_snapshots(previous: dict[str, Any], current: dict[str, Any]) -> dict
     added = sorted(set(after) - set(before))
     deleted = sorted(set(before) - set(after))
     modified: list[str] = []
+    unverified: list[str] = []
     for path in sorted(set(before) & set(after)):
         left = before[path] if isinstance(before[path], dict) else {}
         right = after[path] if isinstance(after[path], dict) else {}
         if left.get("sha256") and right.get("sha256"):
             changed = left.get("sha256") != right.get("sha256")
         else:
+            # Neither side is byte-hashed: the verdict rests on size and mtime
+            # alone, so a same-size, mtime-preserved content edit reads as
+            # unchanged. Record the path as unverified — its unchanged verdict is
+            # not proven, and must never be reported as a bare "0 changed".
             changed = (left.get("size"), left.get("mtime_ns")) != (right.get("size"), right.get("mtime_ns"))
+            unverified.append(path)
         if changed:
             modified.append(path)
     paths = sorted(set(added + modified + deleted))
+    unverified = sorted(unverified)
     return {
         "status": "changed" if paths else "unchanged",
         "count": len(paths),
@@ -58,6 +77,8 @@ def compare_snapshots(previous: dict[str, Any], current: dict[str, Any]) -> dict
         "added": added,
         "modified": modified,
         "deleted": deleted,
+        "unverified": unverified,
+        "unverified_count": len(unverified),
     }
 
 
@@ -115,7 +136,15 @@ def detect_changes(
     observed = compare_snapshots(previous_snapshot, current)
     reconciled = reconcile_supplied_paths(project_root, previous_snapshot, observed, supplied_paths or [])
     paths = list(observed["paths"])
-    confidence = "high" if not current.get("truncated") and not previous_snapshot.get("truncated") else "bounded"
+    # Confidence is bounded not only when a snapshot was truncated, but whenever
+    # any compared file could not be byte-hashed on both sides: its unchanged
+    # verdict then rests on size+mtime and is not proven.
+    unverified = observed.get("unverified", [])
+    confidence = (
+        "high"
+        if not current.get("truncated") and not previous_snapshot.get("truncated") and not unverified
+        else "bounded"
+    )
     return {
         "status": observed["status"],
         "count": observed["count"],
@@ -127,4 +156,6 @@ def detect_changes(
         "current_fingerprint": snapshot_fingerprint(current),
         "source": "observed-checkpoint-reconciliation",
         "confidence": confidence,
+        "unverified": unverified,
+        "unverified_count": len(unverified),
     }

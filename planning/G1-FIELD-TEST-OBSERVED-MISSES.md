@@ -113,3 +113,8 @@ that reproduces the exact fixture above and asserts Forge now labels or refuses.
 
 *Data source: workflow `g1-provable-truth-probe` (15 agents); per-agent transcripts
 in the run's `journal.jsonl`.*
+
+
+## Resolved in 0.559
+
+All five were addressed in release 0.559 (see `CHANGELOG.md`), each with a focused regression extended in place (certified suite unchanged at 523/54): M-G1-1 imported-baseline corroboration; M-G1-2 hash-coverage bounded change confidence; M-G1-3 inferred-vs-confirmed labeling of derived identity/objective/description; M-G1-4 scoped secrets claim; M-G1-5 gated/inferred run commands. The spine (the six held lenses) was preserved unchanged.

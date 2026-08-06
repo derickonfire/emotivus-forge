@@ -122,7 +122,7 @@ def build_passport(project_root: Path, forge_root: Path, *, name: str = "", refr
     prior_snapshot = state.get("snapshot", {}) if isinstance(state.get("snapshot"), dict) else {}
     first_adoption = not bool(prior_snapshot.get("files"))
     observed_checkpoint = orientation["snapshot"] if first_adoption else prior_snapshot
-    authority_baseline = assess_authority_baseline(state, orientation["snapshot"])
+    authority_baseline = assess_authority_baseline(state, orientation["snapshot"], project_root=project_root)
     passport["authority_baseline"] = {
         "status": authority_baseline.get("status", "NOT_ESTABLISHED"),
         "baseline_id": authority_baseline.get("baseline_id", ""),

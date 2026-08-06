@@ -1,4 +1,10 @@
-# Emotivus Forge 0.558 — Ecosystem Resolver
+# Emotivus Forge 0.559 — Provable-Truth Core (G1)
+
+- Hardens the Goal-1 provable-truth core, driven by a 15-agent adversarial field test that probed where a model could push Forge into asserting beyond its evidence. The spine held: tests never shown as passing, document signals never confer authority, self-metrics never authorization, same-version/different-bytes not conflated.
+- Imported authority baseline is corroborated against a chain-verified authorization event in this instance's ledger, or demoted to UNCORROBORATED and quarantined from release.
+- Change detection reports bounded confidence (never a bare proven "0 changed") when a file was compared by size and modification time instead of hash, and names the un-hashed paths.
+- Derived identity, objective, description, and run/test commands are labeled inferred at the point of assertion; the no-objective prompt no longer promises it surfaced any hardcoded secrets. Certified suite unchanged at 523/54; release authorization remains false.
+
 
 - Ranked ecosystem resolver: primary-language dispatch across Python/Node/Go/Rust/Java/Ruby/PHP + static/notebook, so polyglot/framework projects get correct run/test/identity.
 - Extended identity (pom.xml/gemspec/<title>), broader test discovery and secret coverage (.npmrc/npm tokens). Certified suite unchanged at 523/54; release authorization remains false.

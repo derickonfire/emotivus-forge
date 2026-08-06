@@ -144,7 +144,7 @@ def assess_ship_claims(project_root: Path, forge_root: Path, *, perform_remote: 
     settings = load_settings(project_root)
     current_snapshot = state.get("snapshot", {}) if isinstance(state.get("snapshot"), dict) else {}
     changes = detect_changes(project_root, forge_root, current_snapshot, settings)
-    authority_baseline = assess_authority_baseline(state, changes.get("current_snapshot", {}))
+    authority_baseline = assess_authority_baseline(state, changes.get("current_snapshot", {}), project_root=project_root)
     project_lineage = lineage_summary(project_root, forge_root)
     migration_identity = migration_identity_summary(project_root, forge_root)
     package_family = package_family_summary(project_root, forge_root)

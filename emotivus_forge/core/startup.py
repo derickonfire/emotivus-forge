@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 import time
 
+from .changes import change_count_phrase
 from .common import read_json
 from .guidance import build_help
 from .passport import build_passport
@@ -16,6 +17,19 @@ from .sidecar import update_sidecar_status
 from .storage import inspect_state_integrity
 from .workspace_integrity import start_workspace_observation
 from .artifact_collision import observe_version_collisions
+
+
+def _objective_line(objective: dict[str, Any]) -> str:
+    """Render the objective so a derived (README/plan-scraped) objective is never
+    presented identically to an owner-confirmed one. 'confirmed' is reserved for the
+    owner-recorded confirm path; anything else is labeled derived and unconfirmed."""
+    text = str(objective.get("text", "")).strip() if isinstance(objective, dict) else ""
+    if not text:
+        return "Objective: Not confirmed"
+    if str(objective.get("status", "")).lower() == "confirmed":
+        return f"Objective (confirmed): {text}"
+    source = str(objective.get("source", "")).strip() if isinstance(objective, dict) else ""
+    return f"Objective (derived from {source or 'project docs'}, unconfirmed): {text}"
 
 
 def _looks_like_forge_artifact(name: str) -> bool:
@@ -162,13 +176,14 @@ def render_run(payload: dict[str, Any]) -> str:
     objective = payload.get("objective", {}) if isinstance(payload.get("objective"), dict) else {}
     changes = payload.get("changes", {}) if isinstance(payload.get("changes"), dict) else {}
     forks = payload.get("decision_forks", {}) if isinstance(payload.get("decision_forks"), dict) else {}
+    objective_line = _objective_line(objective)
     lines = [
         f"FORGE STARTED — {payload.get('status', 'UNKNOWN')}",
         f"Project: {project.get('name', Path(str(payload.get('project_root', '.'))).name)}",
         f"Action: {payload.get('action', 'UNKNOWN')}",
         f"Active pass: {payload.get('active_pass', {}).get('status', 'NOT_RUN')} · then passive sidecar",
-        f"Objective: {objective.get('text', '') or 'Not confirmed'}",
-        f"Changes: {changes.get('count', 0)} path(s)",
+        objective_line,
+        f"Changes: {change_count_phrase(changes)}",
         f"Authority baseline: {payload.get('authority_baseline', {}).get('status', 'NOT_ESTABLISHED')} · {payload.get('authority_baseline', {}).get('pending_count', 0)} quarantined path(s)",
         f"Continuity: {payload.get('continuity', {}).get('status', 'unknown')}",
         f"Artifact collisions: {payload.get('artifact_version_collisions', {}).get('status', 'NOT_RUN')}",
@@ -182,13 +197,15 @@ def render_run(payload: dict[str, Any]) -> str:
     screening = payload.get("screening", {}) if isinstance(payload.get("screening"), dict) else {}
     orient_extra: list[str] = []
     if orient.get("description"):
-        orient_extra.append(f"What it is: {orient['description']}")
+        src = orient.get("description_source", "")
+        tag = f"derived from {src}, unverified" if src else "derived, unverified"
+        orient_extra.append(f"What it may be ({tag}): {orient['description']}")
     run_test = " · ".join(part for part in [
         f"run `{orient['run']}`" if orient.get("run") else "",
         f"test `{orient['test']}`" if orient.get("test") else "",
     ] if part)
     if run_test:
-        orient_extra.append(f"How to run: {run_test}")
+        orient_extra.append(f"How to run (inferred, not executed): {run_test}")
     layout = orient.get("layout", {}) if isinstance(orient.get("layout"), dict) else {}
     if layout.get("top_level"):
         dir_summary = " ".join(f"{row['dir']}/({row['files']})" for row in layout["top_level"][:4])

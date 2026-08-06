@@ -113,7 +113,7 @@ can still read, migrate, and extend.
   continuous — Forge keeps proving it can be carried forward, and never claims a
   false "done."
 
-## Where we actually are (0.558)
+## Where we actually are (0.559)
 
 Told honestly, not as the plan wished it went:
 
@@ -132,6 +132,8 @@ Told honestly, not as the plan wished it went:
   `P2-01` is still merely *active*. Release authorization remains `false`, honestly.
 - **Home moved.** Development now lives in the canonical `emotivus-forge` repo (see
   `CLAUDE.md`); the certified base is preserved byte-for-byte.
+
+**Update (0.559):** the first G1-core hardening landed — a 15-agent adversarial field test (`planning/G1-FIELD-TEST-OBSERVED-MISSES.md`) confirmed the spine holds and drove five fixes that subtract unearned certainty (imported-baseline corroboration, bounded change confidence, inferred-vs-confirmed labeling, scoped secrets claim, gated run commands). More of the G1 adversarial gate (exact-byte verification, wrong-package rejection) remains.
 
 **The next real build targets the G1 core** — the spine, not more on-ramp. A field
 test aimed at G1 (*where can a model push Forge into asserting something it hasn't

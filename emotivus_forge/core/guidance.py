@@ -33,7 +33,7 @@ def build_help(project_root: Path, forge_root: Path, topic: str | None = None) -
     else:
         state_data = load_state(project_root)
         changes = detect_changes(project_root, forge_root, state_data.get("snapshot", {}), load_settings(project_root))
-        authority_baseline = assess_authority_baseline(state_data, changes.get("current_snapshot", {}))
+        authority_baseline = assess_authority_baseline(state_data, changes.get("current_snapshot", {}), project_root=project_root)
         continuity = assess_continuity(project_root, current_snapshot=changes["current_snapshot"])
         authorities = read_json(ForgePaths(project_root).authorities, {})
         native_tools = read_json(ForgePaths(project_root).native_tools, {})

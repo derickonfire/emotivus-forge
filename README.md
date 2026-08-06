@@ -1,20 +1,17 @@
-# Emotivus Forge 0.558
+# Emotivus Forge 0.559
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.558 changes
+## What 0.559 changes
 
-- Replaces the hardcoded language dispatch with a ranked ecosystem resolver (primary-language ranking) so polyglot/framework projects get correct run/test/identity: Laravel -> `php artisan`, Java -> `mvn`, Ruby -> `rake`, notebooks -> `jupyter`.
-- Extends identity to pom.xml/gemspec/static-site `<title>`; broadens test discovery (root test.js, *_test.go) and secret coverage (.npmrc/npm auth tokens); tidies descriptions (skip license headers, word-boundary truncation).
-- Detects explicit objectives (`## Objective`, `Goal:`) so Forge stops nagging when the objective is written down; adds a deterministic layout summary (top dirs, primary source, packages, tests, central files).
-- Broadens secret coverage: Stripe/generic live-token BLOCK rules and content-scanning of extensionless credential files (aws-credentials, .netrc, .pgpass).
-- Catches hardcoded secrets in ordinary source at orientation (not only filename-flagged files); the target-user case (a hardcoded API key in app.py) now BLOCKs where it was missed.
-- Reads a one-line description, entry points, and run/test commands from the project; falls identity back through go.mod/Cargo.toml/README instead of the directory name.
-- Prints a measured Resume-vs-repo token comparison (e.g. Flask ~1k tokens vs ~467k to read the tree); collapses empty governance ceremony; orients before requiring an objective.
-- Validated by a 12-project spectrum re-test: mean cold-model usefulness 1.83 -> 2.67/5, blocked-before-value 11/12 -> 0/12.
-- Keeps the certified suite at 523 focused public-neutral regressions across 54 deterministic isolated modules; no test added or removed.
+- Hardens the Goal-1 **provable-truth core** from a 15-agent adversarial field test (the spine, not the on-ramp): every fix subtracts unearned certainty.
+- Imported authority baseline is corroborated against a chain-verified authorization event in this instance's ledger, or demoted to `UNCORROBORATED` and quarantined from release — an internally-consistent *imported* baseline is no longer trusted as authority.
+- Change detection reports **bounded** confidence (never a bare proven "0 changed") when a file was compared by size and modification time instead of hash, and names the un-hashed paths.
+- Derived identity, objective, description, and run/test commands are labeled inferred at the point of assertion: `confirmed` is reserved for owner-recorded identity, a scraped README/`<title>` name is `inferred`, a command line is never taken as a description, and `go run` is only suggested for an observed `main` package.
+- The no-objective prompt no longer promises it surfaced *any* hardcoded secrets — screening is stated as bounded, not a completeness guarantee.
+- Keeps the certified suite at 523 focused public-neutral regressions across 54 deterministic isolated modules; regressions extended in place, none added or removed.
 - Preserves the four-page website design and active generator.
 
 ## Current verification target

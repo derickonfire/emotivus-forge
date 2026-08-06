@@ -259,6 +259,22 @@ def _tidy(text: str) -> str:
     return text.rstrip(" :;,-")
 
 
+_COMMAND_LEAD_RE = re.compile(
+    r"^\s*(?:[$>]|#!|(?:npm|npx|pnpm|yarn|pip3?|python3?|ruby|node|deno|bun|go|cargo|make|bundle|php|composer|gradle|mvn|docker|git|rails|rake|flask|django-admin)\b)",
+    re.IGNORECASE,
+)
+
+
+def _looks_command(text: str) -> bool:
+    """A shell/command line masquerading as a description (e.g. 'npm install && npm
+    run wob'). Such a string is an instruction, never an identity, and must not be
+    printed as 'What it is'."""
+    stripped = text.strip()
+    if not stripped:
+        return False
+    return bool(_COMMAND_LEAD_RE.match(stripped)) or "&&" in stripped or " | " in stripped or stripped.startswith("`")
+
+
 def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
     """Deterministic project-layout summary from relative paths alone: top-level
     directories, file-type histogram, primary source dir, packages, and tests."""
@@ -340,6 +356,7 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
             return ""
 
     description = ""
+    description_source = ""
     for readme in ("README.md", "README.rst", "README.txt", "readme.md", "Readme.md"):
         if readme not in names:
             continue
@@ -350,18 +367,26 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
                 continue
             if "](" in raw or "<img" in raw or raw.lower().startswith(("http", "see ", "note:", "licensed ", "copyright", "spdx")):
                 continue
+            # A command line is an instruction, not an identity — never a description.
+            if _looks_command(raw):
+                continue
             if is_prose(raw):
                 description = _tidy(raw)
+                description_source = readme
                 break
         if description:
             break
     if not description:
-        description = (
-            json_value("package.json", "description")
-            or json_value("composer.json", "description")
-            or toml_value("Cargo.toml", "[package]", "description")
-            or toml_value("pyproject.toml", "[project]", "description")
-        )
+        for manifest, value in (
+            ("package.json", json_value("package.json", "description")),
+            ("composer.json", json_value("composer.json", "description")),
+            ("Cargo.toml", toml_value("Cargo.toml", "[package]", "description")),
+            ("pyproject.toml", toml_value("pyproject.toml", "[project]", "description")),
+        ):
+            if value and not _looks_command(value):
+                description = value
+                description_source = manifest
+                break
 
     def existing(*candidates: str) -> list[str]:
         return [candidate for candidate in candidates if candidate in rel_set]
@@ -440,9 +465,12 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
         run = "npm run dev" if "dev" in s else ("npm start" if "start" in s else "")
         test = "npm test" if "test" in s else ""
     elif primary == "go":
-        run = "go run ./..."
+        # `go run` only makes sense with an observed main package; a library has
+        # none, so it builds and tests instead (mirrors the Rust src/main.rs gate).
+        has_main = "main.go" in rel_set or "cmd/main.go" in rel_set
+        run = "go run ./..." if has_main else "go build ./..."
         test = "go test ./..."
-        entry_points = existing("main.go", "cmd/main.go") or root_source(".go")[:2]
+        entry_points = existing("main.go", "cmd/main.go")
     elif primary == "rust":
         run = "cargo run" if "src/main.rs" in rel_set else "cargo build"
         test = "cargo test"
@@ -467,9 +495,13 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
 
     return {
         "description": description,
+        "description_source": description_source,
         "entry_points": entry_points[:6],
         "run": run,
         "test": test,
+        # Run/test commands are derived from manifests and filenames, never executed
+        # here; a caller rendering them must present them as inferred, not as fact.
+        "commands_tier": "inferred",
         "layout": _derive_layout(rel_set),
     }
 
@@ -573,7 +605,11 @@ def orient_project(project_root: Path, forge_root: Path, settings: dict[str, Any
     safety["excluded_directories"] = sorted(IGNORED_DIR_NAMES)
     safety["project_ignore_patterns"] = load_project_ignore(project_root)
     name, name_source = _read_project_name(project_root)
-    confidence = "confirmed" if name_source != "directory" else "inferred"
+    # A name scraped from a README heading or an HTML <title>, or fallen back to the
+    # directory name, is inferred — not confirmed. "confirmed" is reserved for an
+    # owner-recorded identity (passport --record path). A declared manifest name
+    # field is observed, a tier below confirmed and above a prose scrape.
+    confidence = "inferred" if name_source in {"README", "index.html", "directory"} else "observed"
     return {
         "schema": 1,
         "identity": {
