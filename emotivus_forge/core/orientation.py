@@ -212,37 +212,59 @@ def _read_bounded(path: Path, limit: int = 256_000) -> str:
 def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str, Any]:
     """Best-effort, bounded first-contact orientation read from the project itself:
     a one-line description, entry points, and run/test commands. Deterministic."""
-    names = {Path(relative).name for relative in relatives}
+    rel_set = {relative for relative in relatives}
+    names = {Path(relative).name for relative in rel_set}
+
+    def is_prose(text: str) -> bool:
+        letters = sum(character.isalpha() for character in text)
+        return letters >= 8 and letters / max(1, len(text)) > 0.45
+
+    def toml_value(filename: str, section: str, key: str) -> str:
+        in_section = False
+        for line in _read_bounded(project_root / filename).splitlines():
+            stripped = line.strip()
+            if stripped.startswith("["):
+                in_section = stripped == section
+            elif in_section and stripped.startswith(key) and "=" in stripped:
+                value = stripped.split("=", 1)[1].strip().strip("'\"")
+                if value:
+                    return value[:200]
+        return ""
+
+    def json_value(filename: str, key: str) -> str:
+        text = _read_bounded(project_root / filename)
+        try:
+            value = (json.loads(text) if text else {}).get(key, "")
+            return str(value).strip()[:200] if isinstance(value, str) else ""
+        except (json.JSONDecodeError, ValueError):
+            return ""
+
     description = ""
     for readme in ("README.md", "README.rst", "README.txt", "readme.md", "Readme.md"):
         if readme not in names:
             continue
         for line in _read_bounded(project_root / readme).splitlines():
             raw = line.strip()
-            # Skip headings, badges, HTML, tables, rules — take the first real prose line.
-            if not raw or raw.startswith(("#", "![", "[!", "<", ">", "---", "===", "```", "|", "=", "*", "-")):
+            # First real prose line — skip headings, badges, links, HTML, tables, art.
+            if not raw or raw.startswith(("#", "!", "[", "<", ">", "---", "===", "```", "|", "=", "*", "-", "(")):
                 continue
-            if len(raw) > 2:
+            if "](" in raw or "<img" in raw or raw.lower().startswith(("http", "see ", "note:")):
+                continue
+            if is_prose(raw):
                 description = raw[:200]
                 break
         if description:
             break
+    if not description:
+        description = (
+            json_value("package.json", "description")
+            or json_value("composer.json", "description")
+            or toml_value("Cargo.toml", "[package]", "description")
+            or toml_value("pyproject.toml", "[project]", "description")
+        )
 
-    def manifest_description(filename: str, key: str) -> str:
-        text = _read_bounded(project_root / filename)
-        if not text:
-            return ""
-        try:
-            data = json.loads(text)
-            value = data.get(key, "")
-            return str(value).strip()[:200] if isinstance(value, str) else ""
-        except (json.JSONDecodeError, ValueError):
-            return ""
-
-    if not description and "package.json" in names:
-        description = manifest_description("package.json", "description")
-    if not description and "composer.json" in names:
-        description = manifest_description("composer.json", "description")
+    def existing(*candidates: str) -> list[str]:
+        return [candidate for candidate in candidates if candidate in rel_set]
 
     entry_points: list[str] = []
     run = ""
@@ -250,43 +272,38 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
     if "package.json" in names:
         text = _read_bounded(project_root / "package.json")
         try:
-            data = json.loads(text) if text else {}
-            scripts = data.get("scripts", {}) if isinstance(data.get("scripts"), dict) else {}
+            scripts = (json.loads(text) if text else {}).get("scripts", {})
+            scripts = scripts if isinstance(scripts, dict) else {}
         except (json.JSONDecodeError, ValueError):
             scripts = {}
-        for candidate in ("index.js", "index.ts", "server.js", "app.js", "main.js", "src/index.js", "src/index.ts"):
-            if Path(candidate).name in names:
-                entry_points.append(candidate)
-        if "dev" in scripts:
-            run = "npm run dev"
-        elif "start" in scripts:
-            run = "npm start"
-        if "test" in scripts:
-            test = "npm test"
+        entry_points = existing("index.js", "index.ts", "src/index.js", "src/index.ts", "server.js", "app.js", "main.js", "bin/cli.js")
+        run = "npm run dev" if "dev" in scripts else ("npm start" if "start" in scripts else "")
+        test = "npm test" if "test" in scripts else ""
     elif "pyproject.toml" in names or "setup.py" in names or "requirements.txt" in names or any(n.endswith(".py") for n in names):
-        for candidate in ("manage.py", "app.py", "main.py", "wsgi.py", "asgi.py", "__main__.py"):
-            if candidate in names:
-                entry_points.append(candidate)
-        if "manage.py" in names:
+        entry_points = existing("manage.py", "app.py", "main.py", "wsgi.py", "asgi.py", "__main__.py", "src/main.py")
+        if "manage.py" in rel_set:
             run = "python manage.py runserver"
-        elif "app.py" in names:
+        elif "app.py" in rel_set:
             run = "python app.py"
-        elif "main.py" in names:
+        elif "main.py" in rel_set:
             run = "python main.py"
         if any(n.startswith("test_") or n.endswith("_test.py") for n in names) or "tox.ini" in names or "pytest.ini" in names or "conftest.py" in names:
             test = "pytest"
     elif "go.mod" in names:
         run = "go run ./..."
         test = "go test ./..."
-        entry_points = [n for n in sorted(names) if n == "main.go"]
+        entry_points = existing("main.go", "cmd/main.go")
     elif "Cargo.toml" in names:
-        run = "cargo run"
+        run = "cargo run" if "src/main.rs" in rel_set else "cargo build"
         test = "cargo test"
+        entry_points = existing("src/main.rs", "src/lib.rs")
     elif "composer.json" in names:
         run = "php artisan serve" if "artisan" in names else "php -S localhost:8000"
         test = "vendor/bin/phpunit" if "phpunit.xml" in names or "phpunit.xml.dist" in names else ""
+        entry_points = existing("artisan", "public/index.php", "index.php")
     elif any(n.endswith(".html") for n in names) and "package.json" not in names:
-        run = "open index.html (static site — no build)" if "index.html" in names else ""
+        run = "open index.html (static site — no build)" if "index.html" in rel_set else ""
+        entry_points = existing("index.html")
 
     return {
         "description": description,

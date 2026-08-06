@@ -1,5 +1,15 @@
 # Emotivus Forge changelog
 
+## 0.556 — Context Digest: Trustworthy First Contact
+
+- Delivered the first-contact context digest — the observed-miss redirection of Goal 1 toward project intelligence, validated by a 12-project spectrum re-test (mean cold-model usefulness 1.83 -> 2.67/5; blocked-before-value 11/12 -> 0/12).
+- Secret screening now content-scans ordinary source at orientation via a bounded full-text pass (not only filename-flagged files). The target-user case — a hardcoded API key in app.py — now returns BLOCK where it was previously missed; values are never retained.
+- Added first-contact orientation (`orientation.derive_orientation`): a one-line description, entry points, and run/test commands read from the project; identity now falls back go.mod -> Cargo.toml -> README H1 -> directory.
+- Added a measured Resume-vs-repo token-economics line (e.g. Flask ~1k tokens vs ~467k to read the tree); made empty NOT_DECLARED governance lazy in the compact digest; made a missing objective a warning on read-only first contact (a blocker only once there are changes), so Forge orients before blocking.
+- The terminal FORGE STARTED block now leads with What it is / How to run / a Secrets BLOCK/REVIEW alert.
+- Fixed digest defects the spectrum test surfaced: no more hallucinated entry points (exact relative-path membership), no `cargo run` for library-only crates, and prose descriptions skip badges/kaomoji.
+- Additive throughout; certified suite unchanged at 523/54; release authorization remains false. The formal P2-01 schema chunk stays active.
+
 ## 0.555 — Core-Reduction Close: Orphan Retirement and Edition Proof
 
 - Completed Durable Core chunk **P1-06**: retired the fold-orphaned imports left by the P1-04/P1-05 consolidations (`stat`, `hashlib`, `ZIP_TIMESTAMP`, `read_json`, and the now-unused `project_identity_record` imports across the release modules; `release_proof` also carried a never-called `_current_build_id` helper). Confirmed no whole module was orphaned (88 reachable, zero unreachable) and no ceremony-requirement test existed to retire. Genuinely pre-existing dead imports were left in scope for a later dedicated pass.

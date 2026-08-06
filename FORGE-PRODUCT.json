@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.555",
+  "version": "0.556",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.555 maps every active runtime module, command path, and top-level surface before any code reduction, preserving the boundary: Forge supplies exact truth and continuity while models retain reasoning and development.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.556 maps every active runtime module, command path, and top-level surface before any code reduction, preserving the boundary: Forge supplies exact truth and continuity while models retain reasoning and development.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.555",
+  "display_version": "0.556",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

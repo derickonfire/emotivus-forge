@@ -1,4 +1,11 @@
-# Emotivus Forge 0.555 — Core-Reduction Close: Orphan Retirement and Edition Proof
+# Emotivus Forge 0.556 — Context Digest: Trustworthy First Contact
+
+- Delivers the first-contact context digest (Goal 1 redirection per the observed miss), validated by a 12-project spectrum re-test: mean cold-model usefulness 1.83 -> 2.67/5, blocked-before-value 11/12 -> 0/12.
+- Secret screening now catches hardcoded secrets in ordinary source at orientation (a hardcoded API key in app.py now BLOCKs, previously missed).
+- Reads description, entry points, and run/test commands from the project; identity falls back through go.mod/Cargo.toml/README; prints a measured Resume-vs-repo token comparison; orients before requiring an objective.
+- Certified suite unchanged at 523/54; release authorization remains false.
+
+## Prior release — 0.555 — Core-Reduction Close: Orphan Retirement and Edition Proof
 
 - Completes chunk P1-06: retires the fold-orphaned imports left by the P1-04/P1-05 consolidations; confirms no whole module was orphaned and no ceremony-requirement test needed retiring.
 - Completes chunk P1-07: rebuilds and independently proves the public and development editions — the public runtime passes 523/54 from its own extracted bytes — with no lost behavior or history. Closes the core-reduction phase.

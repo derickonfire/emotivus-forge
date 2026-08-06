@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.555  
+**Current build:** 0.556  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -20,7 +20,9 @@
 - P1-05: **COMPLETE** — capability-activation ceremony reduced to a minimal enabled/reason/scope/evidence record with every safety gate preserved.
 - P1-06: **COMPLETE** — fold-orphaned imports retired; no whole module orphaned; no ceremony-requirement test existed.
 - P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 523/54 from its own bytes).
-- Core-reduction phase (P1) complete. Next active chunk: **P2-01 · define the minimal project-truth schema and migration from the legacy eight-state representation**
+- Core-reduction phase (P1) complete.
+- 0.556: **Context digest delivered** — first-contact orientation, secret screening at orientation, measured token economics, lazy governance, orient-before-blocking (Goal 1 redirection per the observed miss; spectrum usefulness 1.83 → 2.67/5, blocked-before-value 11/12 → 0/12).
+- Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
 - Unclassified active top-level paths: **0**
