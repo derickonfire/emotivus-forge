@@ -151,6 +151,7 @@ def _classify_module(module: str) -> list[str]:
     if leaf in {
         "continuity_register", "continuity_benchmark", "bounded_retrieval", "migration_identity",
         "lifecycle", "capabilities", "third_party_intake", "presentation_profile",
+        "forward_compat",
     }:
         values.add("G3_EVOLUTION_KERNEL")
     if module == "emotivus_forge.core":

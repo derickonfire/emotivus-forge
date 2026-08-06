@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.566  
+**Current build:** 0.567  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -19,7 +19,7 @@
 - P1-04: **COMPLETE** — duplicated deterministic plumbing and kit hygiene consolidated into the shared truth boundary; distinct-by-design services kept.
 - P1-05: **COMPLETE** — capability-activation ceremony reduced to a minimal enabled/reason/scope/evidence record with every safety gate preserved.
 - P1-06: **COMPLETE** — fold-orphaned imports retired; no whole module orphaned; no ceremony-requirement test existed.
-- P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 533/55 from its own bytes).
+- P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 536/56 from its own bytes).
 - Core-reduction phase (P1) complete.
 - 0.556: **Context digest delivered** — first-contact orientation, secret screening at orientation, measured token economics, lazy governance, orient-before-blocking (Goal 1 redirection per the observed miss; spectrum usefulness 1.83 → 2.67/5, blocked-before-value 11/12 → 0/12).
 - 0.557: **Project-intelligence completeness** — objective detection on explicit headings, deterministic architecture/layout summary, broader secret coverage (Stripe/generic live tokens, extensionless credential files).
@@ -32,6 +32,7 @@
 - 0.564: **Provenance parity** — instance-binding extended to artifact provenance; scoped Check asserts CONFIRMED only for instance-bound recordings, so an imported/unsigned provenance record is honest as current yet not authenticated. Closes the last place the self-consistent-is-not-authentic class lived. Suite grows additively to 532/55.
 - 0.565: **Native-evidence source binding (DG-8)** — imported native evidence is bound to the source tree fingerprint at capture and reported stale once the tree changes. Completes the recorded G1 observed-miss backlog; DG-7 was reviewed and did not survive verification (no speculative fix). Suite grows additively to 533/55.
 - 0.566: **Goal 1 (Provable Project Truth) certified COMPLETE** — every completion-rule dimension verified by a passing adversarial regression (`planning/G1-COMPLETION.md`); public package passes 533/55 twice deterministically from its own extracted bytes. G2/G3 remain open. Suite unchanged at 533/55.
+- 0.567: **G3 forward-compat (begun)** — forward migration guaranteed to preserve unknown top-level and nested fields verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`, surfaced in the Resume Brief) rather than interpreting or dropping them. First piece of the cross-model evolution kernel. Suite grows additively to 536/56.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.567 — Goal 3: Forward-Compatible Migration (begun)
+
+- Opens the cross-model evolution kernel. Forward migration is now **guaranteed to preserve fields this Forge schema does not recognize** — an older or another vendor's package keeps its unknown top-level **and** nested fields verbatim through migration, locked by a regression so a future refactor cannot silently start dropping data.
+- New `core/forward_compat.py` **reports preserved-but-unrecognized** settings fields; the Resume Brief surfaces a `Forward-compat:` line listing them (only when present). Unknown fields are retained verbatim and never interpreted, trusted, or treated as authority, evidence, or lineage.
+- This is the first piece of the G3 completion rule (migrate an older package, preserve exact meaning): Forge migrates without losing meaning and reports exactly what it did not understand.
+- Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
+- Certified suite grows additively to **536 focused public-neutral regressions across 56 deterministic isolated modules** (new `forward_compat` module + `test_forward_compat`). P2-01 schema chunk stays active.
+
 ## 0.566 — Goal 1 (Provable Project Truth) certified COMPLETE
 
 - Certifies **G1 COMPLETE**. Each dimension of the completion rule — exact identity, authority (import rejection, single- and multi-party instance-binding), lineage, evidence binding (provenance + native evidence), adversarial package rejection, and package authorization — is verified by a passing adversarial regression, inventoried in `planning/G1-COMPLETION.md`.

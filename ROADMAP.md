@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.566  
+**Current release:** 0.567  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -19,7 +19,7 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`). G3 has a certifiable foundation and then remains continuous by design.
 
-## Reconciliation (as of 0.565)
+## Reconciliation (as of 0.567)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -27,7 +27,7 @@ per-chunk sequence in the table below. The chunk table is kept as the original
 structural plan and history; the sections here reconcile it with what actually shipped
 and sequence the near term.
 
-### Delivered 0.556 → 0.565 (evidence-driven)
+### Delivered 0.556 → 0.567 (evidence-driven)
 
 | Release | Goal | Delivered |
 |---|---|---|
@@ -39,6 +39,8 @@ and sequence the near term.
 | 0.563 | G1/G3 | **Multi-party instance-binding**: an owner-provisioned shared collaboration secret makes authorizations mutually instance-bound across enrolled parties. The enforceable basis for cross-model trust. |
 | 0.564 | G1/G3 | **Provenance parity**: instance-binding extended to artifact provenance — a deliverable's lineage is asserted `CONFIRMED` only when its recording event is instance-bound. |
 | 0.565 | G1 | **Native-evidence source binding**: imported native evidence is bound to the source tree fingerprint and reported stale once the tree changes. Closes the recorded G1 observed-miss backlog. |
+| 0.566 | G1 | **Goal 1 certified COMPLETE**: every completion-rule dimension adversarially verified; public package self-tests 533/55 twice from its own bytes (`planning/G1-COMPLETION.md`). |
+| 0.567 | G3 | **Forward-compatible migration**: unknown top-level and nested fields preserved verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`). |
 
 **Standing:** **G1 is COMPLETE (0.566)** — see `planning/G1-COMPLETION.md`. The dominant G1 finding ("self-consistent ≠ authentic") is closed for
 **both authority and provenance** (single- and multi-party) — an imported package can
@@ -48,9 +50,10 @@ consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
-   preserves unknown fields (original P4-01/02), building on the instance-binding delivered
-   under G1.
+1. **G3 continuity kernel (in progress)** — forward-compatible migration landed (0.567,
+   preserves unknown fields). Next: vendor-neutral continuity storage that stores truth
+   rather than model instructions (P4-01), and explicit retain/fold/freeze/retire/replace
+   lifecycle records (P4-03), building on the instance-binding delivered under G1.
 2. **G2 close-out** — cross-vendor cold-entry/exit handoff acceptance, toward declaring G2 COMPLETE.
 
 *Done: the full recorded G1 observed-miss backlog — native-evidence source binding (0.565),

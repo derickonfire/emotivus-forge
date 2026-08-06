@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "forge_version": "0.561",
+  "forge_version": "0.566",
   "entry_files": [
     "forge.py",
     "frg.py"
@@ -51,11 +51,14 @@
       "emotivus_forge.core.decision_forks",
       "emotivus_forge.core.deployable_boundary",
       "emotivus_forge.core.evidence_kit",
+      "emotivus_forge.core.evidence_validity",
       "emotivus_forge.core.external_evidence",
       "emotivus_forge.core.field_trials",
+      "emotivus_forge.core.forward_compat",
       "emotivus_forge.core.guardrails",
       "emotivus_forge.core.guidance",
       "emotivus_forge.core.handoff",
+      "emotivus_forge.core.instance_key",
       "emotivus_forge.core.knowledge",
       "emotivus_forge.core.ledger",
       "emotivus_forge.core.ledger_assertions",
@@ -105,11 +108,11 @@
       "emotivus_forge.services.ship"
     ]
   },
-  "module_count": 89,
-  "static_reachable_count": 89,
-  "ordinary_cli_reachable_count": 83,
-  "standalone_tool_reachable_count": 75,
-  "verification_reachable_count": 89,
+  "module_count": 90,
+  "static_reachable_count": 90,
+  "ordinary_cli_reachable_count": 84,
+  "standalone_tool_reachable_count": 76,
+  "verification_reachable_count": 90,
   "static_unreachable_count": 0,
   "static_unreachable_modules": [],
   "unclassified_modules": [],
@@ -117,7 +120,7 @@
     {
       "module": "emotivus_forge",
       "path": "emotivus_forge/__init__.py",
-      "sha256": "8004b6b29ababd8c9120b024ca1cfce5150f2c01181af6da22d307a764457bb2",
+      "sha256": "d72730a6d477a00706f704d7492320c19f10f99a8be2985cf583fc5c869d8c1a",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -131,7 +134,7 @@
     {
       "module": "emotivus_forge.cli",
       "path": "emotivus_forge/cli.py",
-      "sha256": "92afefac541ef78ec613788b39fbecb97504027fb8f085fd5a1a0a2652efe97f",
+      "sha256": "94576af4c181bcbe23e265d4dea17a2fc5543ab26495aaf7d524e8e0075760b4",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": false,
@@ -176,7 +179,7 @@
     {
       "module": "emotivus_forge.commands.adopt",
       "path": "emotivus_forge/commands/adopt.py",
-      "sha256": "2ac8bcbad25b131852a5c0172d20e890fbf839cd454a574003f5ba1ee131252a",
+      "sha256": "e5a0ee5b5930c478ad1e7989b8bdfa7b5f636ec5644abd3388306ef4174b991a",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": false,
@@ -199,6 +202,7 @@
         "emotivus_forge.core.field_trials",
         "emotivus_forge.core.guardrails",
         "emotivus_forge.core.handoff",
+        "emotivus_forge.core.instance_key",
         "emotivus_forge.core.ledger_assertions",
         "emotivus_forge.core.lineage",
         "emotivus_forge.core.migration_identity",
@@ -805,7 +809,7 @@
     {
       "module": "emotivus_forge.core.evidence_validity",
       "path": "emotivus_forge/core/evidence_validity.py",
-      "sha256": "a3f0af713182f96afb1fd82964512040a3b7468bda3be5687abc8811b9ab6abf",
+      "sha256": "e0c07222e1af6a48807880c4fb29597fbc3a7c0af35d0d69ef85bb6a59d4758a",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -863,6 +867,26 @@
       ],
       "classifications": [
         "G1_PROJECT_TRUTH"
+      ]
+    },
+    {
+      "module": "emotivus_forge.core.forward_compat",
+      "path": "emotivus_forge/core/forward_compat.py",
+      "sha256": "5c0d337a62c6b430bde50fa4b505a55585dd617436e3274aa59fa4da31ffe331",
+      "active_reachable": true,
+      "ordinary_cli_reachable": true,
+      "standalone_tool_reachable": true,
+      "verification_reachable": true,
+      "observed_commands": [
+        "adopt",
+        "resume",
+        "run"
+      ],
+      "imports": [
+        "emotivus_forge.core.state"
+      ],
+      "classifications": [
+        "G3_EVOLUTION_KERNEL"
       ]
     },
     {
@@ -941,7 +965,7 @@
     {
       "module": "emotivus_forge.core.instance_key",
       "path": "emotivus_forge/core/instance_key.py",
-      "sha256": "4ca28b5528cd6b9266969c6157e3193f151c64ffe3f76c68b022f30aa1a78f26",
+      "sha256": "dc25c547e12708af7d02d80f47df1182d221548a557cac3227342cb501601bb4",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -975,7 +999,7 @@
     {
       "module": "emotivus_forge.core.ledger",
       "path": "emotivus_forge/core/ledger.py",
-      "sha256": "93c5a72b565d1a06962da5b1af7cb13f242c2771358f5e217eb776570b4cab5f",
+      "sha256": "3ba722e9c7669d399d521d0b169c814be994cfe196beeb0bb0a2744e67dcea49",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1244,7 +1268,7 @@
     {
       "module": "emotivus_forge.core.passport",
       "path": "emotivus_forge/core/passport.py",
-      "sha256": "bac1b99e15de2c5eadd455c0383627f12dae9de7accc9eb1dbbe725ff505597d",
+      "sha256": "af1eb3114c83545cb36b1d5f57b0ec09daf4652b21e1640ca69d0f017f97b32e",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1258,6 +1282,7 @@
         "emotivus_forge.core.authority_baseline",
         "emotivus_forge.core.authority_registry",
         "emotivus_forge.core.capabilities",
+        "emotivus_forge.core.changes",
         "emotivus_forge.core.common",
         "emotivus_forge.core.continuity_register",
         "emotivus_forge.core.field_trials",
@@ -1377,7 +1402,7 @@
     {
       "module": "emotivus_forge.core.provenance",
       "path": "emotivus_forge/core/provenance.py",
-      "sha256": "4211d55493f4537380ad5cb188bfa7ca810e2542604376ef23714c1fdb354bf5",
+      "sha256": "c54eb9d956781d2c2f9502409039893a62e4ff0311845dbf534883c20c7fcf93",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1390,6 +1415,7 @@
       ],
       "imports": [
         "emotivus_forge.core.common",
+        "emotivus_forge.core.instance_key",
         "emotivus_forge.core.ledger",
         "emotivus_forge.core.lifecycle",
         "emotivus_forge.core.paths",
@@ -1598,7 +1624,7 @@
     {
       "module": "emotivus_forge.core.resume",
       "path": "emotivus_forge/core/resume.py",
-      "sha256": "c399b603cf10b58a461957e2bc68aec4d83f20b00b214d3aab850765c76a6450",
+      "sha256": "13b51cd074fa9f10e9e2766427cfb1f40ff034cb0e0b64c4bb6ec420ab503781",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1622,7 +1648,9 @@
         "emotivus_forge.core.continuity_register",
         "emotivus_forge.core.decision_forks",
         "emotivus_forge.core.deployable_boundary",
+        "emotivus_forge.core.evidence_validity",
         "emotivus_forge.core.field_trials",
+        "emotivus_forge.core.forward_compat",
         "emotivus_forge.core.guardrails",
         "emotivus_forge.core.ledger_assertions",
         "emotivus_forge.core.lineage",
@@ -1700,7 +1728,7 @@
     {
       "module": "emotivus_forge.core.self_currency",
       "path": "emotivus_forge/core/self_currency.py",
-      "sha256": "11bcd5ca72b19ea3967db9f2ddf052213979364f40ae72bed62c76c71f6d19b0",
+      "sha256": "a0489eae46b0a4fc2f203dcc48762fc7471707ff0c7cc2b346edc569cb289213",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1715,6 +1743,7 @@
       "imports": [
         "emotivus_forge",
         "emotivus_forge.core.common",
+        "emotivus_forge.core.evidence_validity",
         "emotivus_forge.core.orientation",
         "emotivus_forge.core.project_identity",
         "emotivus_forge.core.truth"
@@ -2123,7 +2152,7 @@
     {
       "module": "emotivus_forge.services.native_gate",
       "path": "emotivus_forge/services/native_gate.py",
-      "sha256": "93d26a9c529d2ca76e5dde77e703a1a126cbe4e42a4e2974dba285087a3314ad",
+      "sha256": "eaefdefe89ca3165289c1caa0a5ecd268dfe03c3b20abf90db9131f262ac4c1c",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -2159,7 +2188,7 @@
     {
       "module": "emotivus_forge.services.scoped_check",
       "path": "emotivus_forge/services/scoped_check.py",
-      "sha256": "dabe4199b98cc68bfa9953107cd433e89640c8af326baf1cfaf4afe2de875a58",
+      "sha256": "4a40e6baaf2a3d6730983866640ed4daca063a1a42eec9cff3d2d8a5b7f70683",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -2258,6 +2287,7 @@
         "emotivus_forge/core/decision_forks.py",
         "emotivus_forge/core/deployable_boundary.py",
         "emotivus_forge/core/field_trials.py",
+        "emotivus_forge/core/forward_compat.py",
         "emotivus_forge/core/guardrails.py",
         "emotivus_forge/core/knowledge.py",
         "emotivus_forge/core/ledger.py",
@@ -2775,6 +2805,18 @@
         {
           "function": "trial_records",
           "path": "emotivus_forge/core/field_trials.py"
+        },
+        {
+          "function": "<genexpr>",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "known_settings_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "preserved_unknown_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
         },
         {
           "function": "<dictcomp>",
@@ -3657,6 +3699,7 @@
         "emotivus_forge/core/decision_forks.py",
         "emotivus_forge/core/deployable_boundary.py",
         "emotivus_forge/core/field_trials.py",
+        "emotivus_forge/core/forward_compat.py",
         "emotivus_forge/core/guardrails.py",
         "emotivus_forge/core/knowledge.py",
         "emotivus_forge/core/ledger.py",
@@ -4174,6 +4217,18 @@
         {
           "function": "trial_records",
           "path": "emotivus_forge/core/field_trials.py"
+        },
+        {
+          "function": "<genexpr>",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "known_settings_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "preserved_unknown_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
         },
         {
           "function": "<dictcomp>",
@@ -4905,6 +4960,7 @@
         "emotivus_forge/core/decision_forks.py",
         "emotivus_forge/core/deployable_boundary.py",
         "emotivus_forge/core/field_trials.py",
+        "emotivus_forge/core/forward_compat.py",
         "emotivus_forge/core/guardrails.py",
         "emotivus_forge/core/ledger.py",
         "emotivus_forge/core/ledger_assertions.py",
@@ -5367,6 +5423,18 @@
         {
           "function": "trial_records",
           "path": "emotivus_forge/core/field_trials.py"
+        },
+        {
+          "function": "<genexpr>",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "known_settings_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
+        },
+        {
+          "function": "preserved_unknown_fields",
+          "path": "emotivus_forge/core/forward_compat.py"
         },
         {
           "function": "<dictcomp>",
@@ -7624,7 +7692,7 @@
       "path": "CERTIFICATION.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 836,
+      "bytes": 812,
       "development": true,
       "public": false,
       "classifications": [
@@ -7637,7 +7705,7 @@
       "path": "CHANGELOG.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 64492,
+      "bytes": 72018,
       "development": true,
       "public": true,
       "classifications": [
@@ -7715,7 +7783,7 @@
       "path": "FORGE-PRODUCT.json",
       "kind": "file",
       "file_count": 1,
-      "bytes": 52325,
+      "bytes": 52363,
       "development": true,
       "public": true,
       "classifications": [
@@ -7730,7 +7798,7 @@
       "path": "IMPLEMENTATION-REPORT.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 4036,
+      "bytes": 7052,
       "development": true,
       "public": false,
       "classifications": [
@@ -7754,7 +7822,7 @@
       "path": "PROGRESS-STATUS.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 4039,
+      "bytes": 5900,
       "development": true,
       "public": true,
       "classifications": [
@@ -7780,7 +7848,7 @@
       "path": "README.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 2020,
+      "bytes": 2052,
       "development": true,
       "public": true,
       "classifications": [
@@ -7806,7 +7874,7 @@
       "path": "ROADMAP.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 8924,
+      "bytes": 12861,
       "development": true,
       "public": true,
       "classifications": [
@@ -7897,7 +7965,7 @@
       "path": "docs-site/",
       "kind": "directory",
       "file_count": 16,
-      "bytes": 830636,
+      "bytes": 846067,
       "development": true,
       "public": false,
       "classifications": [
@@ -7908,8 +7976,8 @@
     {
       "path": "emotivus_forge/",
       "kind": "directory",
-      "file_count": 178,
-      "bytes": 3743751,
+      "file_count": 180,
+      "bytes": 3772286,
       "development": true,
       "public": true,
       "classifications": [
@@ -8020,8 +8088,8 @@
     {
       "path": "planning/",
       "kind": "directory",
-      "file_count": 37,
-      "bytes": 388081,
+      "file_count": 38,
+      "bytes": 395082,
       "development": true,
       "public": true,
       "classifications": [
@@ -8047,7 +8115,7 @@
       "path": "release/",
       "kind": "directory",
       "file_count": 70,
-      "bytes": 4875919,
+      "bytes": 4878955,
       "development": true,
       "public": true,
       "classifications": [
@@ -8071,8 +8139,8 @@
     {
       "path": "tests/",
       "kind": "directory",
-      "file_count": 117,
-      "bytes": 1667685,
+      "file_count": 118,
+      "bytes": 1694194,
       "development": true,
       "public": true,
       "classifications": [
@@ -8084,7 +8152,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 20,
-      "bytes": 278843,
+      "bytes": 278883,
       "development": true,
       "public": true,
       "classifications": [
@@ -8100,5 +8168,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "6fc813b32264e7935b572dce749f40491b729f6e4f87e9c029274d76b96ed9aa"
+  "report_sha256": "a8ea8ea3d24cd0e991ab8d248b15a8cb556f80f282dcaa62d48382269fdcb7af"
 }

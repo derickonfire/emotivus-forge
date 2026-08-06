@@ -1,19 +1,19 @@
 # Active Runtime Reachability and Classification
 
-**Forge version:** 0.561  
-**Modules inventoried:** 89  
-**Statically reachable:** 89  
+**Forge version:** 0.566  
+**Modules inventoried:** 90  
+**Statically reachable:** 90  
 **Statically unreachable:** 0  
-**Report SHA-256:** `6fc813b32264e7935b572dce749f40491b729f6e4f87e9c029274d76b96ed9aa`
+**Report SHA-256:** `a8ea8ea3d24cd0e991ab8d248b15a8cb556f80f282dcaa62d48382269fdcb7af`
 
 ## Command observations
 
 | Command | Trace | Exit | Modules observed |
 |---|---|---:|---:|
-| `run` | OBSERVED | 0 | 61 |
+| `run` | OBSERVED | 0 | 62 |
 | `help` | OBSERVED | 0 | 7 |
-| `adopt` | OBSERVED | 0 | 56 |
-| `resume` | OBSERVED | 0 | 51 |
+| `adopt` | OBSERVED | 0 | 57 |
+| `resume` | OBSERVED | 0 | 52 |
 | `check` | OBSERVED | 1 | 40 |
 | `ship` | OBSERVED | 1 | 34 |
 
@@ -54,6 +54,7 @@
 | `emotivus_forge.core.evidence_validity` | active | check | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.external_evidence` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.field_trials` | active | adopt, resume, run | G1_PROJECT_TRUTH |
+| `emotivus_forge.core.forward_compat` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.guardrails` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guidance` | active | help | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.handoff` | active | — | G2_SESSION_CONTINUITY |
@@ -140,7 +141,7 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 178 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 180 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
 | `exchange/` | 2 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
@@ -149,11 +150,11 @@
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 37 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 38 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 117 | yes | yes | KEEP | TESTING |
+| `tests/` | 118 | yes | yes | KEEP | TESTING |
 | `tools/` | 20 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification

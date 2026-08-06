@@ -11,6 +11,7 @@ from .relationships import evaluate_relationships, augment_check_plan
 from .capabilities import capability_summary
 from .changes import change_count_phrase, detect_changes, snapshot_fingerprint
 from .evidence_validity import effective_native_validity
+from .forward_compat import preserved_unknown_fields
 from .decision_forks import analyze_decision_forks
 from .guardrails import guardrail_summary
 from .ledger_assertions import ledger_assertion_summary
@@ -402,6 +403,14 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
             f"validity: {effective_native_validity(native_evidence, snapshot_fingerprint(changes['current_snapshot']))}; "
             f"truth: {native_evidence.get('truth', {}).get('truth_state', 'UNKNOWN') if isinstance(native_evidence.get('truth'), dict) else 'UNKNOWN'}; "
             f"tier: {native_evidence.get('verification_tier', 'sandbox')}."
+        )
+    preserved_unknown = preserved_unknown_fields(settings)
+    if preserved_unknown:
+        shown = ", ".join(preserved_unknown[:8])
+        more = "" if len(preserved_unknown) <= 8 else f" (+{len(preserved_unknown) - 8} more)"
+        lines.append(
+            f"- **Forward-compat:** {len(preserved_unknown)} settings field(s) preserved unchanged but not "
+            f"recognized by this Forge schema: {shown}{more}. Retained verbatim; never interpreted or trusted."
         )
     runtime_proof_evidence = passport.get("evidence", {}).get("runtime_proof", {}) if isinstance(passport.get("evidence"), dict) else {}
     if isinstance(runtime_proof_evidence, dict) and runtime_proof_evidence.get("status"):

@@ -1,4 +1,9 @@
-# Emotivus Forge 0.566 — Goal 1 (Provable Project Truth) certified COMPLETE
+# Emotivus Forge 0.567 — Goal 3: Forward-Compatible Migration (begun)
+
+- Forward migration is now guaranteed to preserve fields this Forge schema does not recognize: an older or another vendor's package keeps its unknown top-level and nested fields verbatim.
+- Forge reports preserved-but-unrecognized settings fields (core/forward_compat.py; surfaced in the Resume Brief) rather than interpreting or dropping them. The first piece of the cross-model evolution kernel.
+- Goal 1 remains certified COMPLETE; release authorization remains false. Certified suite grows additively to 536 across 56 modules.
+
 
 - G1 is certified COMPLETE: every completion-rule dimension (exact identity, authority, lineage, evidence binding, adversarial package rejection, package authorization) is verified by a passing adversarial regression, inventoried in planning/G1-COMPLETION.md.
 - Independent exact-byte verification: the public package passes its full certified suite 533/533 twice, deterministically, from its own independently extracted bytes.
