@@ -251,6 +251,53 @@ class AuthorityBaselineTests(ForgeTestCase):
             self.assertEqual(imported["corroboration"]["binding"], "self-consistent")
             self.assertFalse(imported["release_eligible"])
 
+    def test_collaboration_secret_makes_authorizations_mutually_instance_bound(self) -> None:
+        # 0.563 peer enrollment: two instances (distinct Forge homes) that hold the
+        # SAME owner-provisioned collaboration secret mutually trust each other's
+        # authorizations; without the secret, a peer's event is only self-consistent.
+        import os
+        from emotivus_forge.core.instance_key import enroll_collaboration_secret
+        previous_home = os.environ.get("FORGE_HOME")
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            root = base / "proj"
+            root.mkdir()
+            self._fixture(root)
+            secret = "a" * 64
+            try:
+                # Instance A enrolls the shared secret, adopts, and authorizes.
+                os.environ["FORGE_HOME"] = str(base / "home_a")
+                enroll_collaboration_secret(secret)
+                build_passport(root, FORGE_ROOT)
+                check = run_scoped_check(root, FORGE_ROOT)
+                authorize_current_baseline(
+                    root,
+                    FORGE_ROOT,
+                    expected_fingerprint=check["authority_baseline"]["current_fingerprint"],
+                    authority="owner",
+                    reason="Reviewed the exact tree.",
+                )
+                a = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
+                self.assertEqual(a["corroboration"]["binding"], "instance-bound")
+                self.assertTrue(a["release_eligible"])
+
+                # Instance B, a different home WITHOUT the secret: only self-consistent.
+                os.environ["FORGE_HOME"] = str(base / "home_b")
+                b = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
+                self.assertEqual(b["corroboration"]["binding"], "self-consistent")
+                self.assertFalse(b["release_eligible"])
+
+                # Instance B enrolls the SAME secret out-of-band: now mutually bound.
+                enroll_collaboration_secret(secret)
+                b2 = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
+                self.assertEqual(b2["corroboration"]["binding"], "instance-bound")
+                self.assertTrue(b2["release_eligible"])
+            finally:
+                if previous_home is None:
+                    os.environ.pop("FORGE_HOME", None)
+                else:
+                    os.environ["FORGE_HOME"] = previous_home
+
     def test_cli_requires_baseline_authorization_as_separate_adopt_operation(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

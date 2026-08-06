@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.562",
+  "version": "0.563",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.562 begins cryptographic instance-binding: authority-baseline authorizations are signed with a per-instance key stored outside any project tree, and corroboration is tri-state — only an authorization signed by a key this instance trusts is 'instance-bound' and release-eligible. A self-consistent but unsigned or imported authorization is honest as 'current' yet never release-eligible, closing the fabricated-ledger residual so an imported package cannot spoof in-instance authority.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.563 completes multi-party instance-binding: an owner provisions a shared collaboration secret to each trusted party's Forge home out-of-band, and authorizations signed with it are mutually instance-bound across every enrolled party. A party without the secret sees the same authorization as self-consistent but never release-eligible. This is the enforceable basis for a cross-model collaboration: two different-vendor models can trust each other's 'this was authorized' without either being able to forge it, and no imported package can spoof in-instance authority.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.562",
+  "display_version": "0.563",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.563 — Multi-Party Instance-Binding (peer enrollment)
+
+- Completes cryptographic instance-binding across parties. The owner provisions a **shared collaboration secret** into each trusted party's Forge home — `forge adopt --generate-collaboration-secret` creates and stores one; `--enroll-collaboration-secret <PATH_OR_HEX>` enrolls it elsewhere — **out-of-band, never through a project repo**.
+- Authorizations signed with the collaboration key are **mutually instance-bound** for every enrolled party. Signing prefers the collaboration key when enrolled (team-trusted by default) and falls back to the per-instance key; verification trusts this instance's own key and the enrolled collaboration key. A party without the secret sees the same authorization as `self-consistent` — honest, but never release-eligible.
+- This is the enforceable basis for a cross-model collaboration (e.g. LineCheck): two different-vendor models trust each other's "this was authorized" without either being able to forge it, and no imported package can spoof in-instance authority.
+- Proven by a regression running two distinct Forge homes: with the shared secret both reach `instance-bound` and release eligibility; the home without it stays `self-consistent` and not release-eligible until it enrolls the same secret.
+- Certified suite grows additively to **531 focused public-neutral regressions across 55 deterministic isolated modules**. Release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.562 — Cryptographic Instance-Binding (begun)
 
 - Turns the honest 0.560 corroboration boundary into an **enforced** one. Authority-baseline authorization events are now signed with a **per-instance key stored outside any project tree** (`core/instance_key.py`, Forge home, `FORGE_HOME`-overridable). The signature is excluded from the ledger canonical hash, so the chain is unchanged; `key_id` is covered by the event hash.

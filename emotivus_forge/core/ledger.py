@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .common import append_jsonl, read_jsonl, read_jsonl_report, utc_now
-from .instance_key import get_or_create_instance_identity, sign_message
+from .instance_key import signing_identity, sign_message
 from .paths import ForgePaths
 
 
@@ -43,16 +43,15 @@ def record_event(project_root: Path, kind: str, payload: dict[str, Any], *, sour
         "previous_event_hash": previous_hash,
         "payload": payload,
     }
-    if kind in SIGNED_KINDS:
-        identity = get_or_create_instance_identity()
-        if identity is not None:
-            # key_id is covered by event_hash; the signature covers event_hash.
-            event["key_id"] = identity["key_id"]
+    identity = signing_identity() if kind in SIGNED_KINDS else None
+    if identity is not None:
+        # key_id is covered by event_hash; the signature covers event_hash. When a
+        # collaboration secret is enrolled, this is the shared team key so the
+        # authorization is mutually instance-bound for every enrolled party.
+        event["key_id"] = identity["key_id"]
     event["event_hash"] = _canonical_hash(event)
-    if kind in SIGNED_KINDS and event.get("key_id"):
-        identity = get_or_create_instance_identity()
-        if identity is not None:
-            event["signature"] = sign_message(identity["secret"], event["event_hash"])
+    if identity is not None:
+        event["signature"] = sign_message(identity["secret"], event["event_hash"])
     append_jsonl(ForgePaths(project_root).ledger, event)
     return event
 

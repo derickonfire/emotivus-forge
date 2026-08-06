@@ -1,4 +1,9 @@
-# Emotivus Forge 0.562 — Cryptographic Instance-Binding (begun)
+# Emotivus Forge 0.563 — Multi-Party Instance-Binding (peer enrollment)
+
+- An owner-provisioned shared collaboration secret, held out-of-band in each trusted party's Forge home, makes authorizations mutually instance-bound across enrolled parties. A party without the secret sees the same authorization as self-consistent — never release-eligible.
+- The enforceable basis for a cross-model collaboration: two different-vendor models can trust each other's "this was authorized" without either being able to forge it, and no imported package can spoof in-instance authority.
+- `forge adopt --generate-collaboration-secret` / `--enroll-collaboration-secret`. Certified suite grows additively to 531 across 55 modules; release authorization remains false.
+
 
 - Authority-baseline authorizations are now signed with a per-instance key stored outside any project tree. Corroboration is tri-state (instance-bound / self-consistent / uncorroborated) and only instance-bound is release-eligible.
 - Closes the fabricated-ledger residual: an imported package can rebuild a self-consistent chain but cannot sign under the verifying instance's key, so it stays self-consistent — honest as "current" yet never release-eligible.

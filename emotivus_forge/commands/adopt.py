@@ -41,7 +41,52 @@ from .common import print_json, render_adopt
 from .noticing import attach_adopt_notice
 
 
+def _handle_collaboration_enrollment(args: Any) -> int:
+    import json as _json
+
+    from ..core.instance_key import (
+        _collaboration_file,
+        enroll_collaboration_secret,
+        generate_collaboration_secret,
+    )
+
+    if getattr(args, "generate_collaboration_secret", False):
+        identity = generate_collaboration_secret()
+        if identity is None:
+            print("Could not write the collaboration secret: the Forge home is not writable.")
+            return 1
+        print("Generated and enrolled a collaboration secret in this Forge home.")
+        print(f"  file:   {_collaboration_file()}")
+        print(f"  key_id: {identity['key_id']}")
+        print("Distribute this file OUT-OF-BAND to each trusted party's Forge home (same")
+        print("keys/collaboration.json path) — never through a project repo. Authorizations")
+        print("recorded by any enrolled party are then mutually instance-bound.")
+        return 0
+
+    source = str(getattr(args, "enroll_collaboration_secret", "")).strip()
+    secret = source
+    candidate = Path(source)
+    if candidate.is_file():
+        text = candidate.read_text(encoding="utf-8").strip()
+        try:
+            parsed = _json.loads(text)
+            secret = str(parsed.get("secret", "")).strip() if isinstance(parsed, dict) else text
+        except (ValueError, _json.JSONDecodeError):
+            secret = text
+    identity = enroll_collaboration_secret(secret)
+    if identity is None:
+        print("Could not enroll the collaboration secret (empty secret or Forge home not writable).")
+        return 1
+    print("Enrolled the shared collaboration secret in this Forge home.")
+    print(f"  key_id: {identity['key_id']}")
+    print("Authorizations recorded here are now mutually instance-bound with every party")
+    print("holding the same secret.")
+    return 0
+
+
 def handle_adopt(args: Any, parser: Any, forge_root: Path) -> int:
+    if getattr(args, "generate_collaboration_secret", False) or str(getattr(args, "enroll_collaboration_secret", "")).strip():
+        return _handle_collaboration_enrollment(args)
     root = Path(args.project).resolve()
     actions: list[str] = []
     if args.continuity_development_package and not args.import_continuity:

@@ -52,6 +52,8 @@ def _build_parser() -> argparse.ArgumentParser:
 
     p_adopt = sub.add_parser("adopt", help="Create or refresh the minimal Project Passport")
     p_adopt.add_argument("project", nargs="?", default=".")
+    p_adopt.add_argument("--generate-collaboration-secret", action="store_true", help="Create and enroll a shared collaboration secret in this Forge home (outside any project) for the owner to distribute out-of-band to trusted peers")
+    p_adopt.add_argument("--enroll-collaboration-secret", default="", metavar="PATH_OR_HEX", help="Enroll a shared collaboration secret (a keys/collaboration.json file, a file of raw hex, or an inline hex secret) so peers' authorizations are mutually instance-bound")
     p_adopt.add_argument("--name", default="")
     p_adopt.add_argument("--authorize-baseline", default="", metavar="SNAPSHOT_SHA256", help="Explicitly authorize the current project tree using the exact fingerprint reported by Check or Resume; must be a separate Adopt operation")
     p_adopt.add_argument("--baseline-reason", default="", help="Required durable explanation of what project authority reviewed and accepted")
