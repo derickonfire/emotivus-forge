@@ -252,6 +252,7 @@ def _classify_actual_top_level(name: str) -> tuple[list[str], str]:
         "ROADMAP.md": (["G3_EVOLUTION_KERNEL", "WEB_DOCUMENTATION"], "KEEP"),
         "PROGRESS-STATUS.md": (["G3_EVOLUTION_KERNEL", "WEB_DOCUMENTATION"], "KEEP"),
         "README.md": (["WEB_DOCUMENTATION", "G2_SESSION_CONTINUITY"], "KEEP"),
+        "CLAUDE.md": (["G2_SESSION_CONTINUITY", "REFERENCE"], "KEEP"),
         "RUN-FORGE.md": (["G2_SESSION_CONTINUITY", "WEB_DOCUMENTATION"], "KEEP"),
         "CHANGELOG.md": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
         "CERTIFICATION.md": (["G1_PROJECT_TRUTH", "REFERENCE"], "KEEP"),

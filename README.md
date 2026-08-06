@@ -2,6 +2,8 @@
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
+> **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
+
 ## What 0.558 changes
 
 - Replaces the hardcoded language dispatch with a ranked ecosystem resolver (primary-language ranking) so polyglot/framework projects get correct run/test/identity: Laravel -> `php artisan`, Java -> `mvn`, Ruby -> `rake`, notebooks -> `jupyter`.
