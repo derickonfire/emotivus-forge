@@ -1,4 +1,9 @@
-# Emotivus Forge 0.561 — Read-Only Consultation Mode
+# Emotivus Forge 0.562 — Cryptographic Instance-Binding (begun)
+
+- Authority-baseline authorizations are now signed with a per-instance key stored outside any project tree. Corroboration is tri-state (instance-bound / self-consistent / uncorroborated) and only instance-bound is release-eligible.
+- Closes the fabricated-ledger residual: an imported package can rebuild a self-consistent chain but cannot sign under the verifying instance's key, so it stays self-consistent — honest as "current" yet never release-eligible.
+- Honest limits stated. Multi-party peer enrollment is next. Certified suite grows additively to 530 across 55 modules; release authorization remains false.
+
 
 - Adds a genuine read-only consultation mode: `run --read-only` and `resume --read-only`. Forge reads the project's real bytes and prior state but writes nothing into the project tree — its state directory is redirected to a disposable location outside the project (and both repositories) and discarded after the run.
 - Unblocks bounded consultation on a shared or third-party repository without adopting it or leaving a `.forge` footprint. The read-only payload is labeled advisory (`read_only: true`) and is never acceptance evidence.

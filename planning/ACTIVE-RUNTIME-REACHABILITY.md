@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
 **Forge version:** 0.561  
-**Modules inventoried:** 88  
-**Statically reachable:** 88  
+**Modules inventoried:** 89  
+**Statically reachable:** 89  
 **Statically unreachable:** 0  
-**Report SHA-256:** `4ff31971dac080ae562cc35a8b44a0b157746e1c40f9e83a89e24a0370bf402e`
+**Report SHA-256:** `6fc813b32264e7935b572dce749f40491b729f6e4f87e9c029274d76b96ed9aa`
 
 ## Command observations
 
@@ -57,6 +57,7 @@
 | `emotivus_forge.core.guardrails` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guidance` | active | help | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.handoff` | active | — | G2_SESSION_CONTINUITY |
+| `emotivus_forge.core.instance_key` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.knowledge` | active | adopt, run | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.ledger` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.ledger_assertions` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
@@ -139,7 +140,7 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 176 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 178 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
 | `exchange/` | 2 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |

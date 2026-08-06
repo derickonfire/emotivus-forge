@@ -6,11 +6,21 @@ from pathlib import Path
 from typing import Any
 
 from .common import append_jsonl, read_jsonl, read_jsonl_report, utc_now
+from .instance_key import get_or_create_instance_identity, sign_message
 from .paths import ForgePaths
 
 
+# Authority-bearing events are signed with the per-instance key so corroboration can
+# tell an in-instance authorization from an imported/fabricated one. The signature is
+# excluded from the canonical hash (like event_hash) so adding it does not alter the
+# chain: event_hash covers the rest of the event (including key_id), and the signature
+# covers event_hash.
+SIGNED_KINDS = {"authority-baseline-authorized"}
+_CANONICAL_EXCLUDED = {"event_hash", "signature"}
+
+
 def _canonical_hash(value: dict[str, Any]) -> str:
-    payload = {key: item for key, item in value.items() if key != "event_hash"}
+    payload = {key: item for key, item in value.items() if key not in _CANONICAL_EXCLUDED}
     raw = json.dumps(payload, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
@@ -33,7 +43,16 @@ def record_event(project_root: Path, kind: str, payload: dict[str, Any], *, sour
         "previous_event_hash": previous_hash,
         "payload": payload,
     }
+    if kind in SIGNED_KINDS:
+        identity = get_or_create_instance_identity()
+        if identity is not None:
+            # key_id is covered by event_hash; the signature covers event_hash.
+            event["key_id"] = identity["key_id"]
     event["event_hash"] = _canonical_hash(event)
+    if kind in SIGNED_KINDS and event.get("key_id"):
+        identity = get_or_create_instance_identity()
+        if identity is not None:
+            event["signature"] = sign_message(identity["secret"], event["event_hash"])
     append_jsonl(ForgePaths(project_root).ledger, event)
     return event
 

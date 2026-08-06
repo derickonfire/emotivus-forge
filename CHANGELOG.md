@@ -1,5 +1,14 @@
 # Emotivus Forge changelog
 
+## 0.562 — Cryptographic Instance-Binding (begun)
+
+- Turns the honest 0.560 corroboration boundary into an **enforced** one. Authority-baseline authorization events are now signed with a **per-instance key stored outside any project tree** (`core/instance_key.py`, Forge home, `FORGE_HOME`-overridable). The signature is excluded from the ledger canonical hash, so the chain is unchanged; `key_id` is covered by the event hash.
+- Corroboration is **tri-state**: `instance-bound` (matching chain-verified event signed by a key this instance trusts — its own), `self-consistent` (a matching event that is unsigned or signed by an imported/foreign key), or `uncorroborated` (no match / broken chain). **Only `instance-bound` confers release eligibility.**
+- **Closes the fabricated-ledger residual** from the 0.559 re-test (DG-1..DG-5, `planning/G1-RETEST-0559-OBSERVED-MISSES.md`): an imported package can rebuild a self-consistent chain but cannot produce a signature under the verifying instance's key, so it stays `self-consistent` — honest as "current" yet never release-eligible. A regression strips the signature from a legitimately authorized event and asserts it drops to `self-consistent` and loses release eligibility.
+- Honest limits in `TRUTH_BOUNDARY`: authenticates a key/instance, not a human or review quality; a stolen instance secret (machine compromise) defeats it; an unavailable Forge home degrades to unsigned rather than falsely claiming binding.
+- **Next increment:** multi-party peer enrollment (the owner-provisioned collaboration secret) so trusted collaborators' authorizations are mutually instance-bound — the enforceable basis for the cross-model LineCheck collaboration.
+- Certified suite grows additively to **530 focused public-neutral regressions across 55 deterministic isolated modules**. Release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.561 — Read-Only Consultation Mode
 
 - Adds a genuine **read-only consultation mode**: `run --read-only` and `resume --read-only`. Forge reads the project's real bytes and prior `.forge` state but **writes nothing into the project tree** — the state directory is redirected to a disposable location outside the project (and both repositories) via a single interception (`state_root` / `redirect_state` in `core/paths.py`, honored by every ForgePaths-based read/write and the storage lock), used for the run, then discarded.

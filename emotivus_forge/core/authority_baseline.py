@@ -7,6 +7,7 @@ from typing import Any
 
 from .changes import compare_snapshots, snapshot_fingerprint
 from .common import utc_now
+from .instance_key import classify_signature
 from .ledger import read_events, record_event, verify_ledger_chain
 from .orientation import build_snapshot
 from .paths import ForgePaths
@@ -18,9 +19,11 @@ TRUTH_BOUNDARY = (
     "It does not authenticate a human identity, prove authorship, identify which process changed a file, or establish that "
     "the authority substantively reviewed every behavior. A bounded snapshot may rely on size and modification time for "
     "files outside the configured hash budgets; only an exact-strength baseline is eligible for the authority-bound Ship claim. "
-    "Ledger corroboration uses an unkeyed hash chain that travels inside the project's .forge state: it proves the chain is "
-    "internally consistent and that a matching authorization event exists, but it is not a signature and cannot prove the "
-    "authorization was performed by this instance rather than imported or fabricated by anyone able to write .forge."
+    "Authorization events are signed with a per-instance key stored outside the project; corroboration reports 'instance-bound' "
+    "only when a matching event carries a valid signature from a key this instance trusts (its own, or an enrolled peer). A "
+    "self-consistent match with no such signature (unsigned legacy or an imported/foreign key) is honest as 'current' but never "
+    "release-eligible. This authenticates a key/instance, not a human identity or review quality; a stolen instance secret "
+    "(full machine compromise) defeats it."
 )
 
 
@@ -89,14 +92,26 @@ def _corroborate_baseline(project_root: Path | None, record: dict[str, Any]) -> 
     for event in read_events(project_root, kinds={"authority-baseline-authorized"}):
         payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
         if str(payload.get("baseline_id", "")) == baseline_id and str(payload.get("snapshot_fingerprint", "")) == fingerprint:
+            binding = classify_signature(
+                str(event.get("event_hash", "")),
+                str(event.get("key_id", "")),
+                str(event.get("signature", "")),
+            )
+            if binding == "instance-bound":
+                return {
+                    "corroborated": True,
+                    "binding": "instance-bound",
+                    "reason": "authorized by a chain-verified event signed with this instance's key; in-instance authorship is cryptographically bound",
+                    "authorized_utc": str(event.get("utc", "")),
+                }
+            # A matching event exists and the chain is self-consistent, but it is not
+            # signed by this instance's key (unsigned legacy, or imported/foreign): the
+            # match proves internal consistency, not that THIS instance authorized it.
+            # Honest, and never release-eligible (see assess).
             return {
                 "corroborated": True,
-                # Honest wording: the chain is unkeyed and travels with the project.
-                # A match proves internal consistency and that an authorization event
-                # exists — not that this instance (rather than an imported/fabricated
-                # package) performed it. See TRUTH_BOUNDARY.
-                "reason": "matched by a self-consistent authorization event in the project ledger (unkeyed chain — internal consistency, not a signature)",
-                "binding": "unkeyed-self-consistent",
+                "binding": "self-consistent",
+                "reason": "matched by a self-consistent authorization event that is not signed by this instance's key (unsigned or imported); internal consistency, not proof of in-instance authorship",
                 "authorized_utc": str(event.get("utc", "")),
             }
     return {"corroborated": False, "binding": "none", "reason": "no self-consistent authorization event in the project ledger matches this baseline; it was imported or recorded outside this instance"}
@@ -167,7 +182,12 @@ def assess_authority_baseline(
     changes = compare_snapshots(stored_snapshot, current_snapshot)
     current = changes.get("count", 0) == 0
     status = "CURRENT" if current else "QUARANTINED"
-    release_eligible = bool(current and baseline_strength.get("exact") and current_strength.get("exact"))
+    # Release eligibility requires the authorization to be cryptographically bound to
+    # THIS instance — a self-consistent (unsigned/imported) baseline is honest as
+    # "current" but must never confer release eligibility, closing the fabricated-chain
+    # residual from 0.560.
+    instance_bound = corroboration.get("binding") == "instance-bound"
+    release_eligible = bool(current and baseline_strength.get("exact") and current_strength.get("exact") and instance_bound)
     # A count of 0 only proves "unchanged" for files compared by hash. When some
     # files were compared by size+mtime alone, the match is bounded, not proven.
     unverified_paths = list(changes.get("unverified", []))

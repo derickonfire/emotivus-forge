@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.561  
+**Current release:** 0.562  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk

@@ -200,17 +200,55 @@ class AuthorityBaselineTests(ForgeTestCase):
             # chain-verified authorization event; an imported one with no matching
             # ledger event is demoted to UNCORROBORATED and is not release-eligible.
             self.assertIs(assessment.get("corroboration", {}).get("corroborated"), True)
-            # 0.560 (DG-1..DG-5): corroboration is honest that the chain is unkeyed —
-            # it proves self-consistency, not cryptographic in-instance authorship.
-            self.assertEqual(assessment["corroboration"].get("binding"), "unkeyed-self-consistent")
-            self.assertIn("unkeyed", assessment["corroboration"].get("reason", ""))
-            self.assertNotIn("in this instance's ledger", assessment["corroboration"].get("reason", ""))
+            # 0.562 (instance-binding): a baseline authorized on THIS instance is
+            # corroborated by a chain-verified event signed with this instance's key.
+            self.assertEqual(assessment["corroboration"].get("binding"), "instance-bound")
             from emotivus_forge.core.authority_baseline import TRUTH_BOUNDARY
-            self.assertIn("unkeyed", TRUTH_BOUNDARY)
+            self.assertIn("instance-bound", TRUTH_BOUNDARY)
+            # An imported baseline whose baseline_id matches no ledger event is demoted
+            # to UNCORROBORATED and is not release-eligible.
             fabricated = load_state(root)
             fabricated["authority_baseline"] = {**fabricated["authority_baseline"], "baseline_id": "f" * 20}
             imported = assess_authority_baseline(fabricated, fabricated["snapshot"], project_root=root)
             self.assertEqual(imported["status"], "UNCORROBORATED")
+            self.assertFalse(imported["release_eligible"])
+
+    def test_unsigned_imported_authorization_is_self_consistent_not_release_eligible(self) -> None:
+        # 0.562 instance-binding: an authorization event that is not signed by THIS
+        # instance's key (an imported/fabricated package strips or never had the
+        # signature) stays honest as "current" but must never be instance-bound or
+        # release-eligible — closing the fabricated-chain residual from 0.560.
+        import json as _json
+        from emotivus_forge.core.paths import ForgePaths
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            build_passport(root, FORGE_ROOT)
+            check = run_scoped_check(root, FORGE_ROOT)
+            authorize_current_baseline(
+                root,
+                FORGE_ROOT,
+                expected_fingerprint=check["authority_baseline"]["current_fingerprint"],
+                authority="owner",
+                reason="Reviewed the exact tree.",
+            )
+            live = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
+            self.assertEqual(live["corroboration"]["binding"], "instance-bound")
+            self.assertTrue(live["release_eligible"])
+
+            # Simulate an imported package: drop the per-instance signature from the
+            # authorization event. The unkeyed chain stays self-consistent (the
+            # signature is excluded from the event hash), but it is no longer bound.
+            ledger = ForgePaths(root).ledger
+            rows = [_json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip()]
+            for row in rows:
+                if row.get("kind") == "authority-baseline-authorized":
+                    row.pop("signature", None)
+            ledger.write_text("".join(_json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+
+            imported = assess_authority_baseline(load_state(root), load_state(root)["snapshot"], project_root=root)
+            self.assertIs(imported["corroboration"]["corroborated"], True)
+            self.assertEqual(imported["corroboration"]["binding"], "self-consistent")
             self.assertFalse(imported["release_eligible"])
 
     def test_cli_requires_baseline_authorization_as_separate_adopt_operation(self) -> None:

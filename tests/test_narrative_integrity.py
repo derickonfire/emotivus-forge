@@ -20,7 +20,7 @@ def _copy_source(target: Path) -> Path:
 
 class NarrativeIntegrityTests(unittest.TestCase):
     def test_current_certified_source_relationships_pass(self) -> None:
-        result = check_narrative_integrity(FORGE_ROOT, observed_regressions=529, observed_modules=55)
+        result = check_narrative_integrity(FORGE_ROOT, observed_regressions=530, observed_modules=55)
         self.assertEqual(result["status"], "PASS", result.get("problems"))
         stale = check_narrative_integrity(FORGE_ROOT, observed_regressions=474, observed_modules=47)
         self.assertEqual(stale["status"], "FAIL")

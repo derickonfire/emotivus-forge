@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.561",
+  "version": "0.562",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.561 adds a genuine read-only consultation mode (`run --read-only`, `resume --read-only`): Forge reads a project's real bytes and prior state but writes nothing into the project tree — any transient state is redirected to a disposable directory outside it and discarded. This lets Forge advise on a shared or third-party repository under a strict read-only bound without adopting it or leaving a .forge footprint.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.562 begins cryptographic instance-binding: authority-baseline authorizations are signed with a per-instance key stored outside any project tree, and corroboration is tri-state — only an authorization signed by a key this instance trusts is 'instance-bound' and release-eligible. A self-consistent but unsigned or imported authorization is honest as 'current' yet never release-eligible, closing the fabricated-ledger residual so an imported package cannot spoof in-instance authority.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.561",
+  "display_version": "0.562",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

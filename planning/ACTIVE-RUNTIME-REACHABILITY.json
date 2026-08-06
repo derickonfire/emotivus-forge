@@ -105,11 +105,11 @@
       "emotivus_forge.services.ship"
     ]
   },
-  "module_count": 88,
-  "static_reachable_count": 88,
-  "ordinary_cli_reachable_count": 82,
-  "standalone_tool_reachable_count": 74,
-  "verification_reachable_count": 88,
+  "module_count": 89,
+  "static_reachable_count": 89,
+  "ordinary_cli_reachable_count": 83,
+  "standalone_tool_reachable_count": 75,
+  "verification_reachable_count": 89,
   "static_unreachable_count": 0,
   "static_unreachable_modules": [],
   "unclassified_modules": [],
@@ -382,7 +382,7 @@
     {
       "module": "emotivus_forge.core.authority_baseline",
       "path": "emotivus_forge/core/authority_baseline.py",
-      "sha256": "0ad6ffb82f147d8de5415acb20d0523fceb3b221c2853bf05aab26b5ab855a70",
+      "sha256": "2fed26a99f7baa8de6a6909eea340d14a38bb5c42d6386a2b759d32d461fda4e",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -397,6 +397,7 @@
       "imports": [
         "emotivus_forge.core.changes",
         "emotivus_forge.core.common",
+        "emotivus_forge.core.instance_key",
         "emotivus_forge.core.ledger",
         "emotivus_forge.core.orientation",
         "emotivus_forge.core.paths",
@@ -938,6 +939,20 @@
       ]
     },
     {
+      "module": "emotivus_forge.core.instance_key",
+      "path": "emotivus_forge/core/instance_key.py",
+      "sha256": "4ca28b5528cd6b9266969c6157e3193f151c64ffe3f76c68b022f30aa1a78f26",
+      "active_reachable": true,
+      "ordinary_cli_reachable": true,
+      "standalone_tool_reachable": true,
+      "verification_reachable": true,
+      "observed_commands": [],
+      "imports": [],
+      "classifications": [
+        "G1_PROJECT_TRUTH"
+      ]
+    },
+    {
       "module": "emotivus_forge.core.knowledge",
       "path": "emotivus_forge/core/knowledge.py",
       "sha256": "9224b45dd3e4ef0573ff25c6a3d26d6299fca0d267f3ca496cb54e7453b3bfcc",
@@ -960,7 +975,7 @@
     {
       "module": "emotivus_forge.core.ledger",
       "path": "emotivus_forge/core/ledger.py",
-      "sha256": "29f2621e4588bcee7dfeebf669e9bf41ec1f4e74236a93ea0c08bfb5d625e210",
+      "sha256": "93c5a72b565d1a06962da5b1af7cb13f242c2771358f5e217eb776570b4cab5f",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -974,6 +989,7 @@
       ],
       "imports": [
         "emotivus_forge.core.common",
+        "emotivus_forge.core.instance_key",
         "emotivus_forge.core.paths"
       ],
       "classifications": [
@@ -7892,8 +7908,8 @@
     {
       "path": "emotivus_forge/",
       "kind": "directory",
-      "file_count": 176,
-      "bytes": 3727869,
+      "file_count": 178,
+      "bytes": 3743751,
       "development": true,
       "public": true,
       "classifications": [
@@ -8005,7 +8021,7 @@
       "path": "planning/",
       "kind": "directory",
       "file_count": 37,
-      "bytes": 355480,
+      "bytes": 388081,
       "development": true,
       "public": true,
       "classifications": [
@@ -8056,7 +8072,7 @@
       "path": "tests/",
       "kind": "directory",
       "file_count": 117,
-      "bytes": 1668070,
+      "bytes": 1667685,
       "development": true,
       "public": true,
       "classifications": [
@@ -8068,7 +8084,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 20,
-      "bytes": 278785,
+      "bytes": 278843,
       "development": true,
       "public": true,
       "classifications": [
@@ -8084,5 +8100,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "4ff31971dac080ae562cc35a8b44a0b157746e1c40f9e83a89e24a0370bf402e"
+  "report_sha256": "6fc813b32264e7935b572dce749f40491b729f6e4f87e9c029274d76b96ed9aa"
 }
