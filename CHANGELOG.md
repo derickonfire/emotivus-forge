@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.564 — Provenance Parity (instance-binding for artifact provenance)
+
+- Extends cryptographic instance-binding from authority baselines to **artifact provenance**. `artifact-provenance-recorded` is now a signed ledger event; `evaluate_artifact_provenance` corroborates each active record against its signed event (instance-bound / self-consistent / uncorroborated); and the scoped Check asserts `CONFIRMED` for a deliverable's lineage **only when that recording is instance-bound**.
+- A byte-matching but **unsigned or imported** provenance record stays honest as "current" but is not asserted as authenticated provenance — its truth-state is `OBSERVED`, with a reason that says the recording is not instance-bound.
+- **Closes the last place** the "self-consistent ≠ authentic" class lived: after authority (0.562–0.563) and provenance (0.564), an imported package can spoof neither authenticated authority nor authenticated provenance.
+- Proven by a regression: record provenance (instance-bound → `CONFIRMED`), strip the signature from the recording event, and assert it drops to `self-consistent` and loses `CONFIRMED`.
+- Certified suite grows additively to **532 focused public-neutral regressions across 55 deterministic isolated modules**. Release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.563 — Multi-Party Instance-Binding (peer enrollment)
 
 - Completes cryptographic instance-binding across parties. The owner provisions a **shared collaboration secret** into each trusted party's Forge home — `forge adopt --generate-collaboration-secret` creates and stores one; `--enroll-collaboration-secret <PATH_OR_HEX>` enrolls it elsewhere — **out-of-band, never through a project repo**.

@@ -579,14 +579,20 @@ def run_scoped_check(
         if not isinstance(provenance_row, dict):
             continue
         p_status = str(provenance_row.get("status", "UNKNOWN"))
+        p_bound = str(provenance_row.get("binding", "")) == "instance-bound"
+        # CONFIRMED requires the provenance recording to be instance-bound, not merely
+        # a byte-match against a record an imported package could have authored.
+        current_confirmed = p_status == "CURRENT" and p_bound
         truth_records.append(TruthRecord(
             subject=f"artifact-provenance:{provenance_row.get('provenance_id', 'unknown')}",
-            truth_state="CONFIRMED" if p_status == "CURRENT" else "STALE",
+            truth_state="CONFIRMED" if current_confirmed else "STALE" if p_status == "STALE" else "OBSERVED",
             result="PASS" if p_status == "CURRENT" else "FAIL" if p_status == "STALE" else "UNKNOWN",
             verification_tier="static",
             attempted=True,
             reason=(
-                "Current artifact bytes, declared inputs, generator source, contract, and baseline match the authority-recorded digests."
+                "Current artifact bytes, declared inputs, generator source, contract, and baseline match the authority-recorded digests, corroborated by an instance-bound provenance event."
+                if current_confirmed else
+                "Current artifact bytes match the recorded digests, but the provenance recording is not instance-bound (unsigned or imported); it is not asserted as authenticated provenance."
                 if p_status == "CURRENT" else "; ".join(str(item) for item in provenance_row.get("reasons", []) if str(item)) or str(provenance_row.get("reason", "Artifact provenance requires authority attention."))
             ),
             source=str(provenance_row.get("artifact_path", "")),

@@ -8,7 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from .common import normalize_rel, sha256_file, utc_now, write_json
-from .ledger import record_event
+from .instance_key import classify_signature
+from .ledger import read_events, record_event
 from .lifecycle import fingerprint_bound_status
 from .paths import ForgePaths, IGNORED_DIR_NAMES
 from .project_identity import project_identity_record
@@ -315,6 +316,27 @@ def find_unregistered_deliverables(project_root: Path, registered: set[str], *, 
     return list(_scan_delivery_perimeter(project_root, registered, file_limit=file_limit)["unregistered"])
 
 
+def _corroborate_provenance(project_root: Path, provenance_id: str, record: dict[str, Any]) -> str:
+    """Bind a provenance record to a chain-verified, instance-signed recording event.
+
+    Mirrors authority-baseline instance-binding: an imported package can carry a
+    self-consistent artifact-provenance-recorded event, but it cannot sign under the
+    verifying instance's key. Returns 'instance-bound', 'self-consistent', or
+    'uncorroborated'.
+    """
+    recorded_sha = str(record.get("artifact_sha256", ""))
+    for event in read_events(project_root, kinds={"artifact-provenance-recorded"}):
+        payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
+        if str(payload.get("provenance_id", "")) == str(provenance_id) and str(payload.get("artifact_sha256", "")) == recorded_sha:
+            binding = classify_signature(
+                str(event.get("event_hash", "")),
+                str(event.get("key_id", "")),
+                str(event.get("signature", "")),
+            )
+            return "instance-bound" if binding == "instance-bound" else "self-consistent"
+    return "uncorroborated"
+
+
 def evaluate_artifact_provenance(project_root: Path) -> dict[str, Any]:
     project_root = project_root.resolve()
     evaluations: list[dict[str, Any]] = []
@@ -355,11 +377,13 @@ def evaluate_artifact_provenance(project_root: Path) -> dict[str, Any]:
         if expected_baseline and current_baseline != expected_baseline:
             reasons.append(f"current owner-declared baseline is {current_baseline or 'unknown'}, expected {expected_baseline}")
         status = "STALE" if reasons else "CURRENT"
+        binding = _corroborate_provenance(project_root, provenance_id, record)
         evaluations.append({
             "provenance_id": provenance_id,
             "title": contract.get("title", provenance_id),
             "artifact_path": artifact_rel,
             "status": status,
+            "binding": binding,
             "reasons": reasons,
             "artifact_sha256": actual_artifact,
             "recorded_artifact_sha256": record.get("artifact_sha256", ""),

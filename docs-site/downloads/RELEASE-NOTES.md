@@ -1,4 +1,9 @@
-# Emotivus Forge 0.563 — Multi-Party Instance-Binding (peer enrollment)
+# Emotivus Forge 0.564 — Provenance Parity
+
+- Instance-binding extended to artifact provenance: a deliverable's recorded lineage is asserted CONFIRMED only when its recording event is signed by a key this instance trusts. A byte-matching but unsigned or imported provenance record is honest as current yet not asserted as authenticated provenance.
+- Closes the last place the "self-consistent is not authentic" class lived: after authority (0.562–0.563) and provenance (0.564), an imported package can spoof neither authenticated authority nor authenticated provenance.
+- Certified suite grows additively to 532 across 55 modules; release authorization remains false.
+
 
 - An owner-provisioned shared collaboration secret, held out-of-band in each trusted party's Forge home, makes authorizations mutually instance-bound across enrolled parties. A party without the secret sees the same authorization as self-consistent — never release-eligible.
 - The enforceable basis for a cross-model collaboration: two different-vendor models can trust each other's "this was authorized" without either being able to forge it, and no imported package can spoof in-instance authority.

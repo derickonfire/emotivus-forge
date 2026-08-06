@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.563  
+**Current release:** 0.564  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -19,7 +19,7 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundation and then remains continuous by design.
 
-## Reconciliation (as of 0.563)
+## Reconciliation (as of 0.564)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -37,22 +37,26 @@ and sequence the near term.
 | 0.561 | G2/G3 | **Read-only consultation mode** (`run --read-only`, `resume --read-only`) — advise on a shared/third-party repo with zero footprint. |
 | 0.562 | G1/G3 | **Cryptographic instance-binding** (single instance): signed authority events; tri-state corroboration; only instance-bound is release-eligible. Closes the "self-consistent ≠ authentic" residual for authority. |
 | 0.563 | G1/G3 | **Multi-party instance-binding**: an owner-provisioned shared collaboration secret makes authorizations mutually instance-bound across enrolled parties. The enforceable basis for cross-model trust. |
+| 0.564 | G1/G3 | **Provenance parity**: instance-binding extended to artifact provenance — a deliverable's lineage is asserted `CONFIRMED` only when its recording event is instance-bound. |
 
-**Standing:** the dominant G1 finding ("self-consistent ≠ authentic") is closed for
-**authority** (single- and multi-party). G3 has real substance now — cross-vendor trust
-is enforceable, not just prose. G2 gained the zero-footprint consult path.
+**Standing:** the dominant G1 finding ("self-consistent ≠ authentic") is now closed for
+**both authority and provenance** (single- and multi-party) — an imported package can
+spoof neither authenticated authority nor authenticated provenance. G3 has real substance
+now — cross-vendor trust is enforceable, not just prose. G2 gained the zero-footprint
+consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **Provenance parity** — apply instance-binding to `artifact-provenance-recorded`, the
-   one place the "self-consistent ≠ authentic" class still lives (a `CONFIRMED` provenance
-   claim without corroboration). Recorded in `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
-2. **Remaining observed misses** — native-evidence source/tree-fingerprint binding (DG-8);
-   same-version-collision-keyed-off-bytes (DG-7).
-3. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
+1. **Remaining observed misses** — native-evidence source/tree-fingerprint binding (DG-8);
+   same-version-collision-keyed-off-bytes (DG-7). Recorded in
+   `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
+2. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
    (original P2-08/09), now that authority and provenance binding are in place.
-4. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
+3. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
    preserves unknown fields (original P4-01/02), building on instance-binding.
+
+*Done: provenance parity (0.564); single- and multi-party instance-binding (0.562–0.563);
+read-only consult (0.561).*
 
 ### LineCheck collaboration (live validation track)
 

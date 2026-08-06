@@ -63,6 +63,46 @@ class ProvenanceAndDeliveryTests(ForgeTestCase):
             actual = sorted(path.name for path in (root / ".forge").iterdir() if path.is_file())
             self.assertEqual(actual, sorted(STATE_FILE_NAMES))
 
+    def test_imported_provenance_recording_is_not_instance_bound_confirmed(self) -> None:
+        # 0.564 provenance parity: a provenance recording that is not signed by THIS
+        # instance's key (an imported package strips or never had the signature) stays
+        # honest as byte-current, but is NOT instance-bound and must not be asserted as
+        # CONFIRMED authenticated provenance.
+        import json as _json
+        from emotivus_forge.core.paths import ForgePaths
+        from emotivus_forge.core.provenance import evaluate_artifact_provenance
+
+        def _provenance_truth_state(payload: dict) -> str:
+            for record in payload.get("truth_records", []):
+                if str(record.get("subject", "")).startswith("artifact-provenance:"):
+                    return str(record.get("truth_state", ""))
+            return ""
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            contract = self._artifact_fixture(root)
+            build_passport(root, FORGE_ROOT)
+            record_artifact_provenance(root, FORGE_ROOT, contract)
+
+            live = evaluate_artifact_provenance(root)["evaluations"][0]
+            self.assertEqual(live["status"], "CURRENT")
+            self.assertEqual(live["binding"], "instance-bound")
+            self.assertEqual(_provenance_truth_state(run_scoped_check(root, FORGE_ROOT)), "CONFIRMED")
+
+            # Strip the per-instance signature from the provenance recording event.
+            ledger = ForgePaths(root).ledger
+            rows = [_json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip()]
+            for row in rows:
+                if row.get("kind") == "artifact-provenance-recorded":
+                    row.pop("signature", None)
+            ledger.write_text("".join(_json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+
+            imported = evaluate_artifact_provenance(root)["evaluations"][0]
+            self.assertEqual(imported["status"], "CURRENT")  # still byte-current (honest)
+            self.assertEqual(imported["binding"], "self-consistent")  # but not bound
+            self.assertNotEqual(_provenance_truth_state(run_scoped_check(root, FORGE_ROOT)), "CONFIRMED")
+
     def test_input_change_invalidates_recorded_artifact_lineage(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

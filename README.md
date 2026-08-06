@@ -1,21 +1,21 @@
-# Emotivus Forge 0.563
+# Emotivus Forge 0.564
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.563 changes
+## What 0.564 changes
 
-- Completes **multi-party instance-binding** — peer enrollment. The owner provisions a **shared collaboration secret** into each trusted party's Forge home (`forge adopt --generate-collaboration-secret` / `--enroll-collaboration-secret`), **out-of-band, never through a project repo**. Authorizations signed with it are **mutually instance-bound** for every enrolled party.
-- A party **without** the secret sees the same authorization as `self-consistent` — honest, but never release-eligible. This is the enforceable basis for a cross-model collaboration: two different-vendor models can trust each other's "this was authorized" without either being able to forge it, and no imported package can spoof in-instance authority.
-- Signing prefers the collaboration key when one is enrolled (team-trusted by default), falling back to the per-instance key otherwise; verification trusts this instance's own key and the enrolled collaboration key. The secret stays in the Forge home, outside every project tree.
-- Proven by a regression that runs two distinct Forge homes: with the shared secret both reach `instance-bound` and release eligibility; the home without it stays `self-consistent` and not release-eligible until it enrolls the same secret.
-- Certified suite grows additively to **531 focused public-neutral regressions across 55 deterministic isolated modules**.
+- Extends **instance-binding to artifact provenance** — parity with the authority-baseline work. A deliverable's recorded lineage (`artifact-provenance-recorded`) is now a signed event, and the scoped Check asserts `CONFIRMED` for it only when that event is **instance-bound** (signed by a key this instance trusts).
+- A byte-matching but **unsigned or imported** provenance record stays honest as "current" but is **not** asserted as authenticated provenance (its truth-state is `OBSERVED`, not `CONFIRMED`), with a reason that says so plainly.
+- This **closes the last place** the "self-consistent ≠ authentic" class still lived: after 0.562–0.563 (authority) and 0.564 (provenance), an imported package can no longer spoof either authenticated authority or authenticated provenance.
+- Proven by a regression that records provenance (instance-bound → `CONFIRMED`), then strips the signature from the recording event and asserts it drops to `self-consistent` and loses `CONFIRMED`.
+- Certified suite grows additively to **532 focused public-neutral regressions across 55 deterministic isolated modules**.
 - Preserves the four-page website design and active generator.
 
 ## Current verification target
 
-**531/531** focused public-neutral regressions across 55 deterministic isolated modules.
+**532/532** focused public-neutral regressions across 55 deterministic isolated modules.
 
 This count is package metadata until exact final-byte certification completes. It is not release authorization or proof of efficacy.
 
