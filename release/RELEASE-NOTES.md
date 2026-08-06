@@ -1,4 +1,9 @@
-# Emotivus Forge 0.565 — Native-Evidence Source Binding
+# Emotivus Forge 0.566 — Goal 1 (Provable Project Truth) certified COMPLETE
+
+- G1 is certified COMPLETE: every completion-rule dimension (exact identity, authority, lineage, evidence binding, adversarial package rejection, package authorization) is verified by a passing adversarial regression, inventoried in planning/G1-COMPLETION.md.
+- Independent exact-byte verification: the public package passes its full certified suite 533/533 twice, deterministically, from its own independently extracted bytes.
+- Completeness certifies the provable-truth core, not any specific release; release authorization remains false. Certified suite unchanged at 533 across 55 modules.
+
 
 - Imported native-gate evidence is now bound to the exact source tree it was captured against; once the tree changes, it is reported stale rather than current, even under an unchanged native-gate command.
 - Completes the recorded G1 observed-miss backlog. A second recorded finding (same-version collision) was reviewed and did not survive verification, so no speculative fix was made.

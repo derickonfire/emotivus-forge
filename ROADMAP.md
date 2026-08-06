@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.565  
+**Current release:** 0.566  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -13,11 +13,11 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 | Goal | Status | Completion rule |
 |---|---|---|
-| G1 · Provable Project Truth | **ACTIVE** | Exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization all pass from independently verified bytes. |
+| G1 · Provable Project Truth | **COMPLETE** | Exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization all pass from independently verified bytes. Verified in `planning/G1-COMPLETION.md` (0.566). |
 | G2 · One-Command Session Continuity | **ACTIVE** | Cold models can enter and leave representative projects using Run Forge without selecting workflow commands, repeating completed work, or inventing authority. |
 | G3 · Cross-Model Evolution Kernel | **FOUNDATION_ACTIVE** | The foundation is complete when another model/vendor can migrate an older package, preserve exact meaning, replace an obsolete component, and emit a compatible continuity package. |
 
-G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundation and then remains continuous by design.
+G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`). G3 has a certifiable foundation and then remains continuous by design.
 
 ## Reconciliation (as of 0.565)
 
@@ -40,7 +40,7 @@ and sequence the near term.
 | 0.564 | G1/G3 | **Provenance parity**: instance-binding extended to artifact provenance — a deliverable's lineage is asserted `CONFIRMED` only when its recording event is instance-bound. |
 | 0.565 | G1 | **Native-evidence source binding**: imported native evidence is bound to the source tree fingerprint and reported stale once the tree changes. Closes the recorded G1 observed-miss backlog. |
 
-**Standing:** the dominant G1 finding ("self-consistent ≠ authentic") is now closed for
+**Standing:** **G1 is COMPLETE (0.566)** — see `planning/G1-COMPLETION.md`. The dominant G1 finding ("self-consistent ≠ authentic") is closed for
 **both authority and provenance** (single- and multi-party) — an imported package can
 spoof neither authenticated authority nor authenticated provenance. G3 has real substance
 now — cross-vendor trust is enforceable, not just prose. G2 gained the zero-footprint
@@ -48,10 +48,10 @@ consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
-   (original P2-08/09), now that authority, provenance, and native-evidence binding are in place.
-2. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
-   preserves unknown fields (original P4-01/02), building on instance-binding.
+1. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
+   preserves unknown fields (original P4-01/02), building on the instance-binding delivered
+   under G1.
+2. **G2 close-out** — cross-vendor cold-entry/exit handoff acceptance, toward declaring G2 COMPLETE.
 
 *Done: the full recorded G1 observed-miss backlog — native-evidence source binding (0.565),
 provenance parity (0.564), single- and multi-party instance-binding (0.562–0.563), read-only
@@ -96,8 +96,8 @@ evidence-driven track above and are no longer the live sequence; see the near-te
 | P2-05 | Goal 1 | 15–20 min | 0.554 | **QUEUED** | Consolidate exact evidence binding, returned receipt intake, and conflict lifecycle. |
 | P2-06 | Goal 1 | 12–18 min | 0.554 | **QUEUED** | Retain browser pixels, DOM, overflow, and resource identity as package-bound evidence. |
 | P2-07 | Goal 1 | 15–20 min | 0.554 | **QUEUED** | Bind owner authorization to one exact package while keeping human identity and legal authority explicit. |
-| P2-08 | Goal 1 | 15–20 min | 0.555 | **QUEUED** | Run adversarial wrong-package, same-version collision, tampering, and stale-evidence trials. |
-| P2-09 | Goal 1 | 15–20 min | 0.555 | **QUEUED** | Run independent exact-byte verification twice and declare G1 COMPLETE only if every gate passes. |
+| P2-08 | Goal 1 | 15–20 min | 0.566 | **COMPLETE** | Adversarial wrong-package, same-version collision, tampering, and stale-evidence trials pass; coverage inventoried in `planning/G1-COMPLETION.md`. |
+| P2-09 | Goal 1 | 15–20 min | 0.566 | **COMPLETE** | Public package passes 533/55 twice deterministically from its own extracted bytes; G1 declared COMPLETE. |
 | P3-01 | Goal 2 | 15–20 min | 0.556 | **QUEUED** | Implement one deterministic state classifier behind Run Forge. |
 | P3-02 | Goal 2 | 12–18 min | 0.556 | **QUEUED** | Route new projects to adopt-and-orient without requiring the user to know Adopt. |
 | P3-03 | Goal 2 | 8–12 min | 0.556 | **QUEUED** | Route unchanged projects to compact Resume only. |

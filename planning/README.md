@@ -6,7 +6,7 @@
 
 | Goal | Status | Meaning |
 |---|---|---|
-| G1 · Provable Project Truth | **ACTIVE** | Existing truth controls are retained; consolidation and adversarial completion remain. |
+| G1 · Provable Project Truth | **COMPLETE** | Provable-truth core certified complete; every completion-rule dimension is adversarially verified and the public package self-tests from its own bytes. See `planning/G1-COMPLETION.md`. |
 | G2 · One-Command Session Continuity | **ACTIVE** | No-argument routing exists; the unified start/close experience is not complete. |
 | G3 · Cross-Model Evolution Kernel | **FOUNDATION_ACTIVE** | Vendor-neutral continuity exists; simplification, migration, and replacement trials remain. |
 

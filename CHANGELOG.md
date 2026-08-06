@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.566 — Goal 1 (Provable Project Truth) certified COMPLETE
+
+- Certifies **G1 COMPLETE**. Each dimension of the completion rule — exact identity, authority (import rejection, single- and multi-party instance-binding), lineage, evidence binding (provenance + native evidence), adversarial package rejection, and package authorization — is verified by a passing adversarial regression, inventoried in `planning/G1-COMPLETION.md`.
+- **Independent exact-byte verification (P2-09):** the public `RUN-FORGE.zip` passes its full certified suite **533/533 twice, deterministically, from its own independently extracted bytes**.
+- Roadmap moves G1 from ACTIVE to **COMPLETE** and marks P2-08 (adversarial trials) and P2-09 (exact-byte verification) satisfied. The near-term queue advances to the G3 continuity kernel and G2 close-out.
+- **Honest boundary:** completeness certifies the provable-truth core, not any specific release. Release authorization remains **false**; Forge authenticates a key/instance, not a human identity or review quality. DG-7 was reviewed and did not survive verification (no speculative fix).
+- No behavior change; the certified suite is unchanged at **533 focused public-neutral regressions across 55 deterministic isolated modules**. P2-01 schema chunk stays active.
+
 ## 0.565 — Native-Evidence Source Binding (DG-8)
 
 - Binds imported native-gate evidence to the exact source tree it was captured against. `import_native_evidence` captures the current tree fingerprint and persists it on `evidence.native_gate.source_tree_fingerprint`; a shared helper `evidence_validity.effective_native_validity` downgrades the reported validity to `stale-source-changed` at the reader surfaces (Resume, self-currency) when the current tree fingerprint differs.

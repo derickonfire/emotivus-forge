@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.565",
+  "version": "0.566",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.565 binds imported native-gate evidence to the exact source tree it was captured against: once the project tree changes, that evidence is reported stale rather than current, even under the same native-gate command. This closes the last recorded G1 observed miss; a second recorded finding was reviewed and did not survive verification, so no speculative fix was made.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.566 certifies Goal 1 (Provable Project Truth) COMPLETE: exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization each pass an adversarial regression, and the public package passes its full certified suite twice, deterministically, from its own independently extracted bytes. Release authorization remains false — completeness certifies the provable-truth core, not any specific release.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -618,7 +618,7 @@
         {
           "id": "G1",
           "name": "Provable Project Truth",
-          "status": "ACTIVE"
+          "status": "COMPLETE"
         },
         {
           "id": "G2",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.565",
+  "display_version": "0.566",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [
@@ -682,7 +682,7 @@
       {
         "id": "G1",
         "name": "Provable Project Truth",
-        "status": "ACTIVE",
+        "status": "COMPLETE",
         "definition": "Forge identifies the exact project, authority, lineage, changes, evidence, and authorized package without asking an AI model to infer them.",
         "completion_gate": "Exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization all pass from independently verified bytes."
       },
@@ -882,7 +882,7 @@
         "id": "P2-08",
         "phase": "Goal 1",
         "work": "Run adversarial wrong-package, same-version collision, tampering, and stale-evidence trials.",
-        "status": "QUEUED",
+        "status": "COMPLETE",
         "timebox": "15–20 min",
         "target_release": "0.555"
       },
@@ -890,7 +890,7 @@
         "id": "P2-09",
         "phase": "Goal 1",
         "work": "Run independent exact-byte verification twice and declare G1 COMPLETE only if every gate passes.",
-        "status": "QUEUED",
+        "status": "COMPLETE",
         "timebox": "15–20 min",
         "target_release": "0.555"
       },
@@ -1131,7 +1131,7 @@
     "source": "FORGE-PRODUCT.json active_roadmap",
     "reporting_rule": "Report goal state, completed chunks, active chunk, and scored efficacy. Never average unlike goals into a percentage.",
     "goal_status": {
-      "G1": "ACTIVE",
+      "G1": "COMPLETE",
       "G2": "ACTIVE",
       "G3": "FOUNDATION_ACTIVE"
     },

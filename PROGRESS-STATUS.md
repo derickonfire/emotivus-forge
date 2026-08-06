@@ -1,12 +1,12 @@
 # Forge progress status
 
-**Current build:** 0.565  
+**Current build:** 0.566  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
 | Goal | Status | Meaning |
 |---|---|---|
-| G1 · Provable Project Truth | **ACTIVE** | Existing truth controls are retained; consolidation and adversarial completion remain. |
+| G1 · Provable Project Truth | **COMPLETE** | Provable-truth core certified complete; every completion-rule dimension is adversarially verified and the public package self-tests from its own bytes. See `planning/G1-COMPLETION.md`. |
 | G2 · One-Command Session Continuity | **ACTIVE** | No-argument routing exists; the unified start/close experience is not complete. |
 | G3 · Cross-Model Evolution Kernel | **FOUNDATION_ACTIVE** | Vendor-neutral continuity exists; simplification, migration, and replacement trials remain. |
 
@@ -31,6 +31,7 @@
 - 0.563: **Multi-party instance-binding (peer enrollment)** — an owner-provisioned shared collaboration secret, held out-of-band in each trusted party's Forge home, makes authorizations mutually instance-bound across enrolled parties (a party without it sees only self-consistent). The enforceable basis for the cross-model LineCheck collaboration. Suite grows additively to 531/55.
 - 0.564: **Provenance parity** — instance-binding extended to artifact provenance; scoped Check asserts CONFIRMED only for instance-bound recordings, so an imported/unsigned provenance record is honest as current yet not authenticated. Closes the last place the self-consistent-is-not-authentic class lived. Suite grows additively to 532/55.
 - 0.565: **Native-evidence source binding (DG-8)** — imported native evidence is bound to the source tree fingerprint at capture and reported stale once the tree changes. Completes the recorded G1 observed-miss backlog; DG-7 was reviewed and did not survive verification (no speculative fix). Suite grows additively to 533/55.
+- 0.566: **Goal 1 (Provable Project Truth) certified COMPLETE** — every completion-rule dimension verified by a passing adversarial regression (`planning/G1-COMPLETION.md`); public package passes 533/55 twice deterministically from its own extracted bytes. G2/G3 remain open. Suite unchanged at 533/55.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
