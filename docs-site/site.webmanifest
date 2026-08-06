@@ -1,0 +1,15 @@
+{
+  "name": "Emotivus Forge",
+  "short_name": "Forge",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090706",
+  "theme_color": "#090706",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

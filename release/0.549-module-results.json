@@ -1,0 +1,381 @@
+{
+  "summary": {
+    "modules": 53,
+    "tests": 515,
+    "passed_modules": 53,
+    "failures": []
+  },
+  "results": [
+    {
+      "module": "tests.test_attestation_kit",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 14.239,
+      "output": ""
+    },
+    {
+      "module": "tests.test_authority_baseline",
+      "status": "PASS",
+      "tests": 10,
+      "seconds": 3.418,
+      "output": ""
+    },
+    {
+      "module": "tests.test_bounded_retrieval",
+      "status": "PASS",
+      "tests": 6,
+      "seconds": 1.261,
+      "output": ""
+    },
+    {
+      "module": "tests.test_browser_evidence",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 5.654,
+      "output": ""
+    },
+    {
+      "module": "tests.test_build_attestation",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 1.222,
+      "output": ""
+    },
+    {
+      "module": "tests.test_capabilities_guardrails",
+      "status": "PASS",
+      "tests": 15,
+      "seconds": 1.497,
+      "output": ""
+    },
+    {
+      "module": "tests.test_cli_integration",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 9.961,
+      "output": ""
+    },
+    {
+      "module": "tests.test_code_orientation",
+      "status": "PASS",
+      "tests": 20,
+      "seconds": 0.93,
+      "output": ""
+    },
+    {
+      "module": "tests.test_continuity_benchmark",
+      "status": "PASS",
+      "tests": 25,
+      "seconds": 0.952,
+      "output": ""
+    },
+    {
+      "module": "tests.test_continuity_register",
+      "status": "PASS",
+      "tests": 11,
+      "seconds": 1.351,
+      "output": ""
+    },
+    {
+      "module": "tests.test_core_adoption_check",
+      "status": "PASS",
+      "tests": 30,
+      "seconds": 1.938,
+      "output": ""
+    },
+    {
+      "module": "tests.test_decisions_telemetry",
+      "status": "PASS",
+      "tests": 14,
+      "seconds": 1.31,
+      "output": ""
+    },
+    {
+      "module": "tests.test_deployable_claims",
+      "status": "PASS",
+      "tests": 10,
+      "seconds": 1.869,
+      "output": ""
+    },
+    {
+      "module": "tests.test_external_evidence_review",
+      "status": "PASS",
+      "tests": 6,
+      "seconds": 29.98,
+      "output": ""
+    },
+    {
+      "module": "tests.test_field_trials",
+      "status": "PASS",
+      "tests": 7,
+      "seconds": 1.272,
+      "output": ""
+    },
+    {
+      "module": "tests.test_identity_events_lifecycle",
+      "status": "PASS",
+      "tests": 10,
+      "seconds": 1.569,
+      "output": ""
+    },
+    {
+      "module": "tests.test_integrity_campaign",
+      "status": "PASS",
+      "tests": 1,
+      "seconds": 2.822,
+      "output": ""
+    },
+    {
+      "module": "tests.test_ledger_assertions_qualification",
+      "status": "PASS",
+      "tests": 12,
+      "seconds": 1.574,
+      "output": ""
+    },
+    {
+      "module": "tests.test_lineage",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 2.364,
+      "output": ""
+    },
+    {
+      "module": "tests.test_migration_identity",
+      "status": "PASS",
+      "tests": 7,
+      "seconds": 1.247,
+      "output": ""
+    },
+    {
+      "module": "tests.test_narrative_integrity",
+      "status": "PASS",
+      "tests": 4,
+      "seconds": 1.207,
+      "output": ""
+    },
+    {
+      "module": "tests.test_native_invocation_handoff",
+      "status": "PASS",
+      "tests": 10,
+      "seconds": 1.399,
+      "output": ""
+    },
+    {
+      "module": "tests.test_notices_integrity",
+      "status": "PASS",
+      "tests": 12,
+      "seconds": 1.132,
+      "output": ""
+    },
+    {
+      "module": "tests.test_objective_native_authority",
+      "status": "PASS",
+      "tests": 10,
+      "seconds": 1.31,
+      "output": ""
+    },
+    {
+      "module": "tests.test_orientation_safety",
+      "status": "PASS",
+      "tests": 3,
+      "seconds": 0.914,
+      "output": ""
+    },
+    {
+      "module": "tests.test_package_family",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 1.122,
+      "output": ""
+    },
+    {
+      "module": "tests.test_portable_evidence_kit",
+      "status": "PASS",
+      "tests": 7,
+      "seconds": 15.114,
+      "output": ""
+    },
+    {
+      "module": "tests.test_presentation_profile",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 1.198,
+      "output": ""
+    },
+    {
+      "module": "tests.test_progress_status",
+      "status": "PASS",
+      "tests": 4,
+      "seconds": 0.946,
+      "output": ""
+    },
+    {
+      "module": "tests.test_provenance_delivery",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 1.561,
+      "output": ""
+    },
+    {
+      "module": "tests.test_recommended_prompt",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 1.032,
+      "output": ""
+    },
+    {
+      "module": "tests.test_relationships",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 1.677,
+      "output": ""
+    },
+    {
+      "module": "tests.test_release_authorization",
+      "status": "PASS",
+      "tests": 6,
+      "seconds": 2.587,
+      "output": ""
+    },
+    {
+      "module": "tests.test_release_distribution_cold_session",
+      "status": "PASS",
+      "tests": 13,
+      "seconds": 1.929,
+      "output": ""
+    },
+    {
+      "module": "tests.test_release_facts",
+      "status": "PASS",
+      "tests": 7,
+      "seconds": 1.304,
+      "output": ""
+    },
+    {
+      "module": "tests.test_release_package",
+      "status": "PASS",
+      "tests": 11,
+      "seconds": 3.443,
+      "output": ""
+    },
+    {
+      "module": "tests.test_release_proof",
+      "status": "PASS",
+      "tests": 13,
+      "seconds": 2.23,
+      "output": ""
+    },
+    {
+      "module": "tests.test_remote_release_verification",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 2.062,
+      "output": ""
+    },
+    {
+      "module": "tests.test_run_forge_experience",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 1.522,
+      "output": ""
+    },
+    {
+      "module": "tests.test_runtime_matrix",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 5.805,
+      "output": ""
+    },
+    {
+      "module": "tests.test_runtime_proof",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 6.826,
+      "output": ""
+    },
+    {
+      "module": "tests.test_secret_screening",
+      "status": "PASS",
+      "tests": 44,
+      "seconds": 1.216,
+      "output": ""
+    },
+    {
+      "module": "tests.test_self_test_runner",
+      "status": "PASS",
+      "tests": 2,
+      "seconds": 2.035,
+      "output": ""
+    },
+    {
+      "module": "tests.test_session_adapters",
+      "status": "PASS",
+      "tests": 20,
+      "seconds": 0.963,
+      "output": ""
+    },
+    {
+      "module": "tests.test_session_preflight",
+      "status": "PASS",
+      "tests": 2,
+      "seconds": 1.023,
+      "output": ""
+    },
+    {
+      "module": "tests.test_ship_claim_levels",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 1.506,
+      "output": ""
+    },
+    {
+      "module": "tests.test_state_semantic_coverage",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 5.252,
+      "output": ""
+    },
+    {
+      "module": "tests.test_state_transitions",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 5.315,
+      "output": ""
+    },
+    {
+      "module": "tests.test_surface_coverage",
+      "status": "PASS",
+      "tests": 7,
+      "seconds": 1.259,
+      "output": ""
+    },
+    {
+      "module": "tests.test_third_party_intake",
+      "status": "PASS",
+      "tests": 6,
+      "seconds": 1.073,
+      "output": ""
+    },
+    {
+      "module": "tests.test_truth_currency",
+      "status": "PASS",
+      "tests": 8,
+      "seconds": 1.206,
+      "output": ""
+    },
+    {
+      "module": "tests.test_unbaselined_check_truth",
+      "status": "PASS",
+      "tests": 5,
+      "seconds": 2.373,
+      "output": ""
+    },
+    {
+      "module": "tests.test_workspace_integrity",
+      "status": "PASS",
+      "tests": 9,
+      "seconds": 1.085,
+      "output": ""
+    }
+  ]
+}

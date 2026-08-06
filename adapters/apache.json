@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "id": "apache",
+  "name": "Apache/cPanel",
+  "detect": ["**/.htaccess", "**/*.conf"],
+  "checks": ["required hardening files", "deployment preservation", "package exclusions"],
+  "limitations": ["Live Apache directive behavior must be verified on staging or hosting"]
+}

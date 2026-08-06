@@ -1,0 +1,10 @@
+{
+  "type": "zero-byte-file",
+  "path": "dist/stray-file",
+  "symptom": "A zero-byte artifact entered a prior internal delivery.",
+  "root_cause": "A packaging command created an unintended path.",
+  "resolution": "The artifact was removed and the package was rebuilt.",
+  "severity": "error",
+  "scope": "project",
+  "gate": "release"
+}

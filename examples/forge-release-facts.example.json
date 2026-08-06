@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "fact_set_id": "release-facts-2026-08-02",
+  "authority": "owner",
+  "lineage_id": "release-lineage-001",
+  "release_version": "1.2.0",
+  "build_id": "build-120",
+  "package_family_id": "release-family-001",
+  "source_artifact_id": "full-site",
+  "facts": [
+    {"fact_id": "release-version", "source": "lineage.version", "format": "plain"},
+    {"fact_id": "settings-schema", "source": "forge.settings_schema", "format": "plain"},
+    {"fact_id": "native-regressions", "source": "native.regression_count", "format": "plain"},
+    {"fact_id": "known-note", "source": "literal", "value": "Browser evidence remains project-scoped.", "format": "plain"}
+  ],
+  "documents": [
+    {
+      "path": "README.md",
+      "assertions": [
+        {"fact_id": "release-version", "prefix": "Current version: **", "suffix": "**", "occurrences": 1},
+        {"fact_id": "settings-schema", "prefix": "Settings schema: **", "suffix": "**", "occurrences": 1},
+        {"fact_id": "native-regressions", "prefix": "Focused regressions: **", "suffix": "**", "occurrences": 1},
+        {"fact_id": "known-note", "prefix": "Evidence boundary: **", "suffix": "**", "occurrences": 1}
+      ],
+      "forbidden_literals": ["Current version: **1.1.9**"]
+    }
+  ],
+  "truth_boundary": "Forge checks only the declared visible fields inside the exact package and does not understand arbitrary prose or prove substantive correctness."
+}

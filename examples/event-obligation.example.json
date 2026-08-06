@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "guardrail_id": "production-domain-window",
+  "title": "Close temporary production-domain placeholders",
+  "authority": "owner",
+  "rationale": "Wildcard origins and temporary endpoint placeholders are acceptable only while the production domain remains genuinely undecided.",
+  "mode": "event-obligation",
+  "evidence_paths": [
+    "DECISIONS.md"
+  ],
+  "closes_at": {
+    "event_id": "production-domain-confirmed",
+    "description": "The project owner confirms the production domain."
+  },
+  "blocks": [
+    {
+      "id": "runtime-config",
+      "description": "Replace temporary origin and endpoint configuration",
+      "path_patterns": [
+        "config/runtime.json"
+      ]
+    },
+    {
+      "id": "operator-docs",
+      "description": "Update deployment instructions for the confirmed domain",
+      "path_patterns": [
+        "docs/deployment.md"
+      ]
+    }
+  ],
+  "unsafe_after_close": "A wildcard or placeholder remains a security and deployment defect after the production domain is known.",
+  "verification_boundary": "Changing every declared path does not prove production deployment, browser behavior, endpoint reachability, or complete security review."
+}

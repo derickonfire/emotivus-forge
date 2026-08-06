@@ -1,0 +1,30 @@
+{
+  "schema": 2,
+  "verification_status": "existing-project-verification-detected",
+  "canonical": {
+    "id": "file:tools/run_all_checks.sh",
+    "source": "tools/run_all_checks.sh",
+    "command": ["bash", "tools/run_all_checks.sh"],
+    "verification_style": "project-orchestrator",
+    "fingerprint": "<sha256>"
+  },
+  "ecosystem": {
+    "canonical_candidate_id": "file:tools/run_all_checks.sh",
+    "members": [
+      {
+        "source": "tests/verify_fixture.py",
+        "relationship": "invoked-by-canonical-runner",
+        "status": "observed-not-registered-separately"
+      }
+    ]
+  },
+  "approval": {
+    "status": "approved",
+    "candidate_id": "file:tools/run_all_checks.sh",
+    "approved_fingerprint": "<sha256>"
+  },
+  "structured_output_examples": [
+    "FORGE_CHECK|id=browser.home|status=PASS|type=browser|surface=home",
+    "FORGE_EVIDENCE {\"id\":\"database.migration\",\"status\":\"PASS\",\"type\":\"integration\",\"surface\":\"database\"}"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "capability_id": "runtime-proof",
+  "authority": "owner",
+  "trigger": {
+    "description": "A declared staging surface needs proof that expected content rendered rather than only returning HTTP 200.",
+    "evidence_paths": ["docs/runtime-proof-need.md"]
+  },
+  "scope": {
+    "included": ["declared HTTP status and bounded content assertions"],
+    "excluded": ["browser JavaScript", "visual layout", "authentication", "database state", "release readiness"]
+  },
+  "budget": {
+    "runtime_seconds": 15,
+    "file_limit": 5,
+    "output_characters": 10000
+  },
+  "focused_regressions": [
+    "runtime-proof.inactive-by-default",
+    "runtime-proof.explicit-contract",
+    "runtime-proof.content-aware",
+    "runtime-proof.tiny-error-page-fails",
+    "runtime-proof.host-bound",
+    "runtime-proof.budget-bound",
+    "runtime-proof.contract-change-requires-reactivation"
+  ],
+  "native_advantage": {
+    "status": "distinct-value",
+    "explanation": "The bounded recipe detects HTTP error pages that status-only liveness probes cannot distinguish from the intended application response."
+  },
+  "runtime_proof": {
+    "allowed_origins": ["https://staging.example.invalid"],
+    "recipe_paths": ["runtime-proof-homepage.json"]
+  },
+  "allow_repairs": false
+}

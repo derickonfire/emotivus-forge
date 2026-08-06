@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "claim_set_id": "release-truth",
+  "title": "Owner-facing release truth",
+  "authority": "owner",
+  "claims": [
+    {
+      "id": "build-id",
+      "kind": "identity-text",
+      "source_path": "release/STATE.md",
+      "claim_text": "Build:",
+      "identity_field": "build_id",
+      "text_template": "Build: {value}"
+    },
+    {
+      "id": "migration-ddl",
+      "kind": "migration-effects",
+      "source_path": "release/INSTALL.md",
+      "claim_text": "The current migration makes no schema change.",
+      "migration_path": "migrations/current.sql",
+      "expect": "ddl-none"
+    },
+    {
+      "id": "delta-excludes-tools",
+      "kind": "archive-membership",
+      "source_path": "release/STATE.md",
+      "claim_text": "The delta excludes development tooling.",
+      "provenance_id": "changed-files-package",
+      "member": "tools/build_release.py",
+      "expect": "absent"
+    },
+    {
+      "id": "evidence-build",
+      "kind": "evidence-identity",
+      "source_path": "release/EVIDENCE.txt",
+      "claim_text": "Evidence for build",
+      "identity_field": "build_id",
+      "text_template": "Evidence for build {value}"
+    }
+  ],
+  "verification_boundary": "These explicit claims are checked against current deterministic evidence; arbitrary prose and overall release correctness remain outside scope."
+}

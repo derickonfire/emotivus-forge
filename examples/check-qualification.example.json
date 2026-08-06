@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "qualification_id": "membership-active-negative-proof",
+  "check_id": "membership-active",
+  "authority": "owner",
+  "check_source": "tools/check_membership.py",
+  "verification_tier": "static",
+  "negative_cases": [
+    {
+      "id": "missing-membership-constraint",
+      "description": "A known-bad reader omits the membership-active constraint.",
+      "expected_result": "FAIL",
+      "observed_result": "FAIL",
+      "evidence_path": "evidence/membership-negative-case.txt"
+    }
+  ],
+  "limitations": [
+    "Does not prove every dynamically assembled query is discoverable.",
+    "Does not execute the application or database."
+  ],
+  "scanned_surface_count": 19,
+  "truth_boundary": "Qualification records that the current check rejected this declared known-bad case; it does not prove complete defect coverage."
+}

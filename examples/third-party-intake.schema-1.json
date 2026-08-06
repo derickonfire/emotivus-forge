@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "intake_id": "example-library-1.0.0",
+  "authority": "owner",
+  "upstream_project": "Example Library",
+  "upstream_version": "1.0.0",
+  "upstream_archive_name": "example-library-1.0.0.zip",
+  "upstream_archive_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "upstream_archive_bytes": 12345,
+  "license": {
+    "spdx": "Apache-2.0",
+    "copyright": "Example upstream owner",
+    "upstream_file": "example-library-1.0.0/LICENSE",
+    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "notice_file": ""
+  },
+  "full_source_distribution": "external-only",
+  "candidates": [
+    {
+      "candidate_id": "secret-patterns",
+      "classification": "adapt",
+      "stage": "planned",
+      "distribution": "public",
+      "intended_capability": "Bounded confidentiality screening",
+      "mission_fit": "A small standard-library pattern set strengthens exact-package confidentiality without adding a service or database.",
+      "upstream_files": [
+        {
+          "path": "example-library-1.0.0/secrets.go",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "bytes": 1000
+        }
+      ],
+      "dependency_closure": [
+        {
+          "name": "standard library",
+          "type": "standard-library",
+          "version": "language runtime",
+          "license": "runtime license",
+          "required": true,
+          "note": "No third-party runtime dependency."
+        }
+      ],
+      "retained_behaviors": ["Recognize high-confidence secret forms."],
+      "changed_behaviors": ["Report findings without mutating exact evidence bytes."],
+      "trust_semantic_differences": ["A detection result does not establish authority or release readiness."],
+      "security_review": "The candidate is limited to bounded static pattern matching and does not execute imported code.",
+      "confidentiality_review": "Only neutral patterns and tests may enter Forge; no upstream runtime state or private data is retained.",
+      "original_tests": ["example-library-1.0.0/secrets_test.go"],
+      "forge_tests": ["tests/test_confidentiality_screening.py"],
+      "forge_files": ["emotivus_forge/core/confidentiality.py"],
+      "attribution_notice": "Adapted from Example Library under Apache-2.0 and modified for Forge reporting boundaries.",
+      "update_retirement_procedure": "Re-review exact upstream bytes, tests, dependencies, and Forge trust boundaries before replacement."
+    }
+  ],
+  "truth_boundary": "This intake proves exact reviewed provenance and declared reuse boundaries; it does not prove correctness, legal sufficiency, security, or release readiness."
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "assertion_id": "resolved-feature-state",
+  "title": "Resolved feature state remains enabled",
+  "authority": "owner",
+  "record_type": "resolved-defect",
+  "rationale": "The owner accepted the fix and wants the resolved configuration invariant rechecked during every scoped Check.",
+  "evidence_paths": [
+    "DECISIONS.md"
+  ],
+  "assertions": [
+    {
+      "id": "config-value",
+      "kind": "json-equals",
+      "path": "config.json",
+      "key": "feature.status",
+      "value": "enabled"
+    },
+    {
+      "id": "no-obsolete-marker",
+      "kind": "file-not-contains",
+      "path": "README.md",
+      "text": "FEATURE_DISABLED"
+    }
+  ],
+  "verification_boundary": "These predicates confirm only the declared file and JSON state; they do not prove the feature works at runtime."
+}

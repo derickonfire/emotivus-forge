@@ -1,0 +1,8 @@
+{
+  "bundle": "/mnt/data/forge-0548-work/final-candidate/Emotivus-Forge-0.548-Browser-Evidence.zip",
+  "bytes": 2679151,
+  "problems": [],
+  "sha256": "66c246ae6a38eb73160d35ab3ed6383076132288f02bbb65ecd78de6115d864a",
+  "status": "PASS",
+  "truth_boundary": "This receipt proves that one named local Chromium-family executable rendered exact HTML and package-relative resources from the recorded website ZIP under network-isolated package routing, viewport shapes, color-mode settings, and execution environment. It does not prove HTTP-server, production-origin, physical-device, touch-input, or assistive-technology compatibility, accessibility conformance, manual visual correctness, remote-network behavior, independent control, reviewer identity, release authorization, or release readiness."
+}

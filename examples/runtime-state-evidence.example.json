@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "matrix_id": "staging-upgrade",
+  "scenario_id": "upgrade-current-state",
+  "authority": "external-ci",
+  "candidate_binding": {
+    "build_id": "OWNER-DECLARED-BUILD-ID",
+    "components.server.version": "OWNER-DECLARED-COMPONENT-VERSION"
+  },
+  "target_environment": "project-staging",
+  "deployment_stage": "staging",
+  "prior_state_id": "controlled-baseline-copy",
+  "baseline_value": "OWNER-DECLARED-BASELINE",
+  "deployment_result": "PASS",
+  "migration_results": [
+    {
+      "path": "migrations/current-upgrade.sql",
+      "status": "PASS",
+      "sha256": "REPLACE_WITH_CURRENT_MIGRATION_SHA256"
+    }
+  ],
+  "observed_utc": "2026-08-01T20:00:00Z"
+}

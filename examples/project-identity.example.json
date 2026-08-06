@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "identity_id": "product-suite",
+  "authority": "owner",
+  "release_train": "preview",
+  "build_id": "2026-08-01.1",
+  "components": {
+    "server": {
+      "status": "present",
+      "version": "0.3.0",
+      "contracts": {
+        "api": "1"
+      }
+    },
+    "web": {
+      "status": "present",
+      "version": "0.2.0",
+      "contracts": {}
+    },
+    "player": {
+      "status": "absent",
+      "version": null,
+      "contracts": {}
+    }
+  },
+  "monotonic": {
+    "android_version_code": 26080101
+  },
+  "baseline": {
+    "build_id": "2026-07-31.2",
+    "source": "owner",
+    "confirmed_utc": "2026-08-01T12:00:00-04:00"
+  },
+  "literal_policy": {
+    "scan_paths": [
+      "tools/**",
+      "tests/**"
+    ],
+    "exception_paths": [
+      "tests/fixtures/history/**"
+    ],
+    "file_limit": 200
+  },
+  "truth_boundary": "The project authority declares identity values; Forge records, compares, and rejects monotonic regressions but never chooses a version."
+}

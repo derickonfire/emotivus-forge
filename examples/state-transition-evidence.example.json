@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "plan_id": "staging-schema-transition",
+  "transition_id": "legacy-populated-to-current",
+  "authority": "external-ci",
+  "candidate_binding": {
+    "build_id": "2026-08-01.1",
+    "components.server.version": "0.3.0"
+  },
+  "target_environment": "neutral-staging",
+  "deployment_stage": "staging",
+  "baseline_value": "2026-07-31.2",
+  "transition_result": "PASS",
+  "before_snapshot_path": "evidence/before-observed.json",
+  "after_snapshot_path": "evidence/after-observed.json",
+  "deployment_receipt_path": "evidence/deployment-receipt.json",
+  "migration_results": [
+    {
+      "path": "migrations/043_upgrade.sql",
+      "status": "PASS",
+      "sha256": "REPLACE_WITH_CURRENT_SHA256"
+    }
+  ],
+  "rollback": {
+    "result": "PASS",
+    "restored_snapshot_path": "evidence/restored-observed.json",
+    "receipt_path": "evidence/rollback-receipt.json"
+  }
+}

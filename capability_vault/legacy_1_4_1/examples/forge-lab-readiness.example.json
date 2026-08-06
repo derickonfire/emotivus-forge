@@ -1,0 +1,28 @@
+{
+  "id": "application-readiness",
+  "name": "Application content readiness",
+  "enabled": true,
+  "profiles": ["release"],
+  "workspace": "copy",
+  "evidence_level": "content-readiness",
+  "evidence_boundary": "disposable-local-environment",
+  "prerequisites": {
+    "executables": ["php"],
+    "files": ["config.php"],
+    "env": ["APP_TEST_DB_URL"]
+  },
+  "start": ["{php}", "-S", "127.0.0.1:{port}", "-t", "{workspace}"],
+  "probes": [
+    {
+      "url": "http://127.0.0.1:{port}/",
+      "expected_status": [200],
+      "expected_content_type": "text/html",
+      "contains": ["Expected Product Name"],
+      "not_contains": ["not configured", "fatal error"],
+      "min_bytes": 1000
+    }
+  ],
+  "startup_timeout": 15,
+  "command_timeout": 120,
+  "preserve_on_failure": false
+}

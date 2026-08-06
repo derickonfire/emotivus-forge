@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "id": "python",
+  "name": "Python",
+  "detect": ["**/*.py", "pyproject.toml", "requirements.txt", "setup.py"],
+  "checks": ["Python bytecode compilation", "configured pytest or unittest commands"]
+}

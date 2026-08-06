@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "profile_id": "owner-first",
+  "title": "Owner-first structured reporting",
+  "authority": "owner",
+  "audiences": ["owner", "builder", "expert"],
+  "default_audience": "owner",
+  "structure": {
+    "section_order": [
+      "outcome",
+      "what_changed",
+      "validation",
+      "limitations",
+      "roadmap",
+      "downloads",
+      "next_action",
+      "forge_line"
+    ]
+  },
+  "style": {
+    "verbosity": "compact",
+    "technical_detail": "after-owner-summary",
+    "tables": "comparisons-and-status",
+    "forge_line": "meaningful-events-only",
+    "pass_language": "scope-and-exclusions",
+    "tone": "clear, warm, precise, and owner-friendly",
+    "headings": "descriptive",
+    "bullets": "concise"
+  },
+  "max_owner_summary_characters": 1400,
+  "truth_boundary": "This transfers owner-approved communication structure and claim discipline across AI models; it does not guarantee identical prose quality or style execution."
+}

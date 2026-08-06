@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "release_authorization_id": "public-release-authorization",
+  "title": "Exact public package authorization",
+  "authority": "owner",
+  "authority_source": "project-declared owner decision",
+  "release_package_id": "public-release",
+  "package_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "package_bytes": 123456,
+  "build_id": "2026-08-02.1",
+  "decision": "authorize-public-release",
+  "authorized_utc": "2026-08-02T12:00:00Z",
+  "valid_until_utc": "2026-09-02T12:00:00Z",
+  "authorized_channels": [
+    "public-download",
+    "website"
+  ],
+  "conditions": [
+    "Withdraw authorization if exact package bytes or required evidence change."
+  ],
+  "rationale": "The project authority reviewed the exact final package identity and current bounded release evidence and authorizes distribution through the named channels.",
+  "truth_boundary": "This records a project-declared authorization for one exact package and named channels; Forge does not authenticate the human, prove authorship or reviewer competence, or guarantee future package and channel state."
+}

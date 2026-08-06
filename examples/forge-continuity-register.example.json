@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "register_id": "continuity-main",
+  "authority": "owner",
+  "supersedes_register_id": "",
+  "change_reason": "",
+  "facts": [
+    {
+      "fact_id": "mission.continuity",
+      "key": "mission.continuity",
+      "value": "Preserve project truth and institutional memory across sessions, developers, releases, and handoffs.",
+      "trust": "owner-declared",
+      "rationale": "Continuity is a core product mission.",
+      "impact": "Resume, Session Close, handoff, and roadmap work must preserve this mission.",
+      "change_reason": "",
+      "support": [
+        {
+          "kind": "contract-declaration",
+          "note": "The project owner explicitly declared this mission."
+        },
+        {
+          "kind": "project-file",
+          "path": "ROADMAP.md",
+          "locator": "Product missions"
+        }
+      ],
+      "truth_boundary": "This records the governing mission and does not prove every implementation satisfies it."
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "validation.real-cold-sessions",
+      "question": "Do representative real matched cold sessions improve continuity outcomes without excess ceremony?",
+      "priority": "blocker",
+      "status": "open",
+      "blocking_scopes": [
+        "ship",
+        "roadmap"
+      ],
+      "required_evidence": "Matched fresh-session trials across representative projects, models, tasks, and exact parent packages.",
+      "owner": "project owner",
+      "resolution": "",
+      "evidence": [],
+      "truth_boundary": "This gap records missing evidence and does not predict the eventual result."
+    }
+  ],
+  "retired_fact_keys": [],
+  "retired_gap_ids": [],
+  "truth_boundary": "This register governs compact current facts and known gaps; it is not a transcript, semantic memory database, or release authorization."
+}

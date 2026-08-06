@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "updated_utc": "",
+  "contracts": [
+    {
+      "id": "admin-authorization",
+      "title": "Admin authorization matrix",
+      "kind": "authorization",
+      "enabled": true,
+      "profiles": ["section", "release"],
+      "actors": ["owner", "manager", "staff"],
+      "evidence_boundary": "staging",
+      "command": ["{python}", "tools/verify_authorization.py"],
+      "expected_cases": [
+        {"id": "manager-view-users", "category": "allowed-access", "actor": "manager", "action": "view", "resource": "users", "expected": "ALLOW"},
+        {"id": "staff-direct-users", "category": "direct-access-deny", "actor": "staff", "action": "direct-request", "resource": "users", "expected": "DENY"},
+        {"id": "staff-post-users", "category": "denied-mutation", "actor": "staff", "action": "update", "resource": "users", "expected": "DENY"},
+        {"id": "csrf-users", "category": "csrf", "actor": "manager", "action": "update-without-token", "resource": "users", "expected": "DENY"},
+        {"id": "explicit-deny-advanced", "category": "explicit-deny", "actor": "manager", "action": "view", "resource": "advanced-settings", "expected": "DENY"},
+        {"id": "manager-self-promote", "category": "privilege-management", "actor": "manager", "action": "assign-owner", "target": "self", "expected": "DENY"},
+        {"id": "revoked-session", "category": "session-revocation", "actor": "staff", "action": "reuse-session-after-revoke", "target": "self", "expected": "DENY"},
+        {"id": "owner-view-users", "category": "denied-access", "actor": "staff", "action": "view", "resource": "owner-only-users", "expected": "DENY"}
+      ]
+    },
+    {
+      "id": "schema-chain",
+      "title": "Database migration chain",
+      "kind": "migration",
+      "enabled": true,
+      "profiles": ["release"],
+      "evidence_boundary": "release-equivalent",
+      "command": ["{python}", "tools/verify_migrations.py"],
+      "initial_schema": ["empty-database"],
+      "migrations": [
+        {"id": "001-users", "path": "migrations/001-users.sql", "requires": ["empty-database"], "provides": ["users"], "included_in_delivery": true},
+        {"id": "002-roles", "path": "migrations/002-roles.sql", "requires": ["users"], "provides": ["roles"], "included_in_delivery": true}
+      ]
+    }
+  ]
+}

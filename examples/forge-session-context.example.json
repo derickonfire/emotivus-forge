@@ -1,0 +1,19 @@
+{
+  "schema": "forge-session-context/1",
+  "source_kind": "active-ai-distilled",
+  "objective": "Repair remembered login without broadening the authentication architecture.",
+  "requested_items": [
+    "Wire the remember-device choice into the successful login path.",
+    "Add evidence that the persistent cookie is emitted."
+  ],
+  "ai_claims": [
+    "Remember-device persistence was implemented in login.py."
+  ],
+  "decisions": [
+    "Keep the existing local session architecture."
+  ],
+  "rejected_options": [
+    "Do not add a hosted identity provider."
+  ],
+  "next_action": "Run the browser persistence fixture."
+}

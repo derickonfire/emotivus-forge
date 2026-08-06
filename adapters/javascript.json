@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "id": "javascript",
+  "name": "JavaScript",
+  "detect": ["**/*.js", "**/*.mjs", "**/*.cjs", "**/*.ts", "**/*.tsx"],
+  "checks": ["Node syntax checks for executable JavaScript", "configured lint and test commands"],
+  "recommended_commands": ["node --check <file>"]
+}

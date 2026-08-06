@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "id": "css",
+  "name": "CSS",
+  "detect": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less"],
+  "checks": ["balanced CSS block structure", "optional selector-to-markup wiring policy"]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "inventory_id": "example-surface-map-1",
+  "authority": "owner",
+  "lineage_id": "example-lineage-1",
+  "release_version": "1.0.0",
+  "build_id": "build-100",
+  "package_family_id": "example-family-1",
+  "source_artifact_id": "full-site",
+  "surfaces": [
+    {
+      "surface_id": "route-login",
+      "type": "route",
+      "title": "Personal login",
+      "audiences": ["staff", "manager", "owner"],
+      "entrypoints": ["login.php"],
+      "steps": [],
+      "route": "/login.php",
+      "required_tier": "authenticated-executed",
+      "scope": "Password and one-time-code entry into a personal authenticated session."
+    },
+    {
+      "surface_id": "journey-login-dashboard",
+      "type": "journey",
+      "title": "Login to dashboard",
+      "audiences": ["staff"],
+      "entrypoints": [],
+      "steps": ["route-login"],
+      "route": "",
+      "required_tier": "browser-tested",
+      "scope": "A fresh staff browser session authenticates and reaches the expected dashboard."
+    }
+  ],
+  "receipts": [
+    {
+      "receipt_id": "login-authenticated-20260802",
+      "surface_ids": ["route-login"],
+      "tier": "authenticated-executed",
+      "result": "PASS",
+      "package_family_id": "example-family-1",
+      "source_artifact_id": "full-site",
+      "environment": "isolated local database fixture",
+      "method": "Executed the exact login route with a permitted test account and confirmed the authenticated destination.",
+      "reviewer": "independent reviewer",
+      "observed_utc": "2026-08-02T16:00:00+00:00",
+      "expires_utc": "2026-09-01T16:00:00+00:00",
+      "evidence_path": "evidence/login-authenticated.txt",
+      "evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_bytes": 128,
+      "limitations": "This receipt does not execute JavaScript, prove responsive layout, or cover shared-device login.",
+      "truth_boundary": "The receipt proves only the named route, role, environment, method, and evidence tier."
+    }
+  ],
+  "truth_boundary": "Forge maps exact package surfaces to explicit receipts without inferring that route existence proves database, authentication, browser, device, staging, production, or deployment behavior."
+}

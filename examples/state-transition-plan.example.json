@@ -1,0 +1,164 @@
+{
+  "schema": 2,
+  "plan_id": "staging-schema-transition",
+  "title": "Staging persisted-state transition coverage and bounded rollback",
+  "authority": "owner",
+  "candidate_fields": [
+    "build_id",
+    "components.server.version"
+  ],
+  "transitions": [
+    {
+      "transition_id": "fresh-empty-to-current",
+      "target_environment": "neutral-staging",
+      "deployment_stage": "staging",
+      "verification_tier": "staging",
+      "baseline_field": "baseline.build_id",
+      "before_state": {
+        "state_id": "fresh-empty",
+        "description": "Controlled empty-state fixture representing a fresh installation.",
+        "fixture_path": "fixtures/fresh-empty.json",
+        "comparison_mode": "exact"
+      },
+      "expected_after_state": {
+        "state_id": "current-populated",
+        "description": "Expected current state expressed through bounded semantic invariants.",
+        "fixture_path": "fixtures/current-state-example.json",
+        "comparison_mode": "semantic",
+        "semantic_validators": [
+          {
+            "validator_id": "schema-current",
+            "kind": "json-value-equals",
+            "path": "schema",
+            "expected": 43
+          },
+          {
+            "validator_id": "stable-identifiers",
+            "kind": "json-array-unique",
+            "path": "rows",
+            "field": "id"
+          },
+          {
+            "validator_id": "required-row-fields",
+            "kind": "json-array-all-have-fields",
+            "path": "rows",
+            "fields": [
+              "id",
+              "status"
+            ]
+          },
+          {
+            "validator_id": "allowed-row-statuses",
+            "kind": "json-array-values-in",
+            "path": "rows",
+            "field": "status",
+            "allowed": [
+              "active",
+              "inactive"
+            ]
+          },
+          {
+            "validator_id": "row-group-references",
+            "kind": "json-array-references-exist",
+            "path": "rows",
+            "field": "group_id",
+            "target_path": "groups",
+            "target_field": "id"
+          }
+        ]
+      },
+      "deployment_artifact_path": "Candidate-Development.zip",
+      "migration_paths": [
+        "migrations/043_upgrade.sql"
+      ],
+      "runtime_recipe_ids": [
+        "candidate-homepage"
+      ],
+      "evidence_authorities": [
+        "owner",
+        "external-ci"
+      ],
+      "rollback": {
+        "requirement": "availability",
+        "restored_state_id": "fresh-empty",
+        "runtime_recipe_ids": []
+      },
+      "exclusions": [
+        "production traffic",
+        "hidden database contents",
+        "automatic deployment",
+        "release readiness"
+      ]
+    },
+    {
+      "transition_id": "legacy-populated-to-current",
+      "target_environment": "neutral-staging",
+      "deployment_stage": "staging",
+      "verification_tier": "staging",
+      "baseline_field": "baseline.build_id",
+      "before_state": {
+        "state_id": "legacy-populated",
+        "description": "Controlled legacy populated-state fixture for upgrade testing.",
+        "fixture_path": "fixtures/legacy-populated.json",
+        "comparison_mode": "exact"
+      },
+      "expected_after_state": {
+        "state_id": "current-populated",
+        "description": "Expected current state after upgrading the legacy fixture.",
+        "fixture_path": "fixtures/current-state-example.json",
+        "comparison_mode": "exact-and-semantic",
+        "semantic_validators": [
+          {
+            "validator_id": "schema-current",
+            "kind": "json-value-equals",
+            "path": "schema",
+            "expected": 43
+          },
+          {
+            "validator_id": "no-deleted-rows",
+            "kind": "json-array-none-equals",
+            "path": "rows",
+            "field": "status",
+            "value": "deleted"
+          }
+        ]
+      },
+      "deployment_artifact_path": "Candidate-Development.zip",
+      "migration_paths": [
+        "migrations/043_upgrade.sql"
+      ],
+      "runtime_recipe_ids": [
+        "candidate-homepage"
+      ],
+      "evidence_authorities": [
+        "owner",
+        "external-ci"
+      ],
+      "rollback": {
+        "requirement": "drill",
+        "restored_state_id": "legacy-populated",
+        "runtime_recipe_ids": [
+          "candidate-homepage"
+        ]
+      },
+      "exclusions": [
+        "production traffic",
+        "hidden database contents",
+        "automatic deployment",
+        "release readiness"
+      ]
+    }
+  ],
+  "coverage_requirements": [
+    {
+      "coverage_id": "minimum-state-matrix",
+      "description": "Both fresh-empty and legacy-populated upgrade paths must be observed.",
+      "mode": "all",
+      "transition_ids": [
+        "fresh-empty-to-current",
+        "legacy-populated-to-current"
+      ]
+    }
+  ],
+  "verification_boundary": "This plan binds bounded project-owned JSON state invariants, explicit coverage, receipts, artifact and migration bytes, and same-Check runtime evidence without claiming Forge performs deployment, migration, restoration, rollback, arbitrary validation code, hidden-data inspection, or release certification."
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "lineage_id": "example-product-1.2.0",
+  "authority": "owner",
+  "declared_version": "1.2.0",
+  "build_id": "build-2026-08-02-a",
+  "relationship": "continuation",
+  "parent": {
+    "path": "packages/example-product-1.1.0.zip",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "bytes": 123456,
+    "declared_version": "1.1.0",
+    "build_id": "build-2026-07-20-a",
+    "strip_prefix": "Example-Product",
+    "tree_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "tree_file_count": 42
+  },
+  "current": {
+    "tree_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "tree_file_count": 45
+  },
+  "collision_declaration": {},
+  "truth_boundary": "The owner declares the intended ancestry. Forge verifies exact package and tree bytes but not authorship, semantic compatibility, or merge correctness."
+}

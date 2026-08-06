@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "algorithm": "rsa-pkcs1v15-sha256",
+  "key_id": "public-release-key",
+  "modulus_hex": "REPLACE_WITH_AT_LEAST_2048_BIT_RSA_MODULUS_HEX",
+  "public_exponent": 65537
+}

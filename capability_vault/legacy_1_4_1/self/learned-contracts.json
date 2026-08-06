@@ -1,0 +1,1344 @@
+{
+  "schema": 1,
+  "updated_utc": "2026-07-30T05:00:00+00:00",
+  "contracts": [
+    {
+      "id": "mirror-bootstrap-required",
+      "title": "Independent bootstrap remains present",
+      "invariant": "Forge production certification must begin with a standard-library bootstrap validator independent of Forge Core.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "tools/forge_bootstrap.py"
+      ],
+      "affected_subsystems": [
+        "tooling"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_exists",
+        "path": "tools/forge_bootstrap.py"
+      },
+      "fingerprint": "mirror-bootstrap-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "mirror-cli-required",
+      "title": "Mirror remains available from the CLI",
+      "invariant": "Forge releases must expose the Mirror production-certification command.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/cli.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/cli.py",
+        "text": "p_mirror = sub.add_parser(\"mirror\"",
+        "regex": false
+      },
+      "fingerprint": "mirror-cli-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "mirror-engine-required",
+      "title": "Mirror self-hosting engine remains present",
+      "invariant": "Forge must retain the self-hosted production pipeline rather than relying only on fixture tests.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/mirror.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/mirror.py",
+        "text": "def run_mirror(",
+        "regex": false
+      },
+      "fingerprint": "mirror-engine-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "context-aware-secret-detection",
+      "title": "Security scanning remains context-aware",
+      "invariant": "Forge must distinguish detector definitions and declared synthetic fixtures from real credential material without exempting Forge by filename.",
+      "severity": "blocker",
+      "category": "security",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/security.py"
+      ],
+      "affected_subsystems": [
+        "security"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/security.py",
+        "text": "PEM_BLOCK_RE",
+        "regex": false
+      },
+      "fingerprint": "context-aware-secret-detection",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "first-contact-bootstrap-required",
+      "title": "AI first-contact bootstrap remains generated",
+      "invariant": "Initialized host projects must receive a copy-ready prompt that keeps Forge separate and requires audit-only first contact.",
+      "severity": "blocker",
+      "category": "workflow",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/init_project.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/init_project.py",
+        "text": "def _write_ai_bootstrap(",
+        "regex": false
+      },
+      "fingerprint": "first-contact-bootstrap-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "portable-state-required",
+      "title": "Portable Forge state remains available",
+      "invariant": "ZIP-based projects must be able to export, inspect, and adopt assurance state without placing it in public deployment packages.",
+      "severity": "blocker",
+      "category": "continuity",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/state.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_exists",
+        "path": "emotivus_forge/state.py"
+      },
+      "fingerprint": "portable-state-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "tool-classifier-runtime-boundary",
+      "title": "Application runtime is not absorbable tooling",
+      "invariant": "Forge must require affirmative CLI evidence and retain web runtime code rather than recommending application files for absorption.",
+      "severity": "blocker",
+      "category": "migration",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/tool_migration.py"
+      ],
+      "affected_subsystems": [
+        "tooling"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/tool_migration.py",
+        "text": "appears to be application runtime code or is included by a web entry point",
+        "regex": false
+      },
+      "fingerprint": "tool-classifier-runtime-boundary",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "artifact-hygiene-required",
+      "title": "Artifact hygiene remains enforced",
+      "invariant": "Forge must inspect conflict markers contextually and block hostile filenames and unexpected zero-byte files at the package boundary.",
+      "severity": "blocker",
+      "category": "packaging",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/hygiene.py"
+      ],
+      "affected_subsystems": [
+        "security",
+        "packaging"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_exists",
+        "path": "emotivus_forge/hygiene.py"
+      },
+      "fingerprint": "artifact-hygiene-required",
+      "approved_utc": "2026-07-29T00:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "evidence-state-matrix-required",
+      "title": "Explicit execution states remain enforced",
+      "invariant": "Forge Gates must distinguish PASS, FAIL, SKIP, ERROR, and NOT-RUN instead of treating a zero exit code as complete evidence in every scenario.",
+      "severity": "blocker",
+      "category": "assurance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runner.py",
+        "emotivus_forge/evidence.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runner.py",
+        "text": "\"NOT_RUN\"",
+        "regex": false
+      },
+      "fingerprint": "evidence-state-matrix-required",
+      "approved_utc": "2026-07-29T10:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "failure-context-required",
+      "title": "Failure context remains deterministic",
+      "invariant": "Failed required checks must produce a replayable context bundle rather than only raw console output.",
+      "severity": "blocker",
+      "category": "assurance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/failures.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_exists",
+        "path": "emotivus_forge/failures.py"
+      },
+      "fingerprint": "failure-context-required",
+      "approved_utc": "2026-07-29T10:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "guardrail-review-required",
+      "title": "Generated guardrails remain review-gated",
+      "invariant": "Forge may synthesize a guardrail proposal but must not activate it without explicit approval.",
+      "severity": "blocker",
+      "category": "workflow",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/guardrails.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/guardrails.py",
+        "text": "inactive-until-approved",
+        "regex": false
+      },
+      "fingerprint": "guardrail-review-required",
+      "approved_utc": "2026-07-29T10:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "execution-history-required",
+      "title": "Execution evidence history remains available",
+      "invariant": "Forge must retain environment- and command-keyed history for anomaly evidence without treating timing alone as root-cause analysis.",
+      "severity": "blocker",
+      "category": "assurance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/evidence.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/evidence.py",
+        "text": "def evaluate_anomaly(",
+        "regex": false
+      },
+      "fingerprint": "execution-history-required",
+      "approved_utc": "2026-07-29T10:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "update-rollback-required",
+      "title": "Forge Update remains reversible",
+      "invariant": "Forge installation upgrades must be previewed, backed up, verified by the incoming release, and restored automatically when post-update checks fail.",
+      "severity": "blocker",
+      "category": "maintenance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/update.py"
+      ],
+      "affected_subsystems": [
+        "core",
+        "release"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/update.py",
+        "text": "action = \"rolled-back\"",
+        "regex": false
+      },
+      "fingerprint": "update-rollback-required",
+      "approved_utc": "2026-07-29T14:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "doctor-confirmation-required",
+      "title": "Doctor repairs remain review-gated",
+      "invariant": "Doctor may propose narrow reversible filesystem repairs but must require explicit confirmation before applying one.",
+      "severity": "blocker",
+      "category": "maintenance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/remediation.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/remediation.py",
+        "text": "Doctor remediation requires --confirm",
+        "regex": false
+      },
+      "fingerprint": "doctor-confirmation-required",
+      "approved_utc": "2026-07-29T14:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "ci-bridge-boundary-required",
+      "title": "CI Bridge remains an invocation layer",
+      "invariant": "Generated CI must invoke Forge Gates and preserve existing host assurance rather than replacing it silently.",
+      "severity": "blocker",
+      "category": "integration",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/ci_bridge.py"
+      ],
+      "affected_subsystems": [
+        "tooling"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/ci_bridge.py",
+        "text": "Generated CI invokes Forge and does not replace existing project assurance.",
+        "regex": false
+      },
+      "fingerprint": "ci-bridge-boundary-required",
+      "approved_utc": "2026-07-29T14:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "internal-delivery-state-required",
+      "title": "Internal delivery retains portable state",
+      "invariant": "A Forge internal working delivery must pair source with Forge-State.zip while the public deployment profile remains separate.",
+      "severity": "blocker",
+      "category": "packaging",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/delivery.py"
+      ],
+      "affected_subsystems": [
+        "packaging"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/delivery.py",
+        "text": "FORGE-INTERNAL-DELIVERY-MANIFEST.json",
+        "regex": false
+      },
+      "fingerprint": "internal-delivery-state-required",
+      "approved_utc": "2026-07-29T14:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "config-migration-backup-required",
+      "title": "Configuration migrations remain backed up",
+      "invariant": "Forge configuration schema migration must preserve the prior file and record the migration before updated code relies on it.",
+      "severity": "blocker",
+      "category": "maintenance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/config.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/config.py",
+        "text": "config-migrations",
+        "regex": false
+      },
+      "fingerprint": "config-migration-backup-required",
+      "approved_utc": "2026-07-29T14:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "project-intelligence-core-required",
+      "title": "Canonical project intelligence remains shared",
+      "invariant": "Plans, durable records, context packets, and pivots must share one canonical project-memory layer even when exposed under different public cores.",
+      "severity": "blocker",
+      "category": "continuity",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "def build_context_packet(",
+        "regex": false
+      },
+      "fingerprint": "project-intelligence-core-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true
+    },
+    {
+      "id": "lean-public-interface-required",
+      "title": "Three-core public interface remains bounded",
+      "invariant": "The default public workflow must remain organized around Understand, Change, and Prove while named internal capabilities and legacy aliases remain available.",
+      "severity": "error",
+      "category": "usability",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/cli.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/cli.py",
+        "text": "public_commands = {\"understand\", \"change\", \"prove\", \"update\", \"docs\"}",
+        "regex": false
+      },
+      "fingerprint": "lean-public-interface-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true
+    },
+    {
+      "id": "minimum-sufficient-context-required",
+      "title": "Context precision remains an explicit product boundary",
+      "invariant": "Forge must conserve tokens with minimum sufficient verified context and preserve source references and full retrieval paths.",
+      "severity": "error",
+      "category": "continuity",
+      "scope": "project",
+      "affected_paths": [
+        "README.md",
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "README.md",
+        "text": "minimum sufficient verified context",
+        "regex": false
+      },
+      "fingerprint": "minimum-sufficient-context-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true
+    },
+    {
+      "id": "pivot-freedom-with-discipline-required",
+      "title": "Pivot lifecycle remains freedom-preserving",
+      "invariant": "Major change must support retain, revise, suspend, replace, retire, restore, and supersede dispositions while blocking production release during unresolved exploration.",
+      "severity": "blocker",
+      "category": "pivot",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "PIVOT_DISPOSITIONS = {\"review\", \"retain\", \"revise\", \"suspend\", \"replace\", \"retire\", \"restore\", \"supersede\"}",
+        "regex": false
+      },
+      "fingerprint": "pivot-freedom-with-discipline-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true,
+      "reviewed_utc": "2026-07-29T21:15:00+00:00"
+    },
+    {
+      "id": "dual-edition-build-required",
+      "title": "Public and development editions share one certified source",
+      "invariant": "Forge must generate both development and public distributions from one manifest and certify the extracted public edition.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "tools/build_forge_package.py",
+        "emotivus_forge/mirror.py"
+      ],
+      "affected_subsystems": [
+        "tooling"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "tools/build_forge_package.py",
+        "text": "choices=(\"development\", \"public\")",
+        "regex": false
+      },
+      "fingerprint": "dual-edition-build-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true
+    },
+    {
+      "id": "why-forge-public-message-required",
+      "title": "Public Why Forge positioning remains documented",
+      "invariant": "Public documentation must explain project truth, safe change, independent proof, and token-aware world-class code without requiring a specific heading level.",
+      "severity": "warning",
+      "category": "documentation",
+      "scope": "project",
+      "affected_paths": [
+        "docs/WHY-FORGE.md"
+      ],
+      "affected_subsystems": [
+        "documentation"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "docs/WHY-FORGE.md",
+        "text": "AI can build software remarkably fast.",
+        "regex": false
+      },
+      "fingerprint": "why-forge-public-message-required",
+      "approved_utc": "2026-07-29T16:30:00+00:00",
+      "active": true
+    },
+    {
+      "id": "change-quality-targets-required",
+      "title": "Change plans retain broad quality targets",
+      "invariant": "Every new Change plan must preserve explicit targets for security, reliability, performance, efficiency, accessibility, user experience, maintainability, compatibility, and privacy without freezing one implementation.",
+      "severity": "error",
+      "category": "quality",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "QUALITY_DIMENSIONS = (",
+        "regex": false
+      },
+      "fingerprint": "change-quality-targets-required",
+      "approved_utc": "2026-07-29T16:45:00+00:00",
+      "active": true
+    },
+    {
+      "id": "three-core-evidence-interface-required",
+      "title": "Proof evidence remains directly inspectable",
+      "invariant": "The Prove core must expose recorded Gate, execution-history, and failure evidence without requiring users to browse internal directories.",
+      "severity": "error",
+      "category": "evidence",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/evidence.py",
+        "emotivus_forge/cli.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/evidence.py",
+        "text": "def list_evidence(",
+        "regex": false
+      },
+      "fingerprint": "three-core-evidence-interface-required",
+      "approved_utc": "2026-07-29T16:45:00+00:00",
+      "active": true
+    },
+    {
+      "id": "workspace-provenance-required",
+      "title": "Workspace provenance must be classified before broad work",
+      "invariant": "Forge must distinguish complete development source from deployment artifacts, internal deliveries, reconstructed trees, and incomplete workspaces before claiming development or release readiness.",
+      "severity": "error",
+      "category": "provenance",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/provenance.py",
+        "emotivus_forge/init_project.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/provenance.py",
+        "text": "def classify_workspace(",
+        "regex": false
+      },
+      "fingerprint": "workspace-provenance-required",
+      "approved_utc": "2026-07-29T20:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "scope-authority-required",
+      "title": "Active scope controls what work may begin",
+      "invariant": "Forge must not convert acceptance, deployment, or operations-only authority into unapproved feature development.",
+      "severity": "error",
+      "category": "project-truth",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/provenance.py",
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "active scope does not approve coding work",
+        "regex": false
+      },
+      "fingerprint": "scope-authority-required",
+      "approved_utc": "2026-07-29T20:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "runtime-parity-required",
+      "title": "Runtime requirements remain explicit",
+      "invariant": "Forge must infer or record runtime requirements and distinguish useful static verification from release-equivalent environment parity.",
+      "severity": "error",
+      "category": "environment",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/provenance.py",
+        "emotivus_forge/audit.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/provenance.py",
+        "text": "def infer_runtime_requirements(",
+        "regex": false
+      },
+      "fingerprint": "runtime-parity-required",
+      "approved_utc": "2026-07-29T20:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "evidence-boundary-required",
+      "title": "Source and package evidence remain distinct",
+      "invariant": "Forge must label whether evidence measured the development source tree, a runtime environment, or the deployment package.",
+      "severity": "error",
+      "category": "evidence",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runner.py",
+        "emotivus_forge/package.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/package.py",
+        "text": "\"evidence_boundary\": \"deployment-package\"",
+        "regex": false
+      },
+      "fingerprint": "evidence-boundary-required",
+      "approved_utc": "2026-07-29T20:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "project-identity-required",
+      "title": "Portable state must preserve project identity",
+      "invariant": "Forge State and project configuration must use persistent identity so unrelated projects or undeclared forks cannot silently adopt each other\u2019s assurance history.",
+      "severity": "error",
+      "category": "continuity",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/config.py",
+        "emotivus_forge/state.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/state.py",
+        "text": "\"project_identity\": config.get(\"project\", {}).get(\"identity\", \"\")",
+        "regex": false
+      },
+      "fingerprint": "project-identity-required",
+      "approved_utc": "2026-07-29T20:00:00+00:00",
+      "active": true
+    },
+    {
+      "id": "pivot-modes-and-checkpoint-required",
+      "title": "Pivot retains deliberate modes and a pre-change checkpoint",
+      "invariant": "Major changes must preserve a pre-pivot assurance checkpoint and move through explicit controlled-change modes.",
+      "severity": "blocker",
+      "category": "pivot",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "project-intelligence"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "PROJECT_MODES = {\"exploration\", \"transition\", \"development\", \"release\"}",
+        "regex": false
+      },
+      "fingerprint": "pivot-modes-and-checkpoint-required",
+      "approved_utc": "2026-07-29T21:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T21:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2 approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "pivot-contract-lifecycle-required",
+      "title": "Pivot applies full obligation lifecycle",
+      "invariant": "Forge Pivot must retain, revise, suspend, replace, retire, restore, or supersede obligations instead of freezing obsolete implementation.",
+      "severity": "blocker",
+      "category": "pivot",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "project-intelligence"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "\"restore\", \"supersede\"",
+        "regex": false
+      },
+      "fingerprint": "pivot-contract-lifecycle-required",
+      "approved_utc": "2026-07-29T21:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T21:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2 approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "quality-evidence-coverage-required",
+      "title": "Change plans retain quality evidence coverage",
+      "invariant": "Change plans must expose evidence or explicit gaps for security, reliability, performance, efficiency, accessibility, user experience, maintainability, compatibility, and privacy.",
+      "severity": "error",
+      "category": "quality",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "project-intelligence"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "def _quality_coverage(",
+        "regex": false
+      },
+      "fingerprint": "quality-evidence-coverage-required",
+      "approved_utc": "2026-07-29T21:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T21:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2 approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "versioned-standards-ledger-required",
+      "title": "Standards remain versioned Ledger authority",
+      "invariant": "Plans must be able to reference standards with source, version, authority, scope, and replacement history rather than relying on frozen generic claims.",
+      "severity": "error",
+      "category": "standards",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "project-intelligence"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "\"replacement_history\"",
+        "regex": false
+      },
+      "fingerprint": "versioned-standards-ledger-required",
+      "approved_utc": "2026-07-29T21:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T21:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2 approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "pivot-completion-boundary-required",
+      "title": "Pivot completion remains evidence-bound",
+      "invariant": "A Pivot cannot complete without final dispositions, lifecycle reasons, known successors, replacement evidence, quality coverage, release mode, and release proof.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/project_memory.py"
+      ],
+      "affected_subsystems": [
+        "project-intelligence"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/project_memory.py",
+        "text": "pivot completion boundary is not satisfied",
+        "regex": false
+      },
+      "fingerprint": "pivot-completion-boundary-required",
+      "approved_utc": "2026-07-29T21:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T21:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2 approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "lab-content-readiness-required",
+      "title": "Lab readiness requires response evidence",
+      "invariant": "Forge Lab must support positive and negative response assertions and must not equate HTTP status with application readiness.",
+      "severity": "blocker",
+      "category": "lab",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/lab.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/lab.py",
+        "text": "\"body_not_contains\"",
+        "regex": false
+      },
+      "fingerprint": "lab-content-readiness-required",
+      "approved_utc": "2026-07-29T22:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T22:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2.1 field hotfix approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "lab-evidence-strength-policy-required",
+      "title": "Gate Labs require sufficient evidence strength",
+      "invariant": "Required Section and Release Labs must reject evidence weaker than the configured minimum and missing prerequisites must be BLOCKED.",
+      "severity": "blocker",
+      "category": "evidence",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/lab.py",
+        "emotivus_forge/config.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/lab.py",
+        "text": "Lab evidence is too weak for the",
+        "regex": false
+      },
+      "fingerprint": "lab-evidence-strength-policy-required",
+      "approved_utc": "2026-07-29T22:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T22:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2.1 field hotfix approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "internal-delivery-cache-hygiene-required",
+      "title": "Internal deliveries exclude runtime caches",
+      "invariant": "Internal working deliveries and Lab workspaces must exclude Python bytecode and runtime cache directories.",
+      "severity": "error",
+      "category": "packaging",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/delivery.py",
+        "emotivus_forge/lab.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/delivery.py",
+        "text": "\"__pycache__\", \"*.pyc\", \"*.pyo\"",
+        "regex": false
+      },
+      "fingerprint": "internal-delivery-cache-hygiene-required",
+      "approved_utc": "2026-07-29T22:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T22:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.2.1 field hotfix approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "runtime-contract-engine-required",
+      "title": "Runtime contracts remain executable evidence",
+      "invariant": "Forge must preserve project-owned runtime contracts, current contract fingerprints, evidence boundaries, and Gate integration.",
+      "severity": "blocker",
+      "category": "evidence",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runtime_contracts.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runtime_contracts.py",
+        "text": "\"FORGE_RUNTIME_CONTRACT_FINGERPRINT\"",
+        "regex": false
+      },
+      "fingerprint": "runtime-contract-engine-required",
+      "approved_utc": "2026-07-29T23:30:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T23:30:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3 runtime proof approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "authorization-management-proof-required",
+      "title": "Authorization proof includes privilege administration",
+      "invariant": "Authorization proof must include explicit actor/action/target cases for privilege management and session revocation, not only static role membership.",
+      "severity": "blocker",
+      "category": "security",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runtime_contracts.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runtime_contracts.py",
+        "text": "\"privilege-management\"",
+        "regex": false
+      },
+      "fingerprint": "authorization-management-proof-required",
+      "approved_utc": "2026-07-29T23:30:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T23:30:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3 runtime proof approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "migration-predecessor-proof-required",
+      "title": "Migration proof detects excluded predecessors",
+      "invariant": "A shipped migration may not depend on schema state supplied only by an excluded predecessor without explicit target-state evidence.",
+      "severity": "blocker",
+      "category": "database",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runtime_contracts.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runtime_contracts.py",
+        "text": "\"migration.excluded-predecessor\"",
+        "regex": false
+      },
+      "fingerprint": "migration-predecessor-proof-required",
+      "approved_utc": "2026-07-29T23:30:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T23:30:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3 runtime proof approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "runtime-evidence-redaction-required",
+      "title": "Runtime evidence is redacted before persistence",
+      "invariant": "Runtime contract reports must redact credential-like values before storing structured or raw output.",
+      "severity": "blocker",
+      "category": "security",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runtime_contracts.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runtime_contracts.py",
+        "text": "\"[REDACTED]\"",
+        "regex": false
+      },
+      "fingerprint": "runtime-evidence-redaction-required",
+      "approved_utc": "2026-07-29T23:30:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T23:30:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3 runtime proof approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "impact-axes-separation-required",
+      "title": "Impact keeps certification and runtime reach distinct",
+      "invariant": "Impact must distinguish certification impact, dependency reach, and unknown runtime branch reach unless stronger evidence exists.",
+      "severity": "error",
+      "category": "graph",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/graph.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/graph.py",
+        "text": "\"impact_axes\"",
+        "regex": false
+      },
+      "fingerprint": "impact-axes-separation-required",
+      "approved_utc": "2026-07-29T23:30:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-29T23:30:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3 runtime proof approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "release-proof-module-required",
+      "title": "Release Proof remains a first-class model",
+      "invariant": "Forge must retain a joined release-proof model rather than equating check execution with claim coverage.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/release_proof.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/release_proof.py",
+        "text": "def build_release_proof(",
+        "regex": false
+      },
+      "fingerprint": "release-proof-module-required",
+      "approved_utc": "2026-07-30T05:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-30T05:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3.1 recovery architecture approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "release-gate-coverage-join-required",
+      "title": "Release Gate enforces scoped coverage",
+      "invariant": "A release profile must invoke Release Proof after declared checks and package dry-run.",
+      "severity": "blocker",
+      "category": "release",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/runner.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/runner.py",
+        "text": "Check(\"release.proof\", \"release-coverage\"",
+        "regex": false
+      },
+      "fingerprint": "release-gate-coverage-join-required",
+      "approved_utc": "2026-07-30T05:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-30T05:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3.1 recovery architecture approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "forge-observed-generator-required",
+      "title": "Generated handoff artifacts require observed execution",
+      "invariant": "Forge must execute and fingerprint declared generators rather than trusting generator prose.",
+      "severity": "blocker",
+      "category": "delivery",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/release_proof.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/release_proof.py",
+        "text": "artifact lacks a successful Forge-observed generator execution",
+        "regex": false
+      },
+      "fingerprint": "forge-observed-generator-required",
+      "approved_utc": "2026-07-30T05:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-30T05:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3.1 recovery architecture approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "final-owner-bundle-required",
+      "title": "Final handoff is verified as one object",
+      "invariant": "Forge must build and validate final owner-facing bundle membership and hash.",
+      "severity": "blocker",
+      "category": "delivery",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/release_proof.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/release_proof.py",
+        "text": "def build_final_delivery(",
+        "regex": false
+      },
+      "fingerprint": "final-owner-bundle-required",
+      "approved_utc": "2026-07-30T05:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-30T05:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3.1 recovery architecture approved"
+        }
+      ],
+      "superseded_by": ""
+    },
+    {
+      "id": "typed-current-evidence-required",
+      "title": "Coverage counts only current typed evidence",
+      "invariant": "Surface coverage must require PASS evidence bound to the current source and producer fingerprint.",
+      "severity": "blocker",
+      "category": "evidence",
+      "scope": "project",
+      "affected_paths": [
+        "emotivus_forge/release_proof.py"
+      ],
+      "affected_subsystems": [
+        "core"
+      ],
+      "gate": "quick",
+      "regression": {
+        "kind": "file_contains",
+        "path": "emotivus_forge/release_proof.py",
+        "text": "recurring_execution_covered",
+        "regex": false
+      },
+      "fingerprint": "typed-current-evidence-required",
+      "approved_utc": "2026-07-30T05:00:00+00:00",
+      "status": "active",
+      "active": true,
+      "lifecycle": [
+        {
+          "utc": "2026-07-30T05:00:00+00:00",
+          "from": "proposed",
+          "to": "active",
+          "reason": "v1.3.1 recovery architecture approved"
+        }
+      ],
+      "superseded_by": ""
+    }
+  ]
+}

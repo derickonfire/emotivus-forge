@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "relationship_set_id": "public-runtime",
+  "title": "Confirmed public runtime relationships",
+  "authority": "owner",
+  "rationale": "The project owner confirms the minimum relationships needed to expand change impact without building a speculative whole-project graph.",
+  "evidence_paths": [
+    "DECISIONS.md"
+  ],
+  "relationships": [
+    {
+      "id": "public-entrypoint-include",
+      "kind": "entrypoint-include",
+      "source": {
+        "role": "public entry point",
+        "path_patterns": [
+          "public/index.php"
+        ]
+      },
+      "targets": [
+        {
+          "role": "runtime include",
+          "path_patterns": [
+            "includes/bootstrap.php"
+          ]
+        }
+      ],
+      "propagation": "bidirectional",
+      "affected_surfaces": [
+        "public-runtime"
+      ],
+      "impact_dimensions": [
+        "runtime-contract"
+      ],
+      "required_checks": [
+        "native.public-render"
+      ],
+      "reason": "The public entry point requires the bootstrap include at runtime."
+    },
+    {
+      "id": "editor-behavior-binding",
+      "kind": "behavior-binding",
+      "source": {
+        "role": "editor markup",
+        "path_patterns": [
+          "admin/editor.html"
+        ]
+      },
+      "targets": [
+        {
+          "role": "editor behavior",
+          "path_patterns": [
+            "assets/editor.js"
+          ]
+        }
+      ],
+      "propagation": "bidirectional",
+      "affected_surfaces": [
+        "admin-editor"
+      ],
+      "required_checks": [
+        "native.editor-behavior"
+      ],
+      "reason": "The editor controls require their registered client behavior."
+    }
+  ],
+  "verification_boundary": "Forge traverses only these owner-confirmed relationships and does not prove runtime execution, complete dependency coverage, behavioral correctness, or unrecorded dynamic links."
+}

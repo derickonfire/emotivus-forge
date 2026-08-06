@@ -1,0 +1,9 @@
+# Emotivus Forge source-package exclusions
+__pycache__/
+*.pyc
+.release-checks/
+.forge/
+deploy/
+.git/
+self/.runtime/
+exchange/

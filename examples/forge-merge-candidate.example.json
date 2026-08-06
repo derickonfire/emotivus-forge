@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "candidate_id": "example-parallel-branch",
+  "authority": "owner",
+  "declared_version": "1.2.0",
+  "build_id": "parallel-build-b",
+  "parent": {
+    "path": "packages/parallel-parent.zip",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "bytes": 120000,
+    "declared_version": "1.1.0",
+    "build_id": "parallel-parent-a",
+    "strip_prefix": "Example-Product",
+    "tree_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "tree_file_count": 40
+  },
+  "incoming": {
+    "path": "packages/parallel-result.zip",
+    "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "bytes": 130000,
+    "declared_version": "1.2.0",
+    "build_id": "parallel-build-b",
+    "strip_prefix": "Example-Product",
+    "tree_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "tree_file_count": 47
+  },
+  "truth_boundary": "The candidate record proves exact ancestry claims and path differences but does not apply, merge, approve, or authorize the branch."
+}
