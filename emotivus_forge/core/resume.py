@@ -12,6 +12,7 @@ from .capabilities import capability_summary
 from .changes import change_count_phrase, detect_changes, snapshot_fingerprint
 from .evidence_validity import effective_native_validity
 from .forward_compat import preserved_unknown_fields
+from .lifecycle import lifecycle_transition_summary
 from .decision_forks import analyze_decision_forks
 from .guardrails import guardrail_summary
 from .ledger_assertions import ledger_assertion_summary
@@ -403,6 +404,14 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
             f"validity: {effective_native_validity(native_evidence, snapshot_fingerprint(changes['current_snapshot']))}; "
             f"truth: {native_evidence.get('truth', {}).get('truth_state', 'UNKNOWN') if isinstance(native_evidence.get('truth'), dict) else 'UNKNOWN'}; "
             f"tier: {native_evidence.get('verification_tier', 'sandbox')}."
+        )
+    lifecycle_transitions = lifecycle_transition_summary(project_root)
+    if lifecycle_transitions.get("transition_count"):
+        by_disposition = lifecycle_transitions.get("by_disposition", {})
+        parts = ", ".join(f"{count} {name}" for name, count in sorted(by_disposition.items()))
+        lines.append(
+            f"- **Component lifecycle:** {lifecycle_transitions['transition_count']} recorded transition(s) ({parts}). "
+            "Auditable evolution record; does not prove successors are correct or invariants preserved."
         )
     preserved_unknown = preserved_unknown_fields(settings)
     if preserved_unknown:

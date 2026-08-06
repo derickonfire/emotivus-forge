@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.568  
+**Current release:** 0.569  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -19,7 +19,7 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`). G3 has a certifiable foundation and then remains continuous by design.
 
-## Reconciliation (as of 0.568)
+## Reconciliation (as of 0.569)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -27,7 +27,7 @@ per-chunk sequence in the table below. The chunk table is kept as the original
 structural plan and history; the sections here reconcile it with what actually shipped
 and sequence the near term.
 
-### Delivered 0.556 → 0.568 (evidence-driven)
+### Delivered 0.556 → 0.569 (evidence-driven)
 
 | Release | Goal | Delivered |
 |---|---|---|
@@ -42,6 +42,7 @@ and sequence the near term.
 | 0.566 | G1 | **Goal 1 certified COMPLETE**: every completion-rule dimension adversarially verified; public package self-tests 533/55 twice from its own bytes (`planning/G1-COMPLETION.md`). |
 | 0.567 | G3 | **Forward-compatible migration**: unknown top-level and nested fields preserved verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`). |
 | 0.568 | G3 | **Vendor-neutral continuity (P4-01)**: the continuity kernel rejects model-instruction and vendor-identity keys on digest intake — it stores project truth, not model instructions. |
+| 0.569 | G3 | **Component lifecycle records (P4-03)**: retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event; a replace names its successor and preserved invariants. |
 
 **Standing:** **G1 is COMPLETE (0.566)** — see `planning/G1-COMPLETION.md`. The dominant G1 finding ("self-consistent ≠ authentic") is closed for
 **both authority and provenance** (single- and multi-party) — an imported package can
@@ -51,10 +52,11 @@ consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **G3 continuity kernel (in progress)** — forward-compatible migration (0.567) and
-   vendor-neutral continuity (0.568, P4-01) landed. Next: explicit retain/fold/freeze/
-   retire/replace lifecycle records (P4-03), and a future-model replacement trial against
-   an older sealed package (P4-06) toward certifying the G3 foundation.
+1. **G3 continuity kernel (in progress)** — forward-compatible migration (0.567),
+   vendor-neutral continuity (0.568, P4-01), and explicit component lifecycle records
+   (0.569, P4-03) landed. Next: verify preserved invariants on a replace (P4-05), and a
+   future-model replacement round trip against an older sealed package (P4-06/07) toward
+   certifying the G3 foundation (P4-08).
 2. **G2 close-out** — cross-vendor cold-entry/exit handoff acceptance, toward declaring G2 COMPLETE.
 
 *Done: the full recorded G1 observed-miss backlog — native-evidence source binding (0.565),

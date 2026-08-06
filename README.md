@@ -1,21 +1,21 @@
-# Emotivus Forge 0.568
+# Emotivus Forge 0.569
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.568 changes
+## What 0.569 changes
 
-- Continues **Goal-3 cross-model evolution**: the continuity kernel is now explicitly **vendor-neutral** (P4-01). A distilled session digest stores *project truth*, not model instructions — so on intake Forge rejects model-instruction and vendor-identity keys (`system_prompt`, `system`, `instructions`, `model_instructions`, `persona`, `prompt(s)`, `tools`, `functions`, `model`, `provider`, `vendor`) alongside the raw-transcript keys it already refused.
-- Effect: a **different model can consume the continuity** without inheriting another model's directives. The digest's truth boundary now states the vendor-neutrality guarantee explicitly.
-- Structural (key-based) screening, consistent with the existing raw-transcript guard — no heuristic content scanning, so no false positives on legitimate objectives or decisions.
+- Continues **Goal-3 cross-model evolution** with **explicit component lifecycle records** (P4-03). A project authority (or a newer model acting for one) records that a named component was **retained, folded, frozen, retired, or replaced** — a `fold`/`replace` names its successor, and a `replace` records the **invariants that must be preserved** — via `forge adopt --record-lifecycle-transition <contract>`.
+- Each transition is an **append-only, chain-verified ledger event** (`component-lifecycle-transition`), so component evolution across model generations is **auditable**. The Resume Brief surfaces a `Component lifecycle:` line summarizing recorded transitions (only when present).
+- This delivers the "replace an obsolete component" half of the G3 completion rule with an auditable record; whether the declared invariants were actually preserved is a separate verification step (kept honest in the truth boundary).
 - Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
-- Certified suite grows additively to **537 focused public-neutral regressions across 56 deterministic isolated modules**.
+- Certified suite grows additively to **542 focused public-neutral regressions across 57 deterministic isolated modules** (new `test_lifecycle_transition`).
 - Preserves the four-page website design and active generator.
 
 ## Current verification target
 
-**537/537** focused public-neutral regressions across 56 deterministic isolated modules.
+**542/542** focused public-neutral regressions across 57 deterministic isolated modules.
 
 This count is package metadata until exact final-byte certification completes. It is not release authorization or proof of efficacy.
 

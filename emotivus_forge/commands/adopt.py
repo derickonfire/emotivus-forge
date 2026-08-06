@@ -434,6 +434,13 @@ def handle_adopt(args: Any, parser: Any, forge_root: Path) -> int:
             except ValueError as exc:
                 parser.error(str(exc))
             actions.append("artifact provenance")
+        if getattr(args, "record_lifecycle_transition", ""):
+            from ..core.lifecycle import record_lifecycle_transition
+            try:
+                record_lifecycle_transition(root, forge_root, args.record_lifecycle_transition)
+            except ValueError as exc:
+                parser.error(str(exc))
+            actions.append("component lifecycle transition")
         if args.retire_artifact_provenance:
             try:
                 retire_artifact_provenance(root, args.retire_artifact_provenance, args.artifact_provenance_reason, authority=args.artifact_provenance_authority)

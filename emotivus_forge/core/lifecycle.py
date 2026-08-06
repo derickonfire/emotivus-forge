@@ -4,12 +4,91 @@ import hashlib
 from pathlib import Path
 from typing import Any
 
+from .ledger import read_events, record_event
+
 LIFECYCLE_STATES = (
     "proposed",
     "active",
     "approval-required",
     "retired",
 )
+
+# G3 · P4-03 — explicit component-evolution dispositions. A newer model may retain,
+# fold, freeze, retire, or replace a component; the transition is recorded as an
+# append-only, chain-verified ledger event so the evolution is auditable.
+LIFECYCLE_DISPOSITIONS = ("retain", "fold", "freeze", "retire", "replace")
+
+LIFECYCLE_TRANSITION_TRUTH_BOUNDARY = (
+    "A lifecycle transition records a project-authority-declared disposition of a named "
+    "component (retain, fold, freeze, retire, replace) with a durable reason. It is an "
+    "auditable evolution record, not proof that the successor is correct or that the "
+    "declared invariants were actually preserved — invariant verification is a separate step."
+)
+
+
+def record_lifecycle_transition(project_root: Path, forge_root: Path, source_path: str | Path) -> dict[str, Any]:
+    """Record an explicit, auditable component lifecycle transition to the ledger."""
+    from .lineage import _load_contract  # lazy: lineage imports lifecycle
+
+    raw, _source, relative = _load_contract(project_root, forge_root, source_path, "Lifecycle transition contract")
+    if raw.get("schema") != 1:
+        raise ValueError("Lifecycle transition contract must use schema 1.")
+    component = str(raw.get("component", "")).strip()
+    if not component:
+        raise ValueError("Lifecycle transition requires a component.")
+    disposition = str(raw.get("disposition", "")).strip().lower()
+    if disposition not in LIFECYCLE_DISPOSITIONS:
+        raise ValueError(f"Lifecycle disposition must be one of: {', '.join(LIFECYCLE_DISPOSITIONS)}.")
+    authority = str(raw.get("authority", "owner")).strip() or "owner"
+    reason = str(raw.get("reason", "")).strip()
+    if not reason:
+        raise ValueError("Lifecycle transition requires a durable reason.")
+    successor = str(raw.get("successor", "")).strip()
+    if disposition in {"fold", "replace"} and not successor:
+        raise ValueError(f"A '{disposition}' transition requires a successor component.")
+    preserved = [str(item).strip() for item in raw.get("preserved_invariants", []) if str(item).strip()] if isinstance(raw.get("preserved_invariants"), list) else []
+    if disposition == "replace" and not preserved:
+        raise ValueError("A 'replace' transition must record the invariants that must be preserved.")
+    event = record_event(project_root, "component-lifecycle-transition", {
+        "component": component,
+        "disposition": disposition,
+        "authority": authority,
+        "reason": reason[:500],
+        "successor": successor,
+        "preserved_invariants": preserved[:50],
+        "contract_source": relative,
+    }, source=authority)
+    return {
+        "schema": 1,
+        "component": component,
+        "disposition": disposition,
+        "successor": successor,
+        "event_id": str(event.get("id", "")),
+        "truth_boundary": LIFECYCLE_TRANSITION_TRUTH_BOUNDARY,
+    }
+
+
+def lifecycle_transition_summary(project_root: Path) -> dict[str, Any]:
+    """Audit view of recorded component lifecycle transitions, latest per component."""
+    by_disposition: dict[str, int] = {}
+    components: dict[str, dict[str, Any]] = {}
+    events = read_events(project_root, kinds={"component-lifecycle-transition"})
+    for event in events:
+        payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
+        disposition = str(payload.get("disposition", ""))
+        by_disposition[disposition] = by_disposition.get(disposition, 0) + 1
+        components[str(payload.get("component", ""))] = {
+            "disposition": disposition,
+            "successor": str(payload.get("successor", "")),
+            "utc": str(event.get("utc", "")),
+        }
+    return {
+        "schema": 1,
+        "transition_count": len(events),
+        "by_disposition": by_disposition,
+        "components": components,
+        "truth_boundary": LIFECYCLE_TRANSITION_TRUTH_BOUNDARY,
+    }
 
 
 def fingerprint_bound_status(

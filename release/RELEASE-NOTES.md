@@ -1,4 +1,9 @@
-# Emotivus Forge 0.568 — Goal 3: Vendor-Neutral Continuity (P4-01)
+# Emotivus Forge 0.569 — Goal 3: Component Lifecycle Records (P4-03)
+
+- A project authority can record that a named component was retained, folded, frozen, retired, or replaced, via `forge adopt --record-lifecycle-transition`. A fold/replace names its successor; a replace records the invariants that must be preserved.
+- Each transition is an append-only, chain-verified ledger event, so component evolution across model generations is auditable (surfaced in the Resume Brief). Whether invariants were actually preserved is a separate verification step.
+- Goal 1 remains certified COMPLETE; release authorization remains false. Certified suite grows additively to 542 across 57 modules.
+
 
 - The continuity kernel is now explicitly vendor-neutral: a distilled session digest that carries model-instruction or vendor-identity keys (system prompts, instructions, model/provider names) is rejected on intake, so it stores project truth rather than model instructions.
 - A different model can consume the continuity without inheriting another model's directives. Structural key-based screening; no heuristic content scanning.

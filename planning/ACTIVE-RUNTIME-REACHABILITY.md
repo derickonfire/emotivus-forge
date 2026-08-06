@@ -1,19 +1,19 @@
 # Active Runtime Reachability and Classification
 
-**Forge version:** 0.566  
+**Forge version:** 0.568  
 **Modules inventoried:** 90  
 **Statically reachable:** 90  
 **Statically unreachable:** 0  
-**Report SHA-256:** `a8ea8ea3d24cd0e991ab8d248b15a8cb556f80f282dcaa62d48382269fdcb7af`
+**Report SHA-256:** `fe9655b8fe040199f8c267de24c105219880ee61f23f1714962f52f1d34ca4d8`
 
 ## Command observations
 
 | Command | Trace | Exit | Modules observed |
 |---|---|---:|---:|
-| `run` | OBSERVED | 0 | 62 |
+| `run` | OBSERVED | 0 | 63 |
 | `help` | OBSERVED | 0 | 7 |
-| `adopt` | OBSERVED | 0 | 57 |
-| `resume` | OBSERVED | 0 | 52 |
+| `adopt` | OBSERVED | 0 | 58 |
+| `resume` | OBSERVED | 0 | 53 |
 | `check` | OBSERVED | 1 | 40 |
 | `ship` | OBSERVED | 1 | 34 |
 
@@ -62,7 +62,7 @@
 | `emotivus_forge.core.knowledge` | active | adopt, run | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.ledger` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.ledger_assertions` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
-| `emotivus_forge.core.lifecycle` | active | — | G3_EVOLUTION_KERNEL |
+| `emotivus_forge.core.lifecycle` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.lineage` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.migration_identity` | active | adopt, check, resume, run, ship | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.models` | active | adopt, check, resume, run, ship | SHARED_RUNTIME |
@@ -154,7 +154,7 @@
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 118 | yes | yes | KEEP | TESTING |
+| `tests/` | 120 | yes | yes | KEEP | TESTING |
 | `tools/` | 20 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification

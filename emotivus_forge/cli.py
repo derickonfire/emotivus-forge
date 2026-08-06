@@ -123,6 +123,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_adopt.add_argument("--check-qualification-reason", default="", help="Required reason for --retire-check-qualification")
     p_adopt.add_argument("--check-qualification-authority", default="owner", help="Authority retiring the check qualification")
     p_adopt.add_argument("--record-artifact-provenance", action="append", default=[], metavar="PATH", help="Record project-owned artifact generator, input, baseline, and digest provenance; repeat as needed")
+    p_adopt.add_argument("--record-lifecycle-transition", default="", metavar="PATH", help="Record an explicit, auditable component lifecycle transition (retain/fold/freeze/retire/replace) from a project-owned contract; a fold/replace names the successor, a replace records the invariants to preserve")
     p_adopt.add_argument("--retire-artifact-provenance", default="", metavar="PROVENANCE_ID", help="Retire a recorded artifact provenance contract")
     p_adopt.add_argument("--artifact-provenance-reason", default="", help="Required reason for --retire-artifact-provenance")
     p_adopt.add_argument("--artifact-provenance-authority", default="owner", help="Authority retiring the artifact provenance record")

@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.569 — Goal 3: Component Lifecycle Records (P4-03)
+
+- Continues the cross-model evolution kernel with **explicit component lifecycle records**. A project authority (or a newer model acting for one) records that a named component was **retained, folded, frozen, retired, or replaced** via `forge adopt --record-lifecycle-transition <contract>`. A `fold`/`replace` names its successor; a `replace` records the **invariants that must be preserved**.
+- Each transition is an **append-only, chain-verified ledger event** (`component-lifecycle-transition`), so component evolution across model generations is **auditable**. `lifecycle_transition_summary` gives an audit view, surfaced conditionally in the Resume Brief.
+- Delivers the "replace an obsolete component" half of the G3 completion rule with an auditable record. Whether the declared invariants were actually preserved is a separate verification step (kept honest in the truth boundary).
+- Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
+- Certified suite grows additively to **542 focused public-neutral regressions across 57 deterministic isolated modules** (new `lifecycle` transition functions + `test_lifecycle_transition`). P2-01 schema chunk stays active.
+
 ## 0.568 — Goal 3: Vendor-Neutral Continuity (P4-01)
 
 - Continues the cross-model evolution kernel. The continuity kernel is now explicitly **vendor-neutral**: a distilled session digest stores project truth, not model instructions. On intake, `load_session_context` rejects model-instruction and vendor-identity keys — `system_prompt`, `system`, `instructions`, `model_instructions`, `persona`, `prompt`, `prompts`, `tools`, `functions`, `model`, `provider`, `vendor` — alongside the raw-transcript keys it already refused.
