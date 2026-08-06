@@ -2,17 +2,20 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import signal
 import subprocess
 import time
 import sys
 import tempfile
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from ..core.capabilities import public_capability_catalog
 from ..core.guidance import build_help, render_help
 from ..core.notices import render_notice
+from ..core.paths import redirect_state
 from ..core.resume import build_resume
 from ..core.startup import render_run, resolve_project_root, run_forge
 from ..core.storage import state_transaction
@@ -21,9 +24,53 @@ from .common import append_notice, print_json
 from .noticing import attach_resume_notice, attach_run_notice
 
 
+READ_ONLY_LIMITATIONS = (
+    "Read-only consultation: Forge read the project bytes but wrote nothing into the "
+    "project tree; any transient state was written to a disposable directory outside it "
+    "and discarded. Advisory only, never acceptance evidence."
+)
+
+
+@contextmanager
+def _read_only_state(target: Path) -> Iterator[None]:
+    """Run a command against ``target`` while writing no state into its tree.
+
+    The project's existing ``.forge`` (if any) is mirrored into a disposable
+    directory outside both repositories so continuity/stale-evidence/handoff reads
+    stay faithful, then every state write is redirected there and discarded.
+    """
+    target = target.resolve()
+    tmp = Path(tempfile.mkdtemp(prefix="forge-readonly-"))
+    try:
+        source_state = target / ".forge"
+        alt_state = tmp / ".forge"
+        if source_state.is_dir():
+            shutil.copytree(source_state, alt_state)
+        with redirect_state(target, alt_state):
+            yield
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def _mark_read_only(payload: Any) -> None:
+    """Annotate the payload so the read-only, advisory-only bound is explicit."""
+    if isinstance(payload, dict):
+        payload["read_only"] = True
+        payload["read_only_limitations"] = READ_ONLY_LIMITATIONS
+
+
 def handle_run(args: Any, forge_root: Path) -> int:
     requested = Path(args.project)
     resolved, entries = resolve_project_root(requested, forge_root)
+    if getattr(args, "read_only", False):
+        # Bounded read-only consultation: no lock, no state written into the project.
+        project = resolved if entries else requested
+        with _read_only_state(project.resolve()):
+            payload = run_forge(project, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""))
+            attach_run_notice(payload, project if entries else None)
+        _mark_read_only(payload)
+        print_json(payload) if args.json else print(append_notice(render_run(payload), payload), end="")
+        return 1 if payload.get("status") in {"BLOCKED", "NEEDS_PROJECT"} else 0
     if not entries:
         payload = run_forge(requested, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""))
     else:
@@ -44,9 +91,15 @@ def handle_help(args: Any, forge_root: Path) -> int:
 
 def handle_resume(args: Any, forge_root: Path) -> int:
     root = Path(args.project).resolve()
-    with state_transaction(root):
-        payload = build_resume(root, forge_root, budget=args.budget, query=getattr(args, "query", ""))
-        attach_resume_notice(payload, root)
+    if getattr(args, "read_only", False):
+        with _read_only_state(root):
+            payload = build_resume(root, forge_root, budget=args.budget, query=getattr(args, "query", ""))
+            attach_resume_notice(payload, root)
+        _mark_read_only(payload)
+    else:
+        with state_transaction(root):
+            payload = build_resume(root, forge_root, budget=args.budget, query=getattr(args, "query", ""))
+            attach_resume_notice(payload, root)
     print_json(payload) if args.json else print(append_notice(payload["markdown"], payload), end="")
     return 0
 

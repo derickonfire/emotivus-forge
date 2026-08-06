@@ -1,4 +1,9 @@
-# Emotivus Forge 0.560 — Honest Corroboration Boundary
+# Emotivus Forge 0.561 — Read-Only Consultation Mode
+
+- Adds a genuine read-only consultation mode: `run --read-only` and `resume --read-only`. Forge reads the project's real bytes and prior state but writes nothing into the project tree — its state directory is redirected to a disposable location outside the project (and both repositories) and discarded after the run.
+- Unblocks bounded consultation on a shared or third-party repository without adopting it or leaving a `.forge` footprint. The read-only payload is labeled advisory (`read_only: true`) and is never acceptance evidence.
+- Certified suite grows additively to 529 focused public-neutral regressions across 55 deterministic isolated modules; release authorization remains false.
+
 
 - A 15-agent adversarial re-test confirmed all five 0.559 Goal-1 fixes held. The dominant deeper-gate finding: Forge's ledger corroboration chain is unkeyed and travels inside the project's .forge, so a fabricated-consistent chain can spoof in-instance authorship.
 - 0.560 responds honestly and bounded: authority-baseline corroboration and the TRUTH_BOUNDARY now state the ledger chain is unkeyed/self-consistent (not a signature, not proof of in-instance authorship); the over-claim "in this instance's ledger" is removed.

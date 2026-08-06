@@ -1,7 +1,7 @@
 {
   "forge_schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.560",
+  "version": "0.561",
   "updated": "2026-08-05",
   "state": "development-candidate",
   "edition": "development",
@@ -355,13 +355,13 @@
   ],
   "regressions": {
     "progressive_core": 517,
-    "total_declared": 523,
+    "total_declared": 529,
     "legacy_archived": 184
   },
   "self_tests": [
     {
       "id": "active-core-suite",
-      "description": "523 focused public-neutral regressions executed across 54 deterministic isolated modules, including active runtime reachability, top-level path classification, the four-page website contract, authority-gated aggregate Check truth, browser evidence, exact package identity, portable continuity, external evidence review, release proof, and retained historical compatibility.",
+      "description": "529 focused public-neutral regressions executed across 55 deterministic isolated modules, including active runtime reachability, top-level path classification, the four-page website contract, authority-gated aggregate Check truth, browser evidence, exact package identity, portable continuity, external evidence review, release proof, and retained historical compatibility.",
       "module": "isolated-unittest-modules",
       "path": "tests/",
       "command": "python3 forge.py self-test"
@@ -412,7 +412,7 @@
     "canonical_source": "FORGE-PRODUCT.json",
     "release_bound": true
   },
-  "display_version": "0.560",
+  "display_version": "0.561",
   "active_advanced_capabilities": [
     "doctor-diagnose-only-explicit",
     "runtime-proof-content-aware-http-explicit"

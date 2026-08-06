@@ -1,21 +1,20 @@
-# Emotivus Forge 0.560
+# Emotivus Forge 0.561
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.560 changes
+## What 0.561 changes
 
-- Follows a 15-agent adversarial re-test of 0.559: the five Goal-1 fixes all **held** (bounded change confidence, inferred-vs-confirmed labels, scoped secrets claim, gated run commands, and imported-baseline corroboration for ordinary tamper cases).
-- **Honest corroboration boundary:** authority-baseline corroboration now states plainly that its ledger chain is **unkeyed and travels inside the project's `.forge`** — a match proves the chain is internally consistent and an authorization event exists, but is **not** a signature and cannot prove the authorization was performed by this instance rather than imported or fabricated by anyone able to write `.forge`. The prior over-claim "in this instance's ledger" is removed.
-- **Ship bounded phrasing:** the Ship `candidate-unchanged` claim carries the size+mtime-only, not-byte-verified qualifier when un-hashed files exist, instead of a bare "no project paths changed."
-- Full **cryptographic instance-binding** (a per-instance key an imported package cannot reproduce) is recorded as the flagship next increment in `planning/G1-RETEST-0559-OBSERVED-MISSES.md`, along with provenance corroboration parity, migration downgrade, same-version-collision-by-bytes, and native-evidence source binding.
-- Keeps the certified suite at 523 focused public-neutral regressions across 54 deterministic isolated modules; regression extended in place, none added or removed.
+- Adds a genuine **read-only consultation mode** — `run --read-only` and `resume --read-only`. Forge reads the project's real bytes and prior state but **writes nothing into the project tree**: its state directory is redirected to a disposable location outside the project (and both repositories), used for the run, then discarded. Verified by a regression that hashes the whole target tree before and after and asserts it is byte-identical.
+- This is what lets Forge advise on a **shared or third-party repository** under a strict read-only bound — consult without adopting, and leave no `.forge` footprint. The read-only payload is explicitly labeled advisory (`read_only: true` with stated limitations) and is never acceptance evidence.
+- Implemented as one clean interception: a state-directory redirect (`state_root` / `redirect_state`) that every ForgePaths-based read/write and the storage lock resolve through; normal (persisting) operation is unchanged.
+- Grows the certified suite additively to **529 focused public-neutral regressions across 55 deterministic isolated modules** (a new read-only-consult module; six regressions added).
 - Preserves the four-page website design and active generator.
 
 ## Current verification target
 
-**523/523** focused public-neutral regressions across 54 deterministic isolated modules.
+**529/529** focused public-neutral regressions across 55 deterministic isolated modules.
 
 This count is package metadata until exact final-byte certification completes. It is not release authorization or proof of efficacy.
 

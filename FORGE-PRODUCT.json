@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.560",
+  "version": "0.561",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.560 follows a 15-agent adversarial re-test that confirmed the 0.559 Goal-1 fixes held: it makes authority-baseline corroboration state honestly that its ledger chain is unkeyed and travels with the project (internal consistency, not cryptographic proof of in-instance authorship), and carries the bounded, size+mtime-only qualifier into the Ship candidate-unchanged claim. Full cryptographic instance-binding is recorded as the next increment.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.561 adds a genuine read-only consultation mode (`run --read-only`, `resume --read-only`): Forge reads a project's real bytes and prior state but writes nothing into the project tree — any transient state is redirected to a disposable directory outside it and discarded. This lets Forge advise on a shared or third-party repository under a strict read-only bound without adopting it or leaving a .forge footprint.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.560",
+  "display_version": "0.561",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

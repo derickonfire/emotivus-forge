@@ -42,6 +42,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("project", nargs="?", default=".")
     p_run.add_argument("--budget", choices=("compact", "standard", "full"), default="compact")
     p_run.add_argument("--session-context", default="", metavar="PATH", help="Transient distilled current-session digest; raw transcripts are rejected and not retained")
+    p_run.add_argument("--read-only", action="store_true", help="Bounded read-only consultation: read the project bytes but write NOTHING into the project tree (transient state goes to a disposable directory outside it)")
     p_run.add_argument("--json", action="store_true")
 
     p_help = sub.add_parser("help", help="Inspect Forge state and recommend the exact next command")
@@ -177,6 +178,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_resume.add_argument("project", nargs="?", default=".")
     p_resume.add_argument("--budget", choices=("compact", "standard", "full"), default="compact")
     p_resume.add_argument("--query", default="", help="Optional bounded continuity retrieval focus; does not alter authority or project state")
+    p_resume.add_argument("--read-only", action="store_true", help="Bounded read-only consultation: read the project bytes but write NOTHING into the project tree (transient state goes to a disposable directory outside it)")
     p_resume.add_argument("--json", action="store_true")
 
     p_check = sub.add_parser("check", help="Run explicit changed-file scoped checks")

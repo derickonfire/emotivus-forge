@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.561 — Read-Only Consultation Mode
+
+- Adds a genuine **read-only consultation mode**: `run --read-only` and `resume --read-only`. Forge reads the project's real bytes and prior `.forge` state but **writes nothing into the project tree** — the state directory is redirected to a disposable location outside the project (and both repositories) via a single interception (`state_root` / `redirect_state` in `core/paths.py`, honored by every ForgePaths-based read/write and the storage lock), used for the run, then discarded.
+- This unblocks bounded, agreement-compliant consultation on a **shared or third-party repository** (e.g. a multi-model collaboration): Forge can advise on continuity, changed-surface scope, stale evidence, or handoff completeness without adopting the project or leaving a `.forge` footprint. The read-only payload is labeled advisory (`read_only: true` with stated limitations) and is never acceptance evidence.
+- Normal (persisting) operation is unchanged; `--read-only` simply skips the lock and redirects state.
+- Proven by a whole-tree byte-identity regression: the target tree (fresh and adopted) is hashed before and after and asserted identical.
+- Certified suite grows **additively** to **529 focused public-neutral regressions across 55 deterministic isolated modules** (new `test_read_only_consult` module; six regressions). Release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.560 — Honest Corroboration Boundary
 
 - A 15-agent adversarial re-test confirmed all five 0.559 Goal-1 fixes **held** (bounded change confidence, inferred-vs-confirmed labels, scoped secrets claim, gated run commands, and imported-baseline corroboration for ordinary tamper/mismatch cases). Three deeper-gate lenses also held (stale-evidence-as-current, NOT_RUN native gate → PASS, snapshot-fingerprint collision).

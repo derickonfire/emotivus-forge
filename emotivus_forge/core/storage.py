@@ -10,6 +10,7 @@ from typing import Any, Iterator
 from .common import ForgeStateError, read_jsonl_report, utc_now
 from .models import CoreSettings, StateIntegrityIssue
 from .ledger import verify_ledger_chain
+from .paths import state_root
 from .paths import ForgePaths
 
 _JSON_STATE_NAMES = ("passport.json", "authorities.json", "native-tools.json", "settings.json", "state.json")
@@ -86,7 +87,7 @@ class ProjectLock:
     """Cross-platform best-effort exclusive lock with no persistent ninth state file."""
 
     def __init__(self, project_root: Path, *, timeout_seconds: float = 10.0) -> None:
-        self.root = project_root.resolve() / ".forge"
+        self.root = state_root(project_root)
         self.path = self.root / ".operation.lock"
         self.timeout_seconds = max(0.1, float(timeout_seconds))
         self.handle: Any = None
@@ -240,7 +241,7 @@ def require_healthy_state(project_root: Path) -> dict[str, Any]:
     report = inspect_state_integrity(project_root)
     if report.get("status") == "BLOCKED":
         first = report.get("issues", [{}])[0]
-        path = project_root.resolve() / ".forge" / str(first.get("path", "state"))
+        path = state_root(project_root) / str(first.get("path", "state"))
         line = first.get("line")
         raise ForgeStateError(path, str(first.get("message", "Forge state is corrupted")), line=int(line) if isinstance(line, int) else None)
     return report

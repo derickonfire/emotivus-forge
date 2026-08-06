@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.560  
+**Current build:** 0.561  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -19,13 +19,14 @@
 - P1-04: **COMPLETE** — duplicated deterministic plumbing and kit hygiene consolidated into the shared truth boundary; distinct-by-design services kept.
 - P1-05: **COMPLETE** — capability-activation ceremony reduced to a minimal enabled/reason/scope/evidence record with every safety gate preserved.
 - P1-06: **COMPLETE** — fold-orphaned imports retired; no whole module orphaned; no ceremony-requirement test existed.
-- P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 523/54 from its own bytes).
+- P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 529/55 from its own bytes).
 - Core-reduction phase (P1) complete.
 - 0.556: **Context digest delivered** — first-contact orientation, secret screening at orientation, measured token economics, lazy governance, orient-before-blocking (Goal 1 redirection per the observed miss; spectrum usefulness 1.83 → 2.67/5, blocked-before-value 11/12 → 0/12).
 - 0.557: **Project-intelligence completeness** — objective detection on explicit headings, deterministic architecture/layout summary, broader secret coverage (Stripe/generic live tokens, extensionless credential files).
 - 0.558: **Ecosystem resolver** — ranked primary-language dispatch (Python/Node/Go/Rust/Java/Ruby/PHP + static/notebook), pom.xml/gemspec/<title> identity, broader test discovery and .npmrc secret coverage (validated on spectrum batch-1 failures).
 - 0.559: **Provable-truth core (G1)** — imported-baseline corroboration vs the chain-verified ledger, bounded change confidence on un-hashed files, and inferred-vs-confirmed labeling of derived identity/objective/description/commands; driven by the 15-agent G1 field test (`planning/G1-FIELD-TEST-OBSERVED-MISSES.md`).
 - 0.560: **Honest corroboration boundary** — after a 15-agent re-test confirmed the 0.559 fixes held, corroboration + TRUTH_BOUNDARY now state the ledger chain is unkeyed/self-consistent (not cryptographic in-instance proof), and Ship candidate-unchanged carries the bounded qualifier; cryptographic instance-binding recorded as the next increment (`planning/G1-RETEST-0559-OBSERVED-MISSES.md`).
+- 0.561: **Read-only consultation mode** — `run --read-only` / `resume --read-only` read the project's real bytes and prior state but write nothing into the project tree (state redirected to a disposable directory outside it and discarded); lets Forge advise on a shared/third-party repo without adopting it. Suite grows additively to 529/55.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**
