@@ -19,7 +19,55 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundation and then remains continuous by design.
 
+## Reconciliation (as of 0.563)
+
+Development from 0.556 onward became **evidence-driven** — adversarial field tests and
+a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
+per-chunk sequence in the table below. The chunk table is kept as the original
+structural plan and history; the sections here reconcile it with what actually shipped
+and sequence the near term.
+
+### Delivered 0.556 → 0.563 (evidence-driven)
+
+| Release | Goal | Delivered |
+|---|---|---|
+| 0.556–0.558 | G1/G2 | Project-intelligence orientation; ranked ecosystem/framework resolver; content-scanned secrets; broader identity/test coverage. |
+| 0.559 | G1 | Provable-truth core: imported-baseline corroboration vs a chain-verified event; bounded change confidence on un-hashed files; inferred-vs-confirmed labeling. |
+| 0.560 | G1 | Honest corroboration boundary: the unkeyed-chain residual named in `TRUTH_BOUNDARY`; Ship bounded phrasing. |
+| 0.561 | G2/G3 | **Read-only consultation mode** (`run --read-only`, `resume --read-only`) — advise on a shared/third-party repo with zero footprint. |
+| 0.562 | G1/G3 | **Cryptographic instance-binding** (single instance): signed authority events; tri-state corroboration; only instance-bound is release-eligible. Closes the "self-consistent ≠ authentic" residual for authority. |
+| 0.563 | G1/G3 | **Multi-party instance-binding**: an owner-provisioned shared collaboration secret makes authorizations mutually instance-bound across enrolled parties. The enforceable basis for cross-model trust. |
+
+**Standing:** the dominant G1 finding ("self-consistent ≠ authentic") is closed for
+**authority** (single- and multi-party). G3 has real substance now — cross-vendor trust
+is enforceable, not just prose. G2 gained the zero-footprint consult path.
+
+### Near-term sequenced queue (supersedes the stale per-chunk targets)
+
+1. **Provenance parity** — apply instance-binding to `artifact-provenance-recorded`, the
+   one place the "self-consistent ≠ authentic" class still lives (a `CONFIRMED` provenance
+   claim without corroboration). Recorded in `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
+2. **Remaining observed misses** — native-evidence source/tree-fingerprint binding (DG-8);
+   same-version-collision-keyed-off-bytes (DG-7).
+3. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
+   (original P2-08/09), now that authority and provenance binding are in place.
+4. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
+   preserves unknown fields (original P4-01/02), building on instance-binding.
+
+### LineCheck collaboration (live validation track)
+
+Forge participates in the Claude × ChatGPT collaboration on `linecheck-acceptance` under a
+strict, advisory, read-only bound (see `exchange/`). This is Forge's real-world G2/G3
+validation: read-only consult (0.561) and instance-binding (0.562–0.563) are the two
+capabilities it contributes. No Forge code is required for the collaboration to proceed on
+what has shipped; the collaboration is a source of observed misses, not a driver of scope
+creep. Forge never gates LineCheck.
+
 ## Roadmap chunks
+
+*Original structural plan and history. The per-chunk **Target** versions predate the
+evidence-driven track above and are no longer the live sequence; see the near-term queue.*
+
 
 | Chunk | Phase | Timebox | Target | Status | Work |
 |---|---|---:|---|---|---|
