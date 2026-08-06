@@ -157,7 +157,143 @@ def _read_project_name(project_root: Path) -> tuple[str, str]:
                     value = stripped.split("=", 1)[1].strip().strip("'\"")
                     if value:
                         return value, filename
+    gomod = project_root / "go.mod"
+    if gomod.is_file() and gomod.stat().st_size <= 256_000:
+        try:
+            for line in gomod.read_text(encoding="utf-8").splitlines():
+                stripped = line.strip()
+                if stripped.startswith("module "):
+                    module = stripped[len("module "):].strip()
+                    if module:
+                        return module.rsplit("/", 1)[-1], "go.mod"
+        except (OSError, UnicodeDecodeError):
+            pass
+    cargo = project_root / "Cargo.toml"
+    if cargo.is_file() and cargo.stat().st_size <= 256_000:
+        try:
+            in_package = False
+            for line in cargo.read_text(encoding="utf-8").splitlines():
+                stripped = line.strip()
+                if stripped.startswith("["):
+                    in_package = stripped == "[package]"
+                elif in_package and stripped.startswith("name") and "=" in stripped:
+                    value = stripped.split("=", 1)[1].strip().strip("'\"")
+                    if value:
+                        return value, "Cargo.toml"
+        except (OSError, UnicodeDecodeError):
+            pass
+    for readme in ("README.md", "README.rst", "README.txt", "readme.md", "Readme.md"):
+        path = project_root / readme
+        if not path.is_file() or path.stat().st_size > 256_000:
+            continue
+        try:
+            for line in path.read_text(encoding="utf-8").splitlines():
+                stripped = line.strip()
+                if stripped.startswith("# "):
+                    title = stripped[2:].strip()
+                    if title:
+                        return title, "README"
+                if stripped and not stripped.startswith("#"):
+                    break
+        except (OSError, UnicodeDecodeError):
+            continue
     return project_root.name or "Unnamed project", "directory"
+
+
+def _read_bounded(path: Path, limit: int = 256_000) -> str:
+    try:
+        if path.is_file() and path.stat().st_size <= limit:
+            return path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        pass
+    return ""
+
+
+def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str, Any]:
+    """Best-effort, bounded first-contact orientation read from the project itself:
+    a one-line description, entry points, and run/test commands. Deterministic."""
+    names = {Path(relative).name for relative in relatives}
+    description = ""
+    for readme in ("README.md", "README.rst", "README.txt", "readme.md", "Readme.md"):
+        if readme not in names:
+            continue
+        for line in _read_bounded(project_root / readme).splitlines():
+            raw = line.strip()
+            # Skip headings, badges, HTML, tables, rules — take the first real prose line.
+            if not raw or raw.startswith(("#", "![", "[!", "<", ">", "---", "===", "```", "|", "=", "*", "-")):
+                continue
+            if len(raw) > 2:
+                description = raw[:200]
+                break
+        if description:
+            break
+
+    def manifest_description(filename: str, key: str) -> str:
+        text = _read_bounded(project_root / filename)
+        if not text:
+            return ""
+        try:
+            data = json.loads(text)
+            value = data.get(key, "")
+            return str(value).strip()[:200] if isinstance(value, str) else ""
+        except (json.JSONDecodeError, ValueError):
+            return ""
+
+    if not description and "package.json" in names:
+        description = manifest_description("package.json", "description")
+    if not description and "composer.json" in names:
+        description = manifest_description("composer.json", "description")
+
+    entry_points: list[str] = []
+    run = ""
+    test = ""
+    if "package.json" in names:
+        text = _read_bounded(project_root / "package.json")
+        try:
+            data = json.loads(text) if text else {}
+            scripts = data.get("scripts", {}) if isinstance(data.get("scripts"), dict) else {}
+        except (json.JSONDecodeError, ValueError):
+            scripts = {}
+        for candidate in ("index.js", "index.ts", "server.js", "app.js", "main.js", "src/index.js", "src/index.ts"):
+            if Path(candidate).name in names:
+                entry_points.append(candidate)
+        if "dev" in scripts:
+            run = "npm run dev"
+        elif "start" in scripts:
+            run = "npm start"
+        if "test" in scripts:
+            test = "npm test"
+    elif "pyproject.toml" in names or "setup.py" in names or "requirements.txt" in names or any(n.endswith(".py") for n in names):
+        for candidate in ("manage.py", "app.py", "main.py", "wsgi.py", "asgi.py", "__main__.py"):
+            if candidate in names:
+                entry_points.append(candidate)
+        if "manage.py" in names:
+            run = "python manage.py runserver"
+        elif "app.py" in names:
+            run = "python app.py"
+        elif "main.py" in names:
+            run = "python main.py"
+        if any(n.startswith("test_") or n.endswith("_test.py") for n in names) or "tox.ini" in names or "pytest.ini" in names or "conftest.py" in names:
+            test = "pytest"
+    elif "go.mod" in names:
+        run = "go run ./..."
+        test = "go test ./..."
+        entry_points = [n for n in sorted(names) if n == "main.go"]
+    elif "Cargo.toml" in names:
+        run = "cargo run"
+        test = "cargo test"
+    elif "composer.json" in names:
+        run = "php artisan serve" if "artisan" in names else "php -S localhost:8000"
+        test = "vendor/bin/phpunit" if "phpunit.xml" in names or "phpunit.xml.dist" in names else ""
+    elif any(n.endswith(".html") for n in names) and "package.json" not in names:
+        run = "open index.html (static site — no build)" if "index.html" in names else ""
+
+    return {
+        "description": description,
+        "entry_points": entry_points[:6],
+        "run": run,
+        "test": test,
+    }
 
 
 def build_snapshot(
@@ -269,6 +405,7 @@ def orient_project(project_root: Path, forge_root: Path, settings: dict[str, Any
             "source_root": ".",
         },
         "stacks": sorted(stacks),
+        "brief": derive_orientation(project_root, snapshot["files"].keys()),
         "code_orientation": orient_code(project_root, snapshot["files"].keys(), ledger_events),
         "snapshot": snapshot,
         "safety": safety,

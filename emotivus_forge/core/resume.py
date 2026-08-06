@@ -302,6 +302,18 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
         f"- **Relationship-aware scope:** {relationships.get('impact_count', 0)} confirmed impact(s); related paths are context only and are not counted as changed.",
         f"- **Continuity confidence:** {continuity.get('confidence', 'unknown')}",
     ])
+    _brief = passport.get("orientation", {}).get("brief", {}) if isinstance(passport.get("orientation"), dict) else {}
+    _orient_lines: list[str] = []
+    if _brief.get("description"):
+        _orient_lines.append(f"- **What it is:** {_brief['description']}")
+    if _brief.get("entry_points"):
+        _orient_lines.append(f"- **Entry points:** {', '.join(_brief['entry_points'])}")
+    if _brief.get("run"):
+        _orient_lines.append(f"- **Run:** `{_brief['run']}`")
+    if _brief.get("test"):
+        _orient_lines.append(f"- **Test:** `{_brief['test']}`")
+    if _orient_lines:
+        lines.extend(["", "### First-contact orientation", *_orient_lines])
     delta_rows: list[tuple[str, dict[str, Any]]] = []
     for delta_kind in ("added", "changed", "stale"):
         rows = knowledge_delta.get(delta_kind, []) if isinstance(knowledge_delta.get(delta_kind), list) else []
@@ -581,6 +593,7 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
         f"- **Current continuity reuse:** {cached_records_reused} cached project record(s) and {evidence_records_reused} current evidence record(s) reused.",
         f"- **Exact provider-token sessions supplied:** {exact_telemetry.get('session_count', 0)}; total {exact_telemetry.get('total_tokens', 0)} token(s).",
         "- **Current Resume token estimate:** __RESUME_TOKEN_ESTIMATE__ (heuristic characters/4; not provider measurement and not savings).",
+        "- **Context economics:** this Resume is ~__RESUME_TOKEN_ESTIMATE__ tokens; reading the whole project is ~__REPO_TOKENS__ tokens (__CONTEXT_RATIO__). A trustworthy Resume is only a saving when the model can act from it without re-reading the tree.",
         f"- **Controlled benchmark:** {break_even.get('status', 'insufficient-pairs')} — {break_even.get('conclusion', 'Break-even is not established.')}",
         f"- **Suitability:** {telemetry.get('suitability', 'Break-even remains unknown.')}" if isinstance(telemetry, dict) else "- **Suitability:** Break-even remains unknown.",
         "",
@@ -599,8 +612,21 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     ])
     markdown = "\n".join(lines).rstrip() + "\n"
     placeholder = "__RESUME_TOKEN_ESTIMATE__"
-    heuristic_tokens = max(1, round(len(markdown.replace(placeholder, "0")) / 4))
-    markdown = markdown.replace(placeholder, str(heuristic_tokens))
+    repo_tokens = max(1, round(int(changes.get("current_snapshot", {}).get("total_bytes", 0)) / 4))
+    measured = markdown.replace(placeholder, "0").replace("__REPO_TOKENS__", "0").replace("__CONTEXT_RATIO__", "0")
+    heuristic_tokens = max(1, round(len(measured) / 4))
+    ratio = repo_tokens / heuristic_tokens
+    if ratio >= 1.5:
+        ratio_text = f"~{ratio:.0f}x lighter than reading the whole project"
+    elif ratio >= 0.7:
+        ratio_text = "about the same size as reading the project"
+    else:
+        ratio_text = f"~{1 / ratio:.0f}x heavier than the project itself — Forge overhead exceeds the read at this size"
+    markdown = (
+        markdown.replace(placeholder, str(heuristic_tokens))
+        .replace("__REPO_TOKENS__", f"{repo_tokens:,}")
+        .replace("__CONTEXT_RATIO__", ratio_text)
+    )
     telemetry = summarize_telemetry(
         project_root,
         current_resume_characters=len(markdown),

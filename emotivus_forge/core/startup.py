@@ -106,6 +106,8 @@ def run_forge(project_root: Path, forge_root: Path, *, budget: str = "compact", 
         "action": action,
         "project_root": str(project_root),
         "project": passport.get("identity", {}),
+        "orientation": passport.get("orientation", {}).get("brief", {}) if isinstance(passport.get("orientation"), dict) else {},
+        "screening": passport.get("safety", {}).get("tiered_screening", {}) if isinstance(passport.get("safety"), dict) else {},
         "objective": resume.get("objective", {}),
         "next_action": resume.get("next_action", {}),
         "changes": resume.get("changes", {}),
@@ -176,6 +178,22 @@ def render_run(payload: dict[str, Any]) -> str:
         f"Passport: {payload.get('passport', '')}",
         f"Resume: {payload.get('resume', '')}",
     ]
+    orient = payload.get("orientation", {}) if isinstance(payload.get("orientation"), dict) else {}
+    screening = payload.get("screening", {}) if isinstance(payload.get("screening"), dict) else {}
+    orient_extra: list[str] = []
+    if orient.get("description"):
+        orient_extra.append(f"What it is: {orient['description']}")
+    run_test = " · ".join(part for part in [
+        f"run `{orient['run']}`" if orient.get("run") else "",
+        f"test `{orient['test']}`" if orient.get("test") else "",
+    ] if part)
+    if run_test:
+        orient_extra.append(f"How to run: {run_test}")
+    if screening.get("blocked"):
+        counts = screening.get("counts", {}) if isinstance(screening.get("counts"), dict) else {}
+        orient_extra.append(f"Secrets: {counts.get('BLOCK', 0)} BLOCK · {counts.get('REVIEW', 0)} REVIEW — hardcoded secret(s) detected in source")
+    if orient_extra:
+        lines[2:2] = orient_extra
     brief = payload.get("forge_brief", {}) if isinstance(payload.get("forge_brief"), dict) else {}
     if brief:
         evidence = brief.get("evidence", {}) if isinstance(brief.get("evidence"), dict) else {}
