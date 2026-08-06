@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.567  
+**Current build:** 0.568  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -33,6 +33,7 @@
 - 0.565: **Native-evidence source binding (DG-8)** — imported native evidence is bound to the source tree fingerprint at capture and reported stale once the tree changes. Completes the recorded G1 observed-miss backlog; DG-7 was reviewed and did not survive verification (no speculative fix). Suite grows additively to 533/55.
 - 0.566: **Goal 1 (Provable Project Truth) certified COMPLETE** — every completion-rule dimension verified by a passing adversarial regression (`planning/G1-COMPLETION.md`); public package passes 533/55 twice deterministically from its own extracted bytes. G2/G3 remain open. Suite unchanged at 533/55.
 - 0.567: **G3 forward-compat (begun)** — forward migration guaranteed to preserve unknown top-level and nested fields verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`, surfaced in the Resume Brief) rather than interpreting or dropping them. First piece of the cross-model evolution kernel. Suite grows additively to 536/56.
+- 0.568: **G3 vendor-neutral continuity (P4-01)** — the continuity kernel rejects model-instruction and vendor-identity keys on digest intake, so it stores project truth rather than model instructions; a different model can consume the continuity without inheriting another model's directives. Suite grows additively to 537/56.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

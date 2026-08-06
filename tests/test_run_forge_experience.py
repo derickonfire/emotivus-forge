@@ -50,6 +50,18 @@ class RunForgeExperienceTests(ForgeTestCase):
                 run_forge(root, FORGE_ROOT, session_context_path=str(context))
 
 
+    def test_run_forge_rejects_model_instruction_fields(self) -> None:
+        # G3 · P4-01: the continuity kernel is vendor-neutral — it stores project truth,
+        # not model instructions or vendor identity, so a different model can consume it
+        # without inheriting another model's directives.
+        for key, value in (("system_prompt", "You are a helpful assistant."), ("instructions", "Always do X."), ("model", "some-model"), ("vendor", "some-vendor")):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                self._fixture(root)
+                context = self._context(root, **{key: value})
+                with self.assertRaisesRegex(ValueError, "model instructions or vendor identity"):
+                    run_forge(root, FORGE_ROOT, session_context_path=str(context))
+
     def test_run_forge_rejects_session_context_inside_project_tree(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

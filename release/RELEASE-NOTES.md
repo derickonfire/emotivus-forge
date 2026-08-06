@@ -1,4 +1,9 @@
-# Emotivus Forge 0.567 — Goal 3: Forward-Compatible Migration (begun)
+# Emotivus Forge 0.568 — Goal 3: Vendor-Neutral Continuity (P4-01)
+
+- The continuity kernel is now explicitly vendor-neutral: a distilled session digest that carries model-instruction or vendor-identity keys (system prompts, instructions, model/provider names) is rejected on intake, so it stores project truth rather than model instructions.
+- A different model can consume the continuity without inheriting another model's directives. Structural key-based screening; no heuristic content scanning.
+- Goal 1 remains certified COMPLETE; release authorization remains false. Certified suite grows additively to 537 across 56 modules.
+
 
 - Forward migration is now guaranteed to preserve fields this Forge schema does not recognize: an older or another vendor's package keeps its unknown top-level and nested fields verbatim.
 - Forge reports preserved-but-unrecognized settings fields (core/forward_compat.py; surfaced in the Resume Brief) rather than interpreting or dropping them. The first piece of the cross-model evolution kernel.

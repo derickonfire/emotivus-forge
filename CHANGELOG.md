@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.568 — Goal 3: Vendor-Neutral Continuity (P4-01)
+
+- Continues the cross-model evolution kernel. The continuity kernel is now explicitly **vendor-neutral**: a distilled session digest stores project truth, not model instructions. On intake, `load_session_context` rejects model-instruction and vendor-identity keys — `system_prompt`, `system`, `instructions`, `model_instructions`, `persona`, `prompt`, `prompts`, `tools`, `functions`, `model`, `provider`, `vendor` — alongside the raw-transcript keys it already refused.
+- Effect: a **different model can consume the continuity** without inheriting another model's directives. The digest truth boundary states the guarantee explicitly.
+- Structural (key-based) screening, consistent with the existing raw-transcript guard — no heuristic content scanning, so legitimate objectives and decisions are never false-flagged.
+- Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
+- Certified suite grows additively to **537 focused public-neutral regressions across 56 deterministic isolated modules**. P2-01 schema chunk stays active.
+
 ## 0.567 — Goal 3: Forward-Compatible Migration (begun)
 
 - Opens the cross-model evolution kernel. Forward migration is now **guaranteed to preserve fields this Forge schema does not recognize** — an older or another vendor's package keeps its unknown top-level **and** nested fields verbatim through migration, locked by a regression so a future refactor cannot silently start dropping data.

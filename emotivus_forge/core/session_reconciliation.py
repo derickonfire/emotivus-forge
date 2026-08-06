@@ -10,6 +10,14 @@ from .common import utc_now
 
 SESSION_CONTEXT_SCHEMA = "forge-session-context/1"
 _FORBIDDEN_RAW_KEYS = {"messages", "transcript", "conversation", "chat", "raw_chat", "raw_transcript"}
+# G3 · P4-01 — vendor-neutral continuity. The continuity kernel stores project TRUTH,
+# not model instructions. These keys carry model-specific instructions or vendor
+# identity that would make the stored digest non-neutral (a different model must be
+# able to consume the continuity without inheriting another model's directives).
+_FORBIDDEN_INSTRUCTION_KEYS = {
+    "system_prompt", "system", "instructions", "model_instructions", "persona",
+    "prompt", "prompts", "tools", "functions", "model", "provider", "vendor",
+}
 _TOKEN = re.compile(r"[A-Za-z0-9_.:/-]+")
 
 
@@ -48,6 +56,12 @@ def load_session_context(path: str | Path, *, project_root: Path | None = None) 
             "Session context must be a distilled digest, not a raw conversation archive; "
             f"remove: {', '.join(forbidden)}."
         )
+    instruction_keys = sorted(key for key in payload if key.lower() in _FORBIDDEN_INSTRUCTION_KEYS)
+    if instruction_keys:
+        raise ValueError(
+            "Session context stores project truth, not model instructions or vendor identity; "
+            f"the continuity kernel is vendor-neutral, so remove: {', '.join(instruction_keys)}."
+        )
     objective = str(payload.get("objective", "")).strip()
     requests = _strings(payload.get("requested_items", []))
     claims = _strings(payload.get("ai_claims", []))
@@ -71,7 +85,9 @@ def load_session_context(path: str | Path, *, project_root: Path | None = None) 
         "raw_conversation_retained": False,
         "truth_boundary": (
             "This is a transient distilled session digest supplied by the active AI or operator. "
-            "Forge does not authenticate the digest, retain raw chat, or treat AI claims as project facts."
+            "Forge does not authenticate the digest, retain raw chat, or treat AI claims as project facts. "
+            "The continuity kernel is vendor-neutral: it stores project truth, not model instructions or "
+            "vendor identity, so a different model can consume it without inheriting another model's directives."
         ),
     }
 
