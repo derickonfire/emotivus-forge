@@ -202,7 +202,10 @@ def _screen_selection(root: Path, files: list[Path], raw_policy: dict[str, Any])
     for path in files:
         relative = path.relative_to(root).as_posix()
         relatives.append(relative)
-        if path.suffix.lower() not in secret_screening.TEXT_SUFFIXES:
+        if (
+            path.suffix.lower() not in secret_screening.TEXT_SUFFIXES
+            and path.name.lower() not in secret_screening.EXTENSIONLESS_CREDENTIAL_NAMES
+        ):
             continue
         try:
             if path.stat().st_size > 5_000_000:

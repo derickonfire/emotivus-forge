@@ -3,10 +3,11 @@ from __future__ import annotations
 import fnmatch
 import json
 import os
-from pathlib import Path
+from collections import Counter
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterator
 
-from .code_orientation import orient_code
+from .code_orientation import orient_code, SOURCE_SUFFIXES
 from .common import normalize_rel, sha256_file
 from .confidentiality_boundary import classify_confidentiality_boundaries
 from .paths import IGNORED_DIR_NAMES
@@ -209,6 +210,50 @@ def _read_bounded(path: Path, limit: int = 256_000) -> str:
     return ""
 
 
+def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
+    """Deterministic project-layout summary from relative paths alone: top-level
+    directories, file-type histogram, primary source dir, packages, and tests."""
+    top_dirs: "Counter[str]" = Counter()
+    ext_hist: "Counter[str]" = Counter()
+    dir_src: "Counter[str]" = Counter()
+    packages: set[str] = set()
+    test_dirs: "Counter[str]" = Counter()
+    test_count = 0
+    for rel in rel_set:
+        parts = PurePosixPath(rel).parts
+        if not parts:
+            continue
+        top = parts[0] if len(parts) > 1 else "(root)"
+        top_dirs[top] += 1
+        suffix = PurePosixPath(rel).suffix.lower()
+        if suffix:
+            ext_hist[suffix] += 1
+        is_test = parts[-1].startswith("test_") or parts[-1].endswith("_test.py") or "tests" in parts or "test" in parts
+        if is_test:
+            test_count += 1
+            test_dirs[parts[0]] += 1
+        elif suffix in SOURCE_SUFFIXES:
+            # Exclude tests so the primary source dir reflects real source, not tests.
+            dir_src["/".join(parts[:-1]) or "."] += 1
+        if parts[-1] == "__init__.py":
+            packages.add("/".join(parts[:-1]))
+
+    def ranked(counter: "Counter[str]") -> list[tuple[str, int]]:
+        return sorted(counter.items(), key=lambda item: (-item[1], item[0]))
+
+    src_ranked = ranked(dir_src)
+    src_exts = Counter({ext: n for ext, n in ext_hist.items() if ext in SOURCE_SUFFIXES})
+    return {
+        "top_level": [{"dir": name, "files": n} for name, n in ranked(top_dirs)[:8]],
+        "file_types": [{"ext": ext, "count": n} for ext, n in ranked(ext_hist)[:6]],
+        "primary_source_dir": src_ranked[0][0] if src_ranked else "",
+        "primary_language": ranked(src_exts)[0][0] if src_exts else "",
+        "packages": sorted(packages)[:6],
+        "tests": {"dir": ranked(test_dirs)[0][0] if test_dirs else "", "count": test_count},
+        "file_count": len(rel_set),
+    }
+
+
 def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str, Any]:
     """Best-effort, bounded first-contact orientation read from the project itself:
     a one-line description, entry points, and run/test commands. Deterministic."""
@@ -310,6 +355,7 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
         "entry_points": entry_points[:6],
         "run": run,
         "test": test,
+        "layout": _derive_layout(rel_set),
     }
 
 

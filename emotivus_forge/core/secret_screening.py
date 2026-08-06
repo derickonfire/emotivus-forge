@@ -41,6 +41,11 @@ TEXT_SUFFIXES = {
     ".env", ".ini", ".cfg", ".conf", ".properties",
 }
 
+# Credential-bearing files that carry no text suffix but must still be content-scanned.
+EXTENSIONLESS_CREDENTIAL_NAMES = frozenset({
+    "aws-credentials", "credentials", ".netrc", "netrc", ".pgpass", "pgpass", ".htpasswd",
+})
+
 PLACEHOLDER_MARKERS = (
     "example", "changeme", "change-me", "your_", "your-", "placeholder", "dummy",
     "test-only", "synthetic", "not-a-real", "not_a_real", "fake-", "fake_", "${",
@@ -97,6 +102,18 @@ _RULES: tuple[tuple[str, str, re.Pattern[str], str], ...] = (
         BLOCK,
         re.compile(r"PuTTY-User-Key-File-\d"),
         "PuTTY private key file header",
+    ),
+    (
+        "stripe-live-secret-key",
+        BLOCK,
+        re.compile(r"\b[sr]k_live_[0-9A-Za-z]{10,}\b"),
+        "Stripe live secret key shape",
+    ),
+    (
+        "generic-live-token",
+        BLOCK,
+        re.compile(r"\btok_live_[0-9A-Za-z]{10,}\b"),
+        "generic live-credential token shape",
     ),
     (
         "bearer-token-literal",

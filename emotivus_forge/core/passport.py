@@ -72,6 +72,12 @@ def build_passport(project_root: Path, forge_root: Path, *, name: str = "", refr
             "files_observed": orientation["snapshot"]["file_count"],
             "scan_truncated": orientation["snapshot"]["truncated"],
             "brief": orientation.get("brief", {}),
+            "layout": orientation.get("brief", {}).get("layout", {}),
+            "central_files": [
+                row.get("path", "")
+                for row in orientation.get("code_orientation", {}).get("centrality", {}).get("top", [])[:3]
+                if isinstance(row, dict) and row.get("path")
+            ],
             "status": "observed",
         },
         "objective": objective,

@@ -23,6 +23,7 @@ ARCHIVE_PARTS = {"archive", "archived", "old", "legacy", "deprecated", "history"
 OBJECTIVE_HEADINGS = (
     "the next action", "next action", "exact next action", "current objective",
     "active objective", "current work", "do next", "immediate next development sequence",
+    "objective", "goal",
 )
 GOVERNANCE_HEADINGS = (
     "governance", "owner decisions", "decision authority", "rules", "constraints",
@@ -206,7 +207,7 @@ def _extract_objective(text: str) -> tuple[str, str, str]:
                 quality, _ = _objective_quality(action)
                 return action, title, "explicit" if quality == "accepted" else quality
     for line in text.splitlines():
-        match = re.match(r"^\s*(?:next action|current objective|do next)\s*:\s*(.+)$", line, re.I)
+        match = re.match(r"^\s*\**\s*(?:objective|goal|next action|current objective|do next)\s*:\s*\**\s*(.+?)\s*\**\s*$", line, re.I)
         if match and match.group(1).strip():
             action = match.group(1).strip()[:600]
             quality, _ = _objective_quality(action)

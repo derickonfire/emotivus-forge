@@ -115,7 +115,10 @@ def classify_confidentiality_boundaries(
             break
         if relative in scanned or _sensitive_path(relative):
             continue
-        if Path(relative).suffix.lower() not in secret_screening.TEXT_SUFFIXES:
+        if (
+            Path(relative).suffix.lower() not in secret_screening.TEXT_SUFFIXES
+            and Path(relative).name.lower() not in secret_screening.EXTENSIONLESS_CREDENTIAL_NAMES
+        ):
             continue
         path = project_root / relative
         try:

@@ -189,6 +189,14 @@ def render_run(payload: dict[str, Any]) -> str:
     ] if part)
     if run_test:
         orient_extra.append(f"How to run: {run_test}")
+    layout = orient.get("layout", {}) if isinstance(orient.get("layout"), dict) else {}
+    if layout.get("top_level"):
+        dir_summary = " ".join(f"{row['dir']}/({row['files']})" for row in layout["top_level"][:4])
+        source = layout.get("primary_source_dir", "")
+        tests = layout.get("tests", {}) if isinstance(layout.get("tests"), dict) else {}
+        orient_extra.append(
+            f"Layout: {dir_summary}" + (f" · source {source} · tests {tests.get('count', 0)}" if source else "")
+        )
     if screening.get("blocked"):
         counts = screening.get("counts", {}) if isinstance(screening.get("counts"), dict) else {}
         orient_extra.append(f"Secrets: {counts.get('BLOCK', 0)} BLOCK · {counts.get('REVIEW', 0)} REVIEW — hardcoded secret(s) detected in source")

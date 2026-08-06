@@ -325,6 +325,16 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
         _orient_lines.append(f"- **Run:** `{_brief['run']}`")
     if _brief.get("test"):
         _orient_lines.append(f"- **Test:** `{_brief['test']}`")
+    _layout = _brief.get("layout", {}) if isinstance(_brief.get("layout"), dict) else {}
+    if _layout.get("top_level"):
+        _dirs = ", ".join(f"{row['dir']}/ ({row['files']})" for row in _layout["top_level"][:5])
+        _orient_lines.append(f"- **Layout:** {_dirs}")
+    if _layout.get("primary_source_dir"):
+        _tests = _layout.get("tests", {}) if isinstance(_layout.get("tests"), dict) else {}
+        _orient_lines.append(
+            f"- **Source:** `{_layout['primary_source_dir']}` ({_layout.get('primary_language', '')}); "
+            f"tests in `{_tests.get('dir', '?')}` ({_tests.get('count', 0)})"
+        )
     if _orient_lines:
         lines.extend(["", "### First-contact orientation", *_orient_lines])
     delta_rows: list[tuple[str, dict[str, Any]]] = []
