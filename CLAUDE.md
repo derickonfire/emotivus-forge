@@ -17,6 +17,15 @@ ever earned, never assumed.
 Five public commands sit behind the phrase **"Run Forge"**: Help, Adopt,
 Resume, Check, Ship.
 
+**The spine vs. the selling point.** Forge's reason to live is **provable project
+truth** (Goal 1): a deterministic oracle a capable-but-wrong model can't argue
+with, because model capability never confers knowledge of *this* project's real
+state. **Token conservation** — a cold model skipping a repo re-read because the
+first-contact Brief is trustworthy (~443× on Flask) — is a real, demonstrable
+*selling point* and on-ramp, but it is a **consequence of trustworthy truth, not
+the goal.** If a choice ever arises, "impossible to fool" beats "cheap." Do not let
+the roadmap drift back toward polishing the on-ramp at the expense of the G1 core.
+
 ## How to run it
 
 ```bash

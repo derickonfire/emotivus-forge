@@ -40,6 +40,29 @@ Ground rules discovered from the codebase, treated as law here:
 
 ---
 
+## Actual trajectory vs. the plan (0.558 correction)
+
+The milestone sequence below is the *original* plan. Reality diverged, and this
+roadmap records it honestly rather than pretending it went to script:
+
+- **M0–M2 (0.553–0.555) landed** roughly as planned: reorient, fold overlapping
+  services, reduce and re-boundary. Phase A is complete.
+- **0.556–0.558 did not build M4's G1 proof.** That budget went to the *on-ramp*
+  instead — the context digest, the trustworthy first-contact Brief, description
+  and layout hygiene, and the ranked ecosystem resolver (the "project
+  intelligence" redirect, driven by an observed miss and multi-agent field tests).
+  This work is sound and stays. But it advanced **G2 approachability and the
+  token-conservation selling point, not the hard core of G1.**
+- **Consequence:** the `M4 · Prove Goal 1` work is still owed in full. `P2-01`
+  remains merely *active*; no adversarial gate has been earned; release
+  authorization is honestly still `false`.
+
+**Re-prioritized next milestone — the G1 provable-truth core moves to the front.**
+Before it starts, run a G1-aimed field test (record where a model can push Forge
+into asserting something it hasn't proven) so the build begins from recorded
+observed misses, per the expansion rule. Token conservation is not a milestone; it
+is a demonstrable byproduct of trustworthy truth and stays as on-ramp, not spine.
+
 ## Milestone sequence
 
 ### M0 · 0.553 — Reorient (this cycle) · **staged**
@@ -131,6 +154,11 @@ it, what changed, what the evidence shows, and the one exact next action; when G
 and G2 are COMPLETE on adversarial evidence; and when G3 has a certified foundation
 that a model newer than this one can carry forward. Not a bigger tool. A smaller,
 harder-to-fool one.
+
+The test of "finished" is the spine, not the selling point: a model must be
+**unable to make Forge assert something it hasn't proven**. Cheap first contact
+(token conservation) is how models are drawn to use it; being impossible to fool is
+why they should trust it. If we ever have to choose, the second wins.
 
 *The certified 0.552 base is preserved; every milestone advances through Forge's
 own governed release loop.*

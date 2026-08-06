@@ -32,6 +32,34 @@ useful it seems.
 
 G1 and G2 reach a binary COMPLETE. G3 is a foundation that then stays alive.
 
+## The spine vs. the selling point (re-centering, 0.558+)
+
+The reason Forge was **saved and not killed** is a single durable bet: model
+capability keeps rising, but no amount of it makes a model better at knowing the
+**ground truth of a specific project** — what actually ran, what actually passed,
+who actually authorized a release. A more capable model still asserts confident,
+plausible, wrong project state. As models become autonomous agents, the cost of
+that wrong assertion goes *up*. So a deterministic oracle of provable project
+truth — one that **never upgrades `NOT_RUN` to `PASS`** — becomes *more* valuable
+as AI advances, not less. **That is the spine. G1 is the reason to live.**
+
+**Token conservation is a consequence, not the goal.** A trustworthy first-contact
+Brief lets a cold model skip re-reading the repo (measured ~443× on Flask). That
+is a real, demonstrable *selling point* and the on-ramp that gets models to use
+Forge — but it is downstream of provable truth. A Brief a model has to
+double-check saves nothing; only a Brief it can *trust* does. If Forge were only a
+cheap Brief, a bigger context window and cheaper tokens would eventually erode it.
+The provable-truth oracle is what does not erode.
+
+**Honest status of the drift:** releases 0.554–0.558 hardened the on-ramp
+(reduction, orientation, ecosystem resolver, the trustworthy Brief). That work is
+sound and stays — but it advanced G2's approachability and the selling point, *not*
+the hard core of G1 (adversarial package rejection, exact-byte verification,
+authorization only from independently verified bytes). The next real build
+re-centers on that core. Order of priority from here: **(1) G1 provable-truth core
+→ (2) agent-native invocation so the 2029 caller can consult the oracle → (3) keep
+the Brief/token-saving on-ramp → (4) G2 cross-vendor continuity → (5) G3 kernel.**
+
 ## The four strategic phases
 
 The sealed `ROADMAP.md` runs the near-term chunks (P0 reset → P1 core reduction →
@@ -85,24 +113,30 @@ can still read, migrate, and extend.
   continuous — Forge keeps proving it can be carried forward, and never claims a
   false "done."
 
-## What 0.553 actually is
+## Where we actually are (0.558)
 
-0.553 is the **first chunk of Phase A executed under the 2029 thesis**, plus the
-groundwork this reorganization already laid. Concretely, the sealed roadmap's next
-active chunk is **P1-03** (move historical/explanatory docs out of required
-reading). Around it, 0.553 should:
+Told honestly, not as the plan wished it went:
 
-1. Land P1-03: introduce `reference/` and relocate explanatory-only docs, updating
-   the manifest, reachability map, and self-checks in lockstep.
-2. Record the version bump 0.552 → 0.553 consistently across `FORGE-PRODUCT.json`,
-   `FORGE-MANIFEST.json`, `CHANGELOG.md`, `PROGRESS-STATUS.md`, `ROADMAP.md`,
-   `README.md`, and `CERTIFICATION.md`, and update `check_progress`'s expected
-   active chunk. (These are coupled by design — Forge governs its own release.)
-3. Fold `F-553-001` (see `planning/0.553-FINDINGS.md`) into the certified record:
-   the reachability mapper now classifies version-control metadata.
-4. Open the Phase B spike as a *planning* item (agent-native invocation contract)
-   without shipping it yet — an observed miss must be recorded first, per the
-   expansion rule.
+- **Phase A (REDUCE) is complete.** Reduction, folds, and re-boundary landed; the
+  suite holds at 523/523 across 54 modules with behavior-and-history preservation
+  proven.
+- **The on-ramp is strong.** 0.554–0.558 delivered the context digest, the
+  trustworthy first-contact Brief, description/layout hygiene, and the ranked
+  ecosystem resolver — validated by multi-agent spectrum field tests (mean cold
+  usefulness up, blocked-before-value driven to zero). This is the *selling point*
+  and the approachability of G2.
+- **The G1 provable-truth core is still owed.** The milestone map slotted
+  0.557–0.558 as "Prove Goal 1," but that budget went to the on-ramp instead.
+  Adversarial package rejection, exact-byte verification, and
+  authorization-only-from-independently-verified-bytes have **not** been earned.
+  `P2-01` is still merely *active*. Release authorization remains `false`, honestly.
+- **Home moved.** Development now lives in the canonical `emotivus-forge` repo (see
+  `CLAUDE.md`); the certified base is preserved byte-for-byte.
+
+**The next real build targets the G1 core** — the spine, not more on-ramp. A field
+test aimed at G1 (*where can a model push Forge into asserting something it hasn't
+proven?*) should record the observed misses first, per the expansion rule, before
+that build begins.
 
 ## The one-command future
 
