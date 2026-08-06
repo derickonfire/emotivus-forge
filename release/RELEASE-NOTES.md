@@ -1,4 +1,9 @@
-# Emotivus Forge 0.556 — Context Digest: Trustworthy First Contact
+# Emotivus Forge 0.557 — Project-Intelligence Completeness
+
+- Completes the project-intelligence pass of the context digest: objective detection on explicit `## Objective`/`Goal:` headings, a deterministic architecture/layout summary, and broader secret coverage (Stripe/generic live tokens and extensionless credential files).
+- Certified suite unchanged at 523/54; release authorization remains false.
+
+## Prior release — 0.556 — Context Digest: Trustworthy First Contact
 
 - Delivers the first-contact context digest (Goal 1 redirection per the observed miss), validated by a 12-project spectrum re-test: mean cold-model usefulness 1.83 -> 2.67/5, blocked-before-value 11/12 -> 0/12.
 - Secret screening now catches hardcoded secrets in ordinary source at orientation (a hardcoded API key in app.py now BLOCKs, previously missed).

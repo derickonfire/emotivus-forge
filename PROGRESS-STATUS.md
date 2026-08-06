@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.556  
+**Current build:** 0.557  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -22,6 +22,7 @@
 - P1-07: **COMPLETE** — public and development editions rebuilt and proven behavior- and history-preserving (public edition passes 523/54 from its own bytes).
 - Core-reduction phase (P1) complete.
 - 0.556: **Context digest delivered** — first-contact orientation, secret screening at orientation, measured token economics, lazy governance, orient-before-blocking (Goal 1 redirection per the observed miss; spectrum usefulness 1.83 → 2.67/5, blocked-before-value 11/12 → 0/12).
+- 0.557: **Project-intelligence completeness** — objective detection on explicit headings, deterministic architecture/layout summary, broader secret coverage (Stripe/generic live tokens, extensionless credential files).
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

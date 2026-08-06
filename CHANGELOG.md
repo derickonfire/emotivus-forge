@@ -1,5 +1,19 @@
 # Emotivus Forge changelog
 
+## 0.557 — Project-Intelligence Completeness
+
+- Objective detection: `OBJECTIVE_HEADINGS` gained `objective`/`goal` and the inline regex now recognizes `Objective:`/`Goal:` (and `**bold**`), so an explicit `## Objective` heading resolves to status=explicit — Forge no longer nags when the objective is written down.
+- Architecture/layout: a deterministic summary from file paths (top-level dirs + counts, file-type histogram, primary source dir/language with tests excluded, packages, test dir/count), surfaced in the passport, resume, and terminal. Central files are reused from `code_orientation.centrality` (previously computed and discarded) in the passport only, keeping specific paths out of the compact resume.
+- Secret coverage: added Stripe `[sr]k_live_` and generic `tok_live_` BLOCK rules (quantifier form so the self-screen stays clean) and content-scanning of extensionless credential files (aws-credentials, credentials, .netrc, .pgpass, .htpasswd). aws-credentials, config.json api_token, and Stripe keys now all BLOCK. Residual: an all-lowercase DB_PASSWORD value is not an individual finding (file still BLOCK via siblings).
+- Additive throughout; certified suite unchanged at 523/54; release authorization remains false; P2-01 schema chunk stays active.
+
+## 0.557 — Project-Intelligence Completeness
+
+- Objective detection: `OBJECTIVE_HEADINGS` gained `objective`/`goal` and the inline regex now recognizes `Objective:`/`Goal:` (and `**bold**`), so an explicit `## Objective` heading resolves to status=explicit — Forge no longer nags when the objective is written down.
+- Architecture/layout: a deterministic summary from file paths (top-level dirs + counts, file-type histogram, primary source dir/language with tests excluded, packages, test dir/count), surfaced in the passport, resume, and terminal. Central files are reused from `code_orientation.centrality` (previously computed and discarded) in the passport only.
+- Secret coverage: added Stripe `[sr]k_live_` and generic `tok_live_` BLOCK rules (quantifier form so the self-screen stays clean) and content-scanning of extensionless credential files (aws-credentials, credentials, .netrc, .pgpass, .htpasswd). aws-credentials, config.json api_token, and Stripe keys now all BLOCK.
+- Additive throughout; certified suite unchanged at 523/54; release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.556 — Context Digest: Trustworthy First Contact
 
 - Delivered the first-contact context digest — the observed-miss redirection of Goal 1 toward project intelligence, validated by a 12-project spectrum re-test (mean cold-model usefulness 1.83 -> 2.67/5; blocked-before-value 11/12 -> 0/12).
