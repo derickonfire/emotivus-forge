@@ -9,7 +9,8 @@ from .authority_baseline import assess_authority_baseline
 from .change_ledger import build_check_plan
 from .relationships import evaluate_relationships, augment_check_plan
 from .capabilities import capability_summary
-from .changes import change_count_phrase, detect_changes
+from .changes import change_count_phrase, detect_changes, snapshot_fingerprint
+from .evidence_validity import effective_native_validity
 from .decision_forks import analyze_decision_forks
 from .guardrails import guardrail_summary
 from .ledger_assertions import ledger_assertion_summary
@@ -398,7 +399,7 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     if isinstance(native_evidence, dict) and native_evidence.get("status"):
         lines.append(
             f"- **Latest native evidence:** {native_evidence.get('status')} with {native_evidence.get('entry_count', 0)} structured marker(s); "
-            f"validity: {native_evidence.get('validity', 'unknown')}; "
+            f"validity: {effective_native_validity(native_evidence, snapshot_fingerprint(changes['current_snapshot']))}; "
             f"truth: {native_evidence.get('truth', {}).get('truth_state', 'UNKNOWN') if isinstance(native_evidence.get('truth'), dict) else 'UNKNOWN'}; "
             f"tier: {native_evidence.get('verification_tier', 'sandbox')}."
         )

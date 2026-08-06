@@ -1,4 +1,9 @@
-# Emotivus Forge 0.564 — Provenance Parity
+# Emotivus Forge 0.565 — Native-Evidence Source Binding
+
+- Imported native-gate evidence is now bound to the exact source tree it was captured against; once the tree changes, it is reported stale rather than current, even under an unchanged native-gate command.
+- Completes the recorded G1 observed-miss backlog. A second recorded finding (same-version collision) was reviewed and did not survive verification, so no speculative fix was made.
+- Certified suite grows additively to 533 across 55 modules; release authorization remains false.
+
 
 - Instance-binding extended to artifact provenance: a deliverable's recorded lineage is asserted CONFIRMED only when its recording event is signed by a key this instance trusts. A byte-matching but unsigned or imported provenance record is honest as current yet not asserted as authenticated provenance.
 - Closes the last place the "self-consistent is not authentic" class lived: after authority (0.562–0.563) and provenance (0.564), an imported package can spoof neither authenticated authority nor authenticated provenance.

@@ -228,7 +228,7 @@ def _undeclared_coverage(entries: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def import_native_evidence(project_root: Path, registry: dict[str, Any], evidence_path: str) -> dict[str, Any]:
+def import_native_evidence(project_root: Path, registry: dict[str, Any], evidence_path: str, *, source_tree_fingerprint: str = "") -> dict[str, Any]:
     project_root = project_root.resolve()
     approval = registry.get("approval", {}) if isinstance(registry.get("approval"), dict) else {}
     mode = str(approval.get("execution_mode", "unassigned"))
@@ -347,6 +347,10 @@ def import_native_evidence(project_root: Path, registry: dict[str, Any], evidenc
         "evidence": evidence_summary,
         "evidence_records": evidence_records,
         "invocation_fingerprint": invocation_fingerprint,
+        # DG-8: bind the evidence to the source tree it was captured against, so it is
+        # not read as current after the tree changes (evidence for tree A must not
+        # count for tree B, even under the same native-gate command).
+        "source_tree_fingerprint": str(source_tree_fingerprint),
         "coverage": coverage,
         "raw_evidence": refs,
         "raw_output_retained": False,

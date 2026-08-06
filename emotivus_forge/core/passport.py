@@ -7,6 +7,7 @@ from typing import Any
 from .. import __version__
 from .authority_registry import load_or_discover_authorities
 from .authority_baseline import assess_authority_baseline
+from .changes import snapshot_fingerprint
 from .common import read_json, utc_now, write_json
 from .capabilities import capability_summary
 from .ledger import record_event
@@ -113,7 +114,7 @@ def build_passport(project_root: Path, forge_root: Path, *, name: str = "", refr
     passport["guardrails"] = guardrail_summary(project_root)
     passport["field_trials"] = field_trial_summary(project_root)
     passport["advanced_capabilities"] = capability_summary(project_root, passport)
-    passport["self_currency"] = assess_self_currency(project_root, passport, authorities, native_tools)
+    passport["self_currency"] = assess_self_currency(project_root, passport, authorities, native_tools, current_tree_fingerprint=snapshot_fingerprint(orientation["snapshot"]))
     for item in passport["self_currency"].get("attention", []):
         if str(item) not in passport["uncertainties"]:
             passport["uncertainties"].append(str(item))

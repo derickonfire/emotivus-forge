@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.564  
+**Current release:** 0.565  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -19,7 +19,7 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. G3 has a certifiable foundation and then remains continuous by design.
 
-## Reconciliation (as of 0.564)
+## Reconciliation (as of 0.565)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -27,7 +27,7 @@ per-chunk sequence in the table below. The chunk table is kept as the original
 structural plan and history; the sections here reconcile it with what actually shipped
 and sequence the near term.
 
-### Delivered 0.556 → 0.563 (evidence-driven)
+### Delivered 0.556 → 0.565 (evidence-driven)
 
 | Release | Goal | Delivered |
 |---|---|---|
@@ -38,6 +38,7 @@ and sequence the near term.
 | 0.562 | G1/G3 | **Cryptographic instance-binding** (single instance): signed authority events; tri-state corroboration; only instance-bound is release-eligible. Closes the "self-consistent ≠ authentic" residual for authority. |
 | 0.563 | G1/G3 | **Multi-party instance-binding**: an owner-provisioned shared collaboration secret makes authorizations mutually instance-bound across enrolled parties. The enforceable basis for cross-model trust. |
 | 0.564 | G1/G3 | **Provenance parity**: instance-binding extended to artifact provenance — a deliverable's lineage is asserted `CONFIRMED` only when its recording event is instance-bound. |
+| 0.565 | G1 | **Native-evidence source binding**: imported native evidence is bound to the source tree fingerprint and reported stale once the tree changes. Closes the recorded G1 observed-miss backlog. |
 
 **Standing:** the dominant G1 finding ("self-consistent ≠ authentic") is now closed for
 **both authority and provenance** (single- and multi-party) — an imported package can
@@ -47,16 +48,14 @@ consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **Remaining observed misses** — native-evidence source/tree-fingerprint binding (DG-8);
-   same-version-collision-keyed-off-bytes (DG-7). Recorded in
-   `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
-2. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
-   (original P2-08/09), now that authority and provenance binding are in place.
-3. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
+1. **G1 close-out** — the adversarial-trial and independent exact-byte-verification chunks
+   (original P2-08/09), now that authority, provenance, and native-evidence binding are in place.
+2. **G3 continuity kernel** — vendor-neutral continuity storage and forward migration that
    preserves unknown fields (original P4-01/02), building on instance-binding.
 
-*Done: provenance parity (0.564); single- and multi-party instance-binding (0.562–0.563);
-read-only consult (0.561).*
+*Done: the full recorded G1 observed-miss backlog — native-evidence source binding (0.565),
+provenance parity (0.564), single- and multi-party instance-binding (0.562–0.563), read-only
+consult (0.561). DG-7 was reviewed and did not survive verification (no speculative fix).*
 
 ### LineCheck collaboration (live validation track)
 

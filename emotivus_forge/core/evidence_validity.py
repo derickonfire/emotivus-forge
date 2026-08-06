@@ -4,6 +4,23 @@ from typing import Any
 
 from .common import utc_now
 
+
+def effective_native_validity(native_evidence: dict[str, Any], current_tree_fingerprint: str) -> str:
+    """Native evidence validity, downgraded to stale when the source tree changed.
+
+    DG-8: imported native evidence is bound to the tree fingerprint it was captured
+    against. If the current tree differs, the evidence no longer describes the current
+    project and must not read as 'current' — regardless of the stored validity, which
+    is only flipped by recorded change plans.
+    """
+    if not isinstance(native_evidence, dict):
+        return "unknown"
+    stored = str(native_evidence.get("validity", "current"))
+    recorded = str(native_evidence.get("source_tree_fingerprint", ""))
+    if recorded and current_tree_fingerprint and recorded != str(current_tree_fingerprint):
+        return "stale-source-changed"
+    return stored
+
 TYPE_TARGETS: dict[str, set[str]] = {
     "browser": {"website", "frontend"},
     "ui": {"website", "frontend"},

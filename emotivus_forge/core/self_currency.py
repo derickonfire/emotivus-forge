@@ -6,6 +6,7 @@ from typing import Any
 
 from .. import __version__
 from .common import normalize_rel, sha256_file
+from .evidence_validity import effective_native_validity
 from .orientation import load_project_ignore
 from .project_identity import project_identity_record
 from .truth import TruthRecord, summarize_truth_records
@@ -70,6 +71,8 @@ def assess_self_currency(
     passport: dict[str, Any],
     authorities: dict[str, Any],
     native_registry: dict[str, Any],
+    *,
+    current_tree_fingerprint: str = "",
 ) -> dict[str, Any]:
     project_root = project_root.resolve()
     ignore = load_project_ignore(project_root)
@@ -167,7 +170,7 @@ def assess_self_currency(
     evidence = passport.get("evidence", {}) if isinstance(passport.get("evidence"), dict) else {}
     native_evidence = evidence.get("native_gate", {}) if isinstance(evidence.get("native_gate"), dict) else {}
     if native_evidence:
-        validity = str(native_evidence.get("validity", "current"))
+        validity = effective_native_validity(native_evidence, current_tree_fingerprint)
         records.append(TruthRecord(
             subject="native-gate.evidence",
             truth_state="STALE" if "stale" in validity else "OBSERVED",

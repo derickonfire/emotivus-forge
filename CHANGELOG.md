@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.565 — Native-Evidence Source Binding (DG-8)
+
+- Binds imported native-gate evidence to the exact source tree it was captured against. `import_native_evidence` captures the current tree fingerprint and persists it on `evidence.native_gate.source_tree_fingerprint`; a shared helper `evidence_validity.effective_native_validity` downgrades the reported validity to `stale-source-changed` at the reader surfaces (Resume, self-currency) when the current tree fingerprint differs.
+- Effect: evidence captured for tree A no longer reads as `current` for tree B, even under an unchanged native-gate command fingerprint — closing the last recorded G1 observed miss (DG-8).
+- **DG-7 (same-version collision) reviewed, not a confirmed gap.** The collision guard in `record_merge_candidate` already keys off differing bytes (`incoming tree != authority tree`) and the declared version; the field-test's suggested fix referenced a non-existent `incoming.declared_version` field. The realistic residual is owner-declaration integrity, not a Forge authenticity spoof. No speculative change made; recorded in `planning/G1-RETEST-0559-OBSERVED-MISSES.md`.
+- Proven by a regression: import evidence (bound to the current tree), change the tree, and assert the evidence is reported `stale-source-changed`.
+- Certified suite grows additively to **533 focused public-neutral regressions across 55 deterministic isolated modules**. Release authorization remains false; P2-01 schema chunk stays active.
+
 ## 0.564 — Provenance Parity (instance-binding for artifact provenance)
 
 - Extends cryptographic instance-binding from authority baselines to **artifact provenance**. `artifact-provenance-recorded` is now a signed ledger event; `evaluate_artifact_provenance` corroborates each active record against its signed event (instance-bound / self-consistent / uncorroborated); and the scoped Check asserts `CONFIRMED` for a deliverable's lineage **only when that recording is instance-bound**.

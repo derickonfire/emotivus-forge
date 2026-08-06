@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 from ..core.change_ledger import build_change_record, build_check_plan
 from ..core.authority_baseline import assess_authority_baseline
 from ..core.capabilities import CAPABILITY_CATALOG, require_active_capability
-from ..core.changes import change_count_phrase, detect_changes
+from ..core.changes import change_count_phrase, detect_changes, snapshot_fingerprint
 from ..core.common import read_json, utc_now, write_json
 from ..core.evidence_validity import invalidate_connected_evidence
 from ..core.guardrails import evaluate_guardrails
@@ -238,6 +238,9 @@ def _update_passport_native_evidence(project_root: Path, passport: dict[str, Any
         "surfaces": evidence.get("surfaces", []),
         "records": normalized_records,
         "validity": "current",
+        # DG-8: persist the source tree fingerprint so readers (resume, self-currency)
+        # can downgrade this evidence to stale once the project tree changes.
+        "source_tree_fingerprint": str(result.get("source_tree_fingerprint", "")),
         "raw_result": raw.get("result", ""),
         "truth": result.get("truth", {}),
         "truth_summary": evidence.get("truth_summary", {}),
@@ -317,12 +320,15 @@ def run_scoped_check(
         _update_passport_native_evidence(project_root, passport, native_result)
     elif import_native_evidence_path:
         execution_order.append("project-native-evidence-import")
-        native_result = import_native_evidence(project_root, native_registry, import_native_evidence_path)
+        native_result = import_native_evidence(
+            project_root, native_registry, import_native_evidence_path,
+            source_tree_fingerprint=snapshot_fingerprint(changes["current_snapshot"]),
+        )
         _update_passport_native_evidence(project_root, passport, native_result)
 
     from ..core.authority_registry import load_or_discover_authorities
     authorities = load_or_discover_authorities(project_root, forge_root, refresh=True, settings=settings)
-    self_currency = assess_self_currency(project_root, passport, authorities, native_registry)
+    self_currency = assess_self_currency(project_root, passport, authorities, native_registry, current_tree_fingerprint=snapshot_fingerprint(changes["current_snapshot"]))
 
     findings: list[dict[str, Any]] = []
     relationship_configured = bool(

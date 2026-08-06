@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.564",
+  "version": "0.565",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.564 extends instance-binding to artifact provenance: a deliverable's recorded lineage is asserted as CONFIRMED only when its recording event is signed by a key this instance trusts. A byte-matching but unsigned or imported provenance record is honest as current yet is not asserted as authenticated provenance — closing the last place the 'self-consistent is not authentic' class lived.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.565 binds imported native-gate evidence to the exact source tree it was captured against: once the project tree changes, that evidence is reported stale rather than current, even under the same native-gate command. This closes the last recorded G1 observed miss; a second recorded finding was reviewed and did not survive verification, so no speculative fix was made.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.564",
+  "display_version": "0.565",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

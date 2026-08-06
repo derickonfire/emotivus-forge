@@ -87,3 +87,31 @@ source binding (DG-8).
 
 *Data source: workflow `g1-retest-and-deeper-gate` (15 agents); per-agent
 transcripts in the run's `journal.jsonl`.*
+
+---
+
+## Resolution status (as of 0.565)
+
+- **DG-1..DG-5 (self-consistent ≠ authentic) — CLOSED.** Authority: cryptographic
+  instance-binding, single-instance (0.562) and multi-party peer enrollment (0.563).
+  Provenance: parity (0.564). An imported package can spoof neither authenticated
+  authority nor authenticated provenance.
+- **DG-8 (native evidence not tree-bound) — CLOSED (0.565).** Imported native evidence
+  now stores the source tree fingerprint at capture (`import_native_evidence` →
+  persisted on `evidence.native_gate.source_tree_fingerprint`). Readers (resume,
+  self-currency) downgrade it to `stale-source-changed` via
+  `evidence_validity.effective_native_validity` when the current tree fingerprint
+  differs — so evidence captured against tree A no longer reads as current for tree B,
+  even under the same native-gate command. Regression:
+  `test_native_evidence_is_bound_to_the_source_tree_it_was_captured_against`.
+- **DG-7 (same-version collision) — REVIEWED, NOT A CONFIRMED GAP.** Code review of
+  `lineage.record_merge_candidate` shows the collision guard already keys off differing
+  bytes (`contract["incoming"]["tree_sha256"] != recorded_authority_tree`) *and* the
+  declared version (`contract["declared_version"] == active declared_version`). The
+  field-test's suggested fix referenced a `contract["incoming"]["declared_version"]`
+  field that does not exist in the archive-identity model. The realistic residual — an
+  owner mislabeling the merge-candidate's `declared_version` — is an owner-declaration
+  integrity matter, not a Forge authenticity spoof (Forge does not extract an arbitrary
+  incoming archive's "true version"). No code change made; the finding did not survive
+  verification. This is the intended discipline: not every field-test finding is real,
+  and Forge does not manufacture a fix for a hope.

@@ -146,6 +146,50 @@ class NativeInvocationAndHandoffTests(ForgeTestCase):
             self.assertEqual(payload["native_gate"]["status"], "FAIL")
             self.assertEqual(payload["native_gate"]["coverage"]["missing_checks"], ["group.beta"])
 
+    def test_native_evidence_is_bound_to_the_source_tree_it_was_captured_against(self) -> None:
+        # DG-8: imported native evidence is bound to the source tree fingerprint at
+        # capture. After the tree changes, the evidence must not read as current, even
+        # though the native-gate command fingerprint is unchanged.
+        from emotivus_forge.core.common import read_json
+        from emotivus_forge.core.paths import ForgePaths
+        from emotivus_forge.core.orientation import build_snapshot
+        from emotivus_forge.core.changes import snapshot_fingerprint
+        from emotivus_forge.core.evidence_validity import effective_native_validity
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            self._gate(root)
+            contract = self._invocation(root)
+            build_passport(root, FORGE_ROOT)
+            registry = set_native_execution_mode(root, "owner-only", invocation_contract_path=contract.name)
+            approval = registry["approval"]
+            canonical = registry["canonical"]
+            evidence = root / "owner-evidence.json"
+            evidence.write_text(json.dumps({
+                "schema": "forge-native-evidence/1",
+                "candidate_id": canonical["id"],
+                "gate_fingerprint": canonical["fingerprint"],
+                "invocation_fingerprint": approval["approved_invocation_fingerprint"],
+                "execution_authority": "owner",
+                "verification_tier": "sandbox",
+                "status": "PASS",
+                "returncode": 0,
+                "entries": [{"id": "group.alpha", "status": "PASS"}],
+            }, indent=2) + "\n", encoding="utf-8")
+            run_scoped_check(root, FORGE_ROOT, import_native_evidence_path=evidence.name)
+
+            passport = read_json(ForgePaths(root).passport, {})
+            native = passport.get("evidence", {}).get("native_gate", {})
+            self.assertTrue(native.get("source_tree_fingerprint"), "evidence was not bound to a source tree fingerprint")
+            captured_fp = snapshot_fingerprint(build_snapshot(root, FORGE_ROOT))
+            self.assertNotEqual(effective_native_validity(native, captured_fp), "stale-source-changed")
+
+            # Change the project tree after the evidence was captured.
+            (root / "src" / "added_after_capture.py").parent.mkdir(exist_ok=True)
+            (root / "added_after_capture.py").write_text("print('changed tree')\n", encoding="utf-8")
+            changed_fp = snapshot_fingerprint(build_snapshot(root, FORGE_ROOT))
+            self.assertEqual(effective_native_validity(native, changed_fp), "stale-source-changed")
+
     def test_sensitive_environment_key_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
