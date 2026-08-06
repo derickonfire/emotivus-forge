@@ -44,6 +44,7 @@ TEXT_SUFFIXES = {
 # Credential-bearing files that carry no text suffix but must still be content-scanned.
 EXTENSIONLESS_CREDENTIAL_NAMES = frozenset({
     "aws-credentials", "credentials", ".netrc", "netrc", ".pgpass", "pgpass", ".htpasswd",
+    ".npmrc", ".pypirc", ".dockercfg", ".git-credentials",
 })
 
 PLACEHOLDER_MARKERS = (
@@ -114,6 +115,12 @@ _RULES: tuple[tuple[str, str, re.Pattern[str], str], ...] = (
         BLOCK,
         re.compile(r"\btok_live_[0-9A-Za-z]{10,}\b"),
         "generic live-credential token shape",
+    ),
+    (
+        "npm-auth-token",
+        BLOCK,
+        re.compile(r"_authToken\s*=\s*\S{8,}|\bnpm_[0-9A-Za-z]{20,}\b"),
+        "npm registry auth token shape",
     ),
     (
         "bearer-token-literal",

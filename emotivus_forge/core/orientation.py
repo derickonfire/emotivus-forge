@@ -3,6 +3,7 @@ from __future__ import annotations
 import fnmatch
 import json
 import os
+import re
 from collections import Counter
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterator
@@ -183,6 +184,26 @@ def _read_project_name(project_root: Path) -> tuple[str, str]:
                         return value, "Cargo.toml"
         except (OSError, UnicodeDecodeError):
             pass
+    pom = project_root / "pom.xml"
+    if pom.is_file() and pom.stat().st_size <= 256_000:
+        try:
+            without_parent = re.sub(r"<parent>.*?</parent>", "", pom.read_text(encoding="utf-8"), flags=re.DOTALL)
+            name = re.search(r"<name>\s*([^<]+?)\s*</name>", without_parent)
+            if name and name.group(1).strip():
+                return name.group(1).strip(), "pom.xml"
+            artifact = re.search(r"<artifactId>\s*([^<]+?)\s*</artifactId>", without_parent)
+            if artifact and artifact.group(1).strip():
+                return artifact.group(1).strip(), "pom.xml"
+        except (OSError, UnicodeDecodeError):
+            pass
+    for gemspec in sorted(project_root.glob("*.gemspec")):
+        try:
+            match = re.search(r"\.name\s*=\s*['\"]([^'\"]+)['\"]", gemspec.read_text(encoding="utf-8"))
+            if match and match.group(1).strip():
+                return match.group(1).strip(), "gemspec"
+        except (OSError, UnicodeDecodeError):
+            pass
+        return gemspec.stem, "gemspec"
     for readme in ("README.md", "README.rst", "README.txt", "readme.md", "Readme.md"):
         path = project_root / readme
         if not path.is_file() or path.stat().st_size > 256_000:
@@ -198,6 +219,15 @@ def _read_project_name(project_root: Path) -> tuple[str, str]:
                     break
         except (OSError, UnicodeDecodeError):
             continue
+    for html in ("index.html", "public/index.html", "src/index.html"):
+        path = project_root / html
+        if path.is_file() and path.stat().st_size <= 256_000:
+            try:
+                match = re.search(r"<title>\s*([^<]+?)\s*</title>", path.read_text(encoding="utf-8"), re.IGNORECASE)
+                if match and match.group(1).strip():
+                    return match.group(1).strip(), "index.html"
+            except (OSError, UnicodeDecodeError):
+                pass
     return project_root.name or "Unnamed project", "directory"
 
 
@@ -208,6 +238,25 @@ def _read_bounded(path: Path, limit: int = 256_000) -> str:
     except (OSError, UnicodeDecodeError):
         pass
     return ""
+
+
+def _looks_test(name: str) -> bool:
+    lowered = name.lower()
+    return (
+        lowered.startswith("test_")
+        or lowered.endswith(("_test.py", "_test.go", "_test.js", "_test.ts"))
+        or lowered.endswith((".test.js", ".test.ts", ".test.jsx", ".test.tsx", ".spec.js", ".spec.ts", "_spec.rb"))
+        or lowered in ("test.js", "test.ts")
+    )
+
+
+def _tidy(text: str) -> str:
+    """Trim a one-line description to a word boundary and drop trailing punctuation."""
+    text = text.strip()
+    if len(text) > 200:
+        cut = text.rfind(" ", 0, 200)
+        text = text[: cut if cut > 80 else 200].rstrip() + "…"
+    return text.rstrip(" :;,-")
 
 
 def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
@@ -228,7 +277,7 @@ def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
         suffix = PurePosixPath(rel).suffix.lower()
         if suffix:
             ext_hist[suffix] += 1
-        is_test = parts[-1].startswith("test_") or parts[-1].endswith("_test.py") or "tests" in parts or "test" in parts
+        is_test = _looks_test(parts[-1]) or "tests" in parts or "test" in parts or "spec" in parts
         if is_test:
             test_count += 1
             test_dirs[parts[0]] += 1
@@ -241,7 +290,13 @@ def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
     def ranked(counter: "Counter[str]") -> list[tuple[str, int]]:
         return sorted(counter.items(), key=lambda item: (-item[1], item[0]))
 
-    src_ranked = ranked(dir_src)
+    def source_rank(item: tuple[str, int]) -> tuple[int, str]:
+        directory, count = item
+        # Prefer conventional source roots over config/vendored dirs at equal weight.
+        bonus = 1000 if directory.split("/")[0] in ("src", "app", "lib", "internal", "pkg") else 0
+        return (-(count + bonus), directory)
+
+    src_ranked = sorted(dir_src.items(), key=source_rank)
     src_exts = Counter({ext: n for ext, n in ext_hist.items() if ext in SOURCE_SUFFIXES})
     return {
         "top_level": [{"dir": name, "files": n} for name, n in ranked(top_dirs)[:8]],
@@ -293,10 +348,10 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
             # First real prose line — skip headings, badges, links, HTML, tables, art.
             if not raw or raw.startswith(("#", "!", "[", "<", ">", "---", "===", "```", "|", "=", "*", "-", "(")):
                 continue
-            if "](" in raw or "<img" in raw or raw.lower().startswith(("http", "see ", "note:")):
+            if "](" in raw or "<img" in raw or raw.lower().startswith(("http", "see ", "note:", "licensed ", "copyright", "spdx")):
                 continue
             if is_prose(raw):
-                description = raw[:200]
+                description = _tidy(raw)
                 break
         if description:
             break
@@ -311,42 +366,102 @@ def derive_orientation(project_root: Path, relatives: Iterable[str]) -> dict[str
     def existing(*candidates: str) -> list[str]:
         return [candidate for candidate in candidates if candidate in rel_set]
 
+    def scripts_of(filename: str) -> dict[str, Any]:
+        text = _read_bounded(project_root / filename)
+        try:
+            value = (json.loads(text) if text else {}).get("scripts", {})
+            return value if isinstance(value, dict) else {}
+        except (json.JSONDecodeError, ValueError):
+            return {}
+
+    def root_source(suffix: str) -> list[str]:
+        return sorted(r for r in rel_set if "/" not in r and r.lower().endswith(suffix) and not _looks_test(r))
+
+    # Rank the primary ecosystem by source-file evidence, with manifest and
+    # app-framework boosts, so a polyglot / framework project (Laravel with a Vite
+    # package.json, a Java library with a docs site) is not mis-dispatched.
+    lang_exts = {
+        "python": {".py"},
+        "node": {".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx"},
+        "go": {".go"}, "rust": {".rs"}, "java": {".java"}, "ruby": {".rb"}, "php": {".php"},
+    }
+    manifests = {
+        "python": {"pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "environment.yml"},
+        "node": {"package.json"}, "go": {"go.mod"}, "rust": {"Cargo.toml"},
+        "java": {"pom.xml", "build.gradle", "build.gradle.kts"},
+        "ruby": {"Gemfile", "Rakefile", "config.ru"}, "php": {"composer.json"},
+    }
+    app_markers = {"python": {"manage.py"}, "php": {"artisan"}, "ruby": {"config.ru"}}
+    src_count = {lang: 0 for lang in lang_exts}
+    for rel in rel_set:
+        parts = PurePosixPath(rel).parts
+        if _looks_test(parts[-1]) or any(seg in ("tests", "test", "spec") for seg in parts):
+            continue
+        suffix = PurePosixPath(rel).suffix.lower()
+        for lang, exts in lang_exts.items():
+            if suffix in exts:
+                src_count[lang] += 1
+
+    def has_manifest(lang: str) -> bool:
+        return bool(manifests[lang] & names) or (lang == "ruby" and any(n.endswith(".gemspec") for n in names))
+
+    scores: dict[str, int] = {}
+    for lang in lang_exts:
+        score = src_count[lang]
+        if has_manifest(lang):
+            score += 60
+        if app_markers.get(lang, set()) & names:
+            score += 1000
+        if score:
+            scores[lang] = score
+    primary = max(scores, key=lambda lang: (scores[lang], lang)) if scores else ""
+
     entry_points: list[str] = []
     run = ""
     test = ""
-    if "package.json" in names:
-        text = _read_bounded(project_root / "package.json")
-        try:
-            scripts = (json.loads(text) if text else {}).get("scripts", {})
-            scripts = scripts if isinstance(scripts, dict) else {}
-        except (json.JSONDecodeError, ValueError):
-            scripts = {}
-        entry_points = existing("index.js", "index.ts", "src/index.js", "src/index.ts", "server.js", "app.js", "main.js", "bin/cli.js")
-        run = "npm run dev" if "dev" in scripts else ("npm start" if "start" in scripts else "")
-        test = "npm test" if "test" in scripts else ""
-    elif "pyproject.toml" in names or "setup.py" in names or "requirements.txt" in names or any(n.endswith(".py") for n in names):
+    if primary == "python":
         entry_points = existing("manage.py", "app.py", "main.py", "wsgi.py", "asgi.py", "__main__.py", "src/main.py")
-        if "manage.py" in rel_set:
-            run = "python manage.py runserver"
-        elif "app.py" in rel_set:
-            run = "python app.py"
-        elif "main.py" in rel_set:
-            run = "python main.py"
-        if any(n.startswith("test_") or n.endswith("_test.py") for n in names) or "tox.ini" in names or "pytest.ini" in names or "conftest.py" in names:
+        run = (
+            "python manage.py runserver" if "manage.py" in rel_set
+            else "python app.py" if "app.py" in rel_set
+            else "python main.py" if "main.py" in rel_set else ""
+        )
+        if not run and any(n.endswith(".ipynb") for n in names):
+            run = "jupyter notebook"
+        if (
+            any(_looks_test(PurePosixPath(r).name) and r.endswith(".py") for r in rel_set)
+            or any("tests" in PurePosixPath(r).parts for r in rel_set)
+            or {"tox.ini", "pytest.ini", "conftest.py"} & names
+        ):
             test = "pytest"
-    elif "go.mod" in names:
+    elif primary == "node":
+        s = scripts_of("package.json")
+        entry_points = existing("index.js", "index.ts", "src/index.js", "src/index.ts", "server.js", "app.js", "main.js", "bin/cli.js")
+        run = "npm run dev" if "dev" in s else ("npm start" if "start" in s else "")
+        test = "npm test" if "test" in s else ""
+    elif primary == "go":
         run = "go run ./..."
         test = "go test ./..."
-        entry_points = existing("main.go", "cmd/main.go")
-    elif "Cargo.toml" in names:
+        entry_points = existing("main.go", "cmd/main.go") or root_source(".go")[:2]
+    elif primary == "rust":
         run = "cargo run" if "src/main.rs" in rel_set else "cargo build"
         test = "cargo test"
         entry_points = existing("src/main.rs", "src/lib.rs")
-    elif "composer.json" in names:
-        run = "php artisan serve" if "artisan" in names else "php -S localhost:8000"
-        test = "vendor/bin/phpunit" if "phpunit.xml" in names or "phpunit.xml.dist" in names else ""
+    elif primary == "java":
+        run, test = ("mvn compile", "mvn test") if "pom.xml" in names else ("gradle build", "gradle test")
+    elif primary == "ruby":
+        run = "bundle exec rackup" if "config.ru" in names else "ruby"
+        test = "rake test" if "Rakefile" in names else ("bundle exec rspec" if any("spec" in PurePosixPath(r).parts for r in rel_set) else "")
+        entry_points = existing("config.ru", "app.rb", "main.rb")
+    elif primary == "php":
+        s = scripts_of("composer.json")
+        if "artisan" in names:
+            run, test = "php artisan serve", "php artisan test"
+        else:
+            run = "php -S localhost:8000"
+            test = "composer test" if "test" in s else ("vendor/bin/phpunit" if {"phpunit.xml", "phpunit.xml.dist"} & names else "")
         entry_points = existing("artisan", "public/index.php", "index.php")
-    elif any(n.endswith(".html") for n in names) and "package.json" not in names:
+    if not primary and any(n.endswith(".html") for n in names):
         run = "open index.html (static site — no build)" if "index.html" in rel_set else ""
         entry_points = existing("index.html")
 
