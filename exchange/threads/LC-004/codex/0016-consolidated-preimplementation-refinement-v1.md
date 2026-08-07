@@ -177,8 +177,10 @@ An Opening occurrence is unfinished when its operational day ends. It no
 longer clutters the next day's ordinary staff Routine list. The occurrence and
 its unfinished evidence remain historical facts. Authorized manager/owner
 surfaces show the missed, late, expired, or incomplete exception and support
-the existing accountability path. If a proactive notification is required,
-its delivery is permission-scoped and deduplicated.
+the existing accountability path. LineCheck also creates a missed-work
+notification for recipients with the applicable manager or owner permission
+and venue/section scope. Delivery is deduplicated. Additional channels, if
+supported, follow existing recipient preferences.
 
 ### 3.7 Placement Both
 
@@ -721,19 +723,22 @@ The current lc_exdb_work command-center path already derives several
 late/missed/expired exceptions. Reuse it where its contract is correct rather
 than duplicating exception logic.
 
-### 13.3 Notification Gap
+### 13.3 Missed-Work Notification
 
 The current notification catalogue does not appear to contain a dedicated
-proactive missed-Routine event. Claude must distinguish:
+missed-Routine event. General requires a real missed-work notification in
+addition to command-center exception visibility. Treat this as a bounded
+runtime gap unless Claude proves an existing equivalent contract.
 
-- An exception visible when an authorized manager opens the command center.
-- A proactive in-app/email/push notification delivered to managers/owners.
+At minimum, create the normal LineCheck in-app notification/event for each
+authorized recipient. Email, push, or other channel fan-out follows existing
+channel support and recipient preferences; this refinement does not require a
+new notification platform.
 
-If General's word notification requires proactive delivery, treat this as a
-bounded runtime gap. Define:
+Define and prove:
 
 - Trigger time relative to utc_due/utc_expires and operational timezone.
-- Eligible recipients by permission and venue/section scope.
+- Eligible recipients by manager/owner permission and venue/section scope.
 - One delivery identity per occurrence, event type, recipient, and channel.
 - Outbox/retry behavior.
 - Dedupe across cron reruns.
@@ -741,8 +746,8 @@ bounded runtime gap. Define:
 - No leakage of worker/evidence details to unauthorized recipients.
 
 Do not hide prior-day work from staff and call the requirement complete until
-the corresponding accountability path is proven. Do not send broad duplicate
-alerts as a shortcut.
+both the accountability projection and notification event are proven. Do not
+send broad duplicate alerts as a shortcut.
 
 ### 13.4 History
 
@@ -1043,9 +1048,9 @@ Potential LC-004 prerequisite or LC-005 amendment:
 - Creator minimal authoring and staff preview.
 - Claim/participation tests.
 
-### Phase E: Rollover Notification
+### Phase E: Rollover And Missed-Work Notification
 
-Potential bounded prerequisite if proactive notification is required:
+Potential bounded prerequisite:
 
 - Current-day staff projection.
 - Manager/owner exception preservation.
@@ -1188,8 +1193,9 @@ following:
    identity/body hash.
 7. A statement of first versus latest completion projection semantics.
 8. A statement of the stable idempotency/credit identity used across redo.
-9. A statement of whether missed-work notification is command-center
-   visibility or proactive delivery, and the proposed gap closure.
+9. A statement of how the required missed-work notification is generated,
+   permission-scoped, deduplicated, delivered, and reconciled with the
+   command-center exception.
 10. A proposed PR/task split and dependency order. Do not assign new LC numbers
     as approved work.
 11. A list of unresolved product decisions, limited to decisions that cannot be
