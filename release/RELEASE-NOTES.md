@@ -1,4 +1,10 @@
-# Emotivus Forge 0.573 — Field usefulness + anti-bloat
+# Emotivus Forge 0.574 — Anti-bloat: the certified count is computed, not hand-copied
+
+- Removes the exact test/module count from numeric lockstep across CERTIFICATION, README, the manifest, and a test — a hand-maintained integer that had already silently drifted in ungated copies. The self-test runner reports the count live from the actual suite (`python3 -m emotivus_forge self-test`), so it is always accurate and needs no maintenance.
+- Kept every check that prevents a real reader-facing lie: version consistency, state schema, required paths, and download-checksum binding. Prose now describes the suite qualitatively.
+- No runtime behavior change; suite stays green. Release authorization remains false.
+
+## 0.573 — Field usefulness + anti-bloat
 
 - Fixes three defects a read-only consultation on a real project exposed, where Forge behaved as a blocker rather than an advisor: a pending decision fork is now advisory instead of a "stop before changing the project" blocker; the objective resolver obeys a document's own "this file is historical/superseded" banner instead of scraping a stale heading; and test/acceptance/gate harnesses are discovered instead of reported as zero.
 - Anti-bloat pass on Forge's own self-consistency gates: removed per-chunk timebox format/range enforcement, retired-percentage guards, the exact website-nav-label check, and same-file goal-status duplication — bookkeeping ceremony, not truthful claims. Every check that prevents a real reader-facing misstatement was kept.

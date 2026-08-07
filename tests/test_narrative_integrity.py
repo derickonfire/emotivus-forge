@@ -20,11 +20,13 @@ def _copy_source(target: Path) -> Path:
 
 class NarrativeIntegrityTests(unittest.TestCase):
     def test_current_certified_source_relationships_pass(self) -> None:
-        result = check_narrative_integrity(FORGE_ROOT, observed_regressions=546, observed_modules=58)
+        # The narrative integrity check verifies version, schema, path, and download
+        # relationships. The exact regression/module count is no longer asserted here
+        # (0.574 anti-bloat): it is reported live from the actual suite, not a
+        # hand-maintained integer copied across surfaces in lockstep.
+        result = check_narrative_integrity(FORGE_ROOT)
         self.assertEqual(result["status"], "PASS", result.get("problems"))
-        stale = check_narrative_integrity(FORGE_ROOT, observed_regressions=474, observed_modules=47)
-        self.assertEqual(stale["status"], "FAIL")
-        self.assertTrue(any("observed self-test regression count" in item for item in stale["problems"]))
+        self.assertNotIn("certified_regressions", result)
 
     def test_version_drift_is_detected(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

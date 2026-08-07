@@ -10,14 +10,6 @@ from typing import Any
 from .common import sha256_file as _sha256
 from .state import CORE_STATE_SCHEMA, SETTINGS_SCHEMA
 
-CERT_RE = re.compile(
-    r"certified for \*\*(\d+) focused public-neutral regressions\*\* across (\d+) deterministic isolated modules",
-    re.IGNORECASE,
-)
-README_RE = re.compile(
-    r"\*\*(\d+)/(\d+)\*\* focused public-neutral regressions across (\d+) deterministic isolated modules",
-    re.IGNORECASE,
-)
 VERSION_TITLE_RE = re.compile(r"^#(?: Emotivus)? Forge ([0-9]+\.[0-9]+(?:\.[0-9]+)?)", re.MULTILINE)
 
 TRUTH_BOUNDARY = (
@@ -95,9 +87,7 @@ def _zip_manifest_version(path: Path) -> str:
         return ""
 
 
-def check_narrative_integrity(
-    root: Path, *, observed_regressions: int | None = None, observed_modules: int | None = None
-) -> dict[str, Any]:
+def check_narrative_integrity(root: Path) -> dict[str, Any]:
     root = root.resolve()
     problems: list[str] = []
     try:
@@ -124,54 +114,24 @@ def check_narrative_integrity(
     for key in ("canonical_paths", "public_paths"):
         problems.extend(_required_paths(root, manifest, key))
     edition = str(manifest.get("edition", "development")).strip() or "development"
-    regressions = manifest.get("regressions", {}) if isinstance(manifest.get("regressions"), dict) else {}
-    self_tests = manifest.get("self_tests", []) if isinstance(manifest.get("self_tests"), list) else []
-    description = " ".join(str(item.get("description", "")) for item in self_tests if isinstance(item, dict))
 
-    if edition == "public":
-        cert_tests = int(regressions.get("total_declared", -1))
-        module_match = re.search(r"across (\d+) deterministic isolated modules", description, re.IGNORECASE)
-        cert_modules = int(module_match.group(1)) if module_match else -1
-        if cert_tests < 0:
-            problems.append("FORGE-MANIFEST does not declare the public regression count")
-        if cert_modules < 0:
-            problems.append("FORGE-MANIFEST self-test description omits the public module count")
-    else:
+    # Version-title consistency across the narrative surfaces. The exact
+    # regression/module COUNT is deliberately not asserted here (0.574 anti-bloat):
+    # it was a hand-maintained integer copied across CERTIFICATION, README, the
+    # manifest, and a test, and it silently drifted in ungated copies. The live count
+    # is reported by the self-test runner straight from the actual suite — always
+    # accurate, zero maintenance — so prose describes the suite qualitatively and no
+    # surface has to be kept in numeric lockstep.
+    if edition != "public":
         cert_text = (root / "CERTIFICATION.md").read_text(encoding="utf-8")
         cert_title = VERSION_TITLE_RE.search(cert_text)
         if not cert_title or cert_title.group(1) != version:
             problems.append("CERTIFICATION title version differs from FORGE-PRODUCT version")
-        cert_match = CERT_RE.search(cert_text)
-        if not cert_match:
-            problems.append("CERTIFICATION does not declare regression and module counts in the canonical form")
-            cert_tests = cert_modules = -1
-        else:
-            cert_tests, cert_modules = int(cert_match.group(1)), int(cert_match.group(2))
-        if regressions.get("total_declared") != cert_tests:
-            problems.append("FORGE-MANIFEST total_declared regressions differs from CERTIFICATION")
-
-    if cert_tests >= 0 and str(cert_tests) not in description:
-        problems.append("FORGE-MANIFEST self-test description omits the certified regression count")
-    if cert_modules >= 0 and str(cert_modules) not in description:
-        problems.append("FORGE-MANIFEST self-test description omits the certified module count")
-    if observed_regressions is not None and observed_regressions != cert_tests:
-        problems.append(
-            f"observed self-test regression count {observed_regressions} differs from certified metadata {cert_tests}"
-        )
-    if observed_modules is not None and observed_modules != cert_modules:
-        problems.append(
-            f"observed self-test module count {observed_modules} differs from certified metadata {cert_modules}"
-        )
 
     readme_text = (root / "README.md").read_text(encoding="utf-8")
     readme_title = re.search(r"^# Emotivus Forge ([0-9]+\.[0-9]+(?:\.[0-9]+)?)", readme_text, re.MULTILINE)
     if not readme_title or readme_title.group(1) != version:
         problems.append("README title version differs from FORGE-PRODUCT version")
-    readme_match = README_RE.search(readme_text)
-    if not readme_match:
-        problems.append("README does not declare regression and module counts in the canonical form")
-    elif int(readme_match.group(1)) != int(readme_match.group(2)) or int(readme_match.group(1)) != cert_tests or int(readme_match.group(3)) != cert_modules:
-        problems.append("README regression or module count differs from certified package metadata")
 
     if edition != "public":
         implementation = (root / "IMPLEMENTATION-REPORT.md").read_text(encoding="utf-8")
@@ -201,8 +161,6 @@ def check_narrative_integrity(
         "schema": 1,
         "status": "PASS" if not problems else "FAIL",
         "version": version,
-        "certified_regressions": cert_tests,
-        "certified_modules": cert_modules,
         "problems": problems,
         "truth_boundary": TRUTH_BOUNDARY,
     }

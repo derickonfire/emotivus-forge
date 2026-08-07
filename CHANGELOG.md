@@ -1,5 +1,12 @@
 # Emotivus Forge changelog
 
+## 0.574 — Anti-bloat: the certified count is computed, not hand-copied
+
+- **Removes the exact test/module count from numeric lockstep.** The count ("546 across 58 modules") was a hand-maintained integer copied across `CERTIFICATION.md`, `README.md`, `FORGE-MANIFEST.json`, and `test_narrative_integrity.py` — and it had already silently drifted in ungated copies (`CLAUDE.md` and the public website both still said "523/54"). `check_narrative_integrity` no longer asserts the count; the self-test runner reports it live from the actual suite (`python3 -m emotivus_forge self-test`), so it is always accurate and needs no maintenance.
+- **Kept every check that prevents a real reader-facing lie:** version consistency across all surfaces, state schema, required paths, and download-checksum binding. Only the brittle count coupling was removed. `CERT_RE`/`README_RE` and the `observed_regressions`/`observed_modules` parameters are gone; prose now describes the suite qualitatively.
+- Net effect: a seal that adds tests no longer has to bump a number in four files. This closes the specific ceremony flagged in 0.573 — the recurring lockstep cost that made even Forge's own docs drift.
+- No behavior change to the runtime; suite stays green. G1 COMPLETE, G3 foundation CERTIFIED/CONTINUOUS; G2 remains the one open goal. Release authorization remains **false**.
+
 ## 0.573 — Field usefulness + anti-bloat
 
 - **Fixes three defects a read-only consultation on a real project exposed**, where Forge behaved as a blocker rather than an advisor. Each is regression-locked:

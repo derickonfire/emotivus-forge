@@ -1,10 +1,14 @@
-# Emotivus Forge 0.573
+# Emotivus Forge 0.574
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.573 changes
+## What 0.574 changes
+
+- **Completes the anti-bloat pass.** The exact test/module count is no longer copied across CERTIFICATION, README, the manifest, and a test in numeric lockstep — a hand-maintained integer that had already silently drifted in ungated copies. The live count is reported by the self-test runner straight from the actual suite; prose describes the suite qualitatively. The narrative-integrity check still verifies version, schema, required-path, and download-checksum relationships.
+
+## What 0.573 changed
 
 - **Field-usefulness fixes.** A genuine read-only consultation on a real project surfaced three defects where Forge behaved as a blocker rather than an advisor; all three are fixed and regression-locked:
   - A **pending decision fork is now advisory**, not a blocker — first-contact orientation no longer tells the agent to "stop before changing the project" over a choice Forge merely noticed. Only a *contradiction* against a confirmed decision blocks.
@@ -16,9 +20,9 @@ Forge provides portable, exact project truth and session continuity to AI models
 
 ## Current verification target
 
-**546/546** focused public-neutral regressions across 58 deterministic isolated modules.
+A comprehensive suite of focused, public-neutral regressions across deterministic, isolated modules, run from the package's own extracted bytes. Run `python3 -m emotivus_forge self-test` for the live count and per-module results.
 
-This count is package metadata until exact final-byte certification completes. It is not release authorization or proof of efficacy.
+Passing is package metadata until exact final-byte certification completes. It is not release authorization or proof of efficacy.
 
 ## Normal use
 

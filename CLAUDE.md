@@ -43,21 +43,21 @@ There is no pytest dependency; the suite runs on the stdlib:
 python3 -m unittest discover -s tests -q
 ```
 
-The certified target is **546 tests across 58 deterministic isolated modules**,
-and it must stay green.
+The suite is a comprehensive set of deterministic, isolated modules and must stay
+green. Run `python3 -m emotivus_forge self-test` for the live test/module count —
+it is reported straight from the actual suite, not a number to hand-maintain.
 
 ## Invariants that keep the suite self-consistent
 
 Forge verifies its own narrative. Several things are cross-checked and will fail
 loudly if you touch them carelessly:
 
-- **Frozen counts.** `tests/test_narrative_integrity.py` hardcodes the 546 / 58
-  counts. Adding a *new test method* changes the regression count, so a seal that
-  adds tests must bump the count across the narrative surfaces in lockstep. Do
-  **not** contort tests to dodge this — write the clean test and bump the count.
-  (0.573 note: the exact-count claim is itself a lockstep cost that has silently
-  drifted across ungated copies before; making it computed rather than
-  hand-maintained is a recommended future anti-bloat cut.)
+- **Counts are computed, not frozen (0.574).** The exact test/module count is no
+  longer asserted in CERTIFICATION, README, the manifest, or a test — it is
+  reported live from the actual suite by the self-test runner. Add clean new test
+  methods freely; no count needs bumping in lockstep. (The narrative-integrity
+  check still enforces version, schema, required-path, and download-checksum
+  consistency — those remain lockstep because they prevent a real reader-facing lie.)
 - **Lockstep version.** A version bump must move in lockstep across every
   surface the narrative-integrity check enumerates (docs, manifest, product
   JSON, public package, regenerated site). Bump nothing in isolation.

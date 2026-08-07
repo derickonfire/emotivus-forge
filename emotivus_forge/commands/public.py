@@ -278,7 +278,7 @@ def handle_self_test(forge_root: Path) -> int:
             print(f"- {failure}")
         return 1
     from ..core.narrative_integrity import check_narrative_integrity
-    narrative = check_narrative_integrity(forge_root, observed_regressions=total, observed_modules=len(modules))
+    narrative = check_narrative_integrity(forge_root)
     if narrative.get("status") != "PASS":
         print(f"Forge self-test: FAIL — {total} regressions passed, but narrative integrity failed.")
         for problem in narrative.get("problems", []):
