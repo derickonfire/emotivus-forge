@@ -259,7 +259,8 @@ different consent model. Do not collapse the two choices back into one.
 
 The 320px evidence is a narrow-width stress case, not the only device contract.
 The implementation must be fluid and usable on larger Lenovo/Fire-class
-tablets.
+tablets. Portrait is the only owner-supported tablet orientation for this pass:
+do not design, test, render, or request approval for a landscape mode.
 
 Required responsive principles:
 
@@ -286,8 +287,7 @@ Evidence matrix for affected surfaces:
 - 390x844 mobile, dark and light;
 - 800x1280 tablet portrait, dark and light, at least e1/e2/e3/e8 plus e4 where
   manager layout differs;
-- 1280x800 tablet landscape, dark and light, same critical surfaces;
-- 125 percent root text on 390 mobile and at least one tablet orientation.
+- 125 percent root text on 390 mobile and 800x1280 tablet portrait.
 
 Record CSS viewport, deviceScaleFactor, theme, actor/fixture, and state in the
 manifest. These are responsive web gates, not claims about one vendor's exact
