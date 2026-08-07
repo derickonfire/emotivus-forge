@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.570 — Goal 3: Field-Test Hardening (lifecycle binding + vendor-neutral free-text)
+
+- A 12-agent adversarial field test of the G3 kernel found two genuine over-assertions of Forge's own ethos; both are closed and regression-locked (`planning/G3-FIELD-TEST-OBSERVED-MISSES.md`).
+- **GM-2 — lifecycle instance-binding:** `component-lifecycle-transition` is authority-declared, so it now joins `SIGNED_KINDS` and is signed with the per-instance key. `lifecycle_transition_summary` and the Resume line run `classify_signature` per event and label each transition `instance-bound` vs `self-consistent`; an imported or forged (self-consistent chain) transition is never counted as an authentic in-instance record without the imported label — closing the "self-consistent != authentic" spoof for lifecycle, as already done for authority (0.562) and provenance (0.564).
+- **GM-1 — vendor-neutral free-text screening:** `load_session_context` previously guarded only top-level keys, so model directives smuggled into accepted free-text survived. It now screens those values with narrow, high-precision prompt-injection / vendor-directive patterns (ordinary mentions of "system"/"model" are not flagged), and the vendor-neutral truth boundary is softened to state only what the code enforces.
+- Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
+- Certified suite grows additively to **544 focused public-neutral regressions across 57 deterministic isolated modules**. P2-01 schema chunk stays active.
+
 ## 0.569 — Goal 3: Component Lifecycle Records (P4-03)
 
 - Continues the cross-model evolution kernel with **explicit component lifecycle records**. A project authority (or a newer model acting for one) records that a named component was **retained, folded, frozen, retired, or replaced** via `forge adopt --record-lifecycle-transition <contract>`. A `fold`/`replace` names its successor; a `replace` records the **invariants that must be preserved**.

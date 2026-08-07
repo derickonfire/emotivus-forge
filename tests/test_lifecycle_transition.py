@@ -67,6 +67,41 @@ class LifecycleTransitionTests(ForgeTestCase):
             with self.assertRaisesRegex(ValueError, "disposition"):
                 record_lifecycle_transition(root, FORGE_ROOT, self._write(root, disposition="delete"))
 
+    def test_transition_binding_labels_instance_bound_vs_imported(self) -> None:
+        # GM-2 (G3 field test): lifecycle transitions are authority-declared, so like
+        # authority and provenance they are instance-bound. A legit local transition is
+        # instance-bound; a forged/imported unsigned event (self-consistent chain) is
+        # labeled self-consistent, never counted as an authentic in-instance record.
+        import json as _json
+        from emotivus_forge.core.ledger import _canonical_hash
+        from emotivus_forge.core.paths import ForgePaths
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            build_passport(root, FORGE_ROOT)
+            record_lifecycle_transition(root, FORGE_ROOT, self._write(root))
+            summary = lifecycle_transition_summary(root)
+            self.assertEqual(summary["instance_bound_count"], 1)
+            self.assertEqual(summary["self_consistent_count"], 0)
+            self.assertEqual(summary["components"]["legacy-secret-scanner"]["binding"], "instance-bound")
+
+            # Forge an unsigned imported transition with a self-consistent chain.
+            ledger = ForgePaths(root).ledger
+            rows = [_json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip()]
+            event = {
+                "schema": 2, "id": "forged-lifecycle", "utc": "2020-01-01T00:00:00+00:00",
+                "kind": "component-lifecycle-transition", "source": "owner",
+                "previous_event_hash": _canonical_hash(rows[-1]),
+                "payload": {"component": "imported-widget", "disposition": "retire", "authority": "owner", "reason": "imported"},
+            }
+            event["event_hash"] = _canonical_hash(event)
+            with ledger.open("a", encoding="utf-8") as handle:
+                handle.write(_json.dumps(event) + "\n")
+
+            after = lifecycle_transition_summary(root)
+            self.assertEqual(after["self_consistent_count"], 1)
+            self.assertEqual(after["components"]["imported-widget"]["binding"], "self-consistent")
+
     def test_resume_surfaces_lifecycle_transitions_only_when_present(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

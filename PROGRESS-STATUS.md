@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.569  
+**Current build:** 0.570  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -35,6 +35,7 @@
 - 0.567: **G3 forward-compat (begun)** — forward migration guaranteed to preserve unknown top-level and nested fields verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`, surfaced in the Resume Brief) rather than interpreting or dropping them. First piece of the cross-model evolution kernel. Suite grows additively to 536/56.
 - 0.568: **G3 vendor-neutral continuity (P4-01)** — the continuity kernel rejects model-instruction and vendor-identity keys on digest intake, so it stores project truth rather than model instructions; a different model can consume the continuity without inheriting another model's directives. Suite grows additively to 537/56.
 - 0.569: **G3 component lifecycle records (P4-03)** — retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event (a replace names its successor and the invariants to preserve); component evolution across model generations is auditable. Suite grows additively to 542/57.
+- 0.570: **G3 field-test hardening** — a 12-agent adversarial test found two over-assertions, both closed: lifecycle transitions are now instance-bound (imported ones labeled self-consistent), and the vendor-neutral digest screens free-text values (not only keys) with an honest truth boundary. Suite grows additively to 544/57.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

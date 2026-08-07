@@ -4,6 +4,7 @@ import hashlib
 from pathlib import Path
 from typing import Any
 
+from .instance_key import classify_signature
 from .ledger import read_events, record_event
 
 LIFECYCLE_STATES = (
@@ -22,7 +23,10 @@ LIFECYCLE_TRANSITION_TRUTH_BOUNDARY = (
     "A lifecycle transition records a project-authority-declared disposition of a named "
     "component (retain, fold, freeze, retire, replace) with a durable reason. It is an "
     "auditable evolution record, not proof that the successor is correct or that the "
-    "declared invariants were actually preserved — invariant verification is a separate step."
+    "declared invariants were actually preserved — invariant verification is a separate step. "
+    "A transition is 'instance-bound' only when its event is signed by a key this instance "
+    "trusts; an unsigned or imported transition is 'self-consistent' and is not asserted as "
+    "authored in this instance."
 )
 
 
@@ -69,23 +73,41 @@ def record_lifecycle_transition(project_root: Path, forge_root: Path, source_pat
 
 
 def lifecycle_transition_summary(project_root: Path) -> dict[str, Any]:
-    """Audit view of recorded component lifecycle transitions, latest per component."""
+    """Audit view of recorded component lifecycle transitions, latest per component.
+
+    Each transition is authority-declared, so like authority and provenance it is bound
+    to this instance's key: a transition whose event is not signed by a trusted key
+    (an unsigned legacy or an imported/fabricated one) is labeled ``self-consistent``,
+    never counted as an authentic in-instance record without that label.
+    """
     by_disposition: dict[str, int] = {}
+    by_binding: dict[str, int] = {}
     components: dict[str, dict[str, Any]] = {}
     events = read_events(project_root, kinds={"component-lifecycle-transition"})
     for event in events:
         payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
         disposition = str(payload.get("disposition", ""))
         by_disposition[disposition] = by_disposition.get(disposition, 0) + 1
+        binding = classify_signature(
+            str(event.get("event_hash", "")),
+            str(event.get("key_id", "")),
+            str(event.get("signature", "")),
+        )
+        binding = "instance-bound" if binding == "instance-bound" else "self-consistent"
+        by_binding[binding] = by_binding.get(binding, 0) + 1
         components[str(payload.get("component", ""))] = {
             "disposition": disposition,
             "successor": str(payload.get("successor", "")),
+            "binding": binding,
             "utc": str(event.get("utc", "")),
         }
     return {
         "schema": 1,
         "transition_count": len(events),
+        "instance_bound_count": by_binding.get("instance-bound", 0),
+        "self_consistent_count": by_binding.get("self-consistent", 0),
         "by_disposition": by_disposition,
+        "by_binding": by_binding,
         "components": components,
         "truth_boundary": LIFECYCLE_TRANSITION_TRUTH_BOUNDARY,
     }

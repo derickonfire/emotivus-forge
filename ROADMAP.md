@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.569  
+**Current release:** 0.570  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -19,7 +19,7 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 
 G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`). G3 has a certifiable foundation and then remains continuous by design.
 
-## Reconciliation (as of 0.569)
+## Reconciliation (as of 0.570)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -27,7 +27,7 @@ per-chunk sequence in the table below. The chunk table is kept as the original
 structural plan and history; the sections here reconcile it with what actually shipped
 and sequence the near term.
 
-### Delivered 0.556 → 0.569 (evidence-driven)
+### Delivered 0.556 → 0.570 (evidence-driven)
 
 | Release | Goal | Delivered |
 |---|---|---|
@@ -43,6 +43,7 @@ and sequence the near term.
 | 0.567 | G3 | **Forward-compatible migration**: unknown top-level and nested fields preserved verbatim; Forge reports preserved-but-unrecognized fields (`core/forward_compat.py`). |
 | 0.568 | G3 | **Vendor-neutral continuity (P4-01)**: the continuity kernel rejects model-instruction and vendor-identity keys on digest intake — it stores project truth, not model instructions. |
 | 0.569 | G3 | **Component lifecycle records (P4-03)**: retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event; a replace names its successor and preserved invariants. |
+| 0.570 | G3 | **Field-test hardening**: a 12-agent adversarial test closed two over-assertions — lifecycle transitions are now instance-bound (imported ones labeled self-consistent), and the vendor-neutral digest screens free-text values, not only keys. |
 
 **Standing:** **G1 is COMPLETE (0.566)** — see `planning/G1-COMPLETION.md`. The dominant G1 finding ("self-consistent ≠ authentic") is closed for
 **both authority and provenance** (single- and multi-party) — an imported package can

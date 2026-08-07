@@ -15,7 +15,7 @@ from .paths import ForgePaths
 # excluded from the canonical hash (like event_hash) so adding it does not alter the
 # chain: event_hash covers the rest of the event (including key_id), and the signature
 # covers event_hash.
-SIGNED_KINDS = {"authority-baseline-authorized", "artifact-provenance-recorded"}
+SIGNED_KINDS = {"authority-baseline-authorized", "artifact-provenance-recorded", "component-lifecycle-transition"}
 _CANONICAL_EXCLUDED = {"event_hash", "signature"}
 
 

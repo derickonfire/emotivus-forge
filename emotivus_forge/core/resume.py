@@ -409,9 +409,14 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     if lifecycle_transitions.get("transition_count"):
         by_disposition = lifecycle_transitions.get("by_disposition", {})
         parts = ", ".join(f"{count} {name}" for name, count in sorted(by_disposition.items()))
+        imported = int(lifecycle_transitions.get("self_consistent_count", 0) or 0)
+        binding_note = (
+            f" {imported} imported/self-consistent (not authored in this instance)."
+            if imported else " all instance-bound."
+        )
         lines.append(
-            f"- **Component lifecycle:** {lifecycle_transitions['transition_count']} recorded transition(s) ({parts}). "
-            "Auditable evolution record; does not prove successors are correct or invariants preserved."
+            f"- **Component lifecycle:** {lifecycle_transitions['transition_count']} recorded transition(s) ({parts});"
+            f"{binding_note} Auditable evolution record; does not prove successors are correct or invariants preserved."
         )
     preserved_unknown = preserved_unknown_fields(settings)
     if preserved_unknown:

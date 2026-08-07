@@ -1,4 +1,10 @@
-# Emotivus Forge 0.569 — Goal 3: Component Lifecycle Records (P4-03)
+# Emotivus Forge 0.570 — Goal 3: Field-Test Hardening
+
+- A 12-agent adversarial field test of the G3 continuity kernel found two over-assertions; both are closed and regression-locked.
+- Lifecycle transitions are now instance-bound like authority and provenance (an imported or forged transition is labeled self-consistent, never counted as authentic).
+- The vendor-neutral session digest now screens free-text values for prompt-injection and vendor directives (not only keys), with the truth boundary softened to what the code enforces.
+- Goal 1 remains certified COMPLETE; release authorization remains false. Certified suite grows additively to 544 across 57 modules.
+
 
 - A project authority can record that a named component was retained, folded, frozen, retired, or replaced, via `forge adopt --record-lifecycle-transition`. A fold/replace names its successor; a replace records the invariants that must be preserved.
 - Each transition is an append-only, chain-verified ledger event, so component evolution across model generations is auditable (surfaced in the Resume Brief). Whether invariants were actually preserved is a separate verification step.
