@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.571 — Goal 3: Verified Replacement Invariants (P4-05)
+
+- Continues the cross-model evolution kernel. A component `replace` transition can now declare structured `invariant_checks` — a scoped-Check subject plus its required truth-state — and Forge **verifies** them against the actual Check truth records via `verify_lifecycle_invariants`, wired into `run_scoped_check`.
+- Each invariant is reported **preserved** or **violated**; a violation raises a `core.lifecycle-invariant` warning finding. Free-text invariants remain recorded but unverified.
+- Delivers the "verify preserved invariants" step of the G3 completion rule: a newer model can replace an obsolete component and have Forge confirm the declared invariants still hold, rather than take the replacement on trust. PRESERVED means the referenced truth still holds — not that the replacement is correct or complete.
+- Goal 1 remains certified **COMPLETE**; release authorization remains **false**.
+- Certified suite grows additively to **545 focused public-neutral regressions across 57 deterministic isolated modules**. P2-01 schema chunk stays active.
+
 ## 0.570 — Goal 3: Field-Test Hardening (lifecycle binding + vendor-neutral free-text)
 
 - A 12-agent adversarial field test of the G3 kernel found two genuine over-assertions of Forge's own ethos; both are closed and regression-locked (`planning/G3-FIELD-TEST-OBSERVED-MISSES.md`).

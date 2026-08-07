@@ -10,6 +10,7 @@ from emotivus_forge.core.lifecycle import (
 )
 from emotivus_forge.core.passport import build_passport
 from emotivus_forge.core.resume import build_resume
+from emotivus_forge.services.scoped_check import run_scoped_check
 from tests.support import FORGE_ROOT, ForgeTestCase
 
 
@@ -101,6 +102,32 @@ class LifecycleTransitionTests(ForgeTestCase):
             after = lifecycle_transition_summary(root)
             self.assertEqual(after["self_consistent_count"], 1)
             self.assertEqual(after["components"]["imported-widget"]["binding"], "self-consistent")
+
+    def test_replace_invariants_are_verified_against_scoped_check_truth(self) -> None:
+        # P4-05: a replace can declare structured invariant_checks (subject + required
+        # truth-state). Forge verifies them against the current scoped-Check truth
+        # records and reports preserved vs violated — free-text invariants stay recorded
+        # but unverified.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            build_passport(root, FORGE_ROOT)
+            self._write(
+                root,
+                invariant_checks=[
+                    {"subject": "observed-change-reconciliation", "required_truth_state": "OBSERVED"},
+                    {"subject": "authority-baseline", "required_truth_state": "CONFIRMED"},
+                ],
+            )
+            record_lifecycle_transition(root, FORGE_ROOT, "lifecycle-transition.json")
+            payload = run_scoped_check(root, FORGE_ROOT)
+            invariants = payload["lifecycle_invariants"]
+            self.assertEqual(invariants["status"], "VIOLATED")
+            component = invariants["components"]["legacy-secret-scanner"]
+            self.assertIn("observed-change-reconciliation", [p["subject"] for p in component["preserved"]])
+            self.assertIn("authority-baseline", [v["subject"] for v in component["violated"]])
+            self.assertIn("exact identity", component["unverified_freetext"])
+            self.assertTrue(any(f.get("check") == "core.lifecycle-invariant" for f in payload["findings"]))
 
     def test_resume_surfaces_lifecycle_transitions_only_when_present(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

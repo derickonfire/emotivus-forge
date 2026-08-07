@@ -16,6 +16,7 @@ from ..core.common import read_json, utc_now, write_json
 from ..core.evidence_validity import invalidate_connected_evidence
 from ..core.guardrails import evaluate_guardrails
 from ..core.ledger_assertions import evaluate_ledger_assertions
+from ..core.lifecycle import verify_lifecycle_invariants
 from ..core.check_qualification import qualify_evidence_records
 from ..core.provenance import evaluate_artifact_provenance
 from ..core.deployable_boundary import evaluate_deployable_boundaries
@@ -737,6 +738,20 @@ def run_scoped_check(
     )
     truth_summary = summarize_truth_records(truth_records)
 
+    lifecycle_invariants = verify_lifecycle_invariants(truth_records, project_root)
+    for component, detail in lifecycle_invariants.get("components", {}).items():
+        for violation in detail.get("violated", []):
+            findings.append({
+                "check": "core.lifecycle-invariant",
+                "severity": "warning",
+                "path": ".",
+                "line": 0,
+                "message": (
+                    f"Replaced component '{component}' declared invariant "
+                    f"{violation['subject']}={violation['required']}, but the current truth-state is {violation['actual']}."
+                ),
+            })
+
     blocked = any(item.get("severity") == "blocker" for item in findings) or native_result["status"] in {"BLOCKED", "FAIL", "ERROR"}
     aggregate_eligible = authority_status != "NOT_ESTABLISHED"
     if blocked:
@@ -905,6 +920,7 @@ def run_scoped_check(
         "workspace_integrity": workspace_integrity,
         "truth_records": truth_records,
         "truth_summary": truth_summary,
+        "lifecycle_invariants": lifecycle_invariants,
         "self_currency": self_currency,
         "full_log": ".forge/ledger.jsonl",
     }

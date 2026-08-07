@@ -53,6 +53,19 @@ def record_lifecycle_transition(project_root: Path, forge_root: Path, source_pat
     preserved = [str(item).strip() for item in raw.get("preserved_invariants", []) if str(item).strip()] if isinstance(raw.get("preserved_invariants"), list) else []
     if disposition == "replace" and not preserved:
         raise ValueError("A 'replace' transition must record the invariants that must be preserved.")
+    invariant_checks: list[dict[str, str]] = []
+    raw_checks = raw.get("invariant_checks", [])
+    if raw_checks:
+        if not isinstance(raw_checks, list):
+            raise ValueError("invariant_checks must be a list of {subject, required_truth_state} objects.")
+        for item in raw_checks:
+            if not isinstance(item, dict):
+                raise ValueError("Each invariant check must be a {subject, required_truth_state} object.")
+            subject = str(item.get("subject", "")).strip()
+            required = str(item.get("required_truth_state", "")).strip().upper()
+            if not subject or not required:
+                raise ValueError("Each invariant check needs a non-empty subject and required_truth_state.")
+            invariant_checks.append({"subject": subject, "required_truth_state": required})
     event = record_event(project_root, "component-lifecycle-transition", {
         "component": component,
         "disposition": disposition,
@@ -60,6 +73,7 @@ def record_lifecycle_transition(project_root: Path, forge_root: Path, source_pat
         "reason": reason[:500],
         "successor": successor,
         "preserved_invariants": preserved[:50],
+        "invariant_checks": invariant_checks[:50],
         "contract_source": relative,
     }, source=authority)
     return {
@@ -69,6 +83,64 @@ def record_lifecycle_transition(project_root: Path, forge_root: Path, source_pat
         "successor": successor,
         "event_id": str(event.get("id", "")),
         "truth_boundary": LIFECYCLE_TRANSITION_TRUTH_BOUNDARY,
+    }
+
+
+LIFECYCLE_INVARIANT_TRUTH_BOUNDARY = (
+    "Invariant verification checks that each declared invariant's referenced scoped-Check "
+    "subject still holds its required truth-state after a replacement. It verifies only the "
+    "structured checks a replace declared against Forge-observable truth; free-text invariants "
+    "are recorded but not verified. PRESERVED means the referenced truth still holds, not that "
+    "the replacement is correct or complete."
+)
+
+
+def verify_lifecycle_invariants(truth_records: list[dict[str, Any]], project_root: Path) -> dict[str, Any]:
+    """Verify each replace transition's structured invariant_checks against current truth.
+
+    A newer model may replace an obsolete component; Forge verifies the invariants the
+    replace declared as checkable (subject + required truth-state) against the current
+    scoped-Check truth records, and reports preserved vs violated. Free-text invariants
+    are recorded but not verified.
+    """
+    states: dict[str, str] = {}
+    for record in truth_records:
+        if isinstance(record, dict):
+            states[str(record.get("subject", ""))] = str(record.get("truth_state", ""))
+    components: dict[str, dict[str, Any]] = {}
+    violated_total = 0
+    verified_total = 0
+    for event in read_events(project_root, kinds={"component-lifecycle-transition"}):
+        payload = event.get("payload", {}) if isinstance(event.get("payload"), dict) else {}
+        checks = payload.get("invariant_checks", []) if isinstance(payload.get("invariant_checks"), list) else []
+        if not checks:
+            continue
+        preserved: list[dict[str, str]] = []
+        violated: list[dict[str, str]] = []
+        for check in checks:
+            subject = str(check.get("subject", ""))
+            required = str(check.get("required_truth_state", ""))
+            actual = states.get(subject, "ABSENT")
+            if actual == required:
+                preserved.append({"subject": subject, "truth_state": actual})
+            else:
+                violated.append({"subject": subject, "required": required, "actual": actual})
+        verified_total += len(preserved) + len(violated)
+        violated_total += len(violated)
+        components[str(payload.get("component", ""))] = {
+            "disposition": str(payload.get("disposition", "")),
+            "preserved": preserved,
+            "violated": violated,
+            "unverified_freetext": [str(i) for i in payload.get("preserved_invariants", []) if str(i)],
+        }
+    status = "NONE" if not components else "VIOLATED" if violated_total else "PRESERVED"
+    return {
+        "schema": 1,
+        "status": status,
+        "verified_check_count": verified_total,
+        "violated_count": violated_total,
+        "components": components,
+        "truth_boundary": LIFECYCLE_INVARIANT_TRUTH_BOUNDARY,
     }
 
 

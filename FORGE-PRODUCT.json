@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.570",
+  "version": "0.571",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.570 hardens the Goal-3 continuity kernel against two over-assertions a 12-agent adversarial field test found: component lifecycle transitions are now instance-bound like authority and provenance (an imported or unsigned transition is labeled self-consistent, never counted as authentic), and the vendor-neutral session digest now screens free-text values for prompt-injection and vendor directives — not only keys — with the truth boundary softened to what the code actually enforces. Goal 1 remains certified complete; release authorization remains false.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.571 continues Goal-3 with verified replacement invariants: a component 'replace' can declare structured invariant checks (a scoped-Check subject and its required truth-state), and Forge verifies them against the actual Check truth records, reporting each invariant preserved or violated (free-text invariants stay recorded but unverified). A newer model can now replace an obsolete component and have Forge confirm the declared invariants still hold. Goal 1 remains certified complete; release authorization remains false.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.570",
+  "display_version": "0.571",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [

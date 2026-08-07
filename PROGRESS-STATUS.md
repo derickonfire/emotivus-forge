@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.570  
+**Current build:** 0.571  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -36,6 +36,7 @@
 - 0.568: **G3 vendor-neutral continuity (P4-01)** — the continuity kernel rejects model-instruction and vendor-identity keys on digest intake, so it stores project truth rather than model instructions; a different model can consume the continuity without inheriting another model's directives. Suite grows additively to 537/56.
 - 0.569: **G3 component lifecycle records (P4-03)** — retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event (a replace names its successor and the invariants to preserve); component evolution across model generations is auditable. Suite grows additively to 542/57.
 - 0.570: **G3 field-test hardening** — a 12-agent adversarial test found two over-assertions, both closed: lifecycle transitions are now instance-bound (imported ones labeled self-consistent), and the vendor-neutral digest screens free-text values (not only keys) with an honest truth boundary. Suite grows additively to 544/57.
+- 0.571: **G3 verified replacement invariants (P4-05)** — a replace can declare structured invariant checks (subject + required truth-state) that Forge verifies against the scoped-Check truth records, reporting preserved vs violated. A newer model can replace a component and have Forge confirm invariants still hold. Suite grows additively to 545/57.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

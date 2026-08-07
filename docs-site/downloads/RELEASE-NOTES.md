@@ -1,4 +1,9 @@
-# Emotivus Forge 0.570 — Goal 3: Field-Test Hardening
+# Emotivus Forge 0.571 — Goal 3: Verified Replacement Invariants (P4-05)
+
+- A component replace can declare structured invariant checks (a scoped-Check subject and its required truth-state); Forge verifies them against the actual Check truth records and reports each preserved or violated (a violation raises a warning; free-text invariants stay recorded but unverified).
+- A newer model can now replace an obsolete component and have Forge confirm the declared invariants still hold, rather than take the replacement on trust.
+- Goal 1 remains certified COMPLETE; release authorization remains false. Certified suite grows additively to 545 across 57 modules.
+
 
 - A 12-agent adversarial field test of the G3 continuity kernel found two over-assertions; both are closed and regression-locked.
 - Lifecycle transitions are now instance-bound like authority and provenance (an imported or forged transition is labeled self-consistent, never counted as authentic).
