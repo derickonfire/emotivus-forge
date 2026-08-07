@@ -23,6 +23,8 @@ already have access to.
 | **Forge steward** | operates `derickonfire/emotivus-forge`, **read-only toward LineCheck** | Advisory continuity/truth | **None** — advisory only; never acceptance evidence; no ownership/reviewer/merger/arbitration authority |
 | **Rox** | — | Decision | Final decision |
 
+*The ChatGPT/Claude roles above are **per-task defaults**, not fixed identities: a Rox-decided transfer can reassign ownership/review per task (Dual-AI Protocol v0.2 §6). The Forge steward and Rox rows are fixed.*
+
 ## Forge steward — standing status for LC-001
 
 > **Forge consultation: NOT_RUN — bounded read-only invocation unavailable.**
