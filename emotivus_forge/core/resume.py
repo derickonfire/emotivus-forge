@@ -743,7 +743,13 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
     if checks.get("status") in {"FAIL", "ERROR", "BLOCKED"}:
         add_attention("blocker", "verification", "The latest recorded Check did not pass.")
     if decision_forks.get("pending"):
-        add_attention("blocker", "decision", "A high-impact decision fork requires authority before implementation continues.")
+        # A pending decision fork is a choice Forge noticed, not a defect in the
+        # project. It is advisory: it needs authority when the choice is *resolved in
+        # implementation*, not a stop before the session even orients. Escalating it
+        # to a blocker made first-contact orientation emit "Stop before changing the
+        # project", which contradicts Forge's advisory-never-a-blocker boundary. Only
+        # a contradiction — observed work against a *confirmed* decision — is a stop.
+        add_attention("warning", "decision", "A pending decision fork will need authority when it is resolved in implementation.")
     if decision_forks.get("contradictions"):
         add_attention("blocker", "decision", "Observed work may contradict a confirmed governing decision.")
     if capability_attention:
@@ -783,9 +789,16 @@ def build_resume(project_root: Path, forge_root: Path, *, budget: str = "compact
             add_attention("blocker", "continuity-gap", f"{gap.get('gap_id', 'continuity gap')}: {gap.get('question', '')}")
     if knowledge_delta.get("stale"):
         add_attention("warning", "knowledge", "One or more previously supported project facts are stale and should be confirmed before relying on them.")
+    has_changes_to_govern = bool(changes.get("count", 0))
     for reason in self_currency.get("attention", []):
         text = str(reason)
-        severity = "blocker" if "objective" in text.casefold() and "no explicit" in text.casefold() else "warning"
+        casefolded = text.casefold()
+        missing_objective = "objective" in casefolded and "no explicit" in casefolded
+        # A missing objective blocks *changing* the project, not *orienting* it. On a
+        # clean read-only first contact (nothing to govern yet) it is a warning — the
+        # same rule the objective-attention check above uses — and becomes a blocker
+        # only once there are changes. This keeps first contact advisory, never a stop.
+        severity = "blocker" if (missing_objective and has_changes_to_govern) else "warning"
         add_attention(severity, "self-currency", text)
     order = {"blocker": 0, "warning": 1, "notice": 2}
     attention_items.sort(key=lambda item: (order.get(item["severity"], 9), item["category"], item["message"]))

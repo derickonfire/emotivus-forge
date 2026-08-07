@@ -1,5 +1,15 @@
 # Emotivus Forge changelog
 
+## 0.573 — Field usefulness + anti-bloat
+
+- **Fixes three defects a read-only consultation on a real project exposed**, where Forge behaved as a blocker rather than an advisor. Each is regression-locked:
+  - **Pending decision fork is advisory, not a blocker.** `resume.py` no longer escalates a pending fork (a choice Forge merely noticed) to a blocker that makes first-contact orientation emit "Stop before changing the project." Only a *contradiction* against a confirmed decision blocks. The same first-contact softening was applied to the self-currency "no explicit objective" path so a cleared objective can't re-trigger the stop.
+  - **Objective resolver obeys a document's own staleness banner.** `authority_registry.py` detects a planning doc that disowns itself near the top ("historical/parking context", "superseded by", "does not name the current…") and does not scrape its objective, even when it carries a "next action" heading. The skip is recorded honestly in `rejected_objectives`.
+  - **Test/acceptance/gate harnesses are discovered.** `orientation.py` recognizes `check_*`/`*_check`/gate/acceptance/harness files and directories, so a gate-defined project is no longer reported as "tests 0"; the layout states its method and that a non-standard harness can still be missed.
+- **Anti-bloat pass on Forge's own self-consistency gates.** Removed the per-chunk 8–20-minute timebox format/range rule, the retired-percentage guards, the exact website-nav-label check, and the same-file goal-status duplication checks from `check_progress_status.py` — ceremony that enforced bookkeeping, not a truthful claim. Kept every check that prevents a real reader-facing misstatement: version consistency, state schema, required paths, download checksums, goal-status vocabulary, and the planning-doc goal rows a reader consults.
+- Three new regression tests added, four ceremony tests removed: the certified count stays **546 across 58 modules** and no existing behavior test was altered. Verified end-to-end by re-running the read-only consultation on the real project — right objective, harness discovered, advisory (not blocking) recommended prompt, and zero writes into the target tree.
+- G1 COMPLETE, G3 foundation CERTIFIED/CONTINUOUS; G2 remains the one open goal. Release authorization remains **false**.
+
 ## 0.572 — Goal 3 (Cross-Model Evolution Kernel) foundation CERTIFIED
 
 - Certifies the **G3 foundation**. The end-to-end replacement round trip passes with real Forge calls (`test_g3_roundtrip`): another instance **migrates** an older package (unknown top-level and nested fields preserved verbatim), **replaces** an obsolete component with a **Forge-verified** invariant, and **emits a compatible continuity package** a **fresh instance consumes** — restoring the eight state files, the preserved unknown field, and the recorded replacement. Exact meaning survives the round trip.

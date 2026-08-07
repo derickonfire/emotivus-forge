@@ -250,6 +250,43 @@ def _looks_test(name: str) -> bool:
     )
 
 
+# Directory segments that name a test/acceptance/gate harness. A project's checks do
+# not always live under "tests/": acceptance suites, runtime gates, and check-scripts
+# are just as real, and reporting "tests 0" on a gate-defined project is a false
+# negative that makes the Brief look ignorant of the project's own identity.
+_HARNESS_DIR_SEGMENTS = {
+    "tests", "test", "spec", "specs", "e2e", "acceptance", "harness",
+    "gate", "gates", "runtime-gate", "checks",
+}
+
+_HARNESS_SUFFIXES = {
+    ".py", ".php", ".rb", ".js", ".mjs", ".cjs", ".ts", ".go", ".sh", ".sql",
+}
+
+
+def _looks_harness(rel: str) -> bool:
+    """True for a file that is part of a test/acceptance/gate harness — the narrow
+    test-naming convention (``_looks_test``) *or* a check/gate script (``check_*``,
+    ``*_check.*``) *or* a file living under a harness directory. Deliberately wider
+    than ``_looks_test`` so acceptance suites and runtime gates are counted, but still
+    bounded to script suffixes so ordinary source is not swept in."""
+    parts = PurePosixPath(rel).parts
+    if not parts:
+        return False
+    name = parts[-1]
+    lowered = name.lower()
+    if _looks_test(name):
+        return True
+    if any(segment in _HARNESS_DIR_SEGMENTS for segment in parts[:-1]):
+        return True
+    suffix = PurePosixPath(rel).suffix.lower()
+    if suffix in _HARNESS_SUFFIXES:
+        stem = lowered[: -len(suffix)] if suffix else lowered
+        if stem.startswith("check_") or stem.endswith("_check") or stem.startswith("gate_") or stem.endswith("_gate"):
+            return True
+    return False
+
+
 def _tidy(text: str) -> str:
     """Trim a one-line description to a word boundary and drop trailing punctuation."""
     text = text.strip()
@@ -293,7 +330,7 @@ def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
         suffix = PurePosixPath(rel).suffix.lower()
         if suffix:
             ext_hist[suffix] += 1
-        is_test = _looks_test(parts[-1]) or "tests" in parts or "test" in parts or "spec" in parts
+        is_test = _looks_harness(rel)
         if is_test:
             test_count += 1
             test_dirs[parts[0]] += 1
@@ -320,7 +357,11 @@ def _derive_layout(rel_set: set[str]) -> dict[str, Any]:
         "primary_source_dir": src_ranked[0][0] if src_ranked else "",
         "primary_language": ranked(src_exts)[0][0] if src_exts else "",
         "packages": sorted(packages)[:6],
-        "tests": {"dir": ranked(test_dirs)[0][0] if test_dirs else "", "count": test_count},
+        "tests": {
+            "dir": ranked(test_dirs)[0][0] if test_dirs else "",
+            "count": test_count,
+            "method": "test/acceptance/gate files matched by naming and directory; a non-standard harness can still be missed",
+        },
         "file_count": len(rel_set),
     }
 

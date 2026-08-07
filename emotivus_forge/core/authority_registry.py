@@ -42,6 +42,44 @@ COMPLETE_MARKERS = re.compile(
 OPEN_MARKERS = re.compile(r"\b(?:open|next|todo|pending|planned|deferred|active|build|implement|create|add|fix)\b", re.I)
 META_REDIRECT = re.compile(r"\b(?:see|refer(?: to)?|consult|full ordered plan|roadmap order|ordered plan)\b", re.I)
 
+# A planning document sometimes disowns itself in plain English near the top —
+# "this file is historical/parking context", "superseded by X", "no longer the
+# current authority". A human reads that banner and moves on. Forge must too: it
+# must never scrape a current objective out of a file that says it is not current.
+# These patterns are deliberately high-precision (a document declaring its own
+# staleness), not generic mentions of the words, so a live doc that merely
+# discusses history is not silenced.
+_SELF_STALE_MARKERS = re.compile(
+    r"(?:"
+    r"historical(?:\s*/\s*|\s+|-)?(?:parking\s+)?context"
+    r"|parking\s+context"
+    r"|this\s+(?:file|document|doc|page|section)\s+is\s+(?:now\s+)?"
+    r"(?:historical|archived|deprecated|obsolete|superseded|no\s+longer\s+\w+)"
+    r"|(?:is|are)\s+no\s+longer\s+(?:authoritative|current|the\s+current\s+\w+)"
+    r"|does\s+not\s+name\s+the\s+current"
+    r"|not\s+the\s+current\s+(?:next\s+action|objective|authority|plan)"
+    r"|superseded\s+by\b"
+    r"|do\s+not\s+(?:use|continue\s+from|start\s+from)\s+this"
+    r")",
+    re.I,
+)
+
+
+def _declares_itself_stale(text: str, *, head_lines: int = 12) -> bool:
+    """True when a planning doc disowns itself near the top: a plain-English banner
+    saying it is historical / superseded / parking context and does not name the
+    current work. Only the head of the file is inspected, so a live document that
+    merely references history further down is not mistaken for a dead one."""
+    seen: list[str] = []
+    for raw in text.splitlines():
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        seen.append(stripped)
+        if len(seen) >= head_lines:
+            break
+    return bool(_SELF_STALE_MARKERS.search("\n".join(seen)))
+
 
 def _kind_for_name(name: str) -> tuple[str, int]:
     lower = name.lower()
@@ -316,9 +354,19 @@ def discover_authorities(
             continue
         relative = path.relative_to(project_root).as_posix()
         lifecycle, lifecycle_adjustment = _lifecycle(relative)
+        self_stale = _declares_itself_stale(text)
         objective, heading, objective_status = _extract_objective(text)
         linked_objective: dict[str, str] | None = None
         objective_quality, rejection_reason = _objective_quality(objective) if objective else ("rejected", "")
+        if self_stale and objective:
+            # The document says it is not the current authority. Do not use its
+            # objective; record why, so the choice is visible and honest.
+            rejected_objectives.append({
+                "text": objective, "source": relative, "heading": heading,
+                "status": objective_status,
+                "reason": "The document declares itself historical/superseded and does not name the current objective.",
+            })
+            objective, objective_quality, rejection_reason = "", "rejected", "self-declared-stale"
         if objective and objective_quality == "redirect":
             linked_objective = _resolve_linked_objective(project_root, relative, objective)
         rules = _extract_governance(text)

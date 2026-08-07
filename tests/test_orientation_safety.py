@@ -61,6 +61,47 @@ class OrientationSafetyTests(ForgeTestCase):
             self.assertEqual(identity["status"], "observed")
             self.assertNotEqual(identity["status"], "confirmed")
 
+    def test_self_declared_stale_planning_doc_is_not_used_as_objective(self) -> None:
+        # A planning doc that disowns itself at the top ("historical/parking context;
+        # does not name the current next action; continue from X") must not have its
+        # objective scraped, even though it carries a "THE NEXT ACTION" heading. Forge
+        # must read the plain-English banner a human obeys, and fall through to a live
+        # source or to honest "confirmation required".
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "BACKLOG.md").write_text(
+                "> **CURRENT AUTHORITY NOTICE:** This file is historical/parking context. "
+                "It does not name the current next action. Continue from `ROADMAP-NOW.md`.\n\n"
+                "## THE NEXT ACTION\n\n- Ship the abandoned v1 rewrite nobody wants.\n",
+                encoding="utf-8",
+            )
+            (root / "ROADMAP-NOW.md").write_text(
+                "# Roadmap\n\n## Current objective\n\n- Deliver the reconciled scheduling engine for the current release.\n",
+                encoding="utf-8",
+            )
+            authorities = discover_authorities(root, FORGE_ROOT)
+            self.assertNotEqual(authorities["objective"].get("source"), "BACKLOG.md")
+            self.assertNotIn("abandoned v1 rewrite", authorities["objective"].get("text", ""))
+            self.assertTrue(any(
+                item.get("source") == "BACKLOG.md" and "historical" in item.get("reason", "")
+                for item in authorities.get("rejected_objectives", [])
+            ))
+
+    def test_layout_discovers_gate_and_check_harnesses(self) -> None:
+        # A project whose tests are a check_*/gate acceptance harness (not test_*.py or
+        # a tests/ dir) must not be reported as having zero tests — that false negative
+        # made Forge look ignorant of a test-defined project's own identity.
+        from emotivus_forge.core.orientation import derive_orientation
+        relatives = {
+            "index.php", "src/app.php",
+            "toolset/tools/check_routine_audience.php",
+            "toolset/tools/check_schedule_reconciliation.php",
+            "runtime-gate/run_gate.php",
+        }
+        layout = derive_orientation(Path("."), relatives)["layout"]
+        self.assertGreaterEqual(layout["tests"]["count"], 3)
+        self.assertIn("harness", layout["tests"]["method"])
+
     def test_symlinked_files_outside_project_are_not_scanned(self) -> None:
         with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as external_directory:
             root = Path(directory)

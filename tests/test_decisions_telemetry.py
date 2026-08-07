@@ -47,6 +47,21 @@ class DecisionAndTelemetryTests(ForgeTestCase):
                 self.assertIn("Pending decision forks", resume["markdown"])
                 self.assertEqual(resume["status"], "ATTENTION")
 
+    def test_pending_decision_fork_is_advisory_not_a_first_contact_blocker(self) -> None:
+        # A pending decision fork is a choice Forge noticed, not a defect. On a clean
+        # read-only first contact it must surface as an advisory warning, never a
+        # blocker that makes Forge tell the agent to "stop before changing the project".
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._deadline_fork_fixture(root)
+            build_passport(root, FORGE_ROOT)
+            resume = build_resume(root, FORGE_ROOT)
+            self.assertTrue(resume["decision_forks"]["pending"])
+            decision_items = [item for item in resume["attention_items"] if item["category"] == "decision"]
+            self.assertTrue(decision_items)
+            self.assertTrue(all(item["severity"] == "warning" for item in decision_items))
+            self.assertEqual(resume["attention_counts"].get("blocker", 0), 0)
+
     def test_decision_resolution_records_accepted_and_rejected_options(self) -> None:
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)

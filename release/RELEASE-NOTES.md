@@ -1,4 +1,10 @@
-# Emotivus Forge 0.572 — Goal 3 (Cross-Model Evolution Kernel) foundation CERTIFIED
+# Emotivus Forge 0.573 — Field usefulness + anti-bloat
+
+- Fixes three defects a read-only consultation on a real project exposed, where Forge behaved as a blocker rather than an advisor: a pending decision fork is now advisory instead of a "stop before changing the project" blocker; the objective resolver obeys a document's own "this file is historical/superseded" banner instead of scraping a stale heading; and test/acceptance/gate harnesses are discovered instead of reported as zero.
+- Anti-bloat pass on Forge's own self-consistency gates: removed per-chunk timebox format/range enforcement, retired-percentage guards, the exact website-nav-label check, and same-file goal-status duplication — bookkeeping ceremony, not truthful claims. Every check that prevents a real reader-facing misstatement was kept.
+- Three regression tests added, four ceremony tests removed: certified suite unchanged at 546 across 58 modules. Verified end-to-end on the real project (right objective, harness discovered, advisory prompt, zero writes). Release authorization remains false.
+
+## 0.572 — Goal 3 (Cross-Model Evolution Kernel) foundation CERTIFIED
 
 - The end-to-end replacement round trip passes: another instance migrates an older package (unknown fields preserved), replaces an obsolete component with a Forge-verified invariant, and emits a compatible continuity package a fresh instance consumes with exact meaning intact.
 - G3 moves from FOUNDATION_ACTIVE to CONTINUOUS; evidence inventoried in planning/G3-COMPLETION.md. Goal 1 is COMPLETE, Goal 3's foundation is certified; Goal 2 is the one remaining open goal.

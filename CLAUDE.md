@@ -43,7 +43,7 @@ There is no pytest dependency; the suite runs on the stdlib:
 python3 -m unittest discover -s tests -q
 ```
 
-The certified target is **523 tests across 54 deterministic isolated modules**,
+The certified target is **546 tests across 58 deterministic isolated modules**,
 and it must stay green.
 
 ## Invariants that keep the suite self-consistent
@@ -51,9 +51,13 @@ and it must stay green.
 Forge verifies its own narrative. Several things are cross-checked and will fail
 loudly if you touch them carelessly:
 
-- **Frozen counts.** `tests/test_narrative_integrity.py` hardcodes the 523 / 54
-  counts. Adding a *new test method* changes the count and self-trips the
-  integrity check — **extend an existing test method instead of adding one.**
+- **Frozen counts.** `tests/test_narrative_integrity.py` hardcodes the 546 / 58
+  counts. Adding a *new test method* changes the regression count, so a seal that
+  adds tests must bump the count across the narrative surfaces in lockstep. Do
+  **not** contort tests to dodge this — write the clean test and bump the count.
+  (0.573 note: the exact-count claim is itself a lockstep cost that has silently
+  drifted across ungated copies before; making it computed rather than
+  hand-maintained is a recommended future anti-bloat cut.)
 - **Lockstep version.** A version bump must move in lockstep across every
   surface the narrative-integrity check enumerates (docs, manifest, product
   JSON, public package, regenerated site). Bump nothing in isolation.

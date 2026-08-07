@@ -1,8 +1,10 @@
-# Forge 0.572 implementation report
+# Forge 0.573 implementation report
 
 ## Scope
 
 P1-01 and P1-02 of the Durable Core roadmap: active runtime import reachability, bounded command-path observation, and complete active top-level path classification.
+
+0.573 addendum — a field-usefulness and anti-bloat release: fixes three read-only-consultation defects where Forge acted as a blocker rather than an advisor (pending-fork blocker, self-declared-stale objective scrape, undiscovered gate/acceptance harness), and removes internal self-consistency gates that enforced bookkeeping ceremony rather than a truthful claim. No runtime module was added or removed, so the reachability result below is unchanged.
 
 ## Result
 

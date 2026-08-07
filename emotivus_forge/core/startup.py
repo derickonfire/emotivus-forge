@@ -211,9 +211,16 @@ def render_run(payload: dict[str, Any]) -> str:
         dir_summary = " ".join(f"{row['dir']}/({row['files']})" for row in layout["top_level"][:4])
         source = layout.get("primary_source_dir", "")
         tests = layout.get("tests", {}) if isinstance(layout.get("tests"), dict) else {}
-        orient_extra.append(
-            f"Layout: {dir_summary}" + (f" · source {source} · tests {tests.get('count', 0)}" if source else "")
-        )
+        test_count = tests.get("count", 0)
+        test_dir = tests.get("dir", "")
+        detail: list[str] = []
+        if source:
+            detail.append(f"source {source}")
+        if test_count:
+            detail.append(f"tests {test_count}" + (f" in {test_dir}/" if test_dir else "") + " (by naming)")
+        else:
+            detail.append("tests: none matched by naming — a non-standard harness may still exist")
+        orient_extra.append(f"Layout: {dir_summary}" + (" · " + " · ".join(detail) if detail else ""))
     if screening.get("blocked"):
         counts = screening.get("counts", {}) if isinstance(screening.get("counts"), dict) else {}
         orient_extra.append(f"Secrets: {counts.get('BLOCK', 0)} BLOCK · {counts.get('REVIEW', 0)} REVIEW — hardcoded secret(s) detected in source")

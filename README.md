@@ -1,16 +1,17 @@
-# Emotivus Forge 0.572
+# Emotivus Forge 0.573
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.572 changes
+## What 0.573 changes
 
-- **Certifies the Goal-3 (Cross-Model Evolution Kernel) foundation.** The end-to-end replacement round trip passes with real Forge calls (`test_g3_roundtrip`): another instance **migrates** an older package (unknown top-level and nested fields preserved verbatim), **replaces** an obsolete component with a **Forge-verified** invariant, and **emits a compatible continuity package** that a **fresh instance consumes** — restoring all eight state files, the preserved unknown field, and the recorded replacement. Exact meaning survives the round trip.
-- Every clause of the G3 completion rule is delivered and adversarially tested (a 12-agent field test found and closed two over-assertions in 0.570); the evidence is inventoried in `planning/G3-COMPLETION.md`.
-- The roadmap moves **G3 from FOUNDATION_ACTIVE to CONTINUOUS** — the foundation is certified and G3 now remains continuous by design (new instruments require an observed miss + scored trial). **G1 is COMPLETE, G3's foundation is certified; G2 is the one remaining open goal.**
-- Honest boundary: certification is of the evolution *foundation* — not of any specific release. Release authorization remains **false**; Forge preserves and reports unrecognized fields without interpreting them, and verifies declared invariants without claiming a successor is correct.
-- Certified suite grows additively to **546 focused public-neutral regressions across 58 deterministic isolated modules** (new `test_g3_roundtrip`).
+- **Field-usefulness fixes.** A genuine read-only consultation on a real project surfaced three defects where Forge behaved as a blocker rather than an advisor; all three are fixed and regression-locked:
+  - A **pending decision fork is now advisory**, not a blocker — first-contact orientation no longer tells the agent to "stop before changing the project" over a choice Forge merely noticed. Only a *contradiction* against a confirmed decision blocks.
+  - The **objective resolver obeys a document's own staleness banner.** A planning file that says "this file is historical/superseded; continue from X" is no longer scraped for an objective, even when it carries a "next action" heading — Forge reads the plain-English banner a human obeys.
+  - **Test/acceptance/gate harnesses are discovered.** A project whose checks are a `check_*`/gate/acceptance suite is no longer reported as having zero tests; the layout also states its method and flags that a non-standard harness can still be missed.
+- **Anti-bloat pass.** Internal self-consistency gates that enforced bookkeeping ceremony rather than a truthful claim were removed — per-chunk timebox format/range, retired-percentage guards, exact website-nav labels, and same-file goal-status duplication. Every check that prevents a real reader-facing misstatement (version consistency, schemas, required paths, download checksums, goal-status vocabulary, and the planning-doc goal rows a reader consults) was kept.
+- Three new regression tests were added and four ceremony tests removed, so the certified count is unchanged and no existing behavior test was altered. **G1 is COMPLETE, G3's foundation is certified/CONTINUOUS; G2 is the one remaining open goal.** Release authorization remains **false**.
 - Preserves the four-page website design and active generator.
 
 ## Current verification target
