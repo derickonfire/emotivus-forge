@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.571",
+  "version": "0.572",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",
-  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.571 continues Goal-3 with verified replacement invariants: a component 'replace' can declare structured invariant checks (a scoped-Check subject and its required truth-state), and Forge verifies them against the actual Check truth records, reporting each invariant preserved or violated (free-text invariants stay recorded but unverified). A newer model can now replace an obsolete component and have Forge confirm the declared invariants still hold. Goal 1 remains certified complete; release authorization remains false.",
+  "summary": "Forge is the trust layer for AI-built software. It gives any AI model a deterministic, verifiable answer to what is true, who authorized it, what changed, and what the evidence shows — and refuses to turn a hope into a fact. Version 0.572 certifies the Goal-3 cross-model evolution foundation: the end-to-end round trip passes — another instance migrates an older package (unknown fields preserved), replaces an obsolete component with a Forge-verified invariant, and emits a compatible continuity package that a fresh instance consumes with exact meaning intact. Goal 1 is complete, Goal 3's foundation is certified and now continuous; Goal 2 remains open. Release authorization remains false.",
   "positioning": [
     "Forge works beside AI models rather than acting as a coding agent or prompt governor.",
     "Forge owns deterministic project identity, authority, lineage, evidence, and continuity records.",
@@ -628,7 +628,7 @@
         {
           "id": "G3",
           "name": "Cross-Model Evolution Kernel",
-          "status": "FOUNDATION_ACTIVE"
+          "status": "CONTINUOUS"
         }
       ],
       "active_chunk": "P2-01"
@@ -643,7 +643,7 @@
     "Completes P1-01 and P1-02; activates documentation reduction in P1-03.",
     "Preserves the four-page generated website and model-collaboration boundary."
   ],
-  "display_version": "0.571",
+  "display_version": "0.572",
   "release_name": "Active Runtime Reachability and Path Classification",
   "release_lead": "Prove reachability and purpose before deleting, folding, or archiving active code.",
   "active_advanced_capabilities": [
@@ -696,7 +696,7 @@
       {
         "id": "G3",
         "name": "Cross-Model Evolution Kernel",
-        "status": "FOUNDATION_ACTIVE",
+        "status": "CONTINUOUS",
         "definition": "Forge preserves vendor-neutral project truth and a scored evolution loop so newer models can simplify or extend Forge without erasing history.",
         "completion_gate": "The foundation is complete when another model/vendor can migrate an older package, preserve exact meaning, replace an obsolete component, and emit a compatible continuity package."
       }
@@ -1133,7 +1133,7 @@
     "goal_status": {
       "G1": "COMPLETE",
       "G2": "ACTIVE",
-      "G3": "FOUNDATION_ACTIVE"
+      "G3": "CONTINUOUS"
     },
     "completed_chunks": 10,
     "active_chunk": "P2-01",

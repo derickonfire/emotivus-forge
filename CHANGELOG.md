@@ -1,5 +1,13 @@
 # Emotivus Forge changelog
 
+## 0.572 — Goal 3 (Cross-Model Evolution Kernel) foundation CERTIFIED
+
+- Certifies the **G3 foundation**. The end-to-end replacement round trip passes with real Forge calls (`test_g3_roundtrip`): another instance **migrates** an older package (unknown top-level and nested fields preserved verbatim), **replaces** an obsolete component with a **Forge-verified** invariant, and **emits a compatible continuity package** a **fresh instance consumes** — restoring the eight state files, the preserved unknown field, and the recorded replacement. Exact meaning survives the round trip.
+- Every clause of the completion rule is delivered and adversarially tested (the 12-agent field test found + closed two over-assertions in 0.570); the evidence is inventoried in `planning/G3-COMPLETION.md`.
+- The roadmap moves **G3 from FOUNDATION_ACTIVE to CONTINUOUS** across all canonical-goal surfaces — the foundation is certified and G3 remains continuous by design. **G1 is COMPLETE, G3's foundation is certified; G2 (one-command session continuity) is the one remaining open goal.**
+- Honest boundary: certification is of the evolution *foundation*, not of any specific release. Release authorization remains **false**.
+- Certified suite grows additively to **546 focused public-neutral regressions across 58 deterministic isolated modules** (new `test_g3_roundtrip`). P2-01 schema chunk stays active.
+
 ## 0.571 — Goal 3: Verified Replacement Invariants (P4-05)
 
 - Continues the cross-model evolution kernel. A component `replace` transition can now declare structured `invariant_checks` — a scoped-Check subject plus its required truth-state — and Forge **verifies** them against the actual Check truth records via `verify_lifecycle_invariants`, wired into `run_scoped_check`.

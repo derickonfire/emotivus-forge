@@ -1,6 +1,6 @@
 # Forge progress status
 
-**Current build:** 0.571  
+**Current build:** 0.572  
 **Reporting model:** Outcome goals and 8–20 minute chunks  
 **Percentages:** RETIRED
 
@@ -8,7 +8,7 @@
 |---|---|---|
 | G1 · Provable Project Truth | **COMPLETE** | Provable-truth core certified complete; every completion-rule dimension is adversarially verified and the public package self-tests from its own bytes. See `planning/G1-COMPLETION.md`. |
 | G2 · One-Command Session Continuity | **ACTIVE** | No-argument routing exists; the unified start/close experience is not complete. |
-| G3 · Cross-Model Evolution Kernel | **FOUNDATION_ACTIVE** | Vendor-neutral continuity exists; simplification, migration, and replacement trials remain. |
+| G3 · Cross-Model Evolution Kernel | **CONTINUOUS** | Foundation certified: migration preserves meaning, components are replaced with verified invariants, and a compatible continuity package round-trips to a fresh instance. See `planning/G3-COMPLETION.md`. |
 
 ## Core reduction phase
 
@@ -37,6 +37,7 @@
 - 0.569: **G3 component lifecycle records (P4-03)** — retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event (a replace names its successor and the invariants to preserve); component evolution across model generations is auditable. Suite grows additively to 542/57.
 - 0.570: **G3 field-test hardening** — a 12-agent adversarial test found two over-assertions, both closed: lifecycle transitions are now instance-bound (imported ones labeled self-consistent), and the vendor-neutral digest screens free-text values (not only keys) with an honest truth boundary. Suite grows additively to 544/57.
 - 0.571: **G3 verified replacement invariants (P4-05)** — a replace can declare structured invariant checks (subject + required truth-state) that Forge verifies against the scoped-Check truth records, reporting preserved vs violated. A newer model can replace a component and have Forge confirm invariants still hold. Suite grows additively to 545/57.
+- 0.572: **G3 foundation CERTIFIED (CONTINUOUS)** — the end-to-end replacement round trip passes (migrate -> preserve -> replace with verified invariant -> emit compatible package -> consume); evidence in `planning/G3-COMPLETION.md`. G1 COMPLETE, G3 certified, G2 the one open goal. Suite grows additively to 546/58.
 - Next active chunk: **P2-01 · define the minimal project-truth schema** (formal schema work; project-intelligence depth continues alongside)
 - Statically unreachable active modules: **0**
 - Unclassified runtime modules: **0**

@@ -1,4 +1,9 @@
-# Emotivus Forge 0.571 — Goal 3: Verified Replacement Invariants (P4-05)
+# Emotivus Forge 0.572 — Goal 3 (Cross-Model Evolution Kernel) foundation CERTIFIED
+
+- The end-to-end replacement round trip passes: another instance migrates an older package (unknown fields preserved), replaces an obsolete component with a Forge-verified invariant, and emits a compatible continuity package a fresh instance consumes with exact meaning intact.
+- G3 moves from FOUNDATION_ACTIVE to CONTINUOUS; evidence inventoried in planning/G3-COMPLETION.md. Goal 1 is COMPLETE, Goal 3's foundation is certified; Goal 2 is the one remaining open goal.
+- Certification is of the evolution foundation, not any specific release. Release authorization remains false. Certified suite grows additively to 546 across 58 modules.
+
 
 - A component replace can declare structured invariant checks (a scoped-Check subject and its required truth-state); Forge verifies them against the actual Check truth records and reports each preserved or violated (a violation raises a warning; free-text invariants stay recorded but unverified).
 - A newer model can now replace an obsolete component and have Forge confirm the declared invariants still hold, rather than take the replacement on trust.

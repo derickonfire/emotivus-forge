@@ -1,6 +1,6 @@
 # Emotivus Forge — Durable Core Roadmap
 
-**Current release:** 0.571  
+**Current release:** 0.572  
 **Legacy percentage roadmap:** RETIRED  
 **Normal invocation:** `Run Forge`  
 **Planning unit:** one focused 8–20 minute chunk
@@ -15,11 +15,11 @@ Forge works **with** AI models. It provides exact project identity, authority, l
 |---|---|---|
 | G1 · Provable Project Truth | **COMPLETE** | Exact identity, authority, lineage, evidence binding, adversarial package rejection, and package authorization all pass from independently verified bytes. Verified in `planning/G1-COMPLETION.md` (0.566). |
 | G2 · One-Command Session Continuity | **ACTIVE** | Cold models can enter and leave representative projects using Run Forge without selecting workflow commands, repeating completed work, or inventing authority. |
-| G3 · Cross-Model Evolution Kernel | **FOUNDATION_ACTIVE** | The foundation is complete when another model/vendor can migrate an older package, preserve exact meaning, replace an obsolete component, and emit a compatible continuity package. |
+| G3 · Cross-Model Evolution Kernel | **CONTINUOUS** | The foundation is complete when another model/vendor can migrate an older package, preserve exact meaning, replace an obsolete component, and emit a compatible continuity package. Foundation certified in `planning/G3-COMPLETION.md` (0.572); now continuous by design. |
 
-G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`). G3 has a certifiable foundation and then remains continuous by design.
+G1 and G2 must reach a binary **COMPLETE** state. **G1 is COMPLETE as of 0.566** (`planning/G1-COMPLETION.md`); **G3's foundation is CERTIFIED as of 0.572** (`planning/G3-COMPLETION.md`) and now remains continuous by design. **G2 is the remaining open goal.**
 
-## Reconciliation (as of 0.571)
+## Reconciliation (as of 0.572)
 
 Development from 0.556 onward became **evidence-driven** — adversarial field tests and
 a real cross-model collaboration (LineCheck) surfaced the work, rather than the fixed
@@ -27,7 +27,7 @@ per-chunk sequence in the table below. The chunk table is kept as the original
 structural plan and history; the sections here reconcile it with what actually shipped
 and sequence the near term.
 
-### Delivered 0.556 → 0.571 (evidence-driven)
+### Delivered 0.556 → 0.572 (evidence-driven)
 
 | Release | Goal | Delivered |
 |---|---|---|
@@ -45,8 +45,9 @@ and sequence the near term.
 | 0.569 | G3 | **Component lifecycle records (P4-03)**: retain/fold/freeze/retire/replace a named component as an append-only, chain-verified ledger event; a replace names its successor and preserved invariants. |
 | 0.570 | G3 | **Field-test hardening**: a 12-agent adversarial test closed two over-assertions — lifecycle transitions are now instance-bound (imported ones labeled self-consistent), and the vendor-neutral digest screens free-text values, not only keys. |
 | 0.571 | G3 | **Verified replacement invariants (P4-05)**: a replace can declare structured invariant checks that Forge verifies against the scoped-Check truth records, reporting preserved vs violated. |
+| 0.572 | G3 | **G3 foundation CERTIFIED**: the end-to-end replacement round trip passes (migrate -> preserve -> replace with verified invariant -> emit compatible package -> consume); G3 moves to CONTINUOUS (`planning/G3-COMPLETION.md`). |
 
-**Standing:** **G1 is COMPLETE (0.566)** — see `planning/G1-COMPLETION.md`. The dominant G1 finding ("self-consistent ≠ authentic") is closed for
+**Standing:** **G1 is COMPLETE (0.566)** and **G3's foundation is CERTIFIED / CONTINUOUS (0.572)** — see `planning/G1-COMPLETION.md`, `planning/G3-COMPLETION.md`. **G2 is the one remaining open goal.** The dominant G1 finding ("self-consistent ≠ authentic") is closed for
 **both authority and provenance** (single- and multi-party) — an imported package can
 spoof neither authenticated authority nor authenticated provenance. G3 has real substance
 now — cross-vendor trust is enforceable, not just prose. G2 gained the zero-footprint
@@ -54,12 +55,12 @@ consult path.
 
 ### Near-term sequenced queue (supersedes the stale per-chunk targets)
 
-1. **G3 continuity kernel (in progress)** — forward-compatible migration (0.567),
-   vendor-neutral continuity (0.568, P4-01), component lifecycle records (0.569, P4-03),
-   field-test hardening (0.570), and verified replacement invariants (0.571, P4-05) landed.
-   Next: a future-model replacement round trip against an older sealed package (P4-06/07),
-   then certify the G3 foundation (P4-08).
-2. **G2 close-out** — cross-vendor cold-entry/exit handoff acceptance, toward declaring G2 COMPLETE.
+1. **G2 close-out** — the remaining open goal. Cross-vendor cold-entry/exit handoff
+   acceptance (new/unchanged/changed/conflicting/close/release-candidate cold trials),
+   toward declaring G2 COMPLETE.
+
+*G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
+(`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*
 
 *Done: the full recorded G1 observed-miss backlog — native-evidence source binding (0.565),
 provenance parity (0.564), single- and multi-party instance-binding (0.562–0.563), read-only
