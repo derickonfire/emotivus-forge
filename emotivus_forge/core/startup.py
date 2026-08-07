@@ -56,7 +56,16 @@ def resolve_project_root(requested: Path, forge_root: Path) -> tuple[Path, list[
     return candidate, entries
 
 
-def run_forge(project_root: Path, forge_root: Path, *, budget: str = "compact", session_context_path: str = "") -> dict[str, Any]:
+def run_forge(
+    project_root: Path,
+    forge_root: Path,
+    *,
+    budget: str = "compact",
+    session_context_path: str = "",
+    session_close_data: dict[str, Any] | None = None,
+    continuity_export_path: str = "",
+    development_package: str = "",
+) -> dict[str, Any]:
     started = time.monotonic()
     project_root, host_entries = resolve_project_root(project_root, forge_root)
     integrity = inspect_state_integrity(project_root)
@@ -90,7 +99,29 @@ def run_forge(project_root: Path, forge_root: Path, *, budget: str = "compact", 
         payload["recommended_prompt"] = build_recommended_prompt(payload)
         return payload
     session_context = load_session_context(session_context_path, project_root=project_root) if str(session_context_path).strip() else None
-    if not is_adopted(project_root):
+    continuity_export = None
+    if session_close_data is not None:
+        # G2 "leave in one command": Run Forge itself records the durable Session Close
+        # so a cold model never has to switch to a separate close workflow. It adopts
+        # first if needed, runs the scoped Check, records the Close and refreshes
+        # continuity (inside run_scoped_check), and optionally exports a portable
+        # continuity bundle. The caller already holds the state lock for this project.
+        from ..services.scoped_check import run_scoped_check
+        if not is_adopted(project_root):
+            build_passport(project_root, forge_root)
+        check = run_scoped_check(project_root, forge_root, session_close_data=session_close_data)
+        action = "CHECK + SESSION CLOSE"
+        passport = read_json(ForgePaths(project_root).passport, {})
+        if not isinstance(passport, dict):
+            passport = {}
+        resume = build_resume(project_root, forge_root, budget=budget, refresh=False)
+        if continuity_export_path:
+            from ..core.handoff import export_continuity_bundle
+            continuity_export = export_continuity_bundle(
+                project_root, continuity_export_path,
+                development_package=development_package or "", forge_root=forge_root,
+            )
+    elif not is_adopted(project_root):
         passport = build_passport(project_root, forge_root)
         resume = build_resume(project_root, forge_root, budget=budget, refresh=False)
         action = "ADOPT + RESUME"
@@ -146,6 +177,10 @@ def run_forge(project_root: Path, forge_root: Path, *, budget: str = "compact", 
             "advanced_loaded": False,
         },
     }
+    if isinstance(check, dict) and check.get("session_close"):
+        payload["session_close"] = check["session_close"]
+    if continuity_export is not None:
+        payload["continuity_bundle"] = continuity_export
     payload["session_reconciliation"] = build_session_reconciliation(session_context, changes=payload.get("changes", {}), check=check)
     payload["active_pass"] = {
         "status": "COMPLETE",
@@ -238,6 +273,23 @@ def render_run(payload: dict[str, Any]) -> str:
             f"Claimed but not proven: {len(brief.get('claimed_not_proven', []))}",
             f"Exact next action: {brief.get('exact_next_action', '')}",
         ])
+    session_close = payload.get("session_close", {}) if isinstance(payload.get("session_close"), dict) else {}
+    if session_close.get("recorded") or session_close.get("session_type"):
+        close_next = session_close.get("next_action", "")
+        if isinstance(close_next, dict):
+            close_next = close_next.get("text", "")
+        if not close_next:
+            close_next = payload.get("next_action", {}).get("text", "") if isinstance(payload.get("next_action"), dict) else ""
+        close_lines = [
+            "",
+            "SESSION CLOSED",
+            f"Type: {session_close.get('session_type', 'code-increment')} · continuity refreshed: {session_close.get('resume_refreshed', False)}",
+            f"Exact next action: {close_next}",
+        ]
+        bundle = payload.get("continuity_bundle", {}) if isinstance(payload.get("continuity_bundle"), dict) else {}
+        if bundle.get("bundle"):
+            close_lines.append(f"Continuity bundle: {bundle.get('bundle')}")
+        lines.extend(close_lines)
     recommended = payload.get("recommended_prompt", {}) if isinstance(payload.get("recommended_prompt"), dict) else {}
     recommended_text = str(recommended.get("text", "")).strip()
     if recommended_text:

@@ -1,10 +1,10 @@
-# Forge 0.574 implementation report
+# Forge 0.575 implementation report
 
 ## Scope
 
 P1-01 and P1-02 of the Durable Core roadmap: active runtime import reachability, bounded command-path observation, and complete active top-level path classification.
 
-0.573–0.574 addendum — a field-usefulness and anti-bloat pass. 0.573 fixes three read-only-consultation defects where Forge acted as a blocker rather than an advisor (pending-fork blocker, self-declared-stale objective scrape, undiscovered gate/acceptance harness), and removes internal self-consistency gates that enforced bookkeeping ceremony. 0.574 completes it by removing the hand-maintained exact test/module count from numeric lockstep across CERTIFICATION, README, the manifest, and a test — it is reported live from the actual suite instead. No runtime module was added or removed, so the reachability result below is unchanged.
+0.573–0.575 addendum. 0.573 fixes three read-only-consultation defects where Forge acted as a blocker rather than an advisor (pending-fork blocker, self-declared-stale objective scrape, undiscovered gate/acceptance harness) and removes internal bookkeeping-ceremony gates; 0.574 removes the hand-maintained exact test/module count from numeric lockstep (reported live from the actual suite instead). 0.575 advances Goal 2: a cold model can leave a session with the same one command it enters with — `Run Forge --close <digest>` records the durable Session Close, refreshes continuity, surfaces the exact next action, and optionally exports a continuity bundle, reusing existing scoped-Check and Session-Close machinery. No runtime module was added or removed, so the reachability result below is unchanged.
 
 ## Result
 

@@ -20,6 +20,59 @@ SESSION_TYPES = (
 )
 
 
+def load_session_close_digest(path: Path) -> dict[str, Any]:
+    """Load and validate a JSON session-close digest for the one-command 'leave' path
+    (Run Forge --close), so a cold model can end a session without switching to a
+    separate close workflow. A digest is the model's compact end-of-session record; raw
+    transcripts are neither expected nor retained. Requires a non-empty next_action;
+    session_type defaults to 'code-increment' and must be one of SESSION_TYPES. Returns
+    the normalized close_data plus any optional continuity-export request. Raises
+    ValueError with a plain-language reason on any malformed or missing-required input."""
+    import json
+
+    try:
+        raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Session-close digest could not be read as JSON: {exc}") from exc
+    if not isinstance(raw, dict):
+        raise ValueError("Session-close digest must be a JSON object.")
+    next_action = str(raw.get("next_action", "")).strip()
+    if not next_action:
+        raise ValueError("Session-close digest requires a non-empty next_action.")
+    session_type = str(raw.get("session_type", "code-increment")).strip() or "code-increment"
+    if session_type not in SESSION_TYPES:
+        raise ValueError(f"session_type must be one of: {', '.join(SESSION_TYPES)}")
+
+    def _str_list(value: Any) -> list[str]:
+        return [str(item) for item in value if str(item).strip()] if isinstance(value, list) else []
+
+    def _pair_list(value: Any) -> list[dict[str, str]]:
+        rows: list[dict[str, str]] = []
+        if isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    rows.append({str(k): str(v) for k, v in item.items()})
+        return rows
+
+    telemetry = raw.get("interaction_telemetry", {})
+    close_data = {
+        "session_type": session_type,
+        "summary": str(raw.get("summary", "")),
+        "completed_work": _str_list(raw.get("completed_work")),
+        "decisions": _pair_list(raw.get("decisions")),
+        "owner_facts": _pair_list(raw.get("owner_facts")),
+        "unresolved_risks": _str_list(raw.get("unresolved_risks")),
+        "next_action": next_action,
+        "interaction_telemetry": telemetry if isinstance(telemetry, dict) else {},
+        "field_observation_path": str(raw.get("field_observation_path", "")),
+    }
+    return {
+        "close_data": close_data,
+        "export_continuity_path": str(raw.get("export_continuity_path", "")).strip(),
+        "development_package": str(raw.get("development_package", "")).strip(),
+    }
+
+
 
 def parse_durable_pairs(values: list[str], *, label: str, detail_label: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []

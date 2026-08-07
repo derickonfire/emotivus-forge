@@ -1,5 +1,12 @@
 # Emotivus Forge changelog
 
+## 0.575 — Goal 2: leave a session in one command
+
+- **`forge run --close <digest.json>` closes a session through Run Forge itself.** Entering a project was already one command (Run Forge auto-routes new → adopt+orient, unchanged → resume, changed → scoped check + resume); leaving still required knowing `forge check --close-session` with a dozen flags. That asymmetry is the core Goal-2 gap — the completion gate is "cold models can enter *and leave* using Run Forge without selecting workflow commands." Now a cold model provides a compact JSON session-close digest (session type, summary, completed work, exact next action, optional `export_continuity_path`) and Run Forge runs the scoped Check, records the durable Session Close, refreshes continuity, surfaces the exact next action, and optionally exports a portable continuity bundle.
+- **Wiring, not a new subsystem.** The close path delegates to the existing, already-tested `run_scoped_check(session_close_data=...)` + `export_continuity_bundle`; `run_forge` gained a close branch and a small digest loader (`load_session_close_digest`) that validates a non-empty `next_action` and a known `session_type`. `--close` is rejected with `--read-only` (a read-only consult must not write a Session Close).
+- Regression-locked end to end (`test_run_forge_leaves_the_session_in_one_command`, digest validation test). Two new test methods — and thanks to 0.574's computed count, no count needed bumping anywhere.
+- **Honest G2 status:** enter and leave now both work in one command. Release-candidate routing (detect a release candidate without shipping) and the scored cross-vendor cold-trial acceptance gate remain before G2 can be declared COMPLETE — so G2 stays ACTIVE. Release authorization remains **false**.
+
 ## 0.574 — Anti-bloat: the certified count is computed, not hand-copied
 
 - **Removes the exact test/module count from numeric lockstep.** The count ("546 across 58 modules") was a hand-maintained integer copied across `CERTIFICATION.md`, `README.md`, `FORGE-MANIFEST.json`, and `test_narrative_integrity.py` — and it had already silently drifted in ungated copies (`CLAUDE.md` and the public website both still said "523/54"). `check_narrative_integrity` no longer asserts the count; the self-test runner reports it live from the actual suite (`python3 -m emotivus_forge self-test`), so it is always accurate and needs no maintenance.

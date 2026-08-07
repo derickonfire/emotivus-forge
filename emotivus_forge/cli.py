@@ -43,6 +43,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--budget", choices=("compact", "standard", "full"), default="compact")
     p_run.add_argument("--session-context", default="", metavar="PATH", help="Transient distilled current-session digest; raw transcripts are rejected and not retained")
     p_run.add_argument("--read-only", action="store_true", help="Bounded read-only consultation: read the project bytes but write NOTHING into the project tree (transient state goes to a disposable directory outside it)")
+    p_run.add_argument("--close", default="", metavar="PATH", help="Leave the session in one command: a JSON session-close digest (session_type, summary, completed_work, next_action, optional export_continuity_path). Records a durable Session Close and refreshes continuity through Run Forge itself")
     p_run.add_argument("--json", action="store_true")
 
     p_help = sub.add_parser("help", help="Inspect Forge state and recommend the exact next command")

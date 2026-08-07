@@ -1,10 +1,14 @@
-# Emotivus Forge 0.574
+# Emotivus Forge 0.575
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 
 > **Canonical repository:** `derickonfire/emotivus-forge` is the home of Forge development. New sessions should work out of this repo — see [`CLAUDE.md`](CLAUDE.md) for orientation.
 
-## What 0.574 changes
+## What 0.575 changes
+
+- **Goal 2: leave a session in one command.** A cold model can now close a session through Run Forge itself — `forge run --close <digest.json>` — instead of switching to a separate close/ship workflow. The digest is the model's compact end-of-session record (session type, summary, completed work, exact next action, optional continuity-export path); Forge runs the scoped Check, records the durable Session Close, refreshes continuity, surfaces the exact next action, and optionally exports a portable continuity bundle. Entering was already one command; now leaving is too. This reuses the existing scoped-Check and Session-Close machinery — wiring, not a new subsystem — and is regression-locked end to end. Release-candidate routing and the scored cross-vendor cold-trial gate remain before G2 can be declared complete.
+
+## What 0.574 changed
 
 - **Completes the anti-bloat pass.** The exact test/module count is no longer copied across CERTIFICATION, README, the manifest, and a test in numeric lockstep — a hand-maintained integer that had already silently drifted in ungated copies. The live count is reported by the self-test runner straight from the actual suite; prose describes the suite qualitatively. The narrative-integrity check still verifies version, schema, required-path, and download-checksum relationships.
 

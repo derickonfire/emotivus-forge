@@ -62,6 +62,22 @@ def _mark_read_only(payload: Any) -> None:
 def handle_run(args: Any, forge_root: Path) -> int:
     requested = Path(args.project)
     resolved, entries = resolve_project_root(requested, forge_root)
+    close_data = None
+    continuity_export_path = ""
+    development_package = ""
+    if getattr(args, "close", ""):
+        if getattr(args, "read_only", False):
+            print("Run Forge --close records a durable Session Close and cannot be combined with --read-only.", file=sys.stderr)
+            return 2
+        from ..core.session_close import load_session_close_digest
+        try:
+            digest = load_session_close_digest(Path(args.close))
+        except ValueError as exc:
+            print(f"Session-close digest rejected: {exc}", file=sys.stderr)
+            return 2
+        close_data = digest["close_data"]
+        continuity_export_path = digest["export_continuity_path"]
+        development_package = digest["development_package"]
     if getattr(args, "read_only", False):
         # Bounded read-only consultation: no lock, no state written into the project.
         project = resolved if entries else requested
@@ -72,10 +88,12 @@ def handle_run(args: Any, forge_root: Path) -> int:
         print_json(payload) if args.json else print(append_notice(render_run(payload), payload), end="")
         return 1 if payload.get("status") in {"BLOCKED", "NEEDS_PROJECT"} else 0
     if not entries:
-        payload = run_forge(requested, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""))
+        payload = run_forge(requested, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""),
+                            session_close_data=close_data, continuity_export_path=continuity_export_path, development_package=development_package)
     else:
         with state_transaction(resolved, validate_existing=(resolved / ".forge").is_dir()):
-            payload = run_forge(resolved, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""))
+            payload = run_forge(resolved, forge_root, budget=args.budget, session_context_path=getattr(args, "session_context", ""),
+                                session_close_data=close_data, continuity_export_path=continuity_export_path, development_package=development_package)
             attach_run_notice(payload, resolved)
     if not isinstance(payload.get("ai_notice"), dict):
         attach_run_notice(payload, resolved if entries else None)

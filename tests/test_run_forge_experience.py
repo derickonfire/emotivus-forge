@@ -129,3 +129,45 @@ class RunForgeExperienceTests(ForgeTestCase):
             self.assertTrue(close["resume_refreshed"])
             resume = (root / ".forge" / "resume.md").read_text(encoding="utf-8")
             self.assertIn("Run browser evidence.", resume)
+
+    def test_run_forge_leaves_the_session_in_one_command(self) -> None:
+        # G2 "leave in one command": a cold model closes the session through Run Forge
+        # itself (no separate close/ship workflow). The durable Session Close is
+        # recorded, continuity is refreshed, the exact next action is surfaced, and an
+        # optional continuity bundle is exported.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._fixture(root)
+            run_forge(root, FORGE_ROOT)  # enter
+            (root / "app.py").write_text("print('shipped the landing page')\n", encoding="utf-8")
+            bundle_path = root.parent / "continuity.zip"
+            payload = run_forge(root, FORGE_ROOT, session_close_data={
+                "session_type": "code-increment",
+                "summary": "Wired the landing page.",
+                "completed_work": ["Added landing output to app.py"],
+                "decisions": [],
+                "owner_facts": [],
+                "unresolved_risks": ["No tests yet."],
+                "next_action": "Add a contact form to app.py.",
+                "interaction_telemetry": {},
+                "field_observation_path": "",
+            }, continuity_export_path=str(bundle_path))
+            self.assertEqual(payload["action"], "CHECK + SESSION CLOSE")
+            close = payload["session_close"]
+            self.assertTrue(close["resume_refreshed"])
+            self.assertEqual(payload["continuity_bundle"]["bundle"], str(bundle_path))
+            self.assertTrue(bundle_path.is_file())
+            resume = (root / ".forge" / "resume.md").read_text(encoding="utf-8")
+            self.assertIn("Add a contact form to app.py.", resume)
+
+    def test_session_close_digest_requires_a_next_action(self) -> None:
+        from emotivus_forge.core.session_close import load_session_close_digest
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            digest = root / "close.json"
+            digest.write_text(json.dumps({"summary": "did work", "session_type": "code-increment"}), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                load_session_close_digest(digest)
+            digest.write_text(json.dumps({"next_action": "ship it", "session_type": "not-a-type"}), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                load_session_close_digest(digest)

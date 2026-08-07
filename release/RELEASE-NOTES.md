@@ -1,4 +1,10 @@
-# Emotivus Forge 0.574 — Anti-bloat: the certified count is computed, not hand-copied
+# Emotivus Forge 0.575 — Goal 2: leave a session in one command
+
+- A cold model can now close a session through Run Forge itself: `forge run --close <digest.json>` records the durable Session Close, refreshes continuity, surfaces the exact next action, and optionally exports a portable continuity bundle — no separate close/ship workflow. Entering was already one command; now leaving is too.
+- Wiring over the existing scoped-Check and Session-Close machinery, regression-locked end to end. `--close` is rejected with `--read-only`.
+- Goal 2 status: enter and leave now work in one command; release-candidate routing and the scored cross-vendor cold-trial gate remain. Release authorization remains false.
+
+## 0.574 — Anti-bloat: the certified count is computed, not hand-copied
 
 - Removes the exact test/module count from numeric lockstep across CERTIFICATION, README, the manifest, and a test — a hand-maintained integer that had already silently drifted in ungated copies. The self-test runner reports the count live from the actual suite (`python3 -m emotivus_forge self-test`), so it is always accurate and needs no maintenance.
 - Kept every check that prevents a real reader-facing lie: version consistency, state schema, required paths, and download-checksum binding. Prose now describes the suite qualitatively.
