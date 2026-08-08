@@ -118,8 +118,28 @@ class SourceAnchoredReleaseTests(unittest.TestCase):
             "**Schema:** step 73\n")
         result = self._bind(head)
         self.assertEqual(result["verdict"], CONTRADICTED, result)
-        self.assertTrue(any(f["check"] == "accepted-surface-no-candidate-leak" and f["state"] == CONTRADICTED
+        self.assertTrue(any(f["check"] == "accepted-surface-states-true-schema" and f["state"] == CONTRADICTED
                             for f in result["findings"]))
+
+    def test_strict_mode_flags_wrong_non_candidate_number(self) -> None:
+        # A surface stating a wrong schema (71) that is neither the true 72 nor the candidate 73.
+        head = self._head_with(
+            _release_state(self.source_sha, 72, "implemented_in_review_not_accepted", None),
+            "**Schema:** step 71\n")
+        strict = dict(CONFIG, surface_schema_mode="strict")
+        result = bind_source_anchored_release(str(self.root), head, strict)
+        self.assertEqual(result["verdict"], CONTRADICTED, result)
+        self.assertTrue(any(f["check"] == "accepted-surface-states-true-schema" and f["state"] == CONTRADICTED
+                            for f in result["findings"]))
+
+    def test_strict_mode_tolerates_allowlisted_historical_number(self) -> None:
+        # A surface that legitimately mentions a historical schema (68) alongside the true 72.
+        head = self._head_with(
+            _release_state(self.source_sha, 72, "implemented_in_review_not_accepted", None),
+            "Upgraded from schema step 68 to schema step 72.\n")
+        strict = dict(CONFIG, surface_schema_mode="strict", historical_schema_allowlist=[68])
+        result = bind_source_anchored_release(str(self.root), head, strict)
+        self.assertEqual(result["verdict"], CONFIRMED, result)
 
     def test_candidate_carrying_acceptance_evidence_is_contradicted(self) -> None:
         head = self._head_with(

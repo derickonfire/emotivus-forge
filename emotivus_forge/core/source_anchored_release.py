@@ -201,9 +201,16 @@ def bind_source_anchored_release(repo: str, head: str, config: dict) -> dict:
             findings.append(_finding("candidate-labelled-not-accepted", CONFIRMED,
                                      f"candidate schema {cand_schema}: status {cand_status!r}, acceptance_evidence null."))
 
-    # --- Check 3: no accepted/public surface publishes the candidate schema as accepted ---
+    # --- Check 3: accepted/public surfaces must state the true accepted schema ---
+    # mode "candidate" (default, backward-compatible): flag only a claim equal to the
+    #   candidate value — precise, low false-positive.
+    # mode "strict": flag ANY schema-claim that is neither the true accepted schema nor
+    #   a configured historical value — catches a wrong or candidate value even when no
+    #   current_candidate block is present (the exact gap the LineCheck 872289b head showed).
     claim_re = re.compile(config["schema_claim_regex"], re.IGNORECASE)
     named = "n" in claim_re.groupindex
+    mode = config.get("surface_schema_mode", "candidate")
+    allowlist = {str(x) for x in config.get("historical_schema_allowlist", [])}
 
     def _digit(match: "re.Match") -> str | None:
         if named:
@@ -223,20 +230,26 @@ def bind_source_anchored_release(repo: str, head: str, config: dict) -> dict:
             if num is None:
                 continue
             line_no = text.count("\n", 0, match.start()) + 1
-            if cand_schema is not None and num == cand_schema and num != true_schema:
-                leaks.append(f"{surf}:{line_no} claims schema {num} (candidate) for the accepted release")
-            elif num == true_schema:
+            if num == true_schema:
                 stated_true += 1
+                continue
+            if num in allowlist:
+                continue
+            if mode == "strict":
+                tag = " (candidate)" if num == cand_schema else ""
+                leaks.append(f"{surf}:{line_no} claims schema {num}{tag}, not the accepted {true_schema}")
+            elif cand_schema is not None and num == cand_schema:
+                leaks.append(f"{surf}:{line_no} claims schema {num} (candidate) for the accepted release")
     nums = "|".join(sorted({n for n in (true_schema, cand_schema) if n}))
     grep = f"git -C {repo} grep -niE 'schema[^0-9]*({nums})' {head} -- " + " ".join(surfaces)
     if leaks:
-        findings.append(_finding("accepted-surface-no-candidate-leak", CONTRADICTED,
-                                 "accepted/public surfaces publish the candidate schema as accepted: "
+        findings.append(_finding("accepted-surface-states-true-schema", CONTRADICTED,
+                                 f"accepted/public surfaces state a schema other than the accepted {true_schema}: "
                                  + "; ".join(leaks), grep))
     else:
-        findings.append(_finding("accepted-surface-no-candidate-leak", CONFIRMED,
-                                 f"no accepted/public surface leaks candidate schema {cand_schema}; "
-                                 f"{stated_true} accepted-schema mention(s) consistent with {true_schema}.", grep))
+        findings.append(_finding("accepted-surface-states-true-schema", CONFIRMED,
+                                 f"every accepted/public surface schema-claim is the accepted {true_schema} "
+                                 f"({stated_true} mention(s)); mode={mode}.", grep))
 
     # --- Optional Check 4: byte-identical release-truth invariance vs a certified head ---
     baseline = config.get("baseline_invariance")
