@@ -2,10 +2,11 @@
 
 | Field | Value |
 |---|---|
-| LineCheck exact head | `a311a5bbf9a1e3fdd70e0ab2d57f6525c9325a80` (PR #14, draft) |
+| LineCheck exact head | `0f344b7a32aa5bc59337ef469dabf2e9c61b823a` (PR #14, draft) |
 | Local battery | 80 PASS / 0 FAIL / 0 SKIP |
-| Exact-head green run — authority/web-doc consistency | `31228995645` |
-| Exact-head green run — controlled runtime gate | `31228995692` / `31228993400` |
+| Exact-head green run — authority/web-doc consistency | `31230085190` |
+| Exact-head green run — controlled runtime gate | `31230082567` |
+| codex/0055 (Completed newest-first) | ordering contract + gate-enforced regression proof in smoke (`queue/0055`): a fixture whose completion chronology conflicts with title AND due-date order is newest-completed-first, the same pool under the actionable sort stays due-first, null sorts last, tie-breaker deterministic. The images below are unchanged by codex/0055 (it reorders the Completed list only, no visual change to the rendered surfaces); the live Completed view is currently unpopulated because the Task-source reads fetch open rows only — see claude/0048 for the scope note. |
 | Actors | Evidence Staff (role: staff) · Evidence Manager (role: manager) |
 | Fixture | real MariaDB (schema + all migrations, candidate schema 74); seeded Opening/Closing side work (3-of-8 mid-progress), a Both pair, a claimable Deep Clean, standalone + stale Tasks, per-channel consent |
 | Viewports | 320×844, 390×844, 800×1280 (tablet portrait) @ deviceScaleFactor 2 |
