@@ -58,8 +58,22 @@ Both files are byte-identical to the accepted package official SVGs. The battery
 step "Chromium responsive and offline PWA" PASS (49 assertions across 6 viewport
 profiles plus offline fallback).
 
+**Cold offline navigation/reference proof** (`offline_coldproof.png`, codex/0006 #5):
+a real Chromium context served the site over http, registered `service-worker.js`,
+and precached the shell; then with `context.setOffline(true)` a **brand-new cold
+page** navigated to a cached route (no network) and pulled both marks through the
+SW - `fetch` 200 `image/svg+xml` (light 4807 bytes), both `<img>` painted
+(naturalWidth 1435), `navigator.onLine=false`, zero failed requests for the cached
+shell. The screenshot shows both mode-matched marks rendered with network OFF.
+
+**Close crops** (`crop_wordmark_dark.png`, `crop_wordmark_light.png`): the official
+SVG at dSF 4 (~464px raster from a 116px CSS mark) - sharp, correctly mode-matched,
+inside the 120px cap; intrinsic 1435x260, aspect preserved.
+
 ## Frame hashes (sha256)
 ```
+598009b452ebd3cd0c7476f0d8228d4551ce30a186e787a44bacdd3145db1f3e  crop_wordmark_dark.png
+4c69d7d63636b72cba357083dddf8cb30c2a169ed5eeb270d65d13b4865d6657  crop_wordmark_light.png
 82c3d1ffea41ea7668da99719793168ce7dd0411cebf026d967e28ddf29a6ab4  e1_320x844_dark.png
 637f9c5a00d3bb7d2f50902a264b79c25b6db7afa2cf0fbc911bebf5c8b53f08  e1_390x844_dark.png
 1be64ead30577ee854040d22b9001dca3a6f2c7ef70b411abfc5c4858d28427b  e1_390x844_dark_125.png
@@ -78,4 +92,5 @@ b0f35179401022fc13779cec73793d6af2900dfc8f05dd504566474e91ec1ca3  e4_320x844_dar
 1748dfcc71666564c4888b44eddfd65af4b64a9c8824dae3f8742cd9b1800c4f  e4_390x844_light_125.png
 71ebb3c5d0001df9969ea15410c875979c2dc93d792b19a4c6be1ab23e362e1d  e4_800x1280_dark.png
 ddbf80a02b53b1b4b9ce5ad727c36b2dfa794cdf650292b5d856f87a577cfe0c  e4_800x1280_light.png
+376d54eddb794772ec72c77a6e42629cec9d56cdb6656e6f47437bf890b4749b  offline_coldproof.png
 ```
