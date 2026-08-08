@@ -71,9 +71,22 @@ consult (0.561). DG-7 was reviewed and did not survive verification (no speculat
 Forge participates in the Claude × ChatGPT collaboration on `linecheck-acceptance` under a
 strict, advisory, read-only bound (see `exchange/`). This is Forge's real-world G2/G3
 validation: read-only consult (0.561) and instance-binding (0.562–0.563) are the two
-capabilities it contributes. No Forge code is required for the collaboration to proceed on
-what has shipped; the collaboration is a source of observed misses, not a driver of scope
-creep. Forge never gates LineCheck.
+capabilities it contributes. The collaboration is a source of observed misses, not a driver
+of scope creep. Forge never gates LineCheck.
+
+**Observed miss → G1 instrument (0.575).** The LC-004 Phase E schema bump twice declared
+the release *accepted* at a schema its accepted source never shipped, with the public
+surfaces rewritten to match — a lie every internal-consistency gate passed **green**
+(`planning/OBSERVED-MISS-source-anchored-release.md`). `release_facts` compares declared
+fields to each other; it cannot anchor to the accepted source. New G1 instrument
+**source-anchored release verification** (`core/source_anchored_release.py`,
+`tools/bind_release_truth.py`) derives the true accepted schema from the exact accepted
+source commit's code and binds the declared release-state and public surfaces to it,
+`NOT_RUN` when the anchor is unreachable. Validated against real history (CONFIRMED at the
+honest head, CONTRADICTED at the false one). Branch `claude/g1-source-anchored-release`;
+owner sealing pending. The single flag Forge raised across the engagement was this exact
+boundary — the roadmap thesis (bind fragile fact-shaped claims a green gate can't, then
+graduate the check) in one concrete case.
 
 ## Roadmap chunks
 
