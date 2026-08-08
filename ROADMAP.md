@@ -59,6 +59,24 @@ consult path.
    acceptance (new/unchanged/changed/conflicting/close/release-candidate cold trials),
    toward declaring G2 COMPLETE.
 
+2. **Gate-diff monotonicity** *(candidate — miss recorded, instrument not built)* —
+   certify that a change to a project's gate/check scripts removed no assertion,
+   lowered no threshold, and introduced no SKIP path. LineCheck surfaced the miss
+   twice (`planning/OBSERVED-MISS-gate-diff-monotonicity.md`). Needs a scored trial
+   (real schema-pin commit → CONFIRMED, synthetic assertion-removal → CONTRADICTED)
+   before it enters the durable core.
+
+3. **Gate-coverage differ** *(candidate — miss recorded, instrument not built)* —
+   report the checks that exist in a tree but are not invoked by its CI gate, so a
+   green gate can't read as "covered" while silently omitting assertions. LineCheck's
+   `check_worklist_behavior.php` stayed not-gate-wired throughout
+   (`planning/OBSERVED-MISS-gate-coverage-differ.md`). Needs a scored trial before
+   it enters the durable core.
+
+   *(2 and 3 are LineCheck-surfaced G1 candidates folded here per the "miss + trial
+   before instrument" rule — they follow the delivered source-anchored release
+   verification (0.575) in the same truth-anchoring family.)*
+
 *G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
 (`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*
 
