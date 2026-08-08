@@ -145,7 +145,7 @@ def _classify_module(module: str) -> list[str]:
         "surface_coverage", "canonical_claims", "relationships", "ledger", "ledger_assertions",
         "check_qualification", "field_trials", "cold_session_validation", "guardrails", "project_events",
         "secret_screening", "confidentiality_boundary", "narrative_integrity", "self_currency",
-        "instance_key",
+        "instance_key", "source_anchored_release",
     }:
         values.add("G1_PROJECT_TRUTH")
     if leaf in {
