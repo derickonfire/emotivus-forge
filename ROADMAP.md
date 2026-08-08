@@ -66,16 +66,19 @@ consult path.
    (real schema-pin commit → CONFIRMED, synthetic assertion-removal → CONTRADICTED)
    before it enters the durable core.
 
-3. **Gate-coverage differ** *(candidate — miss recorded, instrument not built)* —
-   report the checks that exist in a tree but are not invoked by its CI gate, so a
-   green gate can't read as "covered" while silently omitting assertions. LineCheck's
-   `check_worklist_behavior.php` stayed not-gate-wired throughout
-   (`planning/OBSERVED-MISS-gate-coverage-differ.md`). Needs a scored trial before
-   it enters the durable core.
+3. **Gate-coverage differ** *(DELIVERED 0.575)* — reports the checks that exist in a
+   tree but are not invoked by its CI gate, so a green gate can't read as "covered"
+   while silently omitting assertions; detects glob/loop invocation and returns
+   NOT_RUN rather than false gaps. `core/gate_coverage.py` +
+   `tools/report_gate_coverage.py`. Scored trial passed: replayed against LineCheck
+   `6188585`, surfaced `check_worklist_behavior.php` + 5 sibling behaviour checks as
+   not-gate-wired (`planning/OBSERVED-MISS-gate-coverage-differ.md`).
 
-   *(2 and 3 are LineCheck-surfaced G1 candidates folded here per the "miss + trial
-   before instrument" rule — they follow the delivered source-anchored release
-   verification (0.575) in the same truth-anchoring family.)*
+   *(2 is a LineCheck-surfaced G1 candidate folded here per the "miss + trial before
+   instrument" rule; 3 was delivered this cycle. Both follow the delivered
+   source-anchored release verification (0.575) in the same truth-anchoring family —
+   authority, provenance, native-evidence, release-schema, and now gate coverage are
+   the anchored G1 truth surfaces.)*
 
 *G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
 (`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*

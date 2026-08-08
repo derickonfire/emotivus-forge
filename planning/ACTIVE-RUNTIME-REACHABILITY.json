@@ -20,6 +20,7 @@
       "emotivus_forge.core.continuity_benchmark",
       "emotivus_forge.core.evidence_kit",
       "emotivus_forge.core.external_evidence",
+      "emotivus_forge.core.gate_coverage",
       "emotivus_forge.core.narrative_integrity",
       "emotivus_forge.core.passport",
       "emotivus_forge.core.secret_screening",
@@ -56,6 +57,7 @@
       "emotivus_forge.core.external_evidence",
       "emotivus_forge.core.field_trials",
       "emotivus_forge.core.forward_compat",
+      "emotivus_forge.core.gate_coverage",
       "emotivus_forge.core.guardrails",
       "emotivus_forge.core.guidance",
       "emotivus_forge.core.handoff",
@@ -111,11 +113,11 @@
       "emotivus_forge.services.ship"
     ]
   },
-  "module_count": 91,
-  "static_reachable_count": 91,
+  "module_count": 92,
+  "static_reachable_count": 92,
   "ordinary_cli_reachable_count": 84,
-  "standalone_tool_reachable_count": 77,
-  "verification_reachable_count": 91,
+  "standalone_tool_reachable_count": 78,
+  "verification_reachable_count": 92,
   "static_unreachable_count": 0,
   "static_unreachable_modules": [],
   "unclassified_modules": [],
@@ -892,6 +894,22 @@
       ],
       "classifications": [
         "G3_EVOLUTION_KERNEL"
+      ]
+    },
+    {
+      "module": "emotivus_forge.core.gate_coverage",
+      "path": "emotivus_forge/core/gate_coverage.py",
+      "sha256": "06ac73c3ada87640a4a11b5adb4ea74149f6f2efb32af87f600411e8bce80b51",
+      "active_reachable": true,
+      "ordinary_cli_reachable": false,
+      "standalone_tool_reachable": true,
+      "verification_reachable": true,
+      "observed_commands": [],
+      "imports": [
+        "emotivus_forge.core.truth"
+      ],
+      "classifications": [
+        "G1_PROJECT_TRUTH"
       ]
     },
     {
@@ -1911,7 +1929,7 @@
     {
       "module": "emotivus_forge.core.source_anchored_release",
       "path": "emotivus_forge/core/source_anchored_release.py",
-      "sha256": "c2bec00303efeb6509afac0a4c68441014bffa8a10a0185c12d0fc9962ad9812",
+      "sha256": "6c00013a4bd77c112a780fb4cb5111e03b45ac94b10aae7d9d6ea49f1cfb4824",
       "active_reachable": true,
       "ordinary_cli_reachable": false,
       "standalone_tool_reachable": true,
@@ -7955,7 +7973,7 @@
       "path": "ROADMAP.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 14725,
+      "bytes": 16857,
       "development": true,
       "public": true,
       "classifications": [
@@ -8057,8 +8075,8 @@
     {
       "path": "emotivus_forge/",
       "kind": "directory",
-      "file_count": 182,
-      "bytes": 3853277,
+      "file_count": 184,
+      "bytes": 3873592,
       "development": true,
       "public": true,
       "classifications": [
@@ -8169,8 +8187,8 @@
     {
       "path": "planning/",
       "kind": "directory",
-      "file_count": 40,
-      "bytes": 404726,
+      "file_count": 43,
+      "bytes": 414760,
       "development": true,
       "public": true,
       "classifications": [
@@ -8220,8 +8238,8 @@
     {
       "path": "tests/",
       "kind": "directory",
-      "file_count": 125,
-      "bytes": 1763696,
+      "file_count": 127,
+      "bytes": 1779052,
       "development": true,
       "public": true,
       "classifications": [
@@ -8232,8 +8250,8 @@
     {
       "path": "tools/",
       "kind": "directory",
-      "file_count": 21,
-      "bytes": 275274,
+      "file_count": 22,
+      "bytes": 277417,
       "development": true,
       "public": true,
       "classifications": [
@@ -8249,5 +8267,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "6ab6b841a54e8bdb9a11a45b1a948e653495e5bc6954eb3a44a744a46a578452"
+  "report_sha256": "b4b043dbef936fd3782df95f64ca047d29d58380a1dcefed4b30e20d1410e630"
 }

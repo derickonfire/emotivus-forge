@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
 **Forge version:** 0.575  
-**Modules inventoried:** 91  
-**Statically reachable:** 91  
+**Modules inventoried:** 92  
+**Statically reachable:** 92  
 **Statically unreachable:** 0  
-**Report SHA-256:** `6ab6b841a54e8bdb9a11a45b1a948e653495e5bc6954eb3a44a744a46a578452`
+**Report SHA-256:** `b4b043dbef936fd3782df95f64ca047d29d58380a1dcefed4b30e20d1410e630`
 
 ## Command observations
 
@@ -55,6 +55,7 @@
 | `emotivus_forge.core.external_evidence` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.field_trials` | active | adopt, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.forward_compat` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
+| `emotivus_forge.core.gate_coverage` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guardrails` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guidance` | active | help | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.handoff` | active | — | G2_SESSION_CONTINUITY |
@@ -142,7 +143,7 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 182 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 184 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
 | `exchange/` | 381 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
@@ -151,12 +152,12 @@
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 40 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 43 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 125 | yes | yes | KEEP | TESTING |
-| `tools/` | 21 | yes | yes | KEEP | PACKAGING, TESTING |
+| `tests/` | 127 | yes | yes | KEEP | TESTING |
+| `tools/` | 22 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification
 

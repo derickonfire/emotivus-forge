@@ -1,8 +1,11 @@
 # Observed miss — no instrument reports checks that exist but are not gate-wired
 
-**Type:** observed miss (G1 project-truth candidate) · **Recorded:** 0.575 cycle
-**Trial status:** miss recorded; instrument **not built** — pending a scored trial
-per the "miss + trial before instrument" rule.
+**Type:** observed miss (G1 project-truth) · **Recorded:** 0.575 cycle
+**Trial status:** **DELIVERED 0.575** — scored trial passed. Real LineCheck replay at
+head `6188585` reported GAPS: 6 of 48 inventoried checks not gate-wired, including
+`check_worklist_behavior.php` (the exact reviewer-flagged check) and its five sibling
+Phase B–E behaviour checks. Empty-gap and glob-sweep-indeterminate cases covered by
+isolated tests. Instrument: `core/gate_coverage.py` + `tools/report_gate_coverage.py`.
 
 ## What happened (LineCheck)
 
