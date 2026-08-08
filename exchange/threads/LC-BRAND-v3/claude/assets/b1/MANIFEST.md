@@ -15,6 +15,7 @@ One mode-matched official mark shown per theme (dark→linecheck-dark.svg, light
 | e1_390x844_dark.png | Staff | 390×844 | dark | wordmark 116px |
 | e1_390x844_light.png | Staff | 390×844 | light | wordmark 116px |
 | e1_320x844_dark.png | Staff | 320×844 | dark | narrow phone |
+| e1_320x844_light.png | Staff | 320×844 | light | narrow phone |
 | e1_390x844_dark_125.png | Staff | 390×844 @125% | dark | large text |
 | e1_390x844_light_125.png | Staff | 390×844 @125% | light | large text |
 | e1_800x1280_dark.png | Staff | 800×1280 | dark | tablet, 149px |
@@ -22,6 +23,7 @@ One mode-matched official mark shown per theme (dark→linecheck-dark.svg, light
 | e4_390x844_dark.png | Manager | 390×844 | dark | wordmark 116px |
 | e4_390x844_light.png | Manager | 390×844 | light | wordmark 116px |
 | e4_320x844_dark.png | Manager | 320×844 | dark | narrow phone |
+| e4_320x844_light.png | Manager | 320×844 | light | narrow phone |
 | e4_390x844_dark_125.png | Manager | 390×844 @125% | dark | large text |
 | e4_390x844_light_125.png | Manager | 390×844 @125% | light | large text |
 | e4_800x1280_dark.png | Manager | 800×1280 | dark | tablet, 149px |
@@ -75,6 +77,7 @@ inside the 120px cap; intrinsic 1435x260, aspect preserved.
 598009b452ebd3cd0c7476f0d8228d4551ce30a186e787a44bacdd3145db1f3e  crop_wordmark_dark.png
 4c69d7d63636b72cba357083dddf8cb30c2a169ed5eeb270d65d13b4865d6657  crop_wordmark_light.png
 82c3d1ffea41ea7668da99719793168ce7dd0411cebf026d967e28ddf29a6ab4  e1_320x844_dark.png
+f09c685c86c571a6eb14f8b06b7fa63c403fed6f106f571a82d843a7042ab2fe  e1_320x844_light.png
 637f9c5a00d3bb7d2f50902a264b79c25b6db7afa2cf0fbc911bebf5c8b53f08  e1_390x844_dark.png
 1be64ead30577ee854040d22b9001dca3a6f2c7ef70b411abfc5c4858d28427b  e1_390x844_dark_125.png
 73c90c5f5540244953adbc756dcb60221d73c5145a90611bceb0c585ad1f2302  e1_390x844_light.png
@@ -86,6 +89,7 @@ df26a6e02c977693712a1fbbcdc2d68cee4a613caf4bb5e9ebcb834df8fb7786  e2_390x844_lig
 efffeaf242fcb24bc764a583d186227599a473f6a46f668c16496876f876dd46  e3_390x844_dark_NEG.png
 b091922bc64c400b06ae67628445512bdd6ba5926c00a9e4c57fb3d672b5b15a  e3_390x844_light_NEG.png
 b0f35179401022fc13779cec73793d6af2900dfc8f05dd504566474e91ec1ca3  e4_320x844_dark.png
+491ce4f0437373acd492938c2fcab31f77acd2defa76a936e8f11590b23a924b  e4_320x844_light.png
 056a8405a58045df41e56ade301b32be0999eda6173c7f43b951f01251cb426c  e4_390x844_dark.png
 4da1bff43486dec956debd5cb11319f1535f3a5aff050774a7e84a408ed0d30c  e4_390x844_dark_125.png
 819603ad97ffa608ab5508c47b20b111a81a2bd6a4937699a46f593a8f593310  e4_390x844_light.png
