@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>LC-BRAND-v3 B1 — evidence gallery (head 9f4439d)</title>
+<style>
+ :root{color-scheme:dark} *{box-sizing:border-box}
+ body{margin:0;background:#0f1217;color:#e8eef5;font:15px/1.5 system-ui,sans-serif}
+ header{padding:20px 24px;border-bottom:1px solid #232a33;position:sticky;top:0;background:#0f1217;z-index:2}
+ h1{margin:0 0 4px;font-size:20px} .meta{color:#96a0ac;font-size:13px}
+ .meta a{color:#2f9ed5}
+ .filters{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+ .filters button{background:#1b2028;color:#cdd6df;border:1px solid #2c343e;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+ .filters button.on{background:#2f9ed5;color:#08131c;border-color:#2f9ed5;font-weight:700}
+ h2{padding:0 24px;margin:26px 0 6px;font-size:16px;color:#9fb0c0;text-transform:uppercase;letter-spacing:.04em}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:8px 24px 24px}
+ .boards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;padding:8px 24px 24px}
+ figure{margin:0;background:#151a21;border:1px solid #232a33;border-radius:10px;overflow:hidden}
+ figure img{width:100%;display:block;background:#0b0e12}
+ figcaption{padding:8px 10px;font-size:12px;color:#b7c2ce}
+ figcaption b{color:#e8eef5}
+</style></head><body>
+<header>
+ <h1>LC-BRAND-v3 Phase B1 — lean evidence gallery</h1>
+ <div class="meta">Code head <a href="https://github.com/derickonfire/linecheck-acceptance/commit/9f4439dcded0079f6688f4da9b1f1722ac352aeb">9f4439dcded0</a> ·
+   PR <a href="https://github.com/derickonfire/linecheck-acceptance/pull/22">#22</a> (draft) ·
+   authenticated real-DB fixture, signed-in actors, deviceScaleFactor 2 · both themes · no landscape.
+   Full matrix assertions + hashes in <a href="MANIFEST.md">MANIFEST.md</a>. Offline, repo-relative.</div>
+ <div class="filters" id="fil">
+   <button data-k="all" class="on">All</button>
+   <button data-k="e1">E1 Home</button><button data-k="e2">E2 Routine</button><button data-k="e4">E4 Manager</button>
+   <button data-k="light">Light</button><button data-k="dark">Dark</button><button data-k="125">125% text</button>
+ </div>
+</header>
+<h2>Component comparison boards (production DOM)</h2>
+<div class="boards"><figure class="board"><a href="boards/board1_header_identity.png" target="_blank"><img loading="lazy" src="boards/board1_header_identity.png" alt="Board 1 — Header &amp; Identity"></a>
+  <figcaption><b>Board 1 — Header &amp; Identity</b></figcaption></figure><figure class="board"><a href="boards/board2_routine_completion.png" target="_blank"><img loading="lazy" src="boards/board2_routine_completion.png" alt="Board 2 — Routine &amp; Completion states"></a>
+  <figcaption><b>Board 2 — Routine &amp; Completion states</b></figcaption></figure><figure class="board"><a href="boards/board3_progress_nav_controls.png" target="_blank"><img loading="lazy" src="boards/board3_progress_nav_controls.png" alt="Board 3 — Progress, Navigation &amp; Controls"></a>
+  <figcaption><b>Board 3 — Progress, Navigation &amp; Controls</b></figcaption></figure></div>
+<h2>Representative full pages (12)</h2>
+<div class="grid" id="frames"><figure class="card" data-theme="dark" data-surf="e1" data-scale="125">
+  <a href="frames/e1_320x844_dark_125.png" target="_blank"><img loading="lazy" src="frames/e1_320x844_dark_125.png" alt="E1 staff Home 320x844 dark"></a>
+  <figcaption><b>E1 staff Home</b><br>320x844 · dark · 125% text</figcaption></figure><figure class="card" data-theme="dark" data-surf="e1" data-scale="normal">
+  <a href="frames/e1_390x844_dark.png" target="_blank"><img loading="lazy" src="frames/e1_390x844_dark.png" alt="E1 staff Home 390x844 dark"></a>
+  <figcaption><b>E1 staff Home</b><br>390x844 · dark · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e1" data-scale="normal">
+  <a href="frames/e1_390x844_light.png" target="_blank"><img loading="lazy" src="frames/e1_390x844_light.png" alt="E1 staff Home 390x844 light"></a>
+  <figcaption><b>E1 staff Home</b><br>390x844 · light · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e1" data-scale="normal">
+  <a href="frames/e1_800x1280_light.png" target="_blank"><img loading="lazy" src="frames/e1_800x1280_light.png" alt="E1 staff Home 800x1280 light"></a>
+  <figcaption><b>E1 staff Home</b><br>800x1280 · light · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e2" data-scale="125">
+  <a href="frames/e2_320x844_light_125.png" target="_blank"><img loading="lazy" src="frames/e2_320x844_light_125.png" alt="E2 Routine 320x844 light"></a>
+  <figcaption><b>E2 Routine</b><br>320x844 · light · 125% text</figcaption></figure><figure class="card" data-theme="dark" data-surf="e2" data-scale="normal">
+  <a href="frames/e2_390x844_dark.png" target="_blank"><img loading="lazy" src="frames/e2_390x844_dark.png" alt="E2 Routine 390x844 dark"></a>
+  <figcaption><b>E2 Routine</b><br>390x844 · dark · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e2" data-scale="normal">
+  <a href="frames/e2_390x844_light.png" target="_blank"><img loading="lazy" src="frames/e2_390x844_light.png" alt="E2 Routine 390x844 light"></a>
+  <figcaption><b>E2 Routine</b><br>390x844 · light · normal</figcaption></figure><figure class="card" data-theme="dark" data-surf="e2" data-scale="normal">
+  <a href="frames/e2_800x1280_dark.png" target="_blank"><img loading="lazy" src="frames/e2_800x1280_dark.png" alt="E2 Routine 800x1280 dark"></a>
+  <figcaption><b>E2 Routine</b><br>800x1280 · dark · normal</figcaption></figure><figure class="card" data-theme="dark" data-surf="e4" data-scale="125">
+  <a href="frames/e4_320x844_dark_125.png" target="_blank"><img loading="lazy" src="frames/e4_320x844_dark_125.png" alt="E4 manager Home 320x844 dark"></a>
+  <figcaption><b>E4 manager Home</b><br>320x844 · dark · 125% text</figcaption></figure><figure class="card" data-theme="dark" data-surf="e4" data-scale="normal">
+  <a href="frames/e4_390x844_dark.png" target="_blank"><img loading="lazy" src="frames/e4_390x844_dark.png" alt="E4 manager Home 390x844 dark"></a>
+  <figcaption><b>E4 manager Home</b><br>390x844 · dark · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e4" data-scale="normal">
+  <a href="frames/e4_390x844_light.png" target="_blank"><img loading="lazy" src="frames/e4_390x844_light.png" alt="E4 manager Home 390x844 light"></a>
+  <figcaption><b>E4 manager Home</b><br>390x844 · light · normal</figcaption></figure><figure class="card" data-theme="light" data-surf="e4" data-scale="normal">
+  <a href="frames/e4_800x1280_light.png" target="_blank"><img loading="lazy" src="frames/e4_800x1280_light.png" alt="E4 manager Home 800x1280 light"></a>
+  <figcaption><b>E4 manager Home</b><br>800x1280 · light · normal</figcaption></figure></div>
+<script>
+ const fil=document.getElementById('fil');
+ fil.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+   [...fil.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');
+   const k=b.dataset.k;
+   document.querySelectorAll('#frames .card').forEach(c=>{
+     let show = k==='all' || c.dataset.surf===k || c.dataset.theme===k || (k==='125'&&c.dataset.scale==='125');
+     c.style.display=show?'':'none';});});
+</script>
+</body></html>
