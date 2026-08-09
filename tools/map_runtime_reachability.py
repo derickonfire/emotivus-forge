@@ -129,6 +129,8 @@ def _classify_module(module: str) -> list[str]:
     values: set[str] = set()
     if module in {"emotivus_forge", "emotivus_forge.cli", "emotivus_forge.commands", "emotivus_forge.commands.public", "emotivus_forge.commands.adopt", "emotivus_forge.commands.check", "emotivus_forge.commands.common", "emotivus_forge.commands.noticing"}:
         values.add("G2_SESSION_CONTINUITY")
+    if module == "emotivus_forge.commands.bind":
+        values.add("G1_PROJECT_TRUTH")
     if leaf in {
         "startup", "orientation", "resume", "handoff", "session_close", "session_reconciliation",
         "session_adapters", "sidecar", "recommended_prompt", "guidance", "passport", "knowledge",

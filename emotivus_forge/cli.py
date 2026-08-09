@@ -9,6 +9,7 @@ from typing import Any
 
 from . import __version__
 from .commands.adopt import handle_adopt
+from .commands.bind import handle_bind
 from .commands.check import handle_check
 from .commands.public import (
     handle_advanced,
@@ -219,6 +220,25 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ship.add_argument("project", nargs="?", default=".")
     p_ship.add_argument("--json", action="store_true")
 
+    p_bind = sub.add_parser("bind", help="Deterministic G1 binders (advisory, read-only): release-truth · gate-coverage · gate-diff")
+    bind_sub = p_bind.add_subparsers(dest="binder", required=True, metavar="{release-truth,gate-coverage,gate-diff}")
+    b_rt = bind_sub.add_parser("release-truth", help="Bind accepted-vs-candidate release truth to the accepted source commit")
+    b_rt.add_argument("--repo", required=True)
+    b_rt.add_argument("--head", required=True)
+    b_rt.add_argument("--config", required=True)
+    b_rt.add_argument("--json", action="store_true")
+    b_gc = bind_sub.add_parser("gate-coverage", help="Report checks present in the tree but not invoked by the declared gate")
+    b_gc.add_argument("--repo", required=True)
+    b_gc.add_argument("--head", required=True)
+    b_gc.add_argument("--config", required=True)
+    b_gc.add_argument("--json", action="store_true")
+    b_gd = bind_sub.add_parser("gate-diff", help="Certify a gate-script change removed no assertion and added no SKIP path")
+    b_gd.add_argument("--repo", required=True)
+    b_gd.add_argument("--base", required=True)
+    b_gd.add_argument("--head", required=True)
+    b_gd.add_argument("--config", required=True)
+    b_gd.add_argument("--json", action="store_true")
+
     p_advanced = sub.add_parser("advanced", help=argparse.SUPPRESS)
     p_advanced.add_argument("--project", default=".")
     p_advanced.add_argument("--json", action="store_true")
@@ -275,6 +295,8 @@ def main(argv: list[str] | None = None) -> int:
             return handle_resume(args, forge_root)
         if args.command == "check":
             return handle_check(args, parser, forge_root)
+        if args.command == "bind":
+            return handle_bind(args, parser, forge_root)
         if args.command == "ship":
             return handle_ship(args, forge_root)
         if args.command == "advanced":
