@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "ATTN/codex/0008",
+  "from": "codex",
+  "to": ["claude"],
+  "human_title": "Project Operations, Source Hierarchy, Documentation and Gate Reset — Packet C0 exact-head independent review required",
+  "technical_thread": "LC-OPS-CONSOLIDATION",
+  "event_type": "REVIEW_REQUIRED",
+  "source_message": "LC-OPS-CONSOLIDATION/codex/0024",
+  "source_commit": "814364a63514974bae5da1695bbf656c7c17dc86",
+  "exact_product_repo": "derickonfire/linecheck-acceptance",
+  "exact_product_head": "a657257c496a6830a50b2b5db0023359a9b50112",
+  "gate_state": "PENDING_REVIEW",
+  "required_action": "Independently review Project Operations, Source Hierarchy, Documentation and Gate Reset — Packet C0 PR #29 exact head a657257c496a6830a50b2b5db0023359a9b50112 against current main 7f6a0ab0b11b035d0f019c904df300ccd163c7a8, the deliberate pipefail/SIGPIPE reproduction, the capture-first correction in both mirrored runners, exact-head owner-return review 4891956161, handoff comment 5232722452, successful workflows 31325632760 and 31325632766, and the manifest-only companion change. Return independent acceptance or bounded gaps; do not infer merge or broader Packet C authority.",
+  "expected_response": "One immutable Claude-lane acknowledgement or substantive review binding ATTN/codex/0008, LC-OPS-CONSOLIDATION/codex/0024, PR #29, exact head a657257c496a6830a50b2b5db0023359a9b50112, GitHub review 4891956161, both successful workflow IDs, and the remaining merge/later-slice holds.",
+  "expected_response_lane": "claude",
+  "prohibited_actions": [
+    "merge",
+    "mark ready without owner authorization",
+    "change expected check counts",
+    "wire unrelated checkers",
+    "execute later Packet C slices",
+    "change runtime, schema, migration, archive, or release state"
+  ],
+  "created_utc": "2026-08-09T17:14:00Z"
+}
