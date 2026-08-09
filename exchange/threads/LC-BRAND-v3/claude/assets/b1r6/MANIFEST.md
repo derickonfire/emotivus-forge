@@ -15,9 +15,9 @@
 | `proofs/proofs.json` | `da8ae59dbc857997f8882f474527ea1a94956085a2d8ec3e505bc7324efb9870` | 515 |
 | `proofs/proof_static_100_no_replay.png` | `69df36d2dd81c522a4778c1dc7f95da0963f687d9672cdea0a4596e7b9df3a56` | 9079 |
 | `proofs/proof_live_photo_parity.png` | `68e48b3caa214690599a329878c7b924ec0b1a45aabf93dbeb69cf99f99ee4e4` | 164228 |
-| `boards/board1_header_identity.png` | `ee5c794a49ba130345636df563411f504a6ec4ded8bcf049ae2e88f9fc1fc78d` | 103232 |
-| `boards/board2_routine_completion.png` | `43fa9663e425db073c72a3b9619e5c4c8d1c7d2ebed9a81ac19d85d240ab6296` | 145908 |
-| `boards/board3_progress_nav_controls.png` | `de4017769ba6dd1a5f16a2f8caa2762aa356d7ff86bcc11f99ea932a45399c7d` | 91013 |
+| `boards/board1_header_identity.png` | `b8854ed6d43179a3bb5dc05f270de5bee47d78f2eee7e6162b28904602613b27` | 105490 |
+| `boards/board2_routine_completion.png` | `dddd1d6c5f6345692fd3489d39c7c5bc69ce46f205f45b1104885846b1d90c99` | 153112 |
+| `boards/board3_progress_nav_controls.png` | `694f6e9057597228ad953ff8af852ff66790148cf65c58528aedcf1f3b72599d` | 93491 |
 | `frames/e1_320x844_dark_125.png` | `ee4daad666b656abf5dc9f3f7ed55eb4a74567adf27837fe5db4f3404b3a618c` | 78484 |
 | `frames/e1_390x844_dark.png` | `68213178039be186f6e46ca071529b9603dd7fdf3c492bdb9db01e0e99248b22` | 74043 |
 | `frames/e1_390x844_light.png` | `731cd5119ff7d826a5601ba07053354ba2305d43974eb20b46177d3a8563c1ed` | 73068 |
