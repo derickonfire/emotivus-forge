@@ -32,8 +32,10 @@ GATE_COVERAGE_TRUTH_BOUNDARY = (
     "Forge confirms a check is named by a declared gate source, not that it actually executes, "
     "and an unreferenced check may still run via dynamic or indirect invocation. When a gate "
     "invokes checks by glob/loop, per-check coverage is indeterminate and Forge returns NOT_RUN. "
-    "Coverage is only as complete as the declared gate_sources list; this is a coverage report, "
-    "not proof that any check ran."
+    "Forge matches a check by path, basename, or basename-stem, so it models gates that invoke "
+    "checks by name or module reference; it does not model architectures where check logic lives "
+    "in separately-tested modules behind thin CLI wrappers. Coverage is only as complete as the "
+    "declared gate_sources list; this is a coverage report, not proof that any check ran."
 )
 
 
@@ -122,14 +124,17 @@ def report_gate_coverage(repo: str, head: str, config: dict) -> dict:
         return result(NOT_RUN)
     gate_text = "\n".join(_show(repo, head, p) or "" for p in gate_paths)
 
-    # Honesty guard: detect glob/loop invocation of the inventory.
+    # Honesty guard: detect glob/loop invocation of the inventory. Use the full
+    # basename-glob and the dir-qualified glob (e.g. "check_*.py", "tools/check_*.py")
+    # rather than a bare prefix, so an unrelated "check_" mention does not false-trigger.
     sweep_markers = config.get("sweep_markers")
     if sweep_markers is None:
         sweep_markers = []
         for g in check_globs:
             base = g.rsplit("/", 1)[-1]
             if "*" in base:
-                sweep_markers.append(base.split("*")[0] + "*")  # e.g. "check_*"
+                sweep_markers.append(base)   # "check_*.py"
+                sweep_markers.append(g)      # "tools/check_*.py"
     swept = [mk for mk in sweep_markers if mk and mk in gate_text]
     if swept:
         findings.append(_finding(
@@ -139,9 +144,15 @@ def report_gate_coverage(repo: str, head: str, config: dict) -> dict:
             f"git -C {repo} grep -nE '{'|'.join(sorted(set(swept)))}' {head} -- " + " ".join(gate_paths)))
         return result(NOT_RUN)
 
+    # Match by full path, basename, and (by default) the basename stem — so both
+    # by-filename shell invocation (`php check_foo.php`) and by-stem/module reference
+    # (`from tools.check_foo import`, `python -m ... check_foo`) count as wired.
+    match_stem = config.get("match_stem", True)
     for c in checks:
         name = c.rsplit("/", 1)[-1]
-        if name in gate_text or c in gate_text:
+        stem = name.rsplit(".", 1)[0]
+        refs = [c, name] + ([stem] if match_stem else [])
+        if any(r in gate_text for r in refs):
             continue
         unwired.append(c)
 

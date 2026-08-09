@@ -84,6 +84,27 @@ class GateCoverageTests(unittest.TestCase):
         self.assertEqual(result["verdict"], NOT_RUN, result)
         self.assertTrue(any(f["check"] == "invocation-style" for f in result["findings"]))
 
+    def test_stem_reference_counts_as_wired(self) -> None:
+        # A gate that references a check by module stem (import), not by filename.
+        _write(self.root, "tools/check_alpha.py", "# alpha\n")
+        _write(self.root, "runner.py", "from tools.check_alpha import run\nrun()\n")
+        _git(self.root, "add", "-A")
+        _git(self.root, "commit", "-q", "-m", "python-style gate")
+        head = _git(self.root, "rev-parse", "HEAD")
+        cfg = {"check_inventory": ["tools/check_*.py"], "gate_sources": ["runner.py"]}
+        result = report_gate_coverage(str(self.root), head, cfg)
+        self.assertEqual(result["verdict"], COVERED, result)
+
+    def test_bare_check_glob_mention_does_not_false_sweep(self) -> None:
+        # A comment merely mentioning "check_*" must not be treated as a glob sweep;
+        # the gate still invokes each check by name.
+        head = self._commit(
+            "steps:\n  # legacy note: we used to loop check_* but now invoke by name\n"
+            "  - run: php tools/check_a.php\n  - run: php tools/check_b.php\n"
+            "  - run: php tools/check_c.php\n")
+        result = report_gate_coverage(str(self.root), head, CONFIG)
+        self.assertEqual(result["verdict"], COVERED, result)
+
     def test_no_gate_sources_is_not_run(self) -> None:
         # Commit checks but a workflow that doesn't match the declared gate_sources glob.
         _write(self.root, "other.txt", "x\n")
