@@ -83,6 +83,19 @@ consult path.
    reset — the seven not-gate-wired behaviour checks are being classified automated /
    explicitly manual / owner-retired, so green CI cannot imply coverage that never ran.)*
 
+4. **Witness truth ledger** *(DELIVERED — pending seal; North-Star phase 1)* — a durable,
+   append-only, hash-chained record of claims bound to ground truth with a verdict
+   (CONFIRMED / CONTRADICTED / UNVERIFIABLE / INCOMPLETE). Supersede-not-delete preserves
+   lineage; verdict flips are surfaced, never erased; no path auto-upgrades a verdict
+   (the ledger analog of "never upgrade NOT_RUN to PASS"). `core/truth_ledger.py` +
+   `forge ledger {append,supersede,verify,show}`. Motivation and scored trial:
+   `planning/OBSERVED-MISS-truth-ledger.md` — it reproduces the observer's hand-kept
+   ledger, including the cycle-7 stale-ref near-miss superseded by the force-fetched
+   truth and its verdict flip. First increment of the North-Star pivot (Forge as the
+   machinery that maintains a truthful, evolving model of a subject across sessions);
+   it is the substrate the generalized binders, protocol-verify, and the person-subject
+   track record into.
+
 *G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
 (`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*
 

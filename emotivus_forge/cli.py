@@ -11,6 +11,7 @@ from . import __version__
 from .commands.adopt import handle_adopt
 from .commands.bind import handle_bind
 from .commands.check import handle_check
+from .commands.ledger import handle_ledger
 from .commands.public import (
     handle_advanced,
     handle_help,
@@ -23,6 +24,7 @@ from .core.capabilities import CAPABILITY_CATALOG
 from .core.common import ForgeStateError
 from .core.session_close import SESSION_TYPES
 from .core.native_tools import EXECUTION_MODES
+from .core.truth_ledger import VERDICTS
 from .core.storage import ForgeLockError
 
 
@@ -239,6 +241,36 @@ def _build_parser() -> argparse.ArgumentParser:
     b_gd.add_argument("--config", required=True)
     b_gd.add_argument("--json", action="store_true")
 
+    p_ledger = sub.add_parser("ledger", help="Append-only witness truth ledger: append · supersede · verify · show")
+    ledger_sub = p_ledger.add_subparsers(dest="ledger_command", required=True, metavar="{append,supersede,verify,show}")
+
+    def _add_claim_flags(target: argparse.ArgumentParser) -> None:
+        target.add_argument("--project", default=".")
+        target.add_argument("--claim", required=True, help="The claim being recorded")
+        target.add_argument("--verdict", required=True, choices=sorted(VERDICTS), help="Verdict of the claim against ground truth")
+        target.add_argument("--subject", default="project", help="Subject the claim is about (default: project)")
+        target.add_argument("--source", default="", help="Where the claim was made (doc, bus message, checkpoint)")
+        target.add_argument("--source-ref", dest="source_ref", default="", help="Exact reference for the source (SHA, line, id)")
+        target.add_argument("--gt-kind", default="", help="Ground-truth binding kind (e.g. git-rev-list, sha256, blob-identity)")
+        target.add_argument("--gt-pointer", default="", help="Ground-truth target (command, path, object)")
+        target.add_argument("--gt-observed", default="", help="What the ground truth actually showed")
+        target.add_argument("--method", default="", help="How the verdict was reached (reproduce command)")
+        target.add_argument("--observer", default="forge-observer", help="Who recorded the entry")
+        target.add_argument("--note", default="", help="Optional durable note")
+        target.add_argument("--json", action="store_true")
+
+    l_append = ledger_sub.add_parser("append", help="Record a claim -> ground-truth -> verdict entry")
+    _add_claim_flags(l_append)
+    l_supersede = ledger_sub.add_parser("supersede", help="Append a new verdict that supersedes a prior entry (never edits it)")
+    l_supersede.add_argument("--target", required=True, help="Id of the current-tip entry being superseded")
+    _add_claim_flags(l_supersede)
+    l_verify = ledger_sub.add_parser("verify", help="Prove chain integrity (exit 0 HEALTHY, 1 BLOCKED)")
+    l_verify.add_argument("--project", default=".")
+    l_verify.add_argument("--json", action="store_true")
+    l_show = ledger_sub.add_parser("show", help="Current verdict per claim-lineage, with history and verdict flips")
+    l_show.add_argument("--project", default=".")
+    l_show.add_argument("--json", action="store_true")
+
     p_advanced = sub.add_parser("advanced", help=argparse.SUPPRESS)
     p_advanced.add_argument("--project", default=".")
     p_advanced.add_argument("--json", action="store_true")
@@ -297,6 +329,8 @@ def main(argv: list[str] | None = None) -> int:
             return handle_check(args, parser, forge_root)
         if args.command == "bind":
             return handle_bind(args, parser, forge_root)
+        if args.command == "ledger":
+            return handle_ledger(args, parser, forge_root)
         if args.command == "ship":
             return handle_ship(args, forge_root)
         if args.command == "advanced":
