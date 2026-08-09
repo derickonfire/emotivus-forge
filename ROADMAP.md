@@ -59,6 +59,43 @@ consult path.
    acceptance (new/unchanged/changed/conflicting/close/release-candidate cold trials),
    toward declaring G2 COMPLETE.
 
+2. **Gate-diff monotonicity** *(DELIVERED 0.575)* — certifies that a change to a
+   project's gate/check scripts removed no assertion and introduced no SKIP path into
+   existing checks (added checks are additive; threshold-lowering inside a retained
+   assertion is out of scope, reviewer's domain). `core/gate_diff_monotonicity.py` +
+   `tools/bind_gate_diff_monotonicity.py`. Scored trial passed against the real
+   LineCheck schema-pin bump and the LC-004 merge
+   (`planning/OBSERVED-MISS-gate-diff-monotonicity.md`).
+
+3. **Gate-coverage differ** *(DELIVERED 0.575)* — reports the checks that exist in a
+   tree but are not invoked by its CI gate, so a green gate can't read as "covered"
+   while silently omitting assertions; detects glob/loop invocation and returns
+   NOT_RUN rather than false gaps. `core/gate_coverage.py` +
+   `tools/report_gate_coverage.py`. Scored trial passed: replayed against LineCheck
+   `6188585`, surfaced `check_worklist_behavior.php` + 5 sibling behaviour checks as
+   not-gate-wired (`planning/OBSERVED-MISS-gate-coverage-differ.md`).
+
+   *(All three — source-anchored release verification, gate-diff monotonicity, and
+   gate-coverage — were delivered 0.575 from LineCheck-surfaced misses. They extend
+   the anchored G1 truth surfaces: authority, provenance, native-evidence,
+   release-schema, gate coverage, and gate integrity. **Field impact:** the merge-moment
+   gate-coverage brief was adopted by the LineCheck team into the LC-OPS-CONSOLIDATION
+   reset — the seven not-gate-wired behaviour checks are being classified automated /
+   explicitly manual / owner-retired, so green CI cannot imply coverage that never ran.)*
+
+4. **Witness truth ledger** *(DELIVERED — pending seal; North-Star phase 1)* — a durable,
+   append-only, hash-chained record of claims bound to ground truth with a verdict
+   (CONFIRMED / CONTRADICTED / UNVERIFIABLE / INCOMPLETE). Supersede-not-delete preserves
+   lineage; verdict flips are surfaced, never erased; no path auto-upgrades a verdict
+   (the ledger analog of "never upgrade NOT_RUN to PASS"). `core/truth_ledger.py` +
+   `forge ledger {append,supersede,verify,show}`. Motivation and scored trial:
+   `planning/OBSERVED-MISS-truth-ledger.md` — it reproduces the observer's hand-kept
+   ledger, including the cycle-7 stale-ref near-miss superseded by the force-fetched
+   truth and its verdict flip. First increment of the North-Star pivot (Forge as the
+   machinery that maintains a truthful, evolving model of a subject across sessions);
+   it is the substrate the generalized binders, protocol-verify, and the person-subject
+   track record into.
+
 *G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
 (`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*
 
@@ -71,9 +108,22 @@ consult (0.561). DG-7 was reviewed and did not survive verification (no speculat
 Forge participates in the Claude × ChatGPT collaboration on `linecheck-acceptance` under a
 strict, advisory, read-only bound (see `exchange/`). This is Forge's real-world G2/G3
 validation: read-only consult (0.561) and instance-binding (0.562–0.563) are the two
-capabilities it contributes. No Forge code is required for the collaboration to proceed on
-what has shipped; the collaboration is a source of observed misses, not a driver of scope
-creep. Forge never gates LineCheck.
+capabilities it contributes. The collaboration is a source of observed misses, not a driver
+of scope creep. Forge never gates LineCheck.
+
+**Observed miss → G1 instrument (0.575).** The LC-004 Phase E schema bump twice declared
+the release *accepted* at a schema its accepted source never shipped, with the public
+surfaces rewritten to match — a lie every internal-consistency gate passed **green**
+(`planning/OBSERVED-MISS-source-anchored-release.md`). `release_facts` compares declared
+fields to each other; it cannot anchor to the accepted source. New G1 instrument
+**source-anchored release verification** (`core/source_anchored_release.py`,
+`tools/bind_release_truth.py`) derives the true accepted schema from the exact accepted
+source commit's code and binds the declared release-state and public surfaces to it,
+`NOT_RUN` when the anchor is unreachable. Validated against real history (CONFIRMED at the
+honest head, CONTRADICTED at the false one). Branch `claude/g1-source-anchored-release`;
+owner sealing pending. The single flag Forge raised across the engagement was this exact
+boundary — the roadmap thesis (bind fragile fact-shaped claims a green gate can't, then
+graduate the check) in one concrete case.
 
 ## Roadmap chunks
 
