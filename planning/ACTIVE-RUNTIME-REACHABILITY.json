@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "forge_version": "0.575",
+  "forge_version": "0.576",
   "entry_files": [
     "forge.py",
     "frg.py"
@@ -128,7 +128,7 @@
     {
       "module": "emotivus_forge",
       "path": "emotivus_forge/__init__.py",
-      "sha256": "67022febb0f30e0c75dd426f12e7cb71aec32c159b57ba1448a42bfc305ba1e2",
+      "sha256": "eff89b1ac6fb2dc1b21a917e191ab5edc519733e4c59b533e1c737eff6b227d8",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -1400,7 +1400,7 @@
     {
       "module": "emotivus_forge.core.paths",
       "path": "emotivus_forge/core/paths.py",
-      "sha256": "73af996261db759be3958ae5e71bc536a5db1d3614c11c44496f78ef8bbdaf29",
+      "sha256": "8408799e7f89dc3bf0830abba744062cc4c13a90a79be7b14de4678534e2fe4a",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -7903,7 +7903,7 @@
       "path": "CHANGELOG.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 85103,
+      "bytes": 86781,
       "development": true,
       "public": true,
       "classifications": [
@@ -8072,7 +8072,7 @@
       "path": "ROADMAP.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 17410,
+      "bytes": 18380,
       "development": true,
       "public": true,
       "classifications": [
@@ -8163,7 +8163,7 @@
       "path": "docs-site/",
       "kind": "directory",
       "file_count": 16,
-      "bytes": 876889,
+      "bytes": 912100,
       "development": true,
       "public": false,
       "classifications": [
@@ -8175,7 +8175,7 @@
       "path": "emotivus_forge/",
       "kind": "directory",
       "file_count": 192,
-      "bytes": 3957520,
+      "bytes": 3957489,
       "development": true,
       "public": true,
       "classifications": [
@@ -8286,8 +8286,8 @@
     {
       "path": "planning/",
       "kind": "directory",
-      "file_count": 45,
-      "bytes": 424594,
+      "file_count": 47,
+      "bytes": 446215,
       "development": true,
       "public": true,
       "classifications": [
@@ -8313,7 +8313,7 @@
       "path": "release/",
       "kind": "directory",
       "file_count": 70,
-      "bytes": 4885000,
+      "bytes": 4886016,
       "development": true,
       "public": true,
       "classifications": [
@@ -8350,7 +8350,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 23,
-      "bytes": 279960,
+      "bytes": 280007,
       "development": true,
       "public": true,
       "classifications": [
@@ -8366,5 +8366,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "f982bcdc01be85b2a9dd8dc723d0ef33c5e6a30d72cda9706a71366e7bf6a531"
+  "report_sha256": "9b3548c295adabdd90cebf8a14b69978caeea2a6d4b6dcc86925717f94e75c66"
 }

@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
-**Forge version:** 0.575  
+**Forge version:** 0.576  
 **Modules inventoried:** 96  
 **Statically reachable:** 96  
 **Statically unreachable:** 0  
-**Report SHA-256:** `f982bcdc01be85b2a9dd8dc723d0ef33c5e6a30d72cda9706a71366e7bf6a531`
+**Report SHA-256:** `9b3548c295adabdd90cebf8a14b69978caeea2a6d4b6dcc86925717f94e75c66`
 
 ## Command observations
 
@@ -156,7 +156,7 @@
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 45 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 47 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |

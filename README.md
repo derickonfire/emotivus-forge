@@ -1,4 +1,4 @@
-# Emotivus Forge 0.575
+# Emotivus Forge 0.576
 
 Forge provides portable, exact project truth and session continuity to AI models. It does not tell capable models how to reason, design, code, or debug.
 

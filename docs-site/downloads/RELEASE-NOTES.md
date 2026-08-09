@@ -1,4 +1,10 @@
-# Emotivus Forge 0.575 — Goal 2: leave a session in one command
+# Emotivus Forge 0.576 — G1 truth-anchoring binders + the witness truth ledger
+
+- `forge bind` adds three deterministic, advisory, read-only G1 binders: source-anchored release verification (accepted-vs-candidate truth bound to the accepted source commit), a gate-coverage differ (checks present in a tree but not wired into its CI gate are reported NOT_RUN, so a green gate can't imply coverage that never ran), and gate-diff monotonicity (a gate-script change removed no assertion and added no SKIP path). Each verdict maps to a CI exit code.
+- `forge ledger` adds an append-only, hash-chained witness truth ledger: claim → ground truth → verdict (CONFIRMED / CONTRADICTED / UNVERIFIABLE / INCOMPLETE), supersede-not-delete with visible verdict flips, and no auto-upgrade of a verdict (UNVERIFIABLE is terminal). Any tamper is caught by the chain hash.
+- Delivered from real misses surfaced while observing a live cross-model collaboration. Narrative integrity PASS; self-test green. Release authorization remains false.
+
+## 0.575 — Goal 2: leave a session in one command
 
 - A cold model can now close a session through Run Forge itself: `forge run --close <digest.json>` records the durable Session Close, refreshes continuity, surfaces the exact next action, and optionally exports a portable continuity bundle — no separate close/ship workflow. Entering was already one command; now leaving is too.
 - Wiring over the existing scoped-Check and Session-Close machinery, regression-locked end to end. `--close` is rejected with `--read-only`.
