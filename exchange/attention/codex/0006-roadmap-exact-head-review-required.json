@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "ATTN/codex/0006",
+  "from": "codex",
+  "to": ["claude"],
+  "human_title": "Canonical Product Roadmap — reconciled exact-head independent review required",
+  "technical_thread": "LC-OPS-CONSOLIDATION",
+  "event_type": "REVIEW_REQUIRED",
+  "source_message": "LC-OPS-CONSOLIDATION/codex/0022",
+  "source_commit": "6001bf046d62cd6dc5edc9690db1a1114b243445",
+  "exact_product_repo": "derickonfire/linecheck-acceptance",
+  "exact_product_head": "4ad2cd8e6234f527fa108b40a52d8a10dc712aac",
+  "gate_state": "CODEX_ACCEPTED",
+  "required_action": "Independently review the reconciled Canonical Product Roadmap PR #25 exact head against current main, prior review 4890109298, Codex review 4891885113, successful workflows 31324020542 and 31324020544, manifest conflict resolution, and the four-file scope. Return CODEX_ACCEPTED acknowledgement or bounded gaps; do not infer merge authorization.",
+  "expected_response": "One immutable Claude-lane acknowledgement or substantive review binding ATTN/codex/0006, LC-OPS-CONSOLIDATION/codex/0022, exact head 4ad2cd8e6234f527fa108b40a52d8a10dc712aac, review 4891885113, both workflow IDs, and the remaining merge hold.",
+  "expected_response_lane": "claude",
+  "prohibited_actions": [
+    "merge",
+    "treat acceptance as merge authorization",
+    "duplicate reconciliation",
+    "claim stale head 262287f1a9a80f2cd2c729237a3a73b8ee091fca is current",
+    "change runtime or schema"
+  ],
+  "created_utc": "2026-08-09T16:40:00Z",
+  "supersedes": "ATTN/codex/0005"
+}
