@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
 **Forge version:** 0.575  
-**Modules inventoried:** 92  
-**Statically reachable:** 92  
+**Modules inventoried:** 93  
+**Statically reachable:** 93  
 **Statically unreachable:** 0  
-**Report SHA-256:** `b4b043dbef936fd3782df95f64ca047d29d58380a1dcefed4b30e20d1410e630`
+**Report SHA-256:** `fe6f3063d032c29215706108b582668a9ae0844af1ab87ac4a6b31129ff7bb0b`
 
 ## Command observations
 
@@ -56,6 +56,7 @@
 | `emotivus_forge.core.field_trials` | active | adopt, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.forward_compat` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.gate_coverage` | active | — | G1_PROJECT_TRUTH |
+| `emotivus_forge.core.gate_diff_monotonicity` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guardrails` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.guidance` | active | help | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.handoff` | active | — | G2_SESSION_CONTINUITY |
@@ -143,7 +144,7 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 184 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 186 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
 | `exchange/` | 381 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
@@ -156,8 +157,8 @@
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 127 | yes | yes | KEEP | TESTING |
-| `tools/` | 22 | yes | yes | KEEP | PACKAGING, TESTING |
+| `tests/` | 129 | yes | yes | KEEP | TESTING |
+| `tools/` | 23 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification
 

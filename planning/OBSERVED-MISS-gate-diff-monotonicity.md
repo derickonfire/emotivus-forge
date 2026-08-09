@@ -1,8 +1,16 @@
 # Observed miss — no instrument certifies a gate-script change is monotonic
 
-**Type:** observed miss (G1 project-truth candidate) · **Recorded:** 0.575 cycle
-**Trial status:** miss recorded; instrument **not built** — pending a scored trial
-per the "miss + trial before instrument" rule.
+**Type:** observed miss (G1 project-truth) · **Recorded:** 0.575 cycle
+**Trial status:** **DELIVERED 0.575** — scored trial passed. Instrument:
+`core/gate_diff_monotonicity.py` + `tools/bind_gate_diff_monotonicity.py`.
+Real LineCheck replays: the schema-pin bump `8d578b9..8845c3f` → CONFIRMED
+(assertions 4312→4380, +68, none removed; SKIP 10→10); the LC-004 merge
+`dcb7dbb^..dcb7dbb` scoped to checks → CONFIRMED (new behaviour checks additive).
+The LC-004 replay first exposed a real design flaw — new check files carry honest
+"SKIP if no DB" guards, which a crude aggregate miscounted as a new SKIP path; the
+delivered version measures assertion-loss and new-SKIP **per existing (modified)
+file** and treats added checks as additive. Contradiction cases (removed assertion,
+new SKIP in an existing check, deleted check) covered by isolated tests.
 
 ## What happened (LineCheck)
 

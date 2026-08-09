@@ -59,12 +59,13 @@ consult path.
    acceptance (new/unchanged/changed/conflicting/close/release-candidate cold trials),
    toward declaring G2 COMPLETE.
 
-2. **Gate-diff monotonicity** *(candidate — miss recorded, instrument not built)* —
-   certify that a change to a project's gate/check scripts removed no assertion,
-   lowered no threshold, and introduced no SKIP path. LineCheck surfaced the miss
-   twice (`planning/OBSERVED-MISS-gate-diff-monotonicity.md`). Needs a scored trial
-   (real schema-pin commit → CONFIRMED, synthetic assertion-removal → CONTRADICTED)
-   before it enters the durable core.
+2. **Gate-diff monotonicity** *(DELIVERED 0.575)* — certifies that a change to a
+   project's gate/check scripts removed no assertion and introduced no SKIP path into
+   existing checks (added checks are additive; threshold-lowering inside a retained
+   assertion is out of scope, reviewer's domain). `core/gate_diff_monotonicity.py` +
+   `tools/bind_gate_diff_monotonicity.py`. Scored trial passed against the real
+   LineCheck schema-pin bump and the LC-004 merge
+   (`planning/OBSERVED-MISS-gate-diff-monotonicity.md`).
 
 3. **Gate-coverage differ** *(DELIVERED 0.575)* — reports the checks that exist in a
    tree but are not invoked by its CI gate, so a green gate can't read as "covered"
@@ -74,11 +75,13 @@ consult path.
    `6188585`, surfaced `check_worklist_behavior.php` + 5 sibling behaviour checks as
    not-gate-wired (`planning/OBSERVED-MISS-gate-coverage-differ.md`).
 
-   *(2 is a LineCheck-surfaced G1 candidate folded here per the "miss + trial before
-   instrument" rule; 3 was delivered this cycle. Both follow the delivered
-   source-anchored release verification (0.575) in the same truth-anchoring family —
-   authority, provenance, native-evidence, release-schema, and now gate coverage are
-   the anchored G1 truth surfaces.)*
+   *(All three — source-anchored release verification, gate-diff monotonicity, and
+   gate-coverage — were delivered 0.575 from LineCheck-surfaced misses. They extend
+   the anchored G1 truth surfaces: authority, provenance, native-evidence,
+   release-schema, gate coverage, and gate integrity. **Field impact:** the merge-moment
+   gate-coverage brief was adopted by the LineCheck team into the LC-OPS-CONSOLIDATION
+   reset — the seven not-gate-wired behaviour checks are being classified automated /
+   explicitly manual / owner-retired, so green CI cannot imply coverage that never ran.)*
 
 *G3 foundation CERTIFIED (0.572) and now CONTINUOUS — the end-to-end round trip passes
 (`planning/G3-COMPLETION.md`); new G3 instruments require an observed miss + scored trial.*
