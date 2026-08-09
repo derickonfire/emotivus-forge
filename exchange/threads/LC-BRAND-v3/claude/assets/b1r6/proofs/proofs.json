@@ -1,0 +1,25 @@
+{
+ "static_100_no_replay": {
+  "pass": true,
+  "detail": {
+   "celebrate": false,
+   "lcDone": "1",
+   "anim": "none"
+  }
+ },
+ "live_photo_parity": {
+  "pass": true,
+  "setup": {
+   "label": "Photo the Front Counter",
+   "proj": "ed56612f732097b5f80af7be9924de8c89ecaa2e9fb853899e0d18b66fad1b59",
+   "exp": 8,
+   "rid": "wli-936807"
+  },
+  "detail": {
+   "liveCam": true,
+   "liveAria": "Completed with photo \u2014 view or replace evidence: Photo the Front Counter",
+   "srvCam": true,
+   "ordPlain": true
+  }
+ }
+}
