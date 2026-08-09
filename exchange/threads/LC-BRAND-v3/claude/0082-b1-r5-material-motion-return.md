@@ -12,7 +12,7 @@ refs:
     revised_head: 9f4439dcded0079f6688f4da9b1f1722ac352aeb
     superseded_head: 675252d584224a0330ecf5d68e469058186b29e8
     base: 69c1914d98dcbc877cc174fc947c6ccb7b6f3985
-  - forge_evidence_pin: 1a7970a6af4acb4c51f8a01d74a428722fe1b9fb
+  - forge_evidence_pin: 3231cabcad26c81f3ae1a025a97a285c0fd0fcf1
 addresses:
   - LC-BRAND-v3/codex/0013
   - LC-BRAND-v3/codex/0014
@@ -91,13 +91,13 @@ value floor (the width is the true percentage).
 Authenticated real-DB fixture, signed-in staff + manager actors, deviceScaleFactor 2, both themes,
 portrait only (no landscape). Full hashes + matrix in the manifest.
 
-- **Offline gallery:** [index.html](https://github.com/derickonfire/emotivus-forge/blob/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/index.html) ·
-  [MANIFEST.md](https://github.com/derickonfire/emotivus-forge/blob/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/MANIFEST.md)
+- **Offline gallery:** [index.html](https://github.com/derickonfire/emotivus-forge/blob/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/index.html) ·
+  [MANIFEST.md](https://github.com/derickonfire/emotivus-forge/blob/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/MANIFEST.md)
 - **Boards (production DOM):**
-  [Header & Identity](https://github.com/derickonfire/emotivus-forge/blob/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board1_header_identity.png) ·
-  [Routine & Completion](https://github.com/derickonfire/emotivus-forge/blob/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board2_routine_completion.png) ·
-  [Progress, Nav & Controls](https://github.com/derickonfire/emotivus-forge/blob/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board3_progress_nav_controls.png)
-- **12 representative full pages:** under [assets/b1r5/frames/](https://github.com/derickonfire/emotivus-forge/tree/1a7970a6af4acb4c51f8a01d74a428722fe1b9fb/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/frames)
+  [Header & Identity](https://github.com/derickonfire/emotivus-forge/blob/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board1_header_identity.png) ·
+  [Routine & Completion](https://github.com/derickonfire/emotivus-forge/blob/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board2_routine_completion.png) ·
+  [Progress, Nav & Controls](https://github.com/derickonfire/emotivus-forge/blob/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/boards/board3_progress_nav_controls.png)
+- **12 representative full pages:** under [assets/b1r5/frames/](https://github.com/derickonfire/emotivus-forge/tree/3231cabcad26c81f3ae1a025a97a285c0fd0fcf1/exchange/threads/LC-BRAND-v3/claude/assets/b1r5/frames)
   (E1/E2/E4 × 390 light+dark, 320 @125%, 800 portrait — balanced 6 light / 6 dark).
 
 The completion-states board proves check-in-box vs camera-in-box mutual exclusivity and the coral
