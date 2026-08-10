@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
-**Forge version:** 0.576  
-**Modules inventoried:** 96  
-**Statically reachable:** 96  
+**Forge version:** 0.577  
+**Modules inventoried:** 100  
+**Statically reachable:** 100  
 **Statically unreachable:** 0  
-**Report SHA-256:** `9b3548c295adabdd90cebf8a14b69978caeea2a6d4b6dcc86925717f94e75c66`
+**Report SHA-256:** `404a75861da46564ee3e6fbaeb352028177fe39bb6e939c344a1aae17f42bafe`
 
 ## Command observations
 
@@ -30,6 +30,7 @@
 | `emotivus_forge.commands.common` | active | adopt, check, help, resume, run, ship | G2_SESSION_CONTINUITY, SHARED_RUNTIME |
 | `emotivus_forge.commands.ledger` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.commands.noticing` | active | adopt, check, resume, run | G2_SESSION_CONTINUITY |
+| `emotivus_forge.commands.protocol` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.commands.public` | active | help, resume, run, ship | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core` | active | — | SHARED_RUNTIME |
 | `emotivus_forge.core.artifact_collision` | active | run, ship | G1_PROJECT_TRUTH |
@@ -44,6 +45,7 @@
 | `emotivus_forge.core.change_ledger` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.changes` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.check_qualification` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
+| `emotivus_forge.core.claim_binder` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.code_orientation` | active | adopt, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.cold_session_validation` | active | adopt, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.common` | active | adopt, check, help, resume, run, ship | SHARED_RUNTIME |
@@ -81,8 +83,10 @@
 | `emotivus_forge.core.presentation_profile` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.project_events` | active | check | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.project_identity` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
+| `emotivus_forge.core.protocol_verify` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.provenance` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.recommended_prompt` | active | run | G2_SESSION_CONTINUITY |
+| `emotivus_forge.core.ref_integrity` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.relationships` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.release_authorization` | active | adopt, resume, run, ship | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.release_distribution` | active | adopt, resume, run, ship | G1_PROJECT_TRUTH |
@@ -134,6 +138,7 @@
 | `FORGE-MANIFEST.json` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, PACKAGING |
 | `FORGE-PRODUCT.json` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL, WEB_DOCUMENTATION |
 | `IMPLEMENTATION-REPORT.md` | 1 | yes | no | REFERENCE | REFERENCE |
+| `LC-ARCH-1_1/` | 4 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `LICENSE-INTERNAL.md` | 1 | yes | no | KEEP | REFERENCE |
 | `PROGRESS-STATUS.md` | 1 | yes | yes | KEEP | G3_EVOLUTION_KERNEL, WEB_DOCUMENTATION |
 | `PUBLIC-RELEASE-NOTICE.md` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, WEB_DOCUMENTATION |
@@ -147,20 +152,20 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 192 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 200 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
-| `exchange/` | 381 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `exchange/` | 1053 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `forge.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `forge.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 47 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 52 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 135 | yes | yes | KEEP | TESTING |
+| `tests/` | 141 | yes | yes | KEEP | TESTING |
 | `tools/` | 23 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification

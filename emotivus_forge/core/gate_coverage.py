@@ -19,6 +19,7 @@ from __future__ import annotations
 import fnmatch
 import subprocess
 
+from .ref_integrity import SUPERSEDED, guard_finding
 from .truth import TRUTH_STATES
 
 COVERED = "COVERED"       # every inventoried check is referenced by a declared gate source
@@ -45,11 +46,6 @@ class GitError(RuntimeError):
 
 def _git(repo: str, args: list[str]) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "-C", repo, *args], capture_output=True, text=True)
-
-
-def _is_commit(repo: str, ref: str) -> bool:
-    proc = _git(repo, ["cat-file", "-t", ref])
-    return proc.returncode == 0 and proc.stdout.strip() == "commit"
 
 
 def _show(repo: str, ref: str, path: str) -> str | None:
@@ -97,11 +93,20 @@ def report_gate_coverage(repo: str, head: str, config: dict) -> dict:
             "findings": findings,
         }
 
-    if not _is_commit(repo, head):
-        findings.append(_finding("reachability", NOT_RUN,
-                                 f"head {head} is not a reachable commit in {repo}.",
-                                 f"git -C {repo} cat-file -t {head}"))
+    # Head-integrity gate (R8): a coverage report at a superseded or stale anchor
+    # reads as current coverage when it is not; the guard refuses with NOT_RUN.
+    blocking, assessment = guard_finding(
+        repo, head, label="head",
+        allow_superseded=bool(config.get("allow_superseded_head", False)))
+    if blocking is not None:
+        findings.append(blocking)
         return result(NOT_RUN)
+    if assessment["status"] == SUPERSEDED:
+        # Deliberately historical bind: record the waived currency so the report
+        # cannot masquerade as current coverage (informational; verdict unchanged).
+        findings.append(_finding("head-integrity", COVERED,
+                                 f"head currency waived by allow_superseded_head: {assessment['detail']}",
+                                 assessment["reproduce"]))
 
     try:
         tree = _ls_tree(repo, head)

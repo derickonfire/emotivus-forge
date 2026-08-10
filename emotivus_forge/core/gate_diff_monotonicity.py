@@ -20,6 +20,7 @@ from __future__ import annotations
 import fnmatch
 import subprocess
 
+from .ref_integrity import SUPERSEDED, guard_finding
 from .truth import TRUTH_STATES
 
 CONFIRMED = "CONFIRMED"
@@ -45,11 +46,6 @@ class GitError(RuntimeError):
 
 def _git(repo: str, args: list[str]) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "-C", repo, *args], capture_output=True, text=True)
-
-
-def _is_commit(repo: str, ref: str) -> bool:
-    proc = _git(repo, ["cat-file", "-t", ref])
-    return proc.returncode == 0 and proc.stdout.strip() == "commit"
 
 
 def _show(repo: str, ref: str, path: str) -> str | None:
@@ -96,12 +92,19 @@ def report_gate_diff_monotonicity(repo: str, base: str, head: str, config: dict)
             "findings": findings,
         }
 
+    # Head-integrity gate (R8): both anchors must be current, not merely present.
+    # A superseded base or head silently compares yesterday's gate to today's (or
+    # vice versa) and can author a false CONTRADICTED; the guard refuses instead.
+    allow_superseded = bool(config.get("allow_superseded_head", False))
     for ref, label in ((base, "base"), (head, "head")):
-        if not _is_commit(repo, ref):
-            findings.append(_finding("reachability", NOT_RUN,
-                                     f"{label} {ref} is not a reachable commit in {repo}.",
-                                     f"git -C {repo} cat-file -t {ref}"))
+        blocking, assessment = guard_finding(repo, ref, label=label, allow_superseded=allow_superseded)
+        if blocking is not None:
+            findings.append(blocking)
             return result(NOT_RUN)
+        if assessment["status"] == SUPERSEDED:
+            findings.append(_finding(f"{label}-integrity", CONFIRMED,
+                                     f"{label} currency waived by allow_superseded_head: {assessment['detail']}",
+                                     assessment["reproduce"]))
 
     gate_paths = config["gate_paths"]
     assertion_markers = config.get("assertion_markers", DEFAULT_ASSERTION_MARKERS)
@@ -116,7 +119,8 @@ def report_gate_diff_monotonicity(repo: str, base: str, head: str, config: dict)
     if not changed:
         findings.append(_finding("scope", CONFIRMED,
                                  f"no gate/check files matching {gate_paths} changed in {base[:12]}..{head[:12]}; "
-                                 f"nothing to weaken."))
+                                 f"nothing to weaken.",
+                                 f"git -C {repo} diff --name-only {base[:12]}..{head[:12]} -- " + " ".join(gate_paths)))
         return result(CONFIRMED)
 
     # Monotonicity is about not weakening what is already there. Classify each changed
@@ -154,7 +158,7 @@ def report_gate_diff_monotonicity(repo: str, base: str, head: str, config: dict)
     else:
         findings.append(_finding("assertion-preservation", CONFIRMED,
                                  f"no existing gate file lost assertions across {modified_count} modified "
-                                 f"file(s); +{added_assertions} assertion(s) in added checks."))
+                                 f"file(s); +{added_assertions} assertion(s) in added checks.", repro))
 
     if new_skip_files:
         findings.append(_finding("no-new-skip", CONTRADICTED,
@@ -163,7 +167,7 @@ def report_gate_diff_monotonicity(repo: str, base: str, head: str, config: dict)
     else:
         findings.append(_finding("no-new-skip", CONFIRMED,
                                  "no existing gate file gained a SKIP path (skip-guards inside newly added "
-                                 "checks are additive, not a weakening)."))
+                                 "checks are additive, not a weakening).", repro))
 
     verdict = CONTRADICTED if (weakened_assertions or new_skip_files) else CONFIRMED
     return result(verdict)

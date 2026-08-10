@@ -23,6 +23,7 @@ import re
 import subprocess
 from typing import Any
 
+from .ref_integrity import SUPERSEDED, guard_finding
 from .truth import TRUTH_STATES
 
 # Finding / verdict states, drawn from the core truth vocabulary.
@@ -119,12 +120,22 @@ def bind_source_anchored_release(repo: str, head: str, config: dict) -> dict:
             "findings": findings,
         }
 
-    # --- Reachability gate (never assert on an unreachable object) ---
-    if not _is_commit(repo, head):
-        findings.append(_finding("reachability", NOT_RUN,
-                                 f"head {head} is not a reachable commit in {repo}.",
-                                 f"git -C {repo} cat-file -t {head}"))
+    # --- Head-integrity gate (R8): never bind to a missing, superseded, or stale anchor.
+    # A rebased/force-pushed-away head still exists in the object store; a stale
+    # remote-tracking name resolves silently to old truth. Either could author a
+    # false CONTRADICTED for the claim, so the guard refuses with NOT_RUN instead.
+    blocking, assessment = guard_finding(
+        repo, head, label="head",
+        allow_superseded=bool(config.get("allow_superseded_head", False)))
+    if blocking is not None:
+        findings.append(blocking)
         return result()
+    if assessment["status"] == SUPERSEDED:
+        # Deliberately historical bind: record the waived currency so the result
+        # cannot masquerade as current truth.
+        findings.append(_finding("head-integrity", CONFIRMED,
+                                 f"head currency waived by allow_superseded_head: {assessment['detail']}",
+                                 assessment["reproduce"]))
 
     rs_file = config["release_state_file"]
     rs_text = _file_at(repo, head, rs_file)

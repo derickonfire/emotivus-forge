@@ -11,7 +11,9 @@ from . import __version__
 from .commands.adopt import handle_adopt
 from .commands.bind import handle_bind
 from .commands.check import handle_check
+from .commands.init import handle_init
 from .commands.ledger import handle_ledger
+from .commands.protocol import handle_protocol
 from .commands.public import (
     handle_advanced,
     handle_help,
@@ -22,9 +24,10 @@ from .commands.public import (
 )
 from .core.capabilities import CAPABILITY_CATALOG
 from .core.common import ForgeStateError
+from .core.scaffold import CI_CHOICES, PROFILES
 from .core.session_close import SESSION_TYPES
 from .core.native_tools import EXECUTION_MODES
-from .core.truth_ledger import VERDICTS
+from .core.truth_ledger import VERDICTS, DERIVATIONS
 from .core.storage import ForgeLockError
 
 
@@ -222,24 +225,30 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ship.add_argument("project", nargs="?", default=".")
     p_ship.add_argument("--json", action="store_true")
 
-    p_bind = sub.add_parser("bind", help="Deterministic G1 binders (advisory, read-only): release-truth · gate-coverage · gate-diff")
-    bind_sub = p_bind.add_subparsers(dest="binder", required=True, metavar="{release-truth,gate-coverage,gate-diff}")
+    p_bind = sub.add_parser("bind", help="Deterministic G1 binders (advisory, read-only): release-truth · gate-coverage · gate-diff · claims")
+    bind_sub = p_bind.add_subparsers(dest="binder", required=True, metavar="{release-truth,gate-coverage,gate-diff,claims}")
+
+    def _add_bind_common(target: argparse.ArgumentParser) -> None:
+        target.add_argument("--repo", required=True)
+        target.add_argument("--config", required=True)
+        target.add_argument("--json", action="store_true")
+        target.add_argument("--ledger", action="store_true",
+                            help="Record the binder verdict in the project truth ledger as a binder-derived entry")
+        target.add_argument("--project", default=".",
+                            help="Project root whose truth ledger receives the verdict (with --ledger)")
+
     b_rt = bind_sub.add_parser("release-truth", help="Bind accepted-vs-candidate release truth to the accepted source commit")
-    b_rt.add_argument("--repo", required=True)
     b_rt.add_argument("--head", required=True)
-    b_rt.add_argument("--config", required=True)
-    b_rt.add_argument("--json", action="store_true")
+    _add_bind_common(b_rt)
     b_gc = bind_sub.add_parser("gate-coverage", help="Report checks present in the tree but not invoked by the declared gate")
-    b_gc.add_argument("--repo", required=True)
     b_gc.add_argument("--head", required=True)
-    b_gc.add_argument("--config", required=True)
-    b_gc.add_argument("--json", action="store_true")
+    _add_bind_common(b_gc)
     b_gd = bind_sub.add_parser("gate-diff", help="Certify a gate-script change removed no assertion and added no SKIP path")
-    b_gd.add_argument("--repo", required=True)
     b_gd.add_argument("--base", required=True)
     b_gd.add_argument("--head", required=True)
-    b_gd.add_argument("--config", required=True)
-    b_gd.add_argument("--json", action="store_true")
+    _add_bind_common(b_gd)
+    b_cl = bind_sub.add_parser("claims", help="Evaluate structured claims (head-equals · ancestry · blob-identity · file-sha256 · file-regex) at guarded anchors")
+    _add_bind_common(b_cl)
 
     p_ledger = sub.add_parser("ledger", help="Append-only witness truth ledger: append · supersede · verify · show")
     ledger_sub = p_ledger.add_subparsers(dest="ledger_command", required=True, metavar="{append,supersede,verify,show}")
@@ -247,14 +256,16 @@ def _build_parser() -> argparse.ArgumentParser:
     def _add_claim_flags(target: argparse.ArgumentParser) -> None:
         target.add_argument("--project", default=".")
         target.add_argument("--claim", required=True, help="The claim being recorded")
-        target.add_argument("--verdict", required=True, choices=sorted(VERDICTS), help="Verdict of the claim against ground truth")
+        target.add_argument("--verdict", required=True, choices=sorted(VERDICTS), help="Verdict against ground truth. CONFIRMED requires binder backing (--derivation binder + --reproduce); an unbound human/model judgement is ATTESTED")
         target.add_argument("--subject", default="project", help="Subject the claim is about (default: project)")
         target.add_argument("--source", default="", help="Where the claim was made (doc, bus message, checkpoint)")
         target.add_argument("--source-ref", dest="source_ref", default="", help="Exact reference for the source (SHA, line, id)")
         target.add_argument("--gt-kind", default="", help="Ground-truth binding kind (e.g. git-rev-list, sha256, blob-identity)")
         target.add_argument("--gt-pointer", default="", help="Ground-truth target (command, path, object)")
         target.add_argument("--gt-observed", default="", help="What the ground truth actually showed")
-        target.add_argument("--method", default="", help="How the verdict was reached (reproduce command)")
+        target.add_argument("--derivation", choices=sorted(DERIVATIONS), default="asserted", help="Provenance: 'binder' (re-derived, requires --reproduce + ground truth) or 'asserted' (human/model judgement; default)")
+        target.add_argument("--reproduce", default="", help="Exact command that re-derives the ground truth (required for a binder-derived CONFIRMED)")
+        target.add_argument("--method", default="", help="Free-text description of how the verdict was reached")
         target.add_argument("--observer", default="forge-observer", help="Who recorded the entry")
         target.add_argument("--note", default="", help="Optional durable note")
         target.add_argument("--json", action="store_true")
@@ -270,6 +281,25 @@ def _build_parser() -> argparse.ArgumentParser:
     l_show = ledger_sub.add_parser("show", help="Current verdict per claim-lineage, with history and verdict flips")
     l_show.add_argument("--project", default=".")
     l_show.add_argument("--json", action="store_true")
+
+    p_protocol = sub.add_parser("protocol", help="Verify a multi-agent git collaboration protocol (advisory, read-only)")
+    protocol_sub = p_protocol.add_subparsers(dest="protocol_command", required=True, metavar="{verify}")
+    pv = protocol_sub.add_parser("verify", help="Check protocol invariants: exact-head claims · bindable receipts · structured state · supersession · owner-gated irreversible acts · single-baton liveness")
+    pv.add_argument("--config", required=True, help="Protocol config: declared structured records + initial_holder")
+    pv.add_argument("--repo", default="", help="Repo to bind claim heads against (enables head-currency via the R8 guard)")
+    pv.add_argument("--liveness", action="store_true", help="Also check the single-baton liveness invariant (exactly one holder, else STALLED)")
+    pv.add_argument("--ledger", action="store_true", help="Record the protocol verdict in the project truth ledger as a binder-derived entry")
+    pv.add_argument("--project", default=".", help="Project root whose truth ledger receives the verdict (with --ledger)")
+    pv.add_argument("--json", action="store_true")
+
+    p_init = sub.add_parser("init", help="Scaffold Forge's truth+protocol layer into a project repo (advisory, additive)")
+    p_init.add_argument("project", nargs="?", default=".")
+    p_init.add_argument("--profile", choices=PROFILES, default="truth",
+                        help="truth (default): truth layer only · pair: + a short AI operating agreement · fleet: + the full coordination substrate")
+    p_init.add_argument("--ci", choices=CI_CHOICES, default="none",
+                        help="Also emit a CI workflow that runs the gate (github)")
+    p_init.add_argument("--dry-run", action="store_true", help="Preview the scaffold; write nothing")
+    p_init.add_argument("--json", action="store_true")
 
     p_advanced = sub.add_parser("advanced", help=argparse.SUPPRESS)
     p_advanced.add_argument("--project", default=".")
@@ -331,6 +361,10 @@ def main(argv: list[str] | None = None) -> int:
             return handle_bind(args, parser, forge_root)
         if args.command == "ledger":
             return handle_ledger(args, parser, forge_root)
+        if args.command == "protocol":
+            return handle_protocol(args, parser, forge_root)
+        if args.command == "init":
+            return handle_init(args, parser, forge_root)
         if args.command == "ship":
             return handle_ship(args, forge_root)
         if args.command == "advanced":
