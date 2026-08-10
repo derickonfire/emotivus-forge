@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "forge_version": "0.576",
+  "forge_version": "0.577",
   "entry_files": [
     "forge.py",
     "frg.py"
@@ -131,7 +131,7 @@
     {
       "module": "emotivus_forge",
       "path": "emotivus_forge/__init__.py",
-      "sha256": "eff89b1ac6fb2dc1b21a917e191ab5edc519733e4c59b533e1c737eff6b227d8",
+      "sha256": "e3510fd89ec4e5dc9c30a951f17059877cfa1a1beb2674e537eec08e876ad0cf",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": true,
@@ -8001,7 +8001,7 @@
       "path": "CHANGELOG.md",
       "kind": "file",
       "file_count": 1,
-      "bytes": 86781,
+      "bytes": 89180,
       "development": true,
       "public": true,
       "classifications": [
@@ -8079,7 +8079,7 @@
       "path": "FORGE-PRODUCT.json",
       "kind": "file",
       "file_count": 1,
-      "bytes": 52836,
+      "bytes": 53118,
       "development": true,
       "public": true,
       "classifications": [
@@ -8274,7 +8274,7 @@
       "path": "docs-site/",
       "kind": "directory",
       "file_count": 16,
-      "bytes": 912100,
+      "bytes": 947740,
       "development": true,
       "public": false,
       "classifications": [
@@ -8424,7 +8424,7 @@
       "path": "release/",
       "kind": "directory",
       "file_count": 70,
-      "bytes": 4886016,
+      "bytes": 4887569,
       "development": true,
       "public": true,
       "classifications": [
@@ -8477,5 +8477,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "f3abb78907b76c0edb7b2e99cad8d05ad925940c0d2a45116a0918411be15ee9"
+  "report_sha256": "404a75861da46564ee3e6fbaeb352028177fe39bb6e939c344a1aae17f42bafe"
 }

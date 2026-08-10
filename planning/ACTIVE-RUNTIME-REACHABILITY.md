@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
-**Forge version:** 0.576  
+**Forge version:** 0.577  
 **Modules inventoried:** 100  
 **Statically reachable:** 100  
 **Statically unreachable:** 0  
-**Report SHA-256:** `f3abb78907b76c0edb7b2e99cad8d05ad925940c0d2a45116a0918411be15ee9`
+**Report SHA-256:** `404a75861da46564ee3e6fbaeb352028177fe39bb6e939c344a1aae17f42bafe`
 
 ## Command observations
 

@@ -1,4 +1,12 @@
-# Emotivus Forge 0.576 — G1 truth-anchoring binders + the witness truth ledger
+# Emotivus Forge 0.577 — North-Star Phases 2–3: honest verdicts, current anchors, a checkable protocol
+
+- Truth ledger schema 2: `CONFIRMED` is now reserved for binder-derived verdicts that carry a re-runnable reproduce command and a ground-truth binding; an unbound human/model judgement is `ATTESTED`, never silently CONFIRMED. Enforced at write (append refuses an unbound CONFIRMED) and at read (verify flags one that slipped in → BLOCKED) — "never upgrade NOT_RUN to PASS" applied to the ledger itself.
+- Head-integrity guard (R8): every `forge bind` binder classifies its anchor before binding, so a missing, superseded (rebased/force-pushed-away), or stale remote-tracking head yields NOT_RUN → UNVERIFIABLE, never a false CONTRADICTED. Remote-tracking names are checked against the remote now via ls-remote.
+- Generalized claim binder (R3): `forge bind claims` evaluates head-equals / ancestry / blob-identity / file-sha256 / file-regex claims at guarded anchors, each with its reproduce command, and can record verdicts to the truth ledger with `--ledger`.
+- `forge protocol verify` (R9): a multi-agent git collaboration's invariants — exact-head claims, bindable receipts, structured state, history-preserving supersession, owner-gated irreversible acts, and single-baton `--liveness` — made machine-checkable instead of prose.
+- Restores a green reachability gate reddened by the 0.576 merge; an adversarial review fixed seven correctness defects before commit. Narrative integrity PASS; self-test green. Release authorization remains false.
+
+## 0.576 — G1 truth-anchoring binders + the witness truth ledger
 
 - `forge bind` adds three deterministic, advisory, read-only G1 binders: source-anchored release verification (accepted-vs-candidate truth bound to the accepted source commit), a gate-coverage differ (checks present in a tree but not wired into its CI gate are reported NOT_RUN, so a green gate can't imply coverage that never ran), and gate-diff monotonicity (a gate-script change removed no assertion and added no SKIP path). Each verdict maps to a CI exit code.
 - `forge ledger` adds an append-only, hash-chained witness truth ledger: claim → ground truth → verdict (CONFIRMED / CONTRADICTED / UNVERIFIABLE / INCOMPLETE), supersede-not-delete with visible verdict flips, and no auto-upgrade of a verdict (UNVERIFIABLE is terminal). Any tamper is caught by the chain hash.

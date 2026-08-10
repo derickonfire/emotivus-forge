@@ -1,8 +1,8 @@
 {
   "forge_schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.576",
-  "updated": "2026-08-05",
+  "version": "0.577",
+  "updated": "2026-08-10",
   "state": "development-candidate",
   "edition": "development",
   "archive_root": "Emotivus-Forge",
