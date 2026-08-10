@@ -11,6 +11,7 @@ from . import __version__
 from .commands.adopt import handle_adopt
 from .commands.bind import handle_bind
 from .commands.check import handle_check
+from .commands.init import handle_init
 from .commands.ledger import handle_ledger
 from .commands.protocol import handle_protocol
 from .commands.public import (
@@ -23,6 +24,7 @@ from .commands.public import (
 )
 from .core.capabilities import CAPABILITY_CATALOG
 from .core.common import ForgeStateError
+from .core.scaffold import CI_CHOICES, PROFILES
 from .core.session_close import SESSION_TYPES
 from .core.native_tools import EXECUTION_MODES
 from .core.truth_ledger import VERDICTS, DERIVATIONS
@@ -290,6 +292,15 @@ def _build_parser() -> argparse.ArgumentParser:
     pv.add_argument("--project", default=".", help="Project root whose truth ledger receives the verdict (with --ledger)")
     pv.add_argument("--json", action="store_true")
 
+    p_init = sub.add_parser("init", help="Scaffold Forge's truth+protocol layer into a project repo (advisory, additive)")
+    p_init.add_argument("project", nargs="?", default=".")
+    p_init.add_argument("--profile", choices=PROFILES, default="truth",
+                        help="truth (default): truth layer only · pair: + a short AI operating agreement · fleet: + the full coordination substrate")
+    p_init.add_argument("--ci", choices=CI_CHOICES, default="none",
+                        help="Also emit a CI workflow that runs the gate (github)")
+    p_init.add_argument("--dry-run", action="store_true", help="Preview the scaffold; write nothing")
+    p_init.add_argument("--json", action="store_true")
+
     p_advanced = sub.add_parser("advanced", help=argparse.SUPPRESS)
     p_advanced.add_argument("--project", default=".")
     p_advanced.add_argument("--json", action="store_true")
@@ -352,6 +363,8 @@ def main(argv: list[str] | None = None) -> int:
             return handle_ledger(args, parser, forge_root)
         if args.command == "protocol":
             return handle_protocol(args, parser, forge_root)
+        if args.command == "init":
+            return handle_init(args, parser, forge_root)
         if args.command == "ship":
             return handle_ship(args, forge_root)
         if args.command == "advanced":
