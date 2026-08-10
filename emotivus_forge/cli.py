@@ -12,6 +12,7 @@ from .commands.adopt import handle_adopt
 from .commands.bind import handle_bind
 from .commands.check import handle_check
 from .commands.ledger import handle_ledger
+from .commands.protocol import handle_protocol
 from .commands.public import (
     handle_advanced,
     handle_help,
@@ -279,6 +280,16 @@ def _build_parser() -> argparse.ArgumentParser:
     l_show.add_argument("--project", default=".")
     l_show.add_argument("--json", action="store_true")
 
+    p_protocol = sub.add_parser("protocol", help="Verify a multi-agent git collaboration protocol (advisory, read-only)")
+    protocol_sub = p_protocol.add_subparsers(dest="protocol_command", required=True, metavar="{verify}")
+    pv = protocol_sub.add_parser("verify", help="Check protocol invariants: exact-head claims · bindable receipts · structured state · supersession · owner-gated irreversible acts · single-baton liveness")
+    pv.add_argument("--config", required=True, help="Protocol config: declared structured records + initial_holder")
+    pv.add_argument("--repo", default="", help="Repo to bind claim heads against (enables head-currency via the R8 guard)")
+    pv.add_argument("--liveness", action="store_true", help="Also check the single-baton liveness invariant (exactly one holder, else STALLED)")
+    pv.add_argument("--ledger", action="store_true", help="Record the protocol verdict in the project truth ledger as a binder-derived entry")
+    pv.add_argument("--project", default=".", help="Project root whose truth ledger receives the verdict (with --ledger)")
+    pv.add_argument("--json", action="store_true")
+
     p_advanced = sub.add_parser("advanced", help=argparse.SUPPRESS)
     p_advanced.add_argument("--project", default=".")
     p_advanced.add_argument("--json", action="store_true")
@@ -339,6 +350,8 @@ def main(argv: list[str] | None = None) -> int:
             return handle_bind(args, parser, forge_root)
         if args.command == "ledger":
             return handle_ledger(args, parser, forge_root)
+        if args.command == "protocol":
+            return handle_protocol(args, parser, forge_root)
         if args.command == "ship":
             return handle_ship(args, forge_root)
         if args.command == "advanced":

@@ -97,14 +97,15 @@ def _remote_head(repo: str, remote: str, branch: str, timeout: int) -> str | Non
 
 
 def assess_head(repo: str, ref: str, *, remote_timeout: int = 30) -> dict:
-    """Classify a binder anchor. Returns {ref, resolved, status, detail, reproduce}.
+    """Classify a binder anchor. Returns {ref, resolved, status, anchor_kind, detail, reproduce}.
+    anchor_kind is object_id / local_ref / remote_ref (or "" when unresolved).
 
     FRESH is the only status a binder may bind on. Everything else is a refusal
     with the exact remedy in ``detail`` — the binder maps it to NOT_RUN and the
     truth ledger maps that to terminal UNVERIFIABLE.
     """
     ref = str(ref or "").strip()
-    report = {"ref": ref, "resolved": "", "status": MISSING, "detail": "", "reproduce": "", "truth_boundary": REF_INTEGRITY_TRUTH_BOUNDARY}
+    report = {"ref": ref, "resolved": "", "status": MISSING, "anchor_kind": "", "detail": "", "reproduce": "", "truth_boundary": REF_INTEGRITY_TRUTH_BOUNDARY}
     if not ref:
         report["detail"] = "empty ref."
         return report
@@ -123,6 +124,11 @@ def assess_head(repo: str, ref: str, *, remote_timeout: int = 30) -> dict:
     report["resolved"] = resolved
 
     symbolic = _symbolic_full_name(repo, ref)
+    # anchor_kind lets callers (e.g. protocol verify) distinguish an exact-pinned commit
+    # id from a moving ref NAME, independent of currency status.
+    report["anchor_kind"] = ("remote_ref" if symbolic.startswith("refs/remotes/")
+                             else "local_ref" if symbolic.startswith("refs/")
+                             else "object_id")
 
     if symbolic.startswith("refs/remotes/"):
         # A remote-tracking name is a local snapshot of remote state; verify it against

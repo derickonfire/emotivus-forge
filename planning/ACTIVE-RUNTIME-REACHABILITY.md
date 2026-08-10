@@ -1,10 +1,10 @@
 # Active Runtime Reachability and Classification
 
 **Forge version:** 0.576  
-**Modules inventoried:** 98  
-**Statically reachable:** 98  
+**Modules inventoried:** 100  
+**Statically reachable:** 100  
 **Statically unreachable:** 0  
-**Report SHA-256:** `db8854dd2c1d904b851a9bbd277813742368db51facb100b8b907b2e912f34be`
+**Report SHA-256:** `f3abb78907b76c0edb7b2e99cad8d05ad925940c0d2a45116a0918411be15ee9`
 
 ## Command observations
 
@@ -30,6 +30,7 @@
 | `emotivus_forge.commands.common` | active | adopt, check, help, resume, run, ship | G2_SESSION_CONTINUITY, SHARED_RUNTIME |
 | `emotivus_forge.commands.ledger` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.commands.noticing` | active | adopt, check, resume, run | G2_SESSION_CONTINUITY |
+| `emotivus_forge.commands.protocol` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.commands.public` | active | help, resume, run, ship | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core` | active | — | SHARED_RUNTIME |
 | `emotivus_forge.core.artifact_collision` | active | run, ship | G1_PROJECT_TRUTH |
@@ -82,6 +83,7 @@
 | `emotivus_forge.core.presentation_profile` | active | adopt, resume, run | G3_EVOLUTION_KERNEL |
 | `emotivus_forge.core.project_events` | active | check | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.project_identity` | active | adopt, check, resume, run, ship | G1_PROJECT_TRUTH |
+| `emotivus_forge.core.protocol_verify` | active | — | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.provenance` | active | adopt, check, resume, run | G1_PROJECT_TRUTH |
 | `emotivus_forge.core.recommended_prompt` | active | run | G2_SESSION_CONTINUITY |
 | `emotivus_forge.core.ref_integrity` | active | — | G1_PROJECT_TRUTH |
@@ -150,7 +152,7 @@
 | `capability_vault/` | 109 | yes | no | FREEZE | REFERENCE, MIGRATION |
 | `docs/` | 64 | yes | yes | REDUCE | REFERENCE, WEB_DOCUMENTATION |
 | `docs-site/` | 16 | yes | no | KEEP | WEB_DOCUMENTATION |
-| `emotivus_forge/` | 196 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
+| `emotivus_forge/` | 200 | yes | yes | KEEP | G1_PROJECT_TRUTH, G2_SESSION_CONTINUITY, G3_EVOLUTION_KERNEL |
 | `examples/` | 47 | yes | yes | REFERENCE | MIGRATION, REFERENCE |
 | `exchange/` | 1053 | no | no | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `forge` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
@@ -159,11 +161,11 @@
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 51 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 52 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |
-| `tests/` | 139 | yes | yes | KEEP | TESTING |
+| `tests/` | 141 | yes | yes | KEEP | TESTING |
 | `tools/` | 23 | yes | yes | KEEP | PACKAGING, TESTING |
 
 ## Manifest path classification

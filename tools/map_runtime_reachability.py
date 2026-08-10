@@ -129,7 +129,7 @@ def _classify_module(module: str) -> list[str]:
     values: set[str] = set()
     if module in {"emotivus_forge", "emotivus_forge.cli", "emotivus_forge.commands", "emotivus_forge.commands.public", "emotivus_forge.commands.adopt", "emotivus_forge.commands.check", "emotivus_forge.commands.common", "emotivus_forge.commands.noticing"}:
         values.add("G2_SESSION_CONTINUITY")
-    if module in {"emotivus_forge.commands.bind", "emotivus_forge.commands.ledger"}:
+    if module in {"emotivus_forge.commands.bind", "emotivus_forge.commands.ledger", "emotivus_forge.commands.protocol"}:
         values.add("G1_PROJECT_TRUTH")
     if leaf in {
         "startup", "orientation", "resume", "handoff", "session_close", "session_reconciliation",
@@ -148,7 +148,7 @@ def _classify_module(module: str) -> list[str]:
         "check_qualification", "field_trials", "cold_session_validation", "guardrails", "project_events",
         "secret_screening", "confidentiality_boundary", "narrative_integrity", "self_currency",
         "instance_key", "source_anchored_release", "gate_coverage", "gate_diff_monotonicity",
-        "truth_ledger", "ref_integrity", "claim_binder",
+        "truth_ledger", "ref_integrity", "claim_binder", "protocol_verify",
     }:
         values.add("G1_PROJECT_TRUTH")
     if leaf in {
