@@ -61,6 +61,36 @@ class BindCommandTests(unittest.TestCase):
                      "--base", self.base, "--head", "deadbeef" * 5, "--config", str(self.cfg)])
         self.assertEqual(code, 2)
 
+    def test_gate_diff_ledger_records_confirmed_and_exits_zero(self) -> None:
+        # Regression (review finding #5): a passing gate-diff's CONFIRMED findings must
+        # carry reproduce evidence so record_binder_result can back the CONFIRMED. Before
+        # the fix, --ledger crashed a legitimately-passing gate with exit 2.
+        from emotivus_forge.core.truth_ledger import read_ledger
+        project = self.root / "proj"
+        project.mkdir()
+        code = main(["bind", "gate-diff", "--repo", str(self.root), "--base", self.base,
+                     "--head", self.head, "--config", str(self.cfg),
+                     "--ledger", "--project", str(project)])
+        self.assertEqual(code, 0)
+        rows = read_ledger(project)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["verdict"], "CONFIRMED")
+        self.assertEqual(rows[0]["derivation"], "binder")
+        self.assertTrue(rows[0]["reproduce"])
+
+    def test_gate_diff_ledger_no_change_scope_records_confirmed(self) -> None:
+        # The no-gate-files-changed CONFIRMED path must also carry reproduce.
+        from emotivus_forge.core.truth_ledger import read_ledger
+        project = self.root / "proj2"
+        project.mkdir()
+        # base..base: no changes at all -> scope CONFIRMED
+        code = main(["bind", "gate-diff", "--repo", str(self.root), "--base", self.base,
+                     "--head", self.base, "--config", str(self.cfg),
+                     "--ledger", "--project", str(project)])
+        self.assertEqual(code, 0)
+        rows = read_ledger(project)
+        self.assertEqual(rows[0]["verdict"], "CONFIRMED")
+
 
 if __name__ == "__main__":
     unittest.main()

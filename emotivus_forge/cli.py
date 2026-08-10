@@ -222,24 +222,30 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ship.add_argument("project", nargs="?", default=".")
     p_ship.add_argument("--json", action="store_true")
 
-    p_bind = sub.add_parser("bind", help="Deterministic G1 binders (advisory, read-only): release-truth · gate-coverage · gate-diff")
-    bind_sub = p_bind.add_subparsers(dest="binder", required=True, metavar="{release-truth,gate-coverage,gate-diff}")
+    p_bind = sub.add_parser("bind", help="Deterministic G1 binders (advisory, read-only): release-truth · gate-coverage · gate-diff · claims")
+    bind_sub = p_bind.add_subparsers(dest="binder", required=True, metavar="{release-truth,gate-coverage,gate-diff,claims}")
+
+    def _add_bind_common(target: argparse.ArgumentParser) -> None:
+        target.add_argument("--repo", required=True)
+        target.add_argument("--config", required=True)
+        target.add_argument("--json", action="store_true")
+        target.add_argument("--ledger", action="store_true",
+                            help="Record the binder verdict in the project truth ledger as a binder-derived entry")
+        target.add_argument("--project", default=".",
+                            help="Project root whose truth ledger receives the verdict (with --ledger)")
+
     b_rt = bind_sub.add_parser("release-truth", help="Bind accepted-vs-candidate release truth to the accepted source commit")
-    b_rt.add_argument("--repo", required=True)
     b_rt.add_argument("--head", required=True)
-    b_rt.add_argument("--config", required=True)
-    b_rt.add_argument("--json", action="store_true")
+    _add_bind_common(b_rt)
     b_gc = bind_sub.add_parser("gate-coverage", help="Report checks present in the tree but not invoked by the declared gate")
-    b_gc.add_argument("--repo", required=True)
     b_gc.add_argument("--head", required=True)
-    b_gc.add_argument("--config", required=True)
-    b_gc.add_argument("--json", action="store_true")
+    _add_bind_common(b_gc)
     b_gd = bind_sub.add_parser("gate-diff", help="Certify a gate-script change removed no assertion and added no SKIP path")
-    b_gd.add_argument("--repo", required=True)
     b_gd.add_argument("--base", required=True)
     b_gd.add_argument("--head", required=True)
-    b_gd.add_argument("--config", required=True)
-    b_gd.add_argument("--json", action="store_true")
+    _add_bind_common(b_gd)
+    b_cl = bind_sub.add_parser("claims", help="Evaluate structured claims (head-equals · ancestry · blob-identity · file-sha256 · file-regex) at guarded anchors")
+    _add_bind_common(b_cl)
 
     p_ledger = sub.add_parser("ledger", help="Append-only witness truth ledger: append · supersede · verify · show")
     ledger_sub = p_ledger.add_subparsers(dest="ledger_command", required=True, metavar="{append,supersede,verify,show}")
