@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "name": "Emotivus Forge",
-  "version": "0.575",
+  "version": "0.576",
   "release_state": "core-reduction-candidate",
   "updated": "2026-08-05",
   "tagline": "The trust layer for AI-built software: provable truth and portable continuity across any model.",

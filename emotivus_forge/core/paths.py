@@ -82,6 +82,10 @@ class ForgePaths:
         return self.root / "ledger.jsonl"
 
     @property
+    def truth_ledger(self) -> Path:
+        return self.root / "truth-ledger.jsonl"
+
+    @property
     def authorities(self) -> Path:
         return self.root / "authorities.json"
 
