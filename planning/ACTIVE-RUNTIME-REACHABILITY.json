@@ -8005,6 +8005,19 @@
       "disposition": "REFERENCE"
     },
     {
+      "path": "LC-ARCH-1_1/",
+      "kind": "directory",
+      "file_count": 4,
+      "bytes": 7247,
+      "development": false,
+      "public": false,
+      "classifications": [
+        "REFERENCE",
+        "G3_EVOLUTION_KERNEL"
+      ],
+      "disposition": "KEEP"
+    },
+    {
       "path": "LICENSE-INTERNAL.md",
       "kind": "file",
       "file_count": 1,
@@ -8201,8 +8214,8 @@
     {
       "path": "exchange/",
       "kind": "directory",
-      "file_count": 381,
-      "bytes": 30324314,
+      "file_count": 1053,
+      "bytes": 82477486,
       "development": false,
       "public": false,
       "classifications": [
@@ -8350,7 +8363,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 23,
-      "bytes": 280007,
+      "bytes": 280368,
       "development": true,
       "public": true,
       "classifications": [
@@ -8366,5 +8379,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "9b3548c295adabdd90cebf8a14b69978caeea2a6d4b6dcc86925717f94e75c66"
+  "report_sha256": "b903fa75013e541a0c819a822663841fde59515f1845a1db0e776aab31c9855e"
 }

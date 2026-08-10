@@ -250,6 +250,11 @@ def _classify_actual_top_level(name: str) -> tuple[list[str], str]:
         "docs": (["REFERENCE", "WEB_DOCUMENTATION"], "REDUCE"),
         "planning": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
         "exchange": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
+        # External multi-agent coordination-lane records (codex/claude/general
+        # governance receipts), the same append-only category as `exchange/`.
+        # Not Forge product code; classified so the top-level path is accounted
+        # for and never deleted by a reduction pass.
+        "LC-ARCH-1_1": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
         ".forgeignore": (["G1_PROJECT_TRUTH", "PACKAGING"], "KEEP"),
         ".deployignore": (["PACKAGING"], "KEEP"),
         "FORGE-MANIFEST.json": (["G1_PROJECT_TRUTH", "PACKAGING"], "KEEP"),
