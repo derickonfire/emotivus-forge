@@ -24,7 +24,7 @@ from .core.capabilities import CAPABILITY_CATALOG
 from .core.common import ForgeStateError
 from .core.session_close import SESSION_TYPES
 from .core.native_tools import EXECUTION_MODES
-from .core.truth_ledger import VERDICTS
+from .core.truth_ledger import VERDICTS, DERIVATIONS
 from .core.storage import ForgeLockError
 
 
@@ -247,14 +247,16 @@ def _build_parser() -> argparse.ArgumentParser:
     def _add_claim_flags(target: argparse.ArgumentParser) -> None:
         target.add_argument("--project", default=".")
         target.add_argument("--claim", required=True, help="The claim being recorded")
-        target.add_argument("--verdict", required=True, choices=sorted(VERDICTS), help="Verdict of the claim against ground truth")
+        target.add_argument("--verdict", required=True, choices=sorted(VERDICTS), help="Verdict against ground truth. CONFIRMED requires binder backing (--derivation binder + --reproduce); an unbound human/model judgement is ATTESTED")
         target.add_argument("--subject", default="project", help="Subject the claim is about (default: project)")
         target.add_argument("--source", default="", help="Where the claim was made (doc, bus message, checkpoint)")
         target.add_argument("--source-ref", dest="source_ref", default="", help="Exact reference for the source (SHA, line, id)")
         target.add_argument("--gt-kind", default="", help="Ground-truth binding kind (e.g. git-rev-list, sha256, blob-identity)")
         target.add_argument("--gt-pointer", default="", help="Ground-truth target (command, path, object)")
         target.add_argument("--gt-observed", default="", help="What the ground truth actually showed")
-        target.add_argument("--method", default="", help="How the verdict was reached (reproduce command)")
+        target.add_argument("--derivation", choices=sorted(DERIVATIONS), default="asserted", help="Provenance: 'binder' (re-derived, requires --reproduce + ground truth) or 'asserted' (human/model judgement; default)")
+        target.add_argument("--reproduce", default="", help="Exact command that re-derives the ground truth (required for a binder-derived CONFIRMED)")
+        target.add_argument("--method", default="", help="Free-text description of how the verdict was reached")
         target.add_argument("--observer", default="forge-observer", help="Who recorded the entry")
         target.add_argument("--note", default="", help="Optional durable note")
         target.add_argument("--json", action="store_true")

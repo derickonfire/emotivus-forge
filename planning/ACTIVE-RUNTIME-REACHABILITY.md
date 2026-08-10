@@ -4,7 +4,7 @@
 **Modules inventoried:** 96  
 **Statically reachable:** 96  
 **Statically unreachable:** 0  
-**Report SHA-256:** `b903fa75013e541a0c819a822663841fde59515f1845a1db0e776aab31c9855e`
+**Report SHA-256:** `142dce4f0c9aa08e94af1739d1cf4628bef6fbc2d9ceb50402d24d416ef7aa14`
 
 ## Command observations
 
@@ -157,7 +157,7 @@
 | `frg` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.cmd` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
 | `frg.py` | 1 | yes | yes | KEEP | G2_SESSION_CONTINUITY |
-| `planning/` | 47 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
+| `planning/` | 50 | yes | yes | KEEP | REFERENCE, G3_EVOLUTION_KERNEL |
 | `policy-packs/` | 1 | yes | yes | KEEP | G1_PROJECT_TRUTH, MIGRATION |
 | `release/` | 70 | yes | yes | KEEP | PACKAGING, REFERENCE |
 | `research/` | 5 | yes | no | REFERENCE | REFERENCE |

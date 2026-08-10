@@ -30,11 +30,15 @@ class LedgerCommandTests(unittest.TestCase):
         code, out = _run(
             "ledger", "append", "--project", str(self.root),
             "--claim", "PR#20 head descends from base", "--verdict", "CONFIRMED",
-            "--source", "WORK-REGISTER", "--gt-kind", "merge-base", "--json",
+            "--source", "WORK-REGISTER", "--gt-kind", "merge-base",
+            "--derivation", "binder",
+            "--reproduce", "git merge-base --is-ancestor 305fb7f e5dc360",
+            "--json",
         )
         self.assertEqual(code, 0)
         entry = json.loads(out)
         self.assertEqual(entry["verdict"], "CONFIRMED")
+        self.assertEqual(entry["derivation"], "binder")
 
         code, _ = _run("ledger", "verify", "--project", str(self.root))
         self.assertEqual(code, 0)
@@ -52,7 +56,10 @@ class LedgerCommandTests(unittest.TestCase):
         target = json.loads(out)["id"]
         code, out = _run(
             "ledger", "supersede", "--project", str(self.root), "--target", target,
-            "--claim", "corrected read", "--verdict", "CONFIRMED", "--json",
+            "--claim", "corrected read", "--verdict", "CONFIRMED",
+            "--derivation", "binder", "--gt-kind", "git-rev-list",
+            "--reproduce", "git fetch --force && git rev-parse HEAD",
+            "--json",
         )
         self.assertEqual(code, 0)
         self.assertEqual(json.loads(out)["supersedes"], target)
@@ -61,8 +68,8 @@ class LedgerCommandTests(unittest.TestCase):
         self.assertEqual(json.loads(out)["verdict_flip_count"], 1)
 
     def test_verify_blocked_exit_code_on_tamper(self) -> None:
-        _run("ledger", "append", "--project", str(self.root), "--claim", "a", "--verdict", "CONFIRMED")
-        _run("ledger", "append", "--project", str(self.root), "--claim", "b", "--verdict", "CONFIRMED")
+        _run("ledger", "append", "--project", str(self.root), "--claim", "a", "--verdict", "ATTESTED")
+        _run("ledger", "append", "--project", str(self.root), "--claim", "b", "--verdict", "ATTESTED")
         path = self.root / ".forge" / "truth-ledger.jsonl"
         rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
         rows[0]["verdict"] = "CONTRADICTED"
@@ -74,6 +81,40 @@ class LedgerCommandTests(unittest.TestCase):
         with self.assertRaises(SystemExit) as ctx:
             _run("ledger", "append", "--project", str(self.root), "--claim", "x", "--verdict", "PASS")
         self.assertNotEqual(ctx.exception.code, 0)
+
+    def test_hand_asserted_confirmed_is_refused_at_the_cli(self) -> None:
+        # The field-note reproduction: bare `--verdict CONFIRMED` must not record.
+        with self.assertRaises(SystemExit) as ctx:
+            _run(
+                "ledger", "append", "--project", str(self.root),
+                "--claim", "dead code confirmed by reasoning", "--verdict", "CONFIRMED",
+            )
+        self.assertNotEqual(ctx.exception.code, 0)
+        # Nothing was written: the ledger file does not exist / has no rows.
+        path = self.root / ".forge" / "truth-ledger.jsonl"
+        self.assertFalse(path.exists() and path.read_text(encoding="utf-8").strip())
+
+    def test_attested_judgement_records_and_renders_provenance(self) -> None:
+        code, out = _run(
+            "ledger", "append", "--project", str(self.root),
+            "--claim", "mutation block unreachable (reasoning over source)",
+            "--verdict", "ATTESTED", "--json",
+        )
+        self.assertEqual(code, 0)
+        entry = json.loads(out)
+        self.assertEqual(entry["verdict"], "ATTESTED")
+        self.assertEqual(entry["derivation"], "asserted")
+
+        code, out = _run("ledger", "verify", "--project", str(self.root), "--json")
+        self.assertEqual(code, 0)
+        report = json.loads(out)
+        self.assertEqual(report["tallies_current"]["ATTESTED"], 1)
+        self.assertEqual(report["derivations_current"]["asserted"], 1)
+        self.assertEqual(report["unbound_confirmed"], [])
+
+        code, out = _run("ledger", "show", "--project", str(self.root))
+        self.assertEqual(code, 0)
+        self.assertIn("(asserted)", out)
 
 
 if __name__ == "__main__":

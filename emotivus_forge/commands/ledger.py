@@ -44,11 +44,13 @@ def _project(args: Any) -> Path:
 def _render_entry(entry: dict[str, Any]) -> str:
     claim = entry.get("claim", {}) if isinstance(entry.get("claim"), dict) else {}
     lines = [
-        f"forge ledger — recorded [{entry['verdict']}]",
+        f"forge ledger — recorded [{entry['verdict']}] ({entry.get('derivation', 'asserted')})",
         f"  id:      {entry['id']}",
         f"  subject: {entry['subject']}",
         f"  claim:   {claim.get('text', '')}",
     ]
+    if entry.get("reproduce"):
+        lines.append(f"  reproduce: {entry['reproduce']}")
     if entry.get("supersedes"):
         lines.append(f"  supersedes: {entry['supersedes']} (prior entry preserved)")
     lines.append(f"  lineage: {entry['lineage']}")
@@ -60,9 +62,12 @@ def _render_verify(report: dict[str, Any]) -> str:
         f"forge ledger verify — {report['status']}",
         f"  records: {report['records']}   lineages: {report['lineage_count']}",
         f"  current verdicts: {report['tallies_current']}",
+        f"  current provenance: {report.get('derivations_current', {})}",
     ]
     if report.get("contradicted_tips"):
         lines.append(f"  active CONTRADICTED: {', '.join(report['contradicted_tips'])}")
+    if report.get("unbound_confirmed"):
+        lines.append(f"  unbound CONFIRMED (must be ATTESTED): {', '.join(report['unbound_confirmed'])}")
     for issue in report.get("issues", []):
         lines.append(f"  [issue] line {issue.get('line', '?')}: {issue.get('message', '')}")
     lines.append(f"  boundary: {report['truth_boundary']}")
@@ -76,7 +81,7 @@ def _render_show(view: dict[str, Any]) -> str:
         "",
     ]
     for lineage in view["lineages"]:
-        lines.append(f"  [{lineage['current_verdict']}] {lineage['claim']}")
+        lines.append(f"  [{lineage['current_verdict']}] ({lineage.get('current_derivation', 'asserted')}) {lineage['claim']}")
         lines.append(f"        tip {lineage['tip_id']} · {lineage['revisions']} revision(s) · subject {lineage['subject']}")
         for flip in lineage["verdict_flips"]:
             lines.append(f"        ⟳ flip {flip['from_verdict']} → {flip['to_verdict']} ({flip['from_id']} → {flip['to_id']})")
@@ -90,35 +95,45 @@ def handle_ledger(args: Any, parser: Any, forge_root: Path) -> int:
     json_output = bool(getattr(args, "json", False))
 
     if action == "append":
-        entry = append_claim(
-            _project(args),
-            claim=args.claim,
-            verdict=args.verdict,
-            subject=getattr(args, "subject", "project"),
-            source=getattr(args, "source", ""),
-            source_ref=getattr(args, "source_ref", ""),
-            ground_truth=_ground_truth(args),
-            method=getattr(args, "method", ""),
-            observer=getattr(args, "observer", "forge-observer"),
-            note=getattr(args, "note", ""),
-        )
+        try:
+            entry = append_claim(
+                _project(args),
+                claim=args.claim,
+                verdict=args.verdict,
+                subject=getattr(args, "subject", "project"),
+                source=getattr(args, "source", ""),
+                source_ref=getattr(args, "source_ref", ""),
+                ground_truth=_ground_truth(args),
+                method=getattr(args, "method", ""),
+                derivation=getattr(args, "derivation", "asserted"),
+                reproduce=getattr(args, "reproduce", ""),
+                observer=getattr(args, "observer", "forge-observer"),
+                note=getattr(args, "note", ""),
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
         print_json(entry) if json_output else print(_render_entry(entry))
         return 0
 
     if action == "supersede":
-        entry = supersede_claim(
-            _project(args),
-            args.target,
-            claim=args.claim,
-            verdict=args.verdict,
-            subject=getattr(args, "subject", "project"),
-            source=getattr(args, "source", ""),
-            source_ref=getattr(args, "source_ref", ""),
-            ground_truth=_ground_truth(args),
-            method=getattr(args, "method", ""),
-            observer=getattr(args, "observer", "forge-observer"),
-            note=getattr(args, "note", ""),
-        )
+        try:
+            entry = supersede_claim(
+                _project(args),
+                args.target,
+                claim=args.claim,
+                verdict=args.verdict,
+                subject=getattr(args, "subject", "project"),
+                source=getattr(args, "source", ""),
+                source_ref=getattr(args, "source_ref", ""),
+                ground_truth=_ground_truth(args),
+                method=getattr(args, "method", ""),
+                derivation=getattr(args, "derivation", "asserted"),
+                reproduce=getattr(args, "reproduce", ""),
+                observer=getattr(args, "observer", "forge-observer"),
+                note=getattr(args, "note", ""),
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
         print_json(entry) if json_output else print(_render_entry(entry))
         return 0
 

@@ -142,7 +142,7 @@
     {
       "module": "emotivus_forge.cli",
       "path": "emotivus_forge/cli.py",
-      "sha256": "6e023ebab50ac1ec646e2e2dc349e4a742edf4a4037accafe53d9de1f1a0067a",
+      "sha256": "8c72797b9ec95a336b8bf9c7f9c5ddf7106d21f8366fe0e82f19324a4e4bcc23",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": false,
@@ -313,7 +313,7 @@
     {
       "module": "emotivus_forge.commands.ledger",
       "path": "emotivus_forge/commands/ledger.py",
-      "sha256": "96efb6cc0cf6c87e9c16ad815cbd1462805dc9d251ea264a468c4c7c343d3623",
+      "sha256": "b770de57aa7774947a0499edcacf19b05d2afdc907a557f227588249bd6dccde",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": false,
@@ -2210,7 +2210,7 @@
     {
       "module": "emotivus_forge.core.truth_ledger",
       "path": "emotivus_forge/core/truth_ledger.py",
-      "sha256": "58833b48fc060ffcd2976343a22eae796c21f94e84a8698a13c7d3aebef5cf4d",
+      "sha256": "a171bc65741d6d9610beb8308469debf2402c6b3d7f380134cf87e84369f2c32",
       "active_reachable": true,
       "ordinary_cli_reachable": true,
       "standalone_tool_reachable": false,
@@ -8188,7 +8188,7 @@
       "path": "emotivus_forge/",
       "kind": "directory",
       "file_count": 192,
-      "bytes": 3957489,
+      "bytes": 3980674,
       "development": true,
       "public": true,
       "classifications": [
@@ -8299,8 +8299,8 @@
     {
       "path": "planning/",
       "kind": "directory",
-      "file_count": 47,
-      "bytes": 446215,
+      "file_count": 50,
+      "bytes": 463434,
       "development": true,
       "public": true,
       "classifications": [
@@ -8351,7 +8351,7 @@
       "path": "tests/",
       "kind": "directory",
       "file_count": 135,
-      "bytes": 1837707,
+      "bytes": 1867842,
       "development": true,
       "public": true,
       "classifications": [
@@ -8363,7 +8363,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 23,
-      "bytes": 280368,
+      "bytes": 280413,
       "development": true,
       "public": true,
       "classifications": [
@@ -8379,5 +8379,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "b903fa75013e541a0c819a822663841fde59515f1845a1db0e776aab31c9855e"
+  "report_sha256": "142dce4f0c9aa08e94af1739d1cf4628bef6fbc2d9ceb50402d24d416ef7aa14"
 }
