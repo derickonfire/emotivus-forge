@@ -1,0 +1,21 @@
+# Cloudflare Tunnel config — install to ~/.cloudflared/config.yml
+# Prereqs (one-time, done as YOUR_USER):
+#   cloudflared tunnel login
+#   cloudflared tunnel create linecheck-orchestrator      # prints the tunnel UUID + creds file
+#   cloudflared tunnel route dns linecheck-orchestrator hooks.YOURDOMAIN.com
+# Then run as a service:
+#   sudo cloudflared service install
+#   sudo systemctl enable --now cloudflared
+#
+# The public webhook URL GitHub will POST to becomes:
+#   https://hooks.YOURDOMAIN.com/webhook/github
+
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: /home/YOUR_USER/.cloudflared/REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  # Only the webhook path is exposed publicly. Everything else 404s.
+  - hostname: hooks.YOURDOMAIN.com
+    path: /webhook/github
+    service: http://127.0.0.1:8787
+  - service: http_status:404

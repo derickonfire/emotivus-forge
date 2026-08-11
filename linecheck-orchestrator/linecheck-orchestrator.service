@@ -1,0 +1,24 @@
+# systemd unit — install to /etc/systemd/system/linecheck-orchestrator.service
+# Replace YOUR_USER and the paths, then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now linecheck-orchestrator
+[Unit]
+Description=LineCheck AI-Comms Orchestrator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/linecheck-orchestrator
+EnvironmentFile=/home/YOUR_USER/linecheck-orchestrator/.env
+ExecStart=/home/YOUR_USER/linecheck-orchestrator/.venv/bin/python -m uvicorn orchestrator:app --host 127.0.0.1 --port 8787
+Restart=always
+RestartSec=3
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+# Local runtime — never commit these
+.venv/
+__pycache__/
+*.pyc
+.env
