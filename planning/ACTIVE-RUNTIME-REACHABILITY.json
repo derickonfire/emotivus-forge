@@ -8005,6 +8005,19 @@
       "disposition": "REFERENCE"
     },
     {
+      "path": "LC-ARCH-1_1/",
+      "kind": "directory",
+      "file_count": 4,
+      "bytes": 7247,
+      "development": false,
+      "public": false,
+      "classifications": [
+        "REFERENCE",
+        "G3_EVOLUTION_KERNEL"
+      ],
+      "disposition": "KEEP"
+    },
+    {
       "path": "LICENSE-INTERNAL.md",
       "kind": "file",
       "file_count": 1,
@@ -8201,8 +8214,8 @@
     {
       "path": "exchange/",
       "kind": "directory",
-      "file_count": 381,
-      "bytes": 30324314,
+      "file_count": 1053,
+      "bytes": 82477486,
       "development": false,
       "public": false,
       "classifications": [
@@ -8284,10 +8297,23 @@
       "disposition": "KEEP"
     },
     {
+      "path": "linecheck-orchestrator/",
+      "kind": "directory",
+      "file_count": 10,
+      "bytes": 36749,
+      "development": false,
+      "public": false,
+      "classifications": [
+        "G3_EVOLUTION_KERNEL",
+        "REFERENCE"
+      ],
+      "disposition": "KEEP"
+    },
+    {
       "path": "planning/",
       "kind": "directory",
-      "file_count": 47,
-      "bytes": 446215,
+      "file_count": 48,
+      "bytes": 452966,
       "development": true,
       "public": true,
       "classifications": [
@@ -8350,7 +8376,7 @@
       "path": "tools/",
       "kind": "directory",
       "file_count": 23,
-      "bytes": 280007,
+      "bytes": 280244,
       "development": true,
       "public": true,
       "classifications": [
@@ -8366,5 +8392,5 @@
     "command": "Command traces show functions executed in bounded neutral fixtures; unobserved code is not automatically removable.",
     "removal": "No module is removal-authorized solely by this report. Removal requires path classification, tests, exact package rebuild, and retained-behavior verification."
   },
-  "report_sha256": "9b3548c295adabdd90cebf8a14b69978caeea2a6d4b6dcc86925717f94e75c66"
+  "report_sha256": "c96df9915f9c46fc9995b3b375c010d0d5b9be1f31e9750467ea9f256cf765e6"
 }

@@ -250,6 +250,8 @@ def _classify_actual_top_level(name: str) -> tuple[list[str], str]:
         "docs": (["REFERENCE", "WEB_DOCUMENTATION"], "REDUCE"),
         "planning": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
         "exchange": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
+        "LC-ARCH-1_1": (["REFERENCE", "G3_EVOLUTION_KERNEL"], "KEEP"),
+        "linecheck-orchestrator": (["G3_EVOLUTION_KERNEL", "REFERENCE"], "KEEP"),
         ".forgeignore": (["G1_PROJECT_TRUTH", "PACKAGING"], "KEEP"),
         ".deployignore": (["PACKAGING"], "KEEP"),
         "FORGE-MANIFEST.json": (["G1_PROJECT_TRUTH", "PACKAGING"], "KEEP"),
