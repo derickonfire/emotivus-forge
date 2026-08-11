@@ -36,15 +36,34 @@ if [[ "${SIMULATE:-0}" == "1" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# TODO: replace with the real headless invocation, e.g.:
-#
-#   claude -p "Run Forge. Handle LineCheck event $EVENT_ID at $EVENT_PATH
-#     (commit $EVENT_COMMIT) in repo $GH_REPO. Follow the AI-COMMUNICATION
-#     protocol: act, then commit your reply envelope + close/hand off on the
-#     ledger and post the delivery notice to issue #$INBOX_ISSUE." \
-#     --permission-mode acceptEdits
-#
-# Emit hb "<step>" "<note>" at natural checkpoints inside/around the run so the
-# presence view stays live and the lease keeps refreshing.
+# Real headless invocation. Tunable entirely by environment — no code edits
+# needed for a normal setup:
+#   CLAUDE_BIN     the headless CLI to run           (default: claude)
+#   AGENT_WORKDIR  dir the agent operates in         (default: this repo's root)
+#   CLAUDE_ARGS    extra CLI args                     (default: --permission-mode acceptEdits)
 # ---------------------------------------------------------------------------
-hb "noop" "no real launcher wired yet — set SIMULATE=1 to test the pipeline"
+CLAUDE_BIN="${CLAUDE_BIN:-claude}"
+CLAUDE_ARGS="${CLAUDE_ARGS:---permission-mode acceptEdits}"
+AGENT_WORKDIR="${AGENT_WORKDIR:-$(git -C "$(dirname "$0")" rev-parse --show-toplevel 2>/dev/null || echo .)}"
+
+read -r -d '' PROMPT <<EOF || true
+Run Forge, then handle LineCheck attention event ${EVENT_ID}.
+Envelope: ${EVENT_PATH} at commit ${EVENT_COMMIT} in repo ${GH_REPO}.
+Authority: exchange/authority/LINECHECK-CENTRAL-AI-COMMUNICATION-AUTHORITY-v1.md.
+Read the envelope, perform its required_action, and stay within its
+prohibited_actions. Then publish your reply in your own attention lane
+(exchange/attention/claude/NNNN-*.json) as an immutable event that binds this
+event id, and commit it. Git commit time is receipt time. Do not claim any
+verification you did not actually run.
+EOF
+
+if command -v "$CLAUDE_BIN" >/dev/null 2>&1; then
+  hb "invoke" "running $CLAUDE_BIN in $AGENT_WORKDIR"
+  cd "$AGENT_WORKDIR"
+  # shellcheck disable=SC2086
+  "$CLAUDE_BIN" -p "$PROMPT" $CLAUDE_ARGS
+  hb "finish" "claude turn complete for $EVENT_ID"
+else
+  hb "noop" "$CLAUDE_BIN not on PATH — set CLAUDE_BIN or install the CLI (SIMULATE=1 to test)"
+  echo "launch_claude: '$CLAUDE_BIN' not found on PATH; nothing launched." >&2
+fi

@@ -26,13 +26,34 @@ if [[ "${SIMULATE:-0}" == "1" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# TODO: replace with the real Codex CLI headless invocation, e.g.:
-#
-#   codex exec "Handle LineCheck event $EVENT_ID at $EVENT_PATH (commit
-#     $EVENT_COMMIT) in $GH_REPO. Follow the AI-COMMUNICATION protocol: act,
-#     commit your reply envelope + close/hand off on the ledger, and post the
-#     delivery notice to issue #$INBOX_ISSUE."
-#
-# Emit hb "<step>" "<note>" at checkpoints so presence stays live.
+# Real headless invocation. Tunable entirely by environment — no code edits
+# needed for a normal setup:
+#   CODEX_BIN      the headless CLI to run           (default: codex)
+#   AGENT_WORKDIR  dir the agent operates in         (default: this repo's root)
+#   CODEX_ARGS     extra CLI args                     (default: empty)
 # ---------------------------------------------------------------------------
-hb "noop" "no real launcher wired yet — set SIMULATE=1 to test the pipeline"
+CODEX_BIN="${CODEX_BIN:-codex}"
+CODEX_ARGS="${CODEX_ARGS:-}"
+AGENT_WORKDIR="${AGENT_WORKDIR:-$(git -C "$(dirname "$0")" rev-parse --show-toplevel 2>/dev/null || echo .)}"
+
+read -r -d '' PROMPT <<EOF || true
+Handle LineCheck attention event ${EVENT_ID}.
+Envelope: ${EVENT_PATH} at commit ${EVENT_COMMIT} in repo ${GH_REPO}.
+Authority: exchange/authority/LINECHECK-CENTRAL-AI-COMMUNICATION-AUTHORITY-v1.md.
+Read the envelope, perform its required_action, and stay within its
+prohibited_actions. Then publish your reply in your own attention lane
+(exchange/attention/codex/NNNN-*.json) as an immutable event that binds this
+event id, and commit it. Git commit time is receipt time. Do not claim any
+verification you did not actually run.
+EOF
+
+if command -v "$CODEX_BIN" >/dev/null 2>&1; then
+  hb "invoke" "running $CODEX_BIN in $AGENT_WORKDIR"
+  cd "$AGENT_WORKDIR"
+  # shellcheck disable=SC2086
+  "$CODEX_BIN" exec $CODEX_ARGS "$PROMPT"
+  hb "finish" "codex turn complete for $EVENT_ID"
+else
+  hb "noop" "$CODEX_BIN not on PATH — set CODEX_BIN or install the CLI (SIMULATE=1 to test)"
+  echo "launch_codex: '$CODEX_BIN' not found on PATH; nothing launched." >&2
+fi

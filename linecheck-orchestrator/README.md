@@ -113,10 +113,20 @@ Create a Windows **Task Scheduler** task, trigger *At log on*, action
 `wsl.exe -d <distro> true`. That boots the distro; systemd (PID 1) then brings up
 the two `enable`d units and keeps the distro alive.
 
-### R4 — wire the launchers
-Edit `launchers/launch_claude.sh` and `launch_codex.sh`, replacing the `TODO`
-block with the real headless invocation for each lane. Until then, test the full
-pipeline with the simulator:
+### R4 — the launchers
+`launchers/launch_claude.sh` and `launch_codex.sh` already invoke the real
+headless CLI (`claude -p …` / `codex exec …`) against a protocol-accurate prompt.
+Tune them with env vars — no code edits needed for a normal setup:
+
+| var | default | meaning |
+|-----|---------|---------|
+| `CLAUDE_BIN` / `CODEX_BIN` | `claude` / `codex` | the headless CLI to run |
+| `AGENT_WORKDIR` | this repo's root | dir the agent operates in |
+| `CLAUDE_ARGS` / `CODEX_ARGS` | `--permission-mode acceptEdits` / (empty) | extra CLI args |
+
+If the CLI isn't on `PATH`, the launcher logs it and exits cleanly (it never
+crashes the orchestrator). Prove the pipeline with no CLI at all via the
+simulator (this is what `./smoke_test.sh` automates):
 ```bash
 SIMULATE=1 LANE=claude EVENT_ID=test-1 ORCH_URL=http://127.0.0.1:8787 \
   ./launchers/launch_claude.sh &
