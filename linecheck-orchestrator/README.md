@@ -93,6 +93,26 @@ sudo cloudflared service install && sudo systemctl enable --now cloudflared
 Only `/webhook/github` is exposed; every other path 404s at the edge. The
 heartbeat/presence endpoints stay on localhost.
 
+#### R2/R3 on WSL (Windows)
+Run **both** the orchestrator **and** `cloudflared` *inside the same WSL distro*.
+They then share one `127.0.0.1` namespace — no Windows↔WSL port bridging — and
+because `cloudflared` dials **outward** to Cloudflare, WSL's NAT needs no inbound
+forwarding and nothing is exposed on the Windows host (no `netsh portproxy`).
+
+```bash
+# 1) enable systemd once, then from PowerShell: wsl --shutdown
+sudo tee /etc/wsl.conf >/dev/null <<'EOF'
+[boot]
+systemd=true
+EOF
+# 2) install both units as shipped (R2 + R3 above), then enable them:
+sudo systemctl enable --now linecheck-orchestrator cloudflared
+```
+**Boot persistence:** WSL starts the distro only when something touches it.
+Create a Windows **Task Scheduler** task, trigger *At log on*, action
+`wsl.exe -d <distro> true`. That boots the distro; systemd (PID 1) then brings up
+the two `enable`d units and keeps the distro alive.
+
 ### R4 — wire the launchers
 Edit `launchers/launch_claude.sh` and `launch_codex.sh`, replacing the `TODO`
 block with the real headless invocation for each lane. Until then, test the full
